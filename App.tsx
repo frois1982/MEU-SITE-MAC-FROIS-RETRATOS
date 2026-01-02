@@ -1,3 +1,4 @@
+
 import React, { useEffect } from 'react';
 import { HashRouter, Routes, Route, useLocation } from 'react-router-dom';
 import { Layout } from './components/Layout';
@@ -6,6 +7,7 @@ import { Portfolio } from './pages/Portfolio';
 import { Services, Products } from './pages/ServicesAndProducts';
 import { Blog } from './pages/Blog';
 import { Contact } from './pages/Contact';
+import { LuminaPro } from './pages/LuminaPro';
 
 // Scroll to top helper
 const ScrollToTop = () => {
@@ -26,6 +28,7 @@ const App: React.FC = () => {
           <Route path="/portfolio" element={<Portfolio />} />
           <Route path="/servicos" element={<Services />} />
           <Route path="/produtos" element={<Products />} />
+          <Route path="/lumina-pro" element={<LuminaPro />} />
           <Route path="/blog" element={<Blog />} />
           <Route path="/contato" element={<Contact />} />
         </Routes>

@@ -1,10 +1,10 @@
 
 import React, { useState, useEffect } from 'react';
+import { Link } from 'react-router-dom';
 import { SectionTitle, Button, Card, Skeleton } from '../components/UI';
 import { Check, Target, Video, Zap, Smartphone, FileText, ClipboardCheck, Sparkles, Cpu, Clock } from 'lucide-react';
 import { Service, Product } from '../types';
 
-// MAC: Usando o mesmo script que já está funcionando no seu site!
 const DRIVE_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbzvauekYnaF2p429x0aB2eaAWNIBKdth4INNZtooTpH62GATSPzXEbYhM3jEgwAFedynw/exec";
 
 export const Services: React.FC = () => {
@@ -91,8 +91,6 @@ export const Products: React.FC = () => {
     
     if (productTitle.includes("Edição")) {
       message = "Olá Mac! Vi o Lúmina Edição no site e quero fotos com pele de modelo e estilo instagramável. Como funciona?";
-    } else if (productTitle.includes("Pro")) {
-      message = "Olá Mac! Preciso de ajuda com o caos na minha galeria. Como o Lúmina Pro e a IA podem me ajudar a ganhar tempo?";
     } else if (isComingSoon) {
       message = `Olá Mac! Quero ser avisado em primeira mão sobre o lançamento do ${productTitle}. Me coloque na lista de espera!`;
     } else {
@@ -126,7 +124,7 @@ export const Products: React.FC = () => {
       });
   }, []);
 
-  const products: (Product & { features?: string[], icon?: React.ReactNode })[] = [
+  const products: (Product & { features?: string[], icon?: React.ReactNode, isLuminaPro?: boolean })[] = [
     {
       id: 'p1',
       title: 'Lúmina: Edição',
@@ -144,8 +142,9 @@ export const Products: React.FC = () => {
       description: 'Gerenciamento de galeria com IA. Organiza, seleciona e limpa sua biblioteca em tempo real, 24h por dia, liberando seu tempo.',
       price: 'R$ 19,90/mês',
       badge: 'Inteligência Artificial',
-      ctaLink: '#',
+      ctaLink: '/lumina-pro',
       imageUrl: images.p2,
+      isLuminaPro: true,
       icon: <Cpu className="text-gold-500 mb-2" size={20} />,
       features: ['Organização IA', 'Seleção em Tempo Real', 'Suporte 24h']
     },
@@ -202,16 +201,24 @@ export const Products: React.FC = () => {
 
                  <div className="flex items-center justify-between pt-6 border-t border-zinc-800">
                     <span className="text-gold-500 font-bold tracking-widest">{p.price}</span>
-                    <a 
-                      href={getProductWhatsappLink(p.title, p.price === 'Em Breve')} 
-                      target="_blank" 
-                      rel="noopener noreferrer"
-                      className="inline-block"
-                    >
-                      <Button variant="outline" className="!py-2 !px-4 !text-[10px] !border-zinc-800 hover:!border-gold-500 transition-colors">
-                        {p.price === 'Em Breve' ? 'ME AVISE' : 'CONHECER'}
-                      </Button>
-                    </a>
+                    {p.isLuminaPro ? (
+                      <Link to="/lumina-pro">
+                        <Button variant="outline" className="!py-2 !px-4 !text-[10px] !border-zinc-800 hover:!border-gold-500 transition-colors">
+                          CONHECER
+                        </Button>
+                      </Link>
+                    ) : (
+                      <a 
+                        href={getProductWhatsappLink(p.title, p.price === 'Em Breve')} 
+                        target="_blank" 
+                        rel="noopener noreferrer"
+                        className="inline-block"
+                      >
+                        <Button variant="outline" className="!py-2 !px-4 !text-[10px] !border-zinc-800 hover:!border-gold-500 transition-colors">
+                          {p.price === 'Em Breve' ? 'ME AVISE' : 'CONHECER'}
+                        </Button>
+                      </a>
+                    )}
                  </div>
                </div>
             </Card>
