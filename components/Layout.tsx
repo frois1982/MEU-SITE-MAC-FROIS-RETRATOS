@@ -1,7 +1,7 @@
 
 import React, { useState, useEffect } from 'react';
 import { Link, useLocation } from 'react-router-dom';
-import { Menu, X, Instagram, Mail, Phone, MapPin, Camera, Youtube, Check, Loader2 } from 'lucide-react';
+import { Menu, X, Instagram, Mail, Phone, MapPin, Camera, Youtube, Check, Loader2, MessageCircle } from 'lucide-react';
 
 interface LayoutProps { children: React.ReactNode; }
 
@@ -159,11 +159,33 @@ const Footer: React.FC = () => {
   );
 };
 
+const WhatsAppFAB: React.FC = () => {
+  const whatsappUrl = "https://wa.me/5548996231894?text=Olá%20Mac,%20vi%20seu%20site%20e%20gostaria%20de%20saber%20mais%20sobre%20os%20retratos%20de%20posicionamento.";
+  
+  return (
+    <a 
+      href={whatsappUrl} 
+      target="_blank" 
+      rel="noopener noreferrer"
+      className="fixed bottom-6 right-6 z-[60] flex items-center gap-3 group"
+    >
+      <span className="bg-white text-zinc-900 px-4 py-2 rounded-full text-[10px] font-bold tracking-[0.2em] uppercase shadow-2xl opacity-0 translate-x-4 group-hover:opacity-100 group-hover:translate-x-0 transition-all duration-300 hidden md:block">
+        Falar com Mac
+      </span>
+      <div className="w-14 h-14 bg-emerald-600 rounded-full flex items-center justify-center text-white shadow-[0_10px_30px_rgba(16,185,129,0.4)] hover:bg-emerald-500 transition-all hover:scale-110 active:scale-95 animate-bounce-slow">
+        <MessageCircle size={28} />
+        <span className="absolute inset-0 rounded-full bg-emerald-600 animate-ping opacity-20"></span>
+      </div>
+    </a>
+  );
+};
+
 export const Layout: React.FC<LayoutProps> = ({ children }) => {
   return (
     <div className="min-h-screen bg-black flex flex-col">
       <Navbar />
       <main className="flex-grow pt-24 md:pt-0">{children}</main>
+      <WhatsAppFAB />
       <Footer />
     </div>
   );
