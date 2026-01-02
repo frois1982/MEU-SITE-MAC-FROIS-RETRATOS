@@ -85,6 +85,23 @@ export const Products: React.FC = () => {
     ment2: 'https://images.unsplash.com/photo-1516035069371-29a1b244cc32?q=80&w=400&auto=format&fit=crop&grayscale=true'
   });
 
+  const getProductWhatsappLink = (productTitle: string, isComingSoon: boolean) => {
+    const baseUrl = "https://wa.me/5548996231894";
+    let message = "";
+    
+    if (productTitle.includes("Edição")) {
+      message = "Olá Mac! Vi o Lúmina Edição no site e quero fotos com pele de modelo e estilo instagramável. Como funciona?";
+    } else if (productTitle.includes("Pro")) {
+      message = "Olá Mac! Preciso de ajuda com o caos na minha galeria. Como o Lúmina Pro e a IA podem me ajudar a ganhar tempo?";
+    } else if (isComingSoon) {
+      message = `Olá Mac! Quero ser avisado em primeira mão sobre o lançamento do ${productTitle}. Me coloque na lista de espera!`;
+    } else {
+      message = `Olá Mac! Vi o produto ${productTitle} no seu site e gostaria de mais informações.`;
+    }
+
+    return `${baseUrl}?text=${encodeURIComponent(message)}`;
+  };
+
   useEffect(() => {
     fetch(DRIVE_SCRIPT_URL)
       .then(res => res.json())
@@ -185,9 +202,16 @@ export const Products: React.FC = () => {
 
                  <div className="flex items-center justify-between pt-6 border-t border-zinc-800">
                     <span className="text-gold-500 font-bold tracking-widest">{p.price}</span>
-                    <Button variant="outline" className="!py-2 !px-4 !text-[10px] !border-zinc-800 hover:!border-gold-500">
-                      {p.price === 'Em Breve' ? 'ME AVISE' : 'CONHECER'}
-                    </Button>
+                    <a 
+                      href={getProductWhatsappLink(p.title, p.price === 'Em Breve')} 
+                      target="_blank" 
+                      rel="noopener noreferrer"
+                      className="inline-block"
+                    >
+                      <Button variant="outline" className="!py-2 !px-4 !text-[10px] !border-zinc-800 hover:!border-gold-500 transition-colors">
+                        {p.price === 'Em Breve' ? 'ME AVISE' : 'CONHECER'}
+                      </Button>
+                    </a>
                  </div>
                </div>
             </Card>
