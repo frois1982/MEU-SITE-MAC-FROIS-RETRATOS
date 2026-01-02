@@ -2,6 +2,7 @@
 import React, { useState, useEffect } from 'react';
 import { SectionTitle, Skeleton } from '../components/UI';
 import { PortfolioItem } from '../types';
+import { X, Maximize2 } from 'lucide-react';
 
 const DRIVE_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbzvauekYnaF2p429x0aB2eaAWNIBKdth4INNZtooTpH62GATSPzXEbYhM3jEgwAFedynw/exec"; 
 
@@ -9,6 +10,7 @@ export const Portfolio: React.FC = () => {
   const [items, setItems] = useState<PortfolioItem[]>([]);
   const [loading, setLoading] = useState(true);
   const [activeCategory, setActiveCategory] = useState<string>('All');
+  const [selectedImage, setSelectedImage] = useState<PortfolioItem | null>(null);
 
   useEffect(() => {
     if (!DRIVE_SCRIPT_URL) {
@@ -44,6 +46,15 @@ export const Portfolio: React.FC = () => {
         setLoading(false);
       });
   }, []);
+
+  // Previne scroll do corpo quando a imagem está aberta
+  useEffect(() => {
+    if (selectedImage) {
+      document.body.style.overflow = 'hidden';
+    } else {
+      document.body.style.overflow = 'unset';
+    }
+  }, [selectedImage]);
 
   const filteredItems = activeCategory === 'All' 
     ? items 
@@ -90,17 +101,58 @@ export const Portfolio: React.FC = () => {
         ) : (
           <div className="columns-1 md:columns-2 lg:columns-3 gap-8 space-y-8">
             {filteredItems.map((item) => (
-              <div key={item.id} className="relative group overflow-hidden break-inside-avoid rounded-sm border border-zinc-900 bg-zinc-900 shadow-xl">
-                <img src={item.imageUrl} alt={item.title} className="w-full h-auto grayscale transition-all duration-1000 group-hover:scale-110 group-hover:grayscale-0" />
-                <div className="absolute inset-0 bg-black/80 backdrop-blur-[4px] opacity-0 group-hover:opacity-100 transition-all duration-500 flex flex-col items-center justify-center p-8 text-center">
-                  <h3 className="text-2xl font-serif text-white mb-2">{item.title}</h3>
-                  <span className="text-gold-500 text-xs font-bold uppercase tracking-[0.2em]">{item.category}</span>
+              <div 
+                key={item.id} 
+                onClick={() => setSelectedImage(item)}
+                className="relative group overflow-hidden break-inside-avoid rounded-sm border border-zinc-900 bg-zinc-900 shadow-xl cursor-zoom-in"
+              >
+                {/* Imagem com Zoom e Escurecimento no Hover */}
+                <img 
+                  src={item.imageUrl} 
+                  alt={item.title} 
+                  className="w-full h-auto grayscale transition-all duration-1000 group-hover:scale-105 group-hover:grayscale-0 group-hover:brightness-[0.4]" 
+                />
+                
+                {/* Overlay com informações e ícone de expandir */}
+                <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-all duration-500 flex flex-col items-center justify-center p-8 text-center">
+                  <Maximize2 className="text-gold-500 mb-4 w-6 h-6 transform translate-y-4 group-hover:translate-y-0 transition-transform duration-500" />
+                  <h3 className="text-2xl font-serif text-white mb-2 transform translate-y-4 group-hover:translate-y-0 transition-transform duration-500 delay-75">{item.title}</h3>
+                  <span className="text-gold-500 text-[10px] font-bold uppercase tracking-[0.3em] transform translate-y-4 group-hover:translate-y-0 transition-transform duration-500 delay-150">{item.category}</span>
                 </div>
               </div>
             ))}
           </div>
         )}
       </div>
+
+      {/* Lightbox / Modal de Tela Cheia */}
+      {selectedImage && (
+        <div 
+          className="fixed inset-0 z-[100] bg-black/95 flex items-center justify-center p-4 md:p-12 animate-in fade-in duration-300"
+          onClick={() => setSelectedImage(null)}
+        >
+          <button 
+            className="absolute top-6 right-6 text-zinc-400 hover:text-white transition-colors z-[110]"
+            onClick={() => setSelectedImage(null)}
+          >
+            <X size={40} strokeWidth={1} />
+          </button>
+          
+          <div className="relative max-w-7xl max-h-full flex items-center justify-center">
+            <img 
+              src={selectedImage.imageUrl} 
+              alt={selectedImage.title} 
+              className="max-w-full max-h-[85vh] object-contain shadow-2xl animate-in zoom-in-95 duration-500"
+              onClick={(e) => e.stopPropagation()} // Evita fechar ao clicar na própria imagem
+            />
+            
+            <div className="absolute -bottom-16 left-0 right-0 text-center animate-in slide-in-from-bottom-4 duration-500">
+              <h3 className="text-2xl font-serif text-white">{selectedImage.title}</h3>
+              <p className="text-gold-500 text-xs tracking-[0.4em] uppercase mt-2">{selectedImage.category}</p>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 };
