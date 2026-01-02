@@ -8,6 +8,12 @@ import { Service, Product } from '../types';
 const DRIVE_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbzvauekYnaF2p429x0aB2eaAWNIBKdth4INNZtooTpH62GATSPzXEbYhM3jEgwAFedynw/exec";
 
 export const Services: React.FC = () => {
+  const getWhatsappLink = (projectName: string) => {
+    const baseUrl = "https://wa.me/5548996231894";
+    const message = encodeURIComponent(`Olá Mac, estive no seu site e gostaria de solicitar uma proposta para o ${projectName}. Como podemos prosseguir?`);
+    return `${baseUrl}?text=${message}`;
+  };
+
   const services: Service[] = [
     {
       id: 's1',
@@ -35,18 +41,27 @@ export const Services: React.FC = () => {
         <SectionTitle title="Projetos de Posicionamento" subtitle="Imagem com Autoridade" />
         <div className="grid lg:grid-cols-3 gap-8">
           {services.map((service, idx) => (
-            <div key={service.id} className={`bg-zinc-900 border ${idx === 1 ? 'border-gold-600' : 'border-zinc-800'} p-8 flex flex-col rounded-sm hover:border-gold-500 transition-all`}>
+            <div key={service.id} className={`bg-zinc-900 border ${idx === 1 ? 'border-gold-600' : 'border-zinc-800'} p-8 flex flex-col rounded-sm hover:border-gold-500 transition-all group`}>
               <h3 className="text-2xl font-serif text-white mb-6">{service.title}</h3>
-              <p className="text-zinc-500 mb-8 text-sm flex-grow uppercase tracking-wider">{service.description}</p>
+              <p className="text-zinc-500 mb-8 text-sm flex-grow uppercase tracking-wider leading-relaxed">{service.description}</p>
               <ul className="space-y-4 mb-10 border-t border-zinc-800 pt-8">
                 {service.features.map((f, i) => (
-                  <li key={i} className="flex items-start text-zinc-300 text-xs tracking-widest uppercase">
+                  <li key={i} className="flex items-start text-zinc-300 text-[11px] tracking-widest uppercase">
                     <Check size={14} className="text-gold-500 mr-4 shrink-0" />
                     {f}
                   </li>
                 ))}
               </ul>
-              <Button variant={idx === 1 ? 'primary' : 'outline'} className="w-full">Solicitar Proposta</Button>
+              <a 
+                href={getWhatsappLink(service.title)} 
+                target="_blank" 
+                rel="noopener noreferrer"
+                className="block w-full"
+              >
+                <Button variant={idx === 1 ? 'primary' : 'outline'} className="w-full py-4">
+                  Solicitar Proposta
+                </Button>
+              </a>
             </div>
           ))}
         </div>
