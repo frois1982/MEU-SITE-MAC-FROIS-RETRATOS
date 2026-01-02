@@ -1,8 +1,11 @@
 
-import React from 'react';
-import { SectionTitle, Button, Card } from '../components/UI';
+import React, { useState, useEffect } from 'react';
+import { SectionTitle, Button, Card, Skeleton } from '../components/UI';
 import { Check, Target, Video, Zap, Smartphone, FileText, ClipboardCheck } from 'lucide-react';
 import { Service, Product } from '../types';
+
+// MAC: Usando o mesmo script que já está funcionando no seu site!
+const DRIVE_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbzvauekYnaF2p429x0aB2eaAWNIBKdth4INNZtooTpH62GATSPzXEbYhM3jEgwAFedynw/exec";
 
 export const Services: React.FC = () => {
   const services: Service[] = [
@@ -53,6 +56,39 @@ export const Services: React.FC = () => {
 };
 
 export const Products: React.FC = () => {
+  const [loading, setLoading] = useState(true);
+  const [images, setImages] = useState<{ [key: string]: string }>({
+    p1: 'https://images.unsplash.com/photo-1542038784456-1ea8e935640e?q=80&w=400&auto=format&fit=crop&grayscale=true',
+    p2: 'https://images.unsplash.com/photo-1517694712202-14dd9538aa97?q=80&w=400&auto=format&fit=crop&grayscale=true',
+    p3: 'https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?q=80&w=400&auto=format&fit=crop&grayscale=true',
+    ment1: 'https://images.unsplash.com/photo-1551434678-e076c223a692?q=80&w=400&auto=format&fit=crop&grayscale=true',
+    ment2: 'https://images.unsplash.com/photo-1516035069371-29a1b244cc32?q=80&w=400&auto=format&fit=crop&grayscale=true'
+  });
+
+  useEffect(() => {
+    fetch(DRIVE_SCRIPT_URL)
+      .then(res => res.json())
+      .then(data => {
+        if (Array.isArray(data)) {
+          const newImages = { ...images };
+          data.forEach((file: any) => {
+            const name = file.name.toUpperCase();
+            if (name.startsWith('PROD1_')) newImages.p1 = file.url;
+            if (name.startsWith('PROD2_')) newImages.p2 = file.url;
+            if (name.startsWith('PROD3_')) newImages.p3 = file.url;
+            if (name.startsWith('MENTORIA1_')) newImages.ment1 = file.url;
+            if (name.startsWith('MENTORIA2_')) newImages.ment2 = file.url;
+          });
+          setImages(newImages);
+        }
+        setLoading(false);
+      })
+      .catch(err => {
+        console.error("Erro Produtos Drive:", err);
+        setLoading(false);
+      });
+  }, []);
+
   const products: Product[] = [
     {
       id: 'p1',
@@ -61,7 +97,7 @@ export const Products: React.FC = () => {
       price: 'R$ 297,00',
       badge: 'Curso',
       ctaLink: '#',
-      imageUrl: 'https://images.unsplash.com/photo-1542038784456-1ea8e935640e?q=80&w=400&auto=format&fit=crop&grayscale=true'
+      imageUrl: images.p1
     },
     {
       id: 'p2',
@@ -70,7 +106,7 @@ export const Products: React.FC = () => {
       price: 'R$ 19,90/mês',
       badge: 'Software',
       ctaLink: '#',
-      imageUrl: 'https://images.unsplash.com/photo-1517694712202-14dd9538aa97?q=80&w=400&auto=format&fit=crop&grayscale=true'
+      imageUrl: images.p2
     },
     {
       id: 'p3',
@@ -79,7 +115,7 @@ export const Products: React.FC = () => {
       price: 'R$ 149,00',
       badge: 'Presets',
       ctaLink: '#',
-      imageUrl: 'https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?q=80&w=400&auto=format&fit=crop&grayscale=true'
+      imageUrl: images.p3
     }
   ];
 
@@ -93,7 +129,15 @@ export const Products: React.FC = () => {
         <div className="grid md:grid-cols-3 gap-10 mb-24">
           {products.map((p) => (
             <Card key={p.id} className="!p-0 overflow-hidden group border-zinc-900">
-               <div className="h-64 overflow-hidden"><img src={p.imageUrl} className="w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all duration-700" alt={p.title} /></div>
+               <div className="h-64 overflow-hidden relative">
+                 {loading ? <Skeleton className="w-full h-full" /> : (
+                   <img 
+                    src={p.imageUrl} 
+                    className="w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all duration-700 group-hover:scale-110" 
+                    alt={p.title} 
+                   />
+                 )}
+               </div>
                <div className="p-8">
                  <h3 className="text-xl font-serif text-white mb-4 tracking-widest">{p.title}</h3>
                  <p className="text-zinc-500 text-xs mb-8 uppercase leading-relaxed">{p.description}</p>
@@ -129,8 +173,24 @@ export const Products: React.FC = () => {
                 </a>
             </div>
             <div className="md:w-1/2 grid grid-cols-2 gap-4">
-                <img src="https://images.unsplash.com/photo-1551434678-e076c223a692?q=80&w=400&auto=format&fit=crop&grayscale=true" className="rounded-sm opacity-60 grayscale hover:opacity-100 transition-all duration-700" alt="Mentoria" />
-                <img src="https://images.unsplash.com/photo-1516035069371-29a1b244cc32?q=80&w=400&auto=format&fit=crop&grayscale=true" className="rounded-sm opacity-60 grayscale hover:opacity-100 transition-all duration-700 mt-12" alt="Resultados" />
+                <div className="overflow-hidden rounded-sm h-64 md:h-80">
+                  {loading ? <Skeleton className="w-full h-full" /> : (
+                    <img 
+                      src={images.ment1} 
+                      className="w-full h-full object-cover opacity-60 grayscale hover:opacity-100 transition-all duration-700 hover:scale-105" 
+                      alt="Mentoria 1" 
+                    />
+                  )}
+                </div>
+                <div className="overflow-hidden rounded-sm h-64 md:h-80 mt-12">
+                  {loading ? <Skeleton className="w-full h-full" /> : (
+                    <img 
+                      src={images.ment2} 
+                      className="w-full h-full object-cover opacity-60 grayscale hover:opacity-100 transition-all duration-700 hover:scale-105" 
+                      alt="Mentoria 2" 
+                    />
+                  )}
+                </div>
             </div>
         </div>
       </div>
