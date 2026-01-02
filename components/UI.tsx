@@ -1,3 +1,4 @@
+
 import React from 'react';
 
 interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
@@ -33,4 +34,8 @@ export const Card: React.FC<{ children: React.ReactNode; className?: string }> =
   <div className={`bg-zinc-900/50 border border-zinc-800 p-6 md:p-8 hover:border-gold-600/50 transition-colors duration-300 ${className}`}>
     {children}
   </div>
+);
+
+export const Skeleton: React.FC<{ className?: string }> = ({ className = '' }) => (
+  <div className={`animate-pulse bg-zinc-800 rounded-sm ${className}`}></div>
 );
