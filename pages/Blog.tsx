@@ -1,7 +1,7 @@
 
 import React, { useState, useEffect } from 'react';
 import { SectionTitle, Card, Skeleton, Button } from '../components/UI';
-import { Calendar, Clock, ArrowRight, BookOpen, Share2, ChevronLeft, User } from 'lucide-react';
+import { Calendar, Clock, ArrowRight, BookOpen, Share2, ChevronLeft, User, AlertTriangle } from 'lucide-react';
 
 // MAC: Mantenha sua URL do script aqui
 const DRIVE_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbzvauekYnaF2p429x0aB2eaAWNIBKdth4INNZtooTpH62GATSPzXEbYhM3jEgwAFedynw/exec";
@@ -22,7 +22,6 @@ export const Blog: React.FC = () => {
   const [loading, setLoading] = useState(true);
   const [selectedPost, setSelectedPost] = useState<BlogPost | null>(null);
 
-  // Converte links do Drive para download direto de conteúdo puro
   const getDirectDownloadUrl = (url: string) => {
     if (!url) return '';
     if (url.includes('drive.google.com')) {
@@ -37,7 +36,6 @@ export const Blog: React.FC = () => {
       .then(res => res.json())
       .then(data => {
         if (Array.isArray(data)) {
-          // Filtragem: Apenas arquivos POST_ que terminam em .txt (independente de maiúsculas/minúsculas)
           const textFiles = data.filter((f: any) => {
             const name = f.name.toLowerCase();
             return name.startsWith('post_') && name.endsWith('.txt');
@@ -48,14 +46,12 @@ export const Blog: React.FC = () => {
             const rawDate = parts[1] || 'RECENTE';
             const category = parts[2] || 'ESTRATÉGIA';
             
-            // Limpeza do título: remove extensões e troca hífens por espaços
             let title = parts[3] || 'SEM TÍTULO';
             title = title.replace(/\.[^/.]+$/, "").replace(/-/g, ' ');
             
             const dateParts = rawDate.split('-');
             const formattedDate = dateParts.length === 3 ? `${dateParts[2]}/${dateParts[1]}/${dateParts[0]}` : rawDate;
 
-            // Busca da Imagem (mesmo nome base do post)
             const baseName = file.name.replace(/\.[^/.]+$/, "").toLowerCase();
             const imgFile = data.find((f: any) => {
               const fName = f.name.toLowerCase();
@@ -66,7 +62,7 @@ export const Blog: React.FC = () => {
             return {
               id: file.id,
               title: title.toUpperCase(),
-              excerpt: "A verdade por trás da imagem e o impacto da autoridade visual no mundo real. Clique para ler o editorial completo.",
+              excerpt: "A verdade por trás da imagem e o impacto da autoridade visual no mundo real. Clique para ler o editorial.",
               date: formattedDate,
               category: category.toUpperCase(),
               content: "", 
@@ -93,25 +89,35 @@ export const Blog: React.FC = () => {
       const res = await fetch(post.contentUrl);
       const text = await res.text();
       
-      // Validação simplificada: apenas checa se o Drive retornou uma página de login (HTML)
+      // CAMADA 1: Detecção de Binário (PNG/JPG)
+      // Checamos se o início do arquivo contém assinaturas comuns de imagem
+      const isBinary = text.substring(0, 20).match(/PNG|JFIF|Exif|IHDR|BM/);
+      
+      // CAMADA 2: Detecção de HTML (Página de erro/login do Drive)
       const isHtml = text.trim().toLowerCase().startsWith('<!doctype html>') || text.includes('google-signin');
       
-      if (isHtml) {
+      if (isBinary) {
         setSelectedPost({ 
           ...post, 
-          content: 'O Google Drive não permitiu o acesso direto. \n\nSOLUÇÃO: No seu Google Drive, clique com o botão direito no arquivo .txt, vá em "Compartilhar" e mude o acesso de "Restrito" para "Qualquer pessoa com o link".' 
+          content: 'ERRO DE FORMATO: O sistema detectou que este arquivo é uma imagem e não um texto puro.\n\nCERTIFIQUE-SE DE QUE:\n1. O arquivo no Google Drive é um Documento de Texto (.txt).\n2. Você não renomeou uma imagem para .txt manualmente.\n3. O arquivo de texto e a imagem têm nomes ligeiramente diferentes se o erro persistir.' 
+        });
+      } else if (isHtml) {
+        setSelectedPost({ 
+          ...post, 
+          content: 'ACESSO NEGADO: O Google Drive não permitiu a leitura automática.\n\nSOLUÇÃO:\nClique com o botão direito no arquivo .txt no seu Drive -> Compartilhar -> Mude para "Qualquer pessoa com o link".' 
         });
       } else {
-        // Remove possíveis caracteres estranhos de início de arquivo (BOM)
         const cleanText = text.replace(/^\uFEFF/, '');
         setSelectedPost({ ...post, content: cleanText });
       }
     } catch (e) {
-      setSelectedPost({ ...post, content: 'Não foi possível carregar o texto. Verifique sua conexão ou se o arquivo está público no Drive.' });
+      setSelectedPost({ ...post, content: 'Erro de conexão. Verifique se o arquivo está público no Drive.' });
     }
   };
 
   if (selectedPost) {
+    const isError = selectedPost.content.includes('ERRO DE FORMATO') || selectedPost.content.includes('ACESSO NEGADO');
+
     return (
       <div className="pt-32 pb-24 bg-black min-h-screen animate-fade-in">
         <div className="container mx-auto px-6 max-w-3xl">
@@ -143,9 +149,21 @@ export const Blog: React.FC = () => {
             </div>
 
             <div className="prose prose-invert max-w-none">
-               <div className="text-zinc-300 text-lg leading-loose font-light tracking-wide space-y-10 whitespace-pre-wrap first-letter:text-5xl first-letter:font-serif first-letter:text-gold-500 first-letter:mr-3 first-letter:float-left">
-                  {selectedPost.content}
-               </div>
+               {isError ? (
+                 <div className="bg-zinc-900/50 border border-gold-600/30 p-8 rounded-sm">
+                   <div className="flex items-center gap-3 text-gold-500 mb-6">
+                     <AlertTriangle size={24} />
+                     <h3 className="text-white text-lg font-serif m-0 tracking-widest uppercase">Problema na Fonte</h3>
+                   </div>
+                   <div className="text-zinc-400 text-xs tracking-widest uppercase leading-loose whitespace-pre-wrap">
+                      {selectedPost.content}
+                   </div>
+                 </div>
+               ) : (
+                 <div className="text-zinc-300 text-lg leading-loose font-light tracking-wide space-y-10 whitespace-pre-wrap first-letter:text-5xl first-letter:font-serif first-letter:text-gold-500 first-letter:mr-3 first-letter:float-left">
+                    {selectedPost.content}
+                 </div>
+               )}
             </div>
 
             <div className="mt-32 pt-16 border-t border-zinc-900 flex flex-col items-center text-center">
