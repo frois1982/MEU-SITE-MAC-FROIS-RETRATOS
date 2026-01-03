@@ -22,7 +22,6 @@ export const Home: React.FC = () => {
       .then(res => res.json())
       .then(data => {
         if (Array.isArray(data)) {
-          // Busca flexível: pega qualquer arquivo que contenha o prefixo, independente do que vem depois
           const capa = data.find((f: any) => f.name.toUpperCase().startsWith('CAPA'));
           const manif = data.find((f: any) => f.name.toUpperCase().startsWith('MANIF'));
           if (capa) setHeroImg(capa.url);
