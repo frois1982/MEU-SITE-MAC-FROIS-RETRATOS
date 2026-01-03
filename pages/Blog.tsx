@@ -1,7 +1,7 @@
 
 import React, { useState, useEffect } from 'react';
 import { SectionTitle, Card, Skeleton, Button } from '../components/UI';
-import { Calendar, Clock, ArrowRight, BookOpen, Share2, ChevronLeft, User, AlertTriangle, RefreshCw, ImageIcon } from 'lucide-react';
+import { Calendar, Clock, ArrowRight, BookOpen, Share2, ChevronLeft, User, AlertTriangle, RefreshCw, ImageIcon, ExternalLink } from 'lucide-react';
 
 // MAC: Mantenha sua URL do script aqui
 const DRIVE_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbzvauekYnaF2p429x0aB2eaAWNIBKdth4INNZtooTpH62GATSPzXEbYhM3jEgwAFedynw/exec";
@@ -15,6 +15,7 @@ interface BlogPost {
   category: string;
   content: string;
   contentUrl: string;
+  viewUrl: string;
   imageUrl: string;
   hasCustomImage: boolean;
 }
@@ -64,12 +65,10 @@ export const Blog: React.FC = () => {
               }
             }
 
-            // LÓGICA DA CAPA: Procurar imagem que contenha a mesma data e categoria/titulo
-            const baseSearch = `${parts[1]}`.toLowerCase(); // Busca pela data primeiro
+            const baseSearch = `${parts[1]}`.toLowerCase();
             const imgFile = data.find((f: any) => {
               const fName = f.name.toLowerCase();
               const isImg = fName.endsWith('.jpg') || fName.endsWith('.png') || fName.endsWith('.jpeg') || fName.endsWith('.webp');
-              // Tenta achar imagem que comece com o mesmo nome do texto (sem extensão)
               const baseTxtName = file.name.replace('.txt', '').toLowerCase();
               return isImg && (fName.startsWith(baseTxtName) || (fName.includes(baseSearch) && fName.includes(parts[2].toLowerCase())));
             });
@@ -83,6 +82,7 @@ export const Blog: React.FC = () => {
               category: category.toUpperCase(),
               content: "", 
               contentUrl: getDirectDownloadUrl(file.url),
+              viewUrl: file.url,
               imageUrl: imgFile ? getDirectDownloadUrl(imgFile.url) : 'https://images.unsplash.com/photo-1455390582262-044cdead277a?q=80&w=1200&auto=format&fit=crop&grayscale=true',
               hasCustomImage: !!imgFile
             };
@@ -101,13 +101,9 @@ export const Blog: React.FC = () => {
   const isRealText = (str: string) => {
     if (!str) return false;
     const lower = str.trim().toLowerCase();
-    // Se for HTML do Google Drive, bloqueia
-    if (lower.includes('<!doctype html>') || lower.includes('<html') || lower.includes('google-signin')) return false;
-    
-    // Se for muito curto, pode ser erro
-    if (str.length < 10) return false;
-
-    return true;
+    // Se for HTML, o Google está bloqueando o download direto por falta de permissão pública
+    if (lower.includes('<!doctype') || lower.includes('<html') || lower.includes('google-signin')) return false;
+    return str.length > 20;
   };
 
   const openPost = async (post: BlogPost) => {
@@ -121,14 +117,14 @@ export const Blog: React.FC = () => {
       if (!isRealText(text)) {
         setSelectedPost({ 
           ...post, 
-          content: `ACESSO NEGADO OU ERRO DE PASTA: O arquivo "${post.fileName}" não está acessível.\n\nCOMO RESOLVER:\n1. Vá no Google Drive.\n2. Clique no arquivo com o botão direito -> Compartilhar.\n3. Em "Acesso Geral", mude para "Qualquer pessoa com o link".\n4. Faça isso também para a imagem de capa.` 
+          content: `ACESSO NEGADO PELO GOOGLE DRIVE: O sistema não conseguiu baixar o texto automaticamente.\n\nISSO OCORRE POR DOIS MOTIVOS:\n1. O arquivo não está compartilhado como "Qualquer pessoa com o link".\n2. O Google está pedindo confirmação de segurança para este arquivo específico.` 
         });
       } else {
         const cleanText = text.replace(/^\uFEFF/, '');
         setSelectedPost({ ...post, content: cleanText });
       }
     } catch (e) {
-      setSelectedPost({ ...post, content: 'Falha na conexão com os servidores do Google Drive.' });
+      setSelectedPost({ ...post, content: 'Erro de conexão com o servidor de arquivos.' });
     }
   };
 
@@ -176,12 +172,19 @@ export const Blog: React.FC = () => {
                  <div className="bg-zinc-900/50 border border-gold-600/30 p-10 rounded-sm text-center">
                     <AlertTriangle size={32} className="text-gold-500 mx-auto mb-6" />
                     <h3 className="text-white text-xl font-serif mb-6 tracking-widest uppercase italic">Aviso de Sincronia</h3>
-                    <p className="text-zinc-400 text-xs tracking-[0.2em] uppercase leading-loose whitespace-pre-wrap mb-8">
+                    <p className="text-zinc-400 text-[11px] tracking-[0.2em] uppercase leading-loose whitespace-pre-wrap mb-10">
                       {selectedPost.content}
                     </p>
-                    <Button onClick={() => openPost(selectedPost)} variant="outline" className="text-[10px]">
-                      <RefreshCw size={14} className="mr-2" /> Tentar Sincronizar Novamente
-                    </Button>
+                    <div className="flex flex-col md:flex-row gap-4 justify-center">
+                      <Button onClick={() => openPost(selectedPost)} variant="primary" className="text-[10px]">
+                        <RefreshCw size={14} className="mr-2" /> Tentar Sincronizar Novamente
+                      </Button>
+                      <a href={selectedPost.viewUrl} target="_blank" rel="noreferrer">
+                        <Button variant="outline" className="text-[10px] w-full">
+                          <ExternalLink size={14} className="mr-2" /> Abrir no Google Drive
+                        </Button>
+                      </a>
+                    </div>
                  </div>
                ) : (
                  <div className="text-zinc-300 text-lg leading-loose font-light tracking-wide space-y-10 whitespace-pre-wrap first-letter:text-5xl first-letter:font-serif first-letter:text-gold-500 first-letter:mr-3 first-letter:float-left">
