@@ -3,7 +3,7 @@ import React, { useState, useEffect } from 'react';
 import { GoogleGenAI } from "@google/genai";
 import { Button, Card } from '../components/UI';
 import { DRIVE_SCRIPT_URL } from '../config';
-import { Sparkles, Image as ImageIcon, Copy, Check, Download, Loader2, Key, PenTool, ImagePlus, ArrowRight, Save, Info, FileText, FolderOpen, ExternalLink, Code2, HelpCircle, MousePointer2 } from 'lucide-react';
+import { Sparkles, Image as ImageIcon, Copy, Check, Download, Loader2, Key, PenTool, ImagePlus, ArrowRight, Save, Info, FileText, FolderOpen, ExternalLink, Code2, HelpCircle, MousePointer2, Activity, AlertCircle } from 'lucide-react';
 
 export const Admin: React.FC = () => {
   const [topic, setTopic] = useState('');
@@ -14,8 +14,11 @@ export const Admin: React.FC = () => {
   const [copyStatus, setCopyStatus] = useState(false);
   const [hasKey, setHasKey] = useState(false);
   const [showHelp, setShowHelp] = useState(false);
+  
+  // Estados de Diagnóstico
+  const [testStatus, setTestStatus] = useState<'idle' | 'testing' | 'success' | 'error'>('idle');
+  const [testMessage, setTestMessage] = useState('');
 
-  // Script recursivo para o Mac copiar
   const scriptCode = `function doGet() {
   // 1. COLE O ID DA SUA PASTA ABAIXO (O que fica depois de /folders/ na URL)
   var folderId = "1CsNAC51-bP11LKz9YtjwenbwmAgda9IE"; 
@@ -42,6 +45,27 @@ export const Admin: React.FC = () => {
   return ContentService.createTextOutput(JSON.stringify(results))
     .setMimeType(ContentService.MimeType.JSON);
 }`;
+
+  const testConnection = async () => {
+    setTestStatus('testing');
+    setTestMessage('Iniciando teste de handshake com o Google...');
+    
+    try {
+      const response = await fetch(DRIVE_SCRIPT_URL);
+      if (!response.ok) throw new Error("Servidor não respondeu.");
+      
+      const data = await response.json();
+      if (Array.isArray(data)) {
+        setTestStatus('success');
+        setTestMessage(`Conectado! Encontramos ${data.length} arquivos sincronizados.`);
+      } else {
+        throw new Error("Formato de resposta inválido.");
+      }
+    } catch (err: any) {
+      setTestStatus('error');
+      setTestMessage("ERRO: O script não respondeu. Verifique se ele foi implantado como 'Qualquer Pessoa' e se você autorizou o acesso no editor do Google.");
+    }
+  };
 
   const getBaseFileName = () => {
     const date = new Date().toLocaleDateString('pt-BR').replace(/\//g, '-');
@@ -143,7 +167,7 @@ export const Admin: React.FC = () => {
            <div className="flex items-center gap-4">
              <button 
                onClick={() => setShowHelp(!showHelp)}
-               className={`flex items-center gap-2 text-[10px] uppercase tracking-widest transition-all px-4 py-2 border rounded-full ${showHelp ? 'bg-gold-600 text-black border-gold-600' : 'text-zinc-400 border-zinc-800 hover:text-white'}`}
+               className={`flex items-center gap-2 text-[10px] uppercase tracking-widest transition-all px-6 py-3 border rounded-full ${showHelp ? 'bg-gold-600 text-black border-gold-600' : 'text-zinc-400 border-zinc-800 hover:text-white'}`}
              >
                <HelpCircle size={14} /> {showHelp ? 'Fechar Ajuda' : 'Ajuda Técnica'}
              </button>
@@ -158,6 +182,44 @@ export const Admin: React.FC = () => {
                </div>
              )}
            </div>
+        </div>
+
+        {/* Painel de Diagnóstico (Onde o Mac conserta o erro) */}
+        <div className="mb-12 grid grid-cols-1 md:grid-cols-3 gap-6 animate-fade-in">
+           <Card className="md:col-span-2 bg-zinc-900 border-zinc-800 flex flex-col justify-between">
+              <div>
+                <h3 className="text-white text-xs font-bold tracking-widest uppercase mb-4 flex items-center gap-2">
+                  <Activity size={16} className="text-gold-500" /> Diagnóstico de Conexão
+                </h3>
+                <div className={`p-4 border rounded-sm mb-6 ${testStatus === 'success' ? 'bg-green-500/10 border-green-500/30' : testStatus === 'error' ? 'bg-red-500/10 border-red-500/30' : 'bg-black/40 border-zinc-800'}`}>
+                   <p className={`text-[11px] tracking-widest uppercase ${testStatus === 'success' ? 'text-green-500' : testStatus === 'error' ? 'text-red-500' : 'text-zinc-500'}`}>
+                      {testMessage || "Clique no botão ao lado para testar seu link do Drive."}
+                   </p>
+                </div>
+              </div>
+              <Button 
+                onClick={testConnection} 
+                disabled={testStatus === 'testing'}
+                className="w-full md:w-auto self-end flex items-center gap-2"
+                variant={testStatus === 'error' ? 'outline' : 'primary'}
+              >
+                {testStatus === 'testing' ? <Loader2 size={16} className="animate-spin" /> : <Activity size={16} />}
+                TESTAR CONEXÃO AGORA
+              </Button>
+           </Card>
+
+           <Card className="bg-zinc-900 border-zinc-800">
+              <h3 className="text-white text-xs font-bold tracking-widest uppercase mb-4 flex items-center gap-2">
+                <AlertCircle size={16} className="text-gold-500" /> "Sumiu Tudo?"
+              </h3>
+              <p className="text-zinc-500 text-[9px] tracking-widest uppercase leading-relaxed mb-4">
+                Se as fotos sumiram, verifique se no Google Script você clicou em:
+              </p>
+              <ul className="text-[9px] text-zinc-400 space-y-2 uppercase tracking-widest">
+                 <li className="flex gap-2"><div className="w-1 h-1 bg-gold-600 rounded-full mt-1.5 shrink-0"></div> <strong>Executar:</strong> No menu superior do script, clique em "Executar" para dar permissão.</li>
+                 <li className="flex gap-2"><div className="w-1 h-1 bg-gold-600 rounded-full mt-1.5 shrink-0"></div> <strong>Implantação:</strong> Verifique se escolheu "Qualquer Pessoa".</li>
+              </ul>
+           </Card>
         </div>
 
         {/* Guia Visual do Mac */}
@@ -222,7 +284,6 @@ export const Admin: React.FC = () => {
           </div>
         )}
 
-        {/* Interface de Criação Continua... */}
         <div className="grid lg:grid-cols-12 gap-8">
           <div className="lg:col-span-4 space-y-6">
             <Card className="bg-zinc-900/50 border-zinc-800">

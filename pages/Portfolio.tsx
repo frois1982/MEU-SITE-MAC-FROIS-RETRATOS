@@ -3,11 +3,12 @@ import React, { useState, useEffect, useRef } from 'react';
 import { SectionTitle, Skeleton } from '../components/UI';
 import { PortfolioItem } from '../types';
 import { DRIVE_SCRIPT_URL } from '../config';
-import { X, Maximize2, ChevronLeft, ChevronRight } from 'lucide-react';
+import { X, Maximize2, ChevronLeft, ChevronRight, AlertTriangle } from 'lucide-react';
 
 export const Portfolio: React.FC = () => {
   const [items, setItems] = useState<PortfolioItem[]>([]);
   const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
   const [activeCategory, setActiveCategory] = useState<string>('All');
   const [selectedIndex, setSelectedIndex] = useState<number | null>(null);
   
@@ -20,7 +21,10 @@ export const Portfolio: React.FC = () => {
     }
 
     fetch(DRIVE_SCRIPT_URL)
-      .then(res => res.json())
+      .then(res => {
+        if (!res.ok) throw new Error("Acesso negado ao script.");
+        return res.json();
+      })
       .then(data => {
         if (Array.isArray(data)) {
           const mappedItems: PortfolioItem[] = data
@@ -39,11 +43,15 @@ export const Portfolio: React.FC = () => {
               };
             });
           setItems(mappedItems);
+          setError(null);
+        } else {
+          setError("O script retornou um formato inesperado.");
         }
         setLoading(false);
       })
       .catch(err => {
         console.error("Erro Portfolio Drive:", err);
+        setError("Erro de Sincronia. Verifique se o Script foi autorizado no Google.");
         setLoading(false);
       });
   }, []);
@@ -135,6 +143,12 @@ export const Portfolio: React.FC = () => {
         {loading ? (
           <div className="columns-1 md:columns-2 lg:columns-3 gap-8 space-y-8">
             {[1, 2, 3, 4, 5, 6].map(i => <Skeleton key={i} className="h-80 w-full" />)}
+          </div>
+        ) : error ? (
+          <div className="text-center py-20 bg-zinc-900/30 border border-zinc-900 rounded-sm">
+             <AlertTriangle size={32} className="text-gold-600 mx-auto mb-4 opacity-50" />
+             <p className="text-zinc-500 text-[10px] tracking-[0.4em] uppercase mb-4">{error}</p>
+             <p className="text-zinc-700 text-[9px] tracking-widest uppercase">Verifique o Painel de Controle (Admin) para diagnosticar.</p>
           </div>
         ) : items.length === 0 ? (
           <div className="text-center py-20 text-zinc-700 tracking-[0.3em] uppercase text-xs border border-dashed border-zinc-900 rounded-lg">
