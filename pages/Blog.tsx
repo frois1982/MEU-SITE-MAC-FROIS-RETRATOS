@@ -1,7 +1,7 @@
 
 import React, { useState, useEffect } from 'react';
 import { SectionTitle, Card, Skeleton, Button } from '../components/UI';
-import { Calendar, Clock, ArrowRight, BookOpen, Share2, ChevronLeft, User, AlertTriangle } from 'lucide-react';
+import { Calendar, Clock, ArrowRight, BookOpen, Share2, ChevronLeft, User, AlertTriangle, RefreshCw } from 'lucide-react';
 
 // MAC: Mantenha sua URL do script aqui
 const DRIVE_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbzvauekYnaF2p429x0aB2eaAWNIBKdth4INNZtooTpH62GATSPzXEbYhM3jEgwAFedynw/exec";
@@ -22,11 +22,16 @@ export const Blog: React.FC = () => {
   const [loading, setLoading] = useState(true);
   const [selectedPost, setSelectedPost] = useState<BlogPost | null>(null);
 
+  // Função para converter link e evitar cache errado do Google
   const getDirectDownloadUrl = (url: string) => {
     if (!url) return '';
+    let fileId = '';
     if (url.includes('drive.google.com')) {
-      const fileId = url.split('/d/')[1]?.split('/')[0] || url.split('id=')[1]?.split('&')[0];
-      if (fileId) return `https://drive.google.com/uc?export=download&id=${fileId}`;
+      fileId = url.split('/d/')[1]?.split('/')[0] || url.split('id=')[1]?.split('&')[0];
+    }
+    if (fileId) {
+      // Adicionamos um timestamp (t=...) para garantir que o Google não entregue arquivo de cache
+      return `https://docs.google.com/uc?id=${fileId}&export=download&t=${Date.now()}`;
     }
     return url;
   };
@@ -36,6 +41,7 @@ export const Blog: React.FC = () => {
       .then(res => res.json())
       .then(data => {
         if (Array.isArray(data)) {
+          // Filtro rigoroso: apenas arquivos que terminam com .txt
           const textFiles = data.filter((f: any) => {
             const name = f.name.toLowerCase();
             return name.startsWith('post_') && name.endsWith('.txt');
@@ -52,6 +58,7 @@ export const Blog: React.FC = () => {
             const dateParts = rawDate.split('-');
             const formattedDate = dateParts.length === 3 ? `${dateParts[2]}/${dateParts[1]}/${dateParts[0]}` : rawDate;
 
+            // Busca da imagem (procura arquivos com mesmo nome mas extensão de imagem)
             const baseName = file.name.replace(/\.[^/.]+$/, "").toLowerCase();
             const imgFile = data.find((f: any) => {
               const fName = f.name.toLowerCase();
@@ -62,7 +69,7 @@ export const Blog: React.FC = () => {
             return {
               id: file.id,
               title: title.toUpperCase(),
-              excerpt: "A verdade por trás da imagem e o impacto da autoridade visual no mundo real. Clique para ler o editorial.",
+              excerpt: "A verdade por trás da imagem e o impacto da autoridade visual. Clique para ler o editorial.",
               date: formattedDate,
               category: category.toUpperCase(),
               content: "", 
@@ -81,42 +88,53 @@ export const Blog: React.FC = () => {
       });
   }, []);
 
+  // Verifica se o texto recebido é lixo digital ou texto real
+  const isRealText = (str: string) => {
+    if (!str) return false;
+    const sample = str.substring(0, 200);
+    let printable = 0;
+    for (let i = 0; i < sample.length; i++) {
+      const code = sample.charCodeAt(i);
+      // Checa se o caractere é uma letra, número, espaço ou acento comum
+      if ((code >= 32 && code <= 126) || code === 10 || code === 13 || code >= 160) {
+        printable++;
+      }
+    }
+    // Se menos de 85% do início for texto legível, é um arquivo binário (imagem)
+    return (printable / sample.length) > 0.85;
+  };
+
   const openPost = async (post: BlogPost) => {
     window.scrollTo(0, 0);
-    setSelectedPost({ ...post, content: 'Carregando editorial...' });
+    setSelectedPost({ ...post, content: 'Sincronizando editorial...' });
     
     try {
       const res = await fetch(post.contentUrl);
       const text = await res.text();
       
-      // CAMADA 1: Detecção de Binário (PNG/JPG)
-      // Checamos se o início do arquivo contém assinaturas comuns de imagem
-      const isBinary = text.substring(0, 20).match(/PNG|JFIF|Exif|IHDR|BM/);
-      
-      // CAMADA 2: Detecção de HTML (Página de erro/login do Drive)
       const isHtml = text.trim().toLowerCase().startsWith('<!doctype html>') || text.includes('google-signin');
       
-      if (isBinary) {
+      if (isHtml) {
         setSelectedPost({ 
           ...post, 
-          content: 'ERRO DE FORMATO: O sistema detectou que este arquivo é uma imagem e não um texto puro.\n\nCERTIFIQUE-SE DE QUE:\n1. O arquivo no Google Drive é um Documento de Texto (.txt).\n2. Você não renomeou uma imagem para .txt manualmente.\n3. O arquivo de texto e a imagem têm nomes ligeiramente diferentes se o erro persistir.' 
+          content: 'ACESSO NEGADO: O arquivo está privado.\n\nCOMO RESOLVER:\nNo Google Drive, clique com o botão direito no arquivo .txt -> Compartilhar -> Mude para "Qualquer pessoa com o link".' 
         });
-      } else if (isHtml) {
+      } else if (!isRealText(text)) {
         setSelectedPost({ 
           ...post, 
-          content: 'ACESSO NEGADO: O Google Drive não permitiu a leitura automática.\n\nSOLUÇÃO:\nClique com o botão direito no arquivo .txt no seu Drive -> Compartilhar -> Mude para "Qualquer pessoa com o link".' 
+          content: 'ERRO DE SINCRONIZAÇÃO: O Google Drive tentou entregar uma imagem no lugar do texto.\n\nCOMO RESOLVER:\n1. Verifique se não há dois arquivos com nomes idênticos no Drive.\n2. Tente renomear o arquivo .txt para algo único (ex: post_03_v2.txt).\n3. Verifique se você não salvou a imagem com a extensão .txt por engano.' 
         });
       } else {
         const cleanText = text.replace(/^\uFEFF/, '');
         setSelectedPost({ ...post, content: cleanText });
       }
     } catch (e) {
-      setSelectedPost({ ...post, content: 'Erro de conexão. Verifique se o arquivo está público no Drive.' });
+      setSelectedPost({ ...post, content: 'Falha na conexão com o servidor de arquivos.' });
     }
   };
 
   if (selectedPost) {
-    const isError = selectedPost.content.includes('ERRO DE FORMATO') || selectedPost.content.includes('ACESSO NEGADO');
+    const hasError = selectedPost.content.includes('ERRO DE') || selectedPost.content.includes('ACESSO NEGADO');
 
     return (
       <div className="pt-32 pb-24 bg-black min-h-screen animate-fade-in">
@@ -149,15 +167,16 @@ export const Blog: React.FC = () => {
             </div>
 
             <div className="prose prose-invert max-w-none">
-               {isError ? (
-                 <div className="bg-zinc-900/50 border border-gold-600/30 p-8 rounded-sm">
-                   <div className="flex items-center gap-3 text-gold-500 mb-6">
-                     <AlertTriangle size={24} />
-                     <h3 className="text-white text-lg font-serif m-0 tracking-widest uppercase">Problema na Fonte</h3>
-                   </div>
-                   <div className="text-zinc-400 text-xs tracking-widest uppercase leading-loose whitespace-pre-wrap">
+               {hasError ? (
+                 <div className="bg-zinc-900/50 border border-gold-600/30 p-10 rounded-sm text-center">
+                    <AlertTriangle size={32} className="text-gold-500 mx-auto mb-6" />
+                    <h3 className="text-white text-xl font-serif mb-6 tracking-widest uppercase italic">Conflito de Fonte</h3>
+                    <p className="text-zinc-400 text-xs tracking-[0.2em] uppercase leading-loose whitespace-pre-wrap mb-8">
                       {selectedPost.content}
-                   </div>
+                    </p>
+                    <Button onClick={() => openPost(selectedPost)} variant="outline" className="text-[10px]">
+                      <RefreshCw size={14} className="mr-2" /> Tentar Novamente
+                    </Button>
                  </div>
                ) : (
                  <div className="text-zinc-300 text-lg leading-loose font-light tracking-wide space-y-10 whitespace-pre-wrap first-letter:text-5xl first-letter:font-serif first-letter:text-gold-500 first-letter:mr-3 first-letter:float-left">
