@@ -1,8 +1,8 @@
 
 import React, { useState, useEffect } from 'react';
 import { GoogleGenAI } from "@google/genai";
-import { Button, Card, SectionTitle } from '../components/UI';
-import { Sparkles, Image as ImageIcon, Copy, Check, Download, Loader2, Key, FlaskConical, PenTool, ImagePlus, ArrowRight, Save, Info } from 'lucide-react';
+import { Button, Card } from '../components/UI';
+import { Sparkles, Image as ImageIcon, Copy, Check, Download, Loader2, Key, PenTool, ImagePlus, ArrowRight, Save, Info, FileText, FolderOpen } from 'lucide-react';
 
 export const Admin: React.FC = () => {
   const [topic, setTopic] = useState('');
@@ -13,15 +13,24 @@ export const Admin: React.FC = () => {
   const [copyStatus, setCopyStatus] = useState(false);
   const [hasKey, setHasKey] = useState(false);
 
-  // Detecção robusta da chave
+  // Sugestão de nome de arquivo baseada na data e tema
+  const getSuggestedFileName = () => {
+    const date = new Date().toLocaleDateString('pt-BR').replace(/\//g, '-');
+    const cleanTopic = topic
+      .normalize("NFD")
+      .replace(/[\u0300-\u036f]/g, "")
+      .replace(/[^a-zA-Z0-9]/g, "-")
+      .substring(0, 20)
+      .toUpperCase();
+    return `blog_${date}_EDITORIAL_${cleanTopic || 'POST'}`;
+  };
+
   useEffect(() => {
     const checkStatus = async () => {
-      // Se houver API_KEY no process.env, libera imediatamente
       if (process.env.API_KEY) {
         setHasKey(true);
         return;
       }
-
       try {
         if (window.aistudio && typeof window.aistudio.hasSelectedApiKey === 'function') {
           const selected = await window.aistudio.hasSelectedApiKey();
@@ -38,15 +47,11 @@ export const Admin: React.FC = () => {
     try {
       if (window.aistudio && typeof window.aistudio.openSelectKey === 'function') {
         await window.aistudio.openSelectKey();
-        // Forçamos a entrada independente de delay de resposta do seletor
         setHasKey(true);
-      } else {
-        // Fallback caso esteja rodando fora do iframe mas com a chave injetada
-        if (process.env.API_KEY) setHasKey(true);
+      } else if (process.env.API_KEY) {
+        setHasKey(true);
       }
     } catch (e) {
-      console.error("Falha ao abrir seletor:", e);
-      // Em caso de erro de conexão com o seletor, se houver processo de chave, libera
       if (process.env.API_KEY) setHasKey(true);
     }
   };
@@ -67,7 +72,7 @@ export const Admin: React.FC = () => {
       setGeneratedText(response.text || '');
     } catch (e) {
       console.error(e);
-      alert("Houve um erro técnico. Verifique se o faturamento Pro está ativo no seu console Google Cloud.");
+      alert("Houve um erro técnico. Verifique o faturamento Pro.");
     }
     setLoadingText(false);
   };
@@ -82,9 +87,7 @@ export const Admin: React.FC = () => {
         contents: {
           parts: [{ text: `High-end professional luxury portrait photography, black and white cinematic style, dramatic lighting, sharp focus, 8k resolution, representing the theme: ${topic}. Only photography, no text.` }],
         },
-        config: { 
-          imageConfig: { aspectRatio: "16:9", imageSize: "1K" }
-        },
+        config: { imageConfig: { aspectRatio: "16:9", imageSize: "1K" } },
       });
       
       let foundImg = false;
@@ -97,10 +100,8 @@ export const Admin: React.FC = () => {
           }
         }
       }
-      if (!foundImg) alert("A geração de imagem foi concluída, mas o formato não foi reconhecido. Tente novamente.");
     } catch (e) {
       console.error(e);
-      alert("A geração de imagem falhou. Verifique o saldo do faturamento Pro.");
     }
     setLoadingImg(false);
   };
@@ -110,6 +111,8 @@ export const Admin: React.FC = () => {
     setCopyStatus(true);
     setTimeout(() => setCopyStatus(false), 2000);
   };
+
+  const fileName = getSuggestedFileName();
 
   return (
     <div className="pt-32 pb-24 bg-zinc-950 min-h-screen">
@@ -151,20 +154,11 @@ export const Admin: React.FC = () => {
                 </div>
                 
                 <div className="grid grid-cols-1 gap-4">
-                  <Button 
-                    onClick={generateEditorial} 
-                    disabled={loadingText || !topic || !hasKey}
-                    className="w-full py-4 flex items-center justify-center gap-3 group"
-                  >
-                    {loadingText ? <Loader2 size={18} className="animate-spin" /> : <Sparkles size={18} className="group-hover:rotate-12 transition-transform" />}
+                  <Button onClick={generateEditorial} disabled={loadingText || !topic || !hasKey} className="w-full py-4 flex items-center justify-center gap-3 group">
+                    {loadingText ? <Loader2 size={18} className="animate-spin" /> : <Sparkles size={18} />}
                     GERAR TEXTO
                   </Button>
-                  <Button 
-                    onClick={generateCover} 
-                    disabled={loadingImg || !topic || !hasKey}
-                    variant="outline"
-                    className="w-full py-4 flex items-center justify-center gap-3"
-                  >
+                  <Button onClick={generateCover} disabled={loadingImg || !topic || !hasKey} variant="outline" className="w-full py-4 flex items-center justify-center gap-3">
                     {loadingImg ? <Loader2 size={18} className="animate-spin" /> : <ImagePlus size={18} />}
                     GERAR IMAGEM
                   </Button>
@@ -172,17 +166,41 @@ export const Admin: React.FC = () => {
               </div>
             </Card>
 
-            <div className="bg-gold-600/5 border border-gold-600/20 p-6 rounded-sm">
-              <h4 className="text-gold-500 text-[10px] font-bold tracking-widest uppercase mb-4 flex items-center gap-2">
-                <Info size={14} /> Dica do Estúdio:
-              </h4>
-              <p className="text-zinc-500 text-[11px] leading-relaxed uppercase tracking-widest">
-                A geração Pro exige que o projeto vinculado à sua chave API no Google Cloud tenha faturamento ativo (Pay-as-you-go).
-              </p>
+            <div className="bg-zinc-900/80 border border-zinc-800 p-6 rounded-sm space-y-4">
+               <h4 className="text-white text-[10px] font-bold tracking-widest uppercase flex items-center gap-2">
+                 <FolderOpen size={14} className="text-gold-500" /> Fluxo de Trabalho
+               </h4>
+               <p className="text-zinc-500 text-[10px] uppercase leading-relaxed tracking-widest">
+                 1. Gere o Texto e a Imagem.<br/>
+                 2. Salve ambos com o nome sugerido.<br/>
+                 3. Suba na RAIZ da sua pasta do Drive.
+               </p>
             </div>
           </div>
 
           <div className="lg:col-span-8 space-y-8">
+            {/* Bloco de Nomes de Arquivo */}
+            {(generatedText || generatedImg) && (
+              <div className="bg-gold-600/10 border border-gold-600/30 p-6 rounded-sm animate-fade-in">
+                <h4 className="text-gold-500 text-[10px] font-bold tracking-[0.3em] uppercase mb-4 flex items-center gap-2">
+                  <Save size={16} /> Nomes para Salvar:
+                </h4>
+                <div className="grid md:grid-cols-2 gap-4">
+                  <div className="bg-black/40 p-3 border border-zinc-800 rounded flex justify-between items-center group">
+                    <code className="text-zinc-300 text-[10px] font-mono">{fileName}.txt</code>
+                    <FileText size={12} className="text-zinc-600 group-hover:text-gold-500" />
+                  </div>
+                  <div className="bg-black/40 p-3 border border-zinc-800 rounded flex justify-between items-center group">
+                    <code className="text-zinc-300 text-[10px] font-mono">{fileName}.jpg</code>
+                    <ImageIcon size={12} className="text-zinc-600 group-hover:text-gold-500" />
+                  </div>
+                </div>
+                <p className="text-zinc-600 text-[9px] mt-4 uppercase tracking-widest italic text-center">
+                  * Coloque estes arquivos na mesma pasta das fotos do seu site.
+                </p>
+              </div>
+            )}
+
             <div className="space-y-4">
               <div className="flex justify-between items-center px-2">
                 <span className="text-white text-[10px] font-bold tracking-[0.3em] uppercase flex items-center gap-2">
@@ -194,17 +212,15 @@ export const Admin: React.FC = () => {
                   </button>
                 )}
               </div>
-              <div className="bg-zinc-900 border border-zinc-800 p-10 min-h-[300px] relative overflow-hidden rounded-sm">
+              <div className="bg-zinc-900 border border-zinc-800 p-10 min-h-[250px] relative overflow-hidden rounded-sm">
                  {loadingText && (
-                    <div className="absolute inset-0 bg-black/60 backdrop-blur-sm flex items-center justify-center z-10">
-                       <div className="text-center">
-                          <Loader2 size={40} className="text-gold-500 animate-spin mx-auto mb-4" />
-                          <p className="text-gold-500 text-[10px] tracking-[0.4em] uppercase font-bold">Redigindo Editorial...</p>
-                       </div>
+                    <div className="absolute inset-0 bg-black/60 backdrop-blur-sm flex items-center justify-center z-10 text-center">
+                       <Loader2 size={40} className="text-gold-500 animate-spin mx-auto mb-4" />
+                       <p className="text-gold-500 text-[10px] tracking-[0.4em] uppercase font-bold">Redigindo...</p>
                     </div>
                  )}
                  <div className="text-zinc-400 text-lg leading-loose font-light italic whitespace-pre-wrap font-serif">
-                   {generatedText || "O rascunho do seu próximo editorial aparecerá aqui..."}
+                   {generatedText || "O rascunho do editorial aparecerá aqui..."}
                  </div>
               </div>
             </div>
@@ -215,47 +231,27 @@ export const Admin: React.FC = () => {
                    <ArrowRight size={14} className="text-gold-500" /> Capa sugerida (16:9)
                 </span>
                 {generatedImg && (
-                  <a href={generatedImg} download={`capa_${Date.now()}.png`} className="text-gold-500 hover:text-white transition-colors flex items-center gap-2 text-[10px] tracking-widest uppercase">
-                    <Download size={14} /> Baixar Imagem
+                  <a href={generatedImg} download={`${fileName}.png`} className="text-gold-500 hover:text-white transition-colors flex items-center gap-2 text-[10px] tracking-widest uppercase">
+                    <Download size={14} /> Baixar Capa
                   </a>
                 )}
               </div>
               <div className="bg-zinc-900 border border-zinc-800 aspect-video relative overflow-hidden rounded-sm flex items-center justify-center group shadow-2xl">
                  {loadingImg && (
-                    <div className="absolute inset-0 bg-black/80 backdrop-blur-md flex items-center justify-center z-10">
-                       <div className="text-center">
-                          <Loader2 size={40} className="text-gold-500 animate-spin mx-auto mb-4" />
-                          <p className="text-gold-500 text-[10px] tracking-[0.4em] uppercase font-bold">Revelando com Luz...</p>
-                       </div>
+                    <div className="absolute inset-0 bg-black/80 backdrop-blur-md flex items-center justify-center z-10 text-center">
+                       <Loader2 size={40} className="text-gold-500 animate-spin mx-auto mb-4" />
+                       <p className="text-gold-500 text-[10px] tracking-[0.4em] uppercase font-bold">Processando Luz...</p>
                     </div>
                  )}
                  {generatedImg ? (
-                   <img src={generatedImg} alt="Gerada por IA" className="w-full h-full object-cover animate-fade-in" />
+                   <img src={generatedImg} alt="Capa" className="w-full h-full object-cover animate-fade-in" />
                  ) : (
-                   <div className="text-center opacity-20 group-hover:opacity-40 transition-opacity">
+                   <div className="text-center opacity-20">
                       <ImageIcon size={64} className="text-zinc-700 mx-auto mb-4" />
                       <p className="text-zinc-700 text-xs tracking-[0.5em] uppercase font-bold">Aguardando geração visual</p>
                    </div>
                  )}
               </div>
-              
-              {generatedImg && (
-                <div className="bg-zinc-900/50 border border-zinc-800 p-8 rounded-sm animate-fade-in">
-                  <h5 className="text-white text-[10px] font-bold tracking-[0.3em] uppercase mb-6 flex items-center gap-3">
-                    <Save size={16} className="text-gold-500" /> Instruções de Publicação:
-                  </h5>
-                  <div className="grid md:grid-cols-2 gap-8 text-[10px] text-zinc-500 tracking-[0.2em] uppercase leading-relaxed">
-                    <div className="space-y-2">
-                      <p className="text-gold-600 font-bold">1. IMAGEM</p>
-                      <p>Baixe a imagem acima. Ela já está no formato 16:9 ideal para o layout do blog.</p>
-                    </div>
-                    <div className="space-y-2">
-                      <p className="text-gold-600 font-bold">2. TEXTO</p>
-                      <p>Copie o editorial e salve em um arquivo .txt seguindo o padrão (ex: blog_data_titulo.txt).</p>
-                    </div>
-                  </div>
-                </div>
-              )}
             </div>
           </div>
         </div>
