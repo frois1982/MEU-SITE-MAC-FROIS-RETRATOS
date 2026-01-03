@@ -2,7 +2,7 @@
 import React, { useState, useEffect } from 'react';
 import { GoogleGenAI } from "@google/genai";
 import { Button, Card } from '../components/UI';
-import { Sparkles, Image as ImageIcon, Copy, Check, Download, Loader2, Key, PenTool, ImagePlus, ArrowRight, Save, Info, FileText, FolderOpen } from 'lucide-react';
+import { Sparkles, Image as ImageIcon, Copy, Check, Download, Loader2, Key, PenTool, ImagePlus, ArrowRight, Save, Info, FileText, FolderOpen, ExternalLink, Code2, HelpCircle } from 'lucide-react';
 
 export const Admin: React.FC = () => {
   const [topic, setTopic] = useState('');
@@ -12,8 +12,34 @@ export const Admin: React.FC = () => {
   const [generatedImg, setGeneratedImg] = useState('');
   const [copyStatus, setCopyStatus] = useState(false);
   const [hasKey, setHasKey] = useState(false);
+  const [showHelp, setShowHelp] = useState(false);
 
-  // NOVO PADRÃO: Sem extensão no nome para evitar erro de .txt.txt
+  // Script recursivo para o Mac copiar
+  const scriptCode = `function doGet() {
+  var folderId = "COLE_AQUI_O_ID_DA_SUA_PASTA_CENTRAL"; 
+  var results = [];
+  var folder = DriveApp.getFolderById(folderId);
+  
+  function getFilesRecursively(currentFolder) {
+    var files = currentFolder.getFiles();
+    while (files.hasNext()) {
+      var file = files.next();
+      results.push({
+        name: file.getName(),
+        id: file.getId(),
+        url: "https://docs.google.com/uc?id=" + file.getId() + "&export=download"
+      });
+    }
+    var subfolders = currentFolder.getFolders();
+    while (subfolders.hasNext()) {
+      getFilesRecursively(subfolders.next());
+    }
+  }
+  getFilesRecursively(folder);
+  return ContentService.createTextOutput(JSON.stringify(results))
+    .setMimeType(ContentService.MimeType.JSON);
+}`;
+
   const getBaseFileName = () => {
     const date = new Date().toLocaleDateString('pt-BR').replace(/\//g, '-');
     const cleanTopic = topic
@@ -70,7 +96,6 @@ export const Admin: React.FC = () => {
       setGeneratedText(response.text || '');
     } catch (e) {
       console.error(e);
-      alert("Houve um erro técnico. Verifique o faturamento Pro.");
     }
     setLoadingText(false);
   };
@@ -88,12 +113,10 @@ export const Admin: React.FC = () => {
         config: { imageConfig: { aspectRatio: "16:9", imageSize: "1K" } },
       });
       
-      let foundImg = false;
       if (response.candidates && response.candidates[0].content.parts) {
         for (const part of response.candidates[0].content.parts) {
           if (part.inlineData) {
             setGeneratedImg(`data:image/png;base64,${part.inlineData.data}`);
-            foundImg = true;
             break;
           }
         }
@@ -109,22 +132,83 @@ export const Admin: React.FC = () => {
   return (
     <div className="pt-32 pb-24 bg-zinc-950 min-h-screen">
       <div className="container mx-auto px-6">
-        <div className="flex flex-col md:flex-row justify-between items-center mb-12 gap-6">
+        <div className="flex flex-col md:flex-row justify-between items-center mb-12 gap-6 text-center md:text-left">
            <div>
              <h2 className="text-gold-500 text-xs font-bold tracking-[0.5em] uppercase mb-2">Ambiente de Criação</h2>
              <h1 className="text-4xl font-serif text-white italic tracking-widest">Laboratório Criativo</h1>
            </div>
-           {!hasKey ? (
-             <Button onClick={handleKeyActivation} className="bg-gold-600 text-black px-8 py-3 flex items-center gap-3 font-bold">
-               <Key size={18} /> ATIVAR FERRAMENTAS PRO
-             </Button>
-           ) : (
-             <div className="flex items-center gap-3 text-[10px] text-zinc-500 uppercase tracking-widest border border-zinc-800 px-4 py-2 rounded-full">
-               <div className="w-2 h-2 bg-green-500 rounded-full animate-pulse"></div>
-               Estúdio Conectado
-             </div>
-           )}
+           <div className="flex items-center gap-4">
+             <button 
+               onClick={() => setShowHelp(!showHelp)}
+               className="flex items-center gap-2 text-[10px] text-zinc-400 hover:text-white uppercase tracking-widest transition-all"
+             >
+               <HelpCircle size={14} /> Ajuda Técnica
+             </button>
+             {!hasKey ? (
+               <Button onClick={handleKeyActivation} className="bg-gold-600 text-black px-8 py-3 flex items-center gap-3 font-bold">
+                 <Key size={18} /> ATIVAR FERRAMENTAS PRO
+               </Button>
+             ) : (
+               <div className="flex items-center gap-3 text-[10px] text-zinc-500 uppercase tracking-widest border border-zinc-800 px-4 py-2 rounded-full">
+                 <div className="w-2 h-2 bg-green-500 rounded-full animate-pulse"></div>
+                 Estúdio Conectado
+               </div>
+             )}
+           </div>
         </div>
+
+        {/* Modal de Ajuda Técnica para o Mac */}
+        {showHelp && (
+          <div className="mb-12 bg-zinc-900 border border-gold-600/30 p-8 rounded-sm animate-fade-in relative overflow-hidden">
+            <div className="absolute top-0 right-0 w-32 h-32 bg-gold-600/5 rounded-full blur-3xl"></div>
+            <div className="flex justify-between items-start mb-6">
+              <h3 className="text-gold-500 text-sm font-bold tracking-widest uppercase flex items-center gap-3">
+                <Code2 size={18} /> Painel de Integração (Google Script)
+              </h3>
+              <button onClick={() => setShowHelp(false)} className="text-zinc-500 hover:text-white uppercase text-[10px] tracking-widest">Fechar</button>
+            </div>
+            
+            <div className="grid md:grid-cols-2 gap-8">
+              <div className="space-y-4">
+                <p className="text-zinc-400 text-xs leading-relaxed tracking-wide">
+                  O Script não é um arquivo comum no Drive. Para acessá-lo e fazer o site ler a pasta <strong className="text-white">BLOG</strong>, siga estes passos:
+                </p>
+                <ol className="text-[10px] text-zinc-500 space-y-3 uppercase tracking-widest list-decimal pl-4">
+                  <li>Clique no botão "Abrir Painel do Google" abaixo.</li>
+                  <li>Procure seu projeto ou crie um novo.</li>
+                  <li>Cole o código ao lado.</li>
+                  <li>Troque o ID pelo da sua pasta "PASTA_SITE_MAC".</li>
+                  <li>Implantar -> Nova Implantação -> App da Web.</li>
+                </ol>
+                <a 
+                  href="https://script.google.com/" 
+                  target="_blank" 
+                  rel="noreferrer"
+                  className="inline-flex items-center gap-2 bg-zinc-800 hover:bg-zinc-700 text-white text-[10px] font-bold px-6 py-3 tracking-widest transition-all mt-4"
+                >
+                  <ExternalLink size={14} /> ABRIR PAINEL DO GOOGLE
+                </a>
+              </div>
+              <div className="relative group">
+                <div className="absolute top-4 right-4 z-10">
+                   <button 
+                    onClick={() => {
+                      navigator.clipboard.writeText(scriptCode);
+                      alert("Código copiado! Cole no Google Apps Script.");
+                    }}
+                    className="bg-gold-600 text-black p-2 rounded-sm hover:scale-110 transition-transform"
+                    title="Copiar Código"
+                   >
+                     <Copy size={16} />
+                   </button>
+                </div>
+                <pre className="bg-black p-6 rounded-sm text-[10px] text-zinc-400 overflow-x-auto border border-zinc-800 max-h-[250px] font-mono">
+                  {scriptCode}
+                </pre>
+              </div>
+            </div>
+          </div>
+        )}
 
         <div className="grid lg:grid-cols-12 gap-8">
           <div className="lg:col-span-4 space-y-6">
@@ -163,13 +247,12 @@ export const Admin: React.FC = () => {
                  <FolderOpen size={14} className="text-gold-500" /> Organização do Drive
                </h4>
                <p className="text-zinc-500 text-[10px] uppercase leading-relaxed tracking-widest">
-                 DICA: Você pode criar uma pasta chamada <strong className="text-zinc-300">BLOG</strong> dentro da pasta do site para não bagunçar a raiz. O sistema vai encontrar os arquivos lá.
+                 DICA: Agora que você vai atualizar o script, a pasta <strong className="text-zinc-300">BLOG</strong> vai funcionar perfeitamente!
                </p>
             </div>
           </div>
 
           <div className="lg:col-span-8 space-y-8">
-            {/* Bloco de Instruções de Salvamento Ultra-Claras */}
             {(generatedText || generatedImg) && (
               <div className="bg-gold-600/10 border border-gold-600/30 p-8 rounded-sm animate-fade-in shadow-2xl">
                 <h4 className="text-gold-500 text-[11px] font-bold tracking-[0.3em] uppercase mb-6 flex items-center gap-3">
@@ -177,7 +260,6 @@ export const Admin: React.FC = () => {
                 </h4>
                 
                 <div className="space-y-6">
-                  {/* Arquivo de Texto */}
                   <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 p-4 bg-black/40 border border-zinc-800 rounded-sm">
                     <div className="flex items-center gap-4">
                       <div className="w-10 h-10 bg-zinc-900 flex items-center justify-center text-zinc-500"><FileText size={20}/></div>
@@ -189,7 +271,7 @@ export const Admin: React.FC = () => {
                     <button 
                       onClick={() => {
                         navigator.clipboard.writeText(baseName);
-                        alert('Nome copiado! Cole no nome do arquivo ao salvar no Bloco de Notas.');
+                        alert('Nome copiado!');
                       }}
                       className="text-[10px] text-zinc-400 hover:text-white flex items-center gap-2 uppercase tracking-widest"
                     >
@@ -197,7 +279,6 @@ export const Admin: React.FC = () => {
                     </button>
                   </div>
 
-                  {/* Arquivo de Imagem */}
                   <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 p-4 bg-black/40 border border-zinc-800 rounded-sm">
                     <div className="flex items-center gap-4">
                       <div className="w-10 h-10 bg-zinc-900 flex items-center justify-center text-zinc-500"><ImageIcon size={20}/></div>
@@ -216,12 +297,6 @@ export const Admin: React.FC = () => {
                       <Copy size={14}/> Copiar Nome
                     </button>
                   </div>
-                </div>
-
-                <div className="mt-8 p-4 bg-gold-600/5 border border-gold-600/20 rounded-sm">
-                  <p className="text-zinc-400 text-[9px] uppercase tracking-[0.2em] leading-loose">
-                    <strong className="text-gold-500">ATENÇÃO:</strong> Ao salvar no Bloco de Notas, não digite ".txt". Apenas cole o nome. Isso evita que o arquivo fique com nome duplo.
-                  </p>
                 </div>
               </div>
             )}
@@ -257,7 +332,7 @@ export const Admin: React.FC = () => {
             <div className="space-y-4">
               <div className="flex justify-between items-center px-2">
                 <span className="text-white text-[10px] font-bold tracking-[0.3em] uppercase flex items-center gap-2">
-                   <ArrowRight size={14} className="text-gold-500" /> Capa sugerida (16:9)
+                   <ArrowRight size={14} className="text-gold-500" /> Capa sugerida
                 </span>
                 {generatedImg && (
                   <a href={generatedImg} download={`CAPA_${baseName}.png`} className="text-gold-500 hover:text-white transition-colors flex items-center gap-2 text-[10px] tracking-widest uppercase">

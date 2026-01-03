@@ -39,10 +39,7 @@ const Navbar: React.FC = () => {
               {link.name}
             </Link>
           ))}
-          <Link to="/admin" className="flex items-center gap-2 bg-zinc-900 border border-zinc-800 px-4 py-2 rounded-sm text-gold-500 text-[10px] hover:bg-gold-600 hover:text-black transition-all group">
-            <FlaskConical size={14} className="group-hover:animate-pulse" />
-            LAB
-          </Link>
+          {/* Botão LAB removido daqui para privacidade */}
         </div>
         <button onClick={() => setIsOpen(!isOpen)} className="md:hidden text-white">
           {isOpen ? <X size={28} /> : <Menu size={28} />}
@@ -56,9 +53,6 @@ const Navbar: React.FC = () => {
                 {link.name}
               </Link>
             ))}
-            <Link to="/admin" className="text-lg font-serif text-center text-gold-500 uppercase tracking-widest flex items-center justify-center gap-2">
-              <FlaskConical size={18} /> LABORATÓRIO
-            </Link>
           </div>
         </div>
       )}
