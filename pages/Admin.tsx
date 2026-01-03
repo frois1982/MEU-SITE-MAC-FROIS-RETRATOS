@@ -13,14 +13,14 @@ export const Admin: React.FC = () => {
   const [copyStatus, setCopyStatus] = useState(false);
   const [hasKey, setHasKey] = useState(false);
 
-  // Sugestão de nome de arquivo baseada na data e tema
-  const getSuggestedFileName = () => {
+  // NOVO PADRÃO: Sem extensão no nome para evitar erro de .txt.txt
+  const getBaseFileName = () => {
     const date = new Date().toLocaleDateString('pt-BR').replace(/\//g, '-');
     const cleanTopic = topic
       .normalize("NFD")
       .replace(/[\u0300-\u036f]/g, "")
       .replace(/[^a-zA-Z0-9]/g, "-")
-      .substring(0, 20)
+      .substring(0, 25)
       .toUpperCase();
     return `blog_${date}_EDITORIAL_${cleanTopic || 'POST'}`;
   };
@@ -47,8 +47,6 @@ export const Admin: React.FC = () => {
     try {
       if (window.aistudio && typeof window.aistudio.openSelectKey === 'function') {
         await window.aistudio.openSelectKey();
-        setHasKey(true);
-      } else if (process.env.API_KEY) {
         setHasKey(true);
       }
     } catch (e) {
@@ -106,13 +104,7 @@ export const Admin: React.FC = () => {
     setLoadingImg(false);
   };
 
-  const copyToClipboard = () => {
-    navigator.clipboard.writeText(generatedText);
-    setCopyStatus(true);
-    setTimeout(() => setCopyStatus(false), 2000);
-  };
-
-  const fileName = getSuggestedFileName();
+  const baseName = getBaseFileName();
 
   return (
     <div className="pt-32 pb-24 bg-zinc-950 min-h-screen">
@@ -168,46 +160,83 @@ export const Admin: React.FC = () => {
 
             <div className="bg-zinc-900/80 border border-zinc-800 p-6 rounded-sm space-y-4">
                <h4 className="text-white text-[10px] font-bold tracking-widest uppercase flex items-center gap-2">
-                 <FolderOpen size={14} className="text-gold-500" /> Fluxo de Trabalho
+                 <FolderOpen size={14} className="text-gold-500" /> Organização do Drive
                </h4>
                <p className="text-zinc-500 text-[10px] uppercase leading-relaxed tracking-widest">
-                 1. Gere o Texto e a Imagem.<br/>
-                 2. Salve ambos com o nome sugerido.<br/>
-                 3. Suba na RAIZ da sua pasta do Drive.
+                 DICA: Você pode criar uma pasta chamada <strong className="text-zinc-300">BLOG</strong> dentro da pasta do site para não bagunçar a raiz. O sistema vai encontrar os arquivos lá.
                </p>
             </div>
           </div>
 
           <div className="lg:col-span-8 space-y-8">
-            {/* Bloco de Nomes de Arquivo */}
+            {/* Bloco de Instruções de Salvamento Ultra-Claras */}
             {(generatedText || generatedImg) && (
-              <div className="bg-gold-600/10 border border-gold-600/30 p-6 rounded-sm animate-fade-in">
-                <h4 className="text-gold-500 text-[10px] font-bold tracking-[0.3em] uppercase mb-4 flex items-center gap-2">
-                  <Save size={16} /> Nomes para Salvar:
+              <div className="bg-gold-600/10 border border-gold-600/30 p-8 rounded-sm animate-fade-in shadow-2xl">
+                <h4 className="text-gold-500 text-[11px] font-bold tracking-[0.3em] uppercase mb-6 flex items-center gap-3">
+                  <Save size={18} /> Protocolo de Salvamento:
                 </h4>
-                <div className="grid md:grid-cols-2 gap-4">
-                  <div className="bg-black/40 p-3 border border-zinc-800 rounded flex justify-between items-center group">
-                    <code className="text-zinc-300 text-[10px] font-mono">{fileName}.txt</code>
-                    <FileText size={12} className="text-zinc-600 group-hover:text-gold-500" />
+                
+                <div className="space-y-6">
+                  {/* Arquivo de Texto */}
+                  <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 p-4 bg-black/40 border border-zinc-800 rounded-sm">
+                    <div className="flex items-center gap-4">
+                      <div className="w-10 h-10 bg-zinc-900 flex items-center justify-center text-zinc-500"><FileText size={20}/></div>
+                      <div>
+                        <p className="text-white text-[10px] font-bold tracking-widest uppercase mb-1">1. Salvar Texto como:</p>
+                        <code className="text-gold-500 text-xs font-mono">{baseName}</code>
+                      </div>
+                    </div>
+                    <button 
+                      onClick={() => {
+                        navigator.clipboard.writeText(baseName);
+                        alert('Nome copiado! Cole no nome do arquivo ao salvar no Bloco de Notas.');
+                      }}
+                      className="text-[10px] text-zinc-400 hover:text-white flex items-center gap-2 uppercase tracking-widest"
+                    >
+                      <Copy size={14}/> Copiar Nome
+                    </button>
                   </div>
-                  <div className="bg-black/40 p-3 border border-zinc-800 rounded flex justify-between items-center group">
-                    <code className="text-zinc-300 text-[10px] font-mono">{fileName}.jpg</code>
-                    <ImageIcon size={12} className="text-zinc-600 group-hover:text-gold-500" />
+
+                  {/* Arquivo de Imagem */}
+                  <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 p-4 bg-black/40 border border-zinc-800 rounded-sm">
+                    <div className="flex items-center gap-4">
+                      <div className="w-10 h-10 bg-zinc-900 flex items-center justify-center text-zinc-500"><ImageIcon size={20}/></div>
+                      <div>
+                        <p className="text-white text-[10px] font-bold tracking-widest uppercase mb-1">2. Salvar Imagem como:</p>
+                        <code className="text-gold-500 text-xs font-mono">CAPA_{baseName}</code>
+                      </div>
+                    </div>
+                    <button 
+                      onClick={() => {
+                        navigator.clipboard.writeText(`CAPA_${baseName}`);
+                        alert('Nome da Capa copiado!');
+                      }}
+                      className="text-[10px] text-zinc-400 hover:text-white flex items-center gap-2 uppercase tracking-widest"
+                    >
+                      <Copy size={14}/> Copiar Nome
+                    </button>
                   </div>
                 </div>
-                <p className="text-zinc-600 text-[9px] mt-4 uppercase tracking-widest italic text-center">
-                  * Coloque estes arquivos na mesma pasta das fotos do seu site.
-                </p>
+
+                <div className="mt-8 p-4 bg-gold-600/5 border border-gold-600/20 rounded-sm">
+                  <p className="text-zinc-400 text-[9px] uppercase tracking-[0.2em] leading-loose">
+                    <strong className="text-gold-500">ATENÇÃO:</strong> Ao salvar no Bloco de Notas, não digite ".txt". Apenas cole o nome. Isso evita que o arquivo fique com nome duplo.
+                  </p>
+                </div>
               </div>
             )}
 
             <div className="space-y-4">
               <div className="flex justify-between items-center px-2">
                 <span className="text-white text-[10px] font-bold tracking-[0.3em] uppercase flex items-center gap-2">
-                   <ArrowRight size={14} className="text-gold-500" /> Editorial Sugerido
+                   <ArrowRight size={14} className="text-gold-500" /> Editorial Gerado
                 </span>
                 {generatedText && (
-                  <button onClick={copyToClipboard} className="text-gold-500 hover:text-white transition-colors flex items-center gap-2 text-[10px] tracking-widest uppercase">
+                  <button onClick={() => {
+                    navigator.clipboard.writeText(generatedText);
+                    setCopyStatus(true);
+                    setTimeout(() => setCopyStatus(false), 2000);
+                  }} className="text-gold-500 hover:text-white transition-colors flex items-center gap-2 text-[10px] tracking-widest uppercase">
                     {copyStatus ? <Check size={14} /> : <Copy size={14} />} {copyStatus ? 'Copiado' : 'Copiar Texto'}
                   </button>
                 )}
@@ -231,7 +260,7 @@ export const Admin: React.FC = () => {
                    <ArrowRight size={14} className="text-gold-500" /> Capa sugerida (16:9)
                 </span>
                 {generatedImg && (
-                  <a href={generatedImg} download={`${fileName}.png`} className="text-gold-500 hover:text-white transition-colors flex items-center gap-2 text-[10px] tracking-widest uppercase">
+                  <a href={generatedImg} download={`CAPA_${baseName}.png`} className="text-gold-500 hover:text-white transition-colors flex items-center gap-2 text-[10px] tracking-widest uppercase">
                     <Download size={14} /> Baixar Capa
                   </a>
                 )}
