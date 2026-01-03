@@ -102,18 +102,18 @@ export const Products: React.FC = () => {
   useEffect(() => {
     if (!DRIVE_SCRIPT_URL) return;
 
-    fetch(DRIVE_SCRIPT_URL)
+    fetch(`${DRIVE_SCRIPT_URL}?t=${Date.now()}`)
       .then(res => res.json())
       .then(data => {
         if (Array.isArray(data)) {
           const newImages = { ...images };
           data.forEach((file: any) => {
             const name = file.name.toUpperCase();
-            if (name.startsWith('PROD1_')) newImages.p1 = file.url;
-            if (name.startsWith('PROD2_')) newImages.p2 = file.url;
-            if (name.startsWith('PROD3_')) newImages.p3 = file.url;
-            if (name.startsWith('MENTORIA1_')) newImages.ment1 = file.url;
-            if (name.startsWith('MENTORIA2_')) newImages.ment2 = file.url;
+            if (name.startsWith('PROD1')) newImages.p1 = file.url;
+            if (name.startsWith('PROD2')) newImages.p2 = file.url;
+            if (name.startsWith('PROD3')) newImages.p3 = file.url;
+            if (name.startsWith('MENTORIA1')) newImages.ment1 = file.url;
+            if (name.startsWith('MENTORIA2')) newImages.ment2 = file.url;
           });
           setImages(newImages);
         }
