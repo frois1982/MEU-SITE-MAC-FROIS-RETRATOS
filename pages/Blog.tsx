@@ -22,12 +22,21 @@ export const Blog: React.FC = () => {
   const [loading, setLoading] = useState(true);
   const [selectedPost, setSelectedPost] = useState<BlogPost | null>(null);
 
+  // Função para garantir que o link do Drive seja de download direto
+  const getDirectDownloadUrl = (url: string) => {
+    if (url.includes('drive.google.com')) {
+      const fileId = url.split('/d/')[1]?.split('/')[0] || url.split('id=')[1]?.split('&')[0];
+      if (fileId) return `https://drive.google.com/uc?export=download&id=${fileId}`;
+    }
+    return url;
+  };
+
   useEffect(() => {
     fetch(DRIVE_SCRIPT_URL)
       .then(res => res.json())
       .then(data => {
         if (Array.isArray(data)) {
-          // 1. Filtragem Rigorosa: Apenas arquivos que são REALMENTE .txt
+          // Filtragem: Apenas arquivos que começam com POST_ e são .txt
           const textFiles = data.filter((f: any) => {
             const name = f.name.toLowerCase();
             return name.startsWith('post_') && name.endsWith('.txt');
@@ -38,23 +47,19 @@ export const Blog: React.FC = () => {
             const rawDate = parts[1] || 'RECENTE';
             const category = parts[2] || 'ESTRATÉGIA';
             
-            // Limpeza Profunda do Título
+            // Limpeza agressiva do título (remove extensões e hífens)
             let title = parts[3] || 'SEM TÍTULO';
-            // Remove qualquer extensão (.txt, .TXT, .png, etc) de forma agressiva
-            title = title.split('.')[0].replace(/-/g, ' ');
+            title = title.replace(/\.[^/.]+$/, "").replace(/-/g, ' ');
             
             const dateParts = rawDate.split('-');
             const formattedDate = dateParts.length === 3 ? `${dateParts[2]}/${dateParts[1]}/${dateParts[0]}` : rawDate;
 
-            // Busca da Imagem Correspondente
-            // Pegamos o nome base do arquivo (ex: POST_2024_ESTRATEGIA_TITULO)
+            // Busca da Imagem (mesmo nome base do post)
             const baseName = file.name.split('.')[0].toLowerCase();
-            
             const imgFile = data.find((f: any) => {
               const fName = f.name.toLowerCase();
-              const isImage = fName.endsWith('.jpg') || fName.endsWith('.png') || fName.endsWith('.jpeg') || fName.endsWith('.webp');
-              // A imagem deve ter o MESMO nome base do arquivo de texto
-              return isImage && fName.startsWith(baseName);
+              const isImg = fName.endsWith('.jpg') || fName.endsWith('.png') || fName.endsWith('.jpeg') || fName.endsWith('.webp');
+              return isImg && fName.startsWith(baseName);
             });
 
             return {
@@ -64,8 +69,8 @@ export const Blog: React.FC = () => {
               date: formattedDate,
               category: category.toUpperCase(),
               content: "", 
-              contentUrl: file.url,
-              imageUrl: imgFile ? imgFile.url : 'https://images.unsplash.com/photo-1455390582262-044cdead277a?q=80&w=800&auto=format&fit=crop&grayscale=true'
+              contentUrl: getDirectDownloadUrl(file.url),
+              imageUrl: imgFile ? getDirectDownloadUrl(imgFile.url) : 'https://images.unsplash.com/photo-1455390582262-044cdead277a?q=80&w=800&auto=format&fit=crop&grayscale=true'
             };
           });
 
@@ -87,14 +92,19 @@ export const Blog: React.FC = () => {
       const res = await fetch(post.contentUrl);
       const text = await res.text();
       
-      // Validação de Segurança contra "Código de Barras" (Arquivos binários)
-      // Se o texto contiver marcas d'água de arquivos de imagem (PNG, JFIF, Exif)
-      const isBinary = text.substring(0, 100).match(/PNG|JFIF|Exif||IHDR/);
+      // Validação Real (Corrigida: sem o erro do || vazio)
+      const isBinary = text.substring(0, 100).match(/PNG|JFIF|Exif|IHDR/);
+      const isHtml = text.substring(0, 100).toLowerCase().includes('<!doctype html>');
       
-      if (isBinary || text.length > 100000) {
+      if (isBinary || text.length > 200000) {
         setSelectedPost({ 
           ...post, 
-          content: 'ERRO DE FORMATO: O sistema detectou que este arquivo não é um texto puro. \n\nCertifique-se de que no Google Drive você salvou como "Documento de Texto (.txt)" e não apenas renomeou uma imagem com .txt no final.' 
+          content: 'ERRO: O sistema detectou um arquivo binário (imagem). Certifique-se de que o arquivo de texto está nomeado corretamente no Drive e não há conflitos com o nome da imagem.' 
+        });
+      } else if (isHtml) {
+        setSelectedPost({ 
+          ...post, 
+          content: 'O Google Drive retornou uma página de erro ou login. Verifique se o arquivo .txt está com a opção "Qualquer pessoa com o link" ativada (Público).' 
         });
       } else {
         setSelectedPost({ ...post, content: text });
