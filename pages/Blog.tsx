@@ -1,9 +1,8 @@
 
 import React, { useState, useEffect } from 'react';
 import { SectionTitle, Card, Skeleton, Button } from '../components/UI';
+import { DRIVE_SCRIPT_URL } from '../config';
 import { Calendar, Clock, ArrowRight, BookOpen, Share2, ChevronLeft, User, AlertTriangle, RefreshCw, ImageIcon, ExternalLink } from 'lucide-react';
-
-const DRIVE_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbzvauekYnaF2p429x0aB2eaAWNIBKdth4INNZtooTpH62GATSPzXEbYhM3jEgwAFedynw/exec";
 
 interface BlogPost {
   id: string;
@@ -37,11 +36,12 @@ export const Blog: React.FC = () => {
   };
 
   useEffect(() => {
+    if (!DRIVE_SCRIPT_URL) return;
+
     fetch(DRIVE_SCRIPT_URL)
       .then(res => res.json())
       .then(data => {
         if (Array.isArray(data)) {
-          // Filtrar apenas arquivos de texto do blog
           const textFiles = data.filter((f: any) => {
             const name = f.name.toLowerCase();
             return name.startsWith('blog_') && name.endsWith('.txt');
@@ -60,12 +60,10 @@ export const Blog: React.FC = () => {
               formattedDate = `${dateParts[0]}/${dateParts[1]}/${dateParts[2]}`;
             }
 
-            // BUSCA PRECISA DA IMAGEM: Agora usa o prefixo CAPA_BLOG_
             const baseSearch = file.name.replace('.txt', '').toLowerCase();
             const imgFile = data.find((f: any) => {
               const fName = f.name.toLowerCase();
               const isImg = fName.endsWith('.jpg') || fName.endsWith('.png') || fName.endsWith('.jpeg') || fName.endsWith('.webp');
-              // Tenta achar a imagem com CAPA_ na frente
               return isImg && fName.includes(baseSearch) && fName.startsWith('capa_');
             });
 
@@ -102,7 +100,6 @@ export const Blog: React.FC = () => {
       const res = await fetch(post.contentUrl);
       const text = await res.text();
       
-      // VERIFICAÇÃO BINÁRIA: Se o texto começar com "PNG" ou "JFIF", o Google mandou a imagem no lugar do texto
       if (text.includes('PNG') || text.includes('JFIF') || text.includes('Exif')) {
          setSelectedPost({ 
           ...post, 

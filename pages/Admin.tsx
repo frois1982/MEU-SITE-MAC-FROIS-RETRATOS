@@ -2,7 +2,8 @@
 import React, { useState, useEffect } from 'react';
 import { GoogleGenAI } from "@google/genai";
 import { Button, Card } from '../components/UI';
-import { Sparkles, Image as ImageIcon, Copy, Check, Download, Loader2, Key, PenTool, ImagePlus, ArrowRight, Save, Info, FileText, FolderOpen, ExternalLink, Code2, HelpCircle } from 'lucide-react';
+import { DRIVE_SCRIPT_URL } from '../config';
+import { Sparkles, Image as ImageIcon, Copy, Check, Download, Loader2, Key, PenTool, ImagePlus, ArrowRight, Save, Info, FileText, FolderOpen, ExternalLink, Code2, HelpCircle, MousePointer2 } from 'lucide-react';
 
 export const Admin: React.FC = () => {
   const [topic, setTopic] = useState('');
@@ -16,7 +17,9 @@ export const Admin: React.FC = () => {
 
   // Script recursivo para o Mac copiar
   const scriptCode = `function doGet() {
-  var folderId = "COLE_AQUI_O_ID_DA_SUA_PASTA_CENTRAL"; 
+  // 1. COLE O ID DA SUA PASTA ABAIXO (O que fica depois de /folders/ na URL)
+  var folderId = "1CsNAC51-bP11LKz9YtjwenbwmAgda9IE"; 
+  
   var results = [];
   var folder = DriveApp.getFolderById(folderId);
   
@@ -140,9 +143,9 @@ export const Admin: React.FC = () => {
            <div className="flex items-center gap-4">
              <button 
                onClick={() => setShowHelp(!showHelp)}
-               className="flex items-center gap-2 text-[10px] text-zinc-400 hover:text-white uppercase tracking-widest transition-all"
+               className={`flex items-center gap-2 text-[10px] uppercase tracking-widest transition-all px-4 py-2 border rounded-full ${showHelp ? 'bg-gold-600 text-black border-gold-600' : 'text-zinc-400 border-zinc-800 hover:text-white'}`}
              >
-               <HelpCircle size={14} /> Ajuda Técnica
+               <HelpCircle size={14} /> {showHelp ? 'Fechar Ajuda' : 'Ajuda Técnica'}
              </button>
              {!hasKey ? (
                <Button onClick={handleKeyActivation} className="bg-gold-600 text-black px-8 py-3 flex items-center gap-3 font-bold">
@@ -157,37 +160,47 @@ export const Admin: React.FC = () => {
            </div>
         </div>
 
-        {/* Modal de Ajuda Técnica para o Mac */}
+        {/* Guia Visual do Mac */}
         {showHelp && (
           <div className="mb-12 bg-zinc-900 border border-gold-600/30 p-8 rounded-sm animate-fade-in relative overflow-hidden">
             <div className="absolute top-0 right-0 w-32 h-32 bg-gold-600/5 rounded-full blur-3xl"></div>
-            <div className="flex justify-between items-start mb-6">
-              <h3 className="text-gold-500 text-sm font-bold tracking-widest uppercase flex items-center gap-3">
-                <Code2 size={18} /> Painel de Integração (Google Script)
-              </h3>
-              <button onClick={() => setShowHelp(false)} className="text-zinc-500 hover:text-white uppercase text-[10px] tracking-widest">Fechar</button>
-            </div>
             
+            <div className="mb-10 p-6 bg-black/40 border border-zinc-800">
+               <h4 className="text-white text-xs font-bold tracking-widest uppercase mb-4 flex items-center gap-2">
+                 <MousePointer2 size={14} className="text-gold-500" /> Passo 1: Pegar o ID da Pasta
+               </h4>
+               <p className="text-zinc-400 text-[10px] uppercase tracking-[0.2em] mb-4">No seu navegador, dentro da pasta do Drive, olhe a URL:</p>
+               <div className="bg-zinc-900 p-3 font-mono text-xs rounded border border-zinc-800 overflow-x-auto">
+                 <span className="text-zinc-600">...google.com/drive/u/0/folders/</span>
+                 <span className="text-gold-500 font-bold bg-gold-500/10 px-1">1CsNAC51-bP11LKz9YtjwenbwmAgda9IE</span>
+               </div>
+               <p className="text-zinc-500 text-[10px] italic mt-3 tracking-widest uppercase">Copie apenas a parte em destaque dourado.</p>
+            </div>
+
             <div className="grid md:grid-cols-2 gap-8">
               <div className="space-y-4">
-                <p className="text-zinc-400 text-xs leading-relaxed tracking-wide">
-                  O Script não é um arquivo comum no Drive. Para acessá-lo e fazer o site ler a pasta <strong className="text-white">BLOG</strong>, siga estes passos:
+                <h4 className="text-white text-xs font-bold tracking-widest uppercase flex items-center gap-2">
+                 <Code2 size={14} className="text-gold-500" /> Passo 2: O Script Recursivo
+               </h4>
+                <p className="text-zinc-400 text-[10px] leading-relaxed tracking-widest uppercase">
+                  Copie o código ao lado, cole no seu Google Apps Script e substitua o ID. Depois de publicar (Implantar), você terá um link final.
                 </p>
-                <ol className="text-[10px] text-zinc-500 space-y-3 uppercase tracking-widest list-decimal pl-4">
-                  <li>Clique no botão "Abrir Painel do Google" abaixo.</li>
-                  <li>Procure seu projeto ou crie um novo.</li>
-                  <li>Cole o código ao lado.</li>
-                  <li>Troque o ID pelo da sua pasta "PASTA_SITE_MAC".</li>
-                  <li>Implantar -> Nova Implantação -> App da Web.</li>
-                </ol>
-                <a 
-                  href="https://script.google.com/" 
-                  target="_blank" 
-                  rel="noreferrer"
-                  className="inline-flex items-center gap-2 bg-zinc-800 hover:bg-zinc-700 text-white text-[10px] font-bold px-6 py-3 tracking-widest transition-all mt-4"
-                >
-                  <ExternalLink size={14} /> ABRIR PAINEL DO GOOGLE
-                </a>
+                <div className="pt-4 space-y-4">
+                   <div className="p-4 bg-gold-600/5 border-l-2 border-gold-600">
+                      <p className="text-gold-500 text-[10px] font-bold tracking-widest uppercase mb-2">ONDE COLAR O LINK FINAL NO SITE?</p>
+                      <p className="text-zinc-500 text-[9px] tracking-widest uppercase leading-relaxed">
+                        Abra o arquivo <strong className="text-white">config.ts</strong> no seu projeto e cole o link gerado lá. O site fará o resto.
+                      </p>
+                   </div>
+                   <a 
+                    href="https://script.google.com/" 
+                    target="_blank" 
+                    rel="noreferrer"
+                    className="inline-flex items-center gap-2 bg-zinc-800 hover:bg-zinc-700 text-white text-[10px] font-bold px-6 py-3 tracking-widest transition-all"
+                  >
+                    <ExternalLink size={14} /> IR PARA GOOGLE SCRIPTS
+                  </a>
+                </div>
               </div>
               <div className="relative group">
                 <div className="absolute top-4 right-4 z-10">
@@ -196,13 +209,12 @@ export const Admin: React.FC = () => {
                       navigator.clipboard.writeText(scriptCode);
                       alert("Código copiado! Cole no Google Apps Script.");
                     }}
-                    className="bg-gold-600 text-black p-2 rounded-sm hover:scale-110 transition-transform"
-                    title="Copiar Código"
+                    className="bg-gold-600 text-black p-2 rounded-sm hover:scale-110 transition-transform shadow-xl"
                    >
                      <Copy size={16} />
                    </button>
                 </div>
-                <pre className="bg-black p-6 rounded-sm text-[10px] text-zinc-400 overflow-x-auto border border-zinc-800 max-h-[250px] font-mono">
+                <pre className="bg-black p-6 rounded-sm text-[10px] text-zinc-400 overflow-x-auto border border-zinc-800 max-h-[300px] font-mono leading-relaxed">
                   {scriptCode}
                 </pre>
               </div>
@@ -210,6 +222,7 @@ export const Admin: React.FC = () => {
           </div>
         )}
 
+        {/* Interface de Criação Continua... */}
         <div className="grid lg:grid-cols-12 gap-8">
           <div className="lg:col-span-4 space-y-6">
             <Card className="bg-zinc-900/50 border-zinc-800">
@@ -242,13 +255,17 @@ export const Admin: React.FC = () => {
               </div>
             </Card>
 
-            <div className="bg-zinc-900/80 border border-zinc-800 p-6 rounded-sm space-y-4">
+            <div className="bg-zinc-900/80 border border-zinc-800 p-6 rounded-sm space-y-4 shadow-2xl">
                <h4 className="text-white text-[10px] font-bold tracking-widest uppercase flex items-center gap-2">
-                 <FolderOpen size={14} className="text-gold-500" /> Organização do Drive
+                 <FolderOpen size={14} className="text-gold-500" /> Status do Link
                </h4>
-               <p className="text-zinc-500 text-[10px] uppercase leading-relaxed tracking-widest">
-                 DICA: Agora que você vai atualizar o script, a pasta <strong className="text-zinc-300">BLOG</strong> vai funcionar perfeitamente!
-               </p>
+               <div className="text-[9px] text-zinc-500 uppercase tracking-widest space-y-3">
+                  <p>Link Atual:</p>
+                  <div className="bg-black/50 p-2 border border-zinc-800 text-gold-600 truncate font-mono">
+                    {DRIVE_SCRIPT_URL}
+                  </div>
+                  <p className="leading-relaxed">Certifique-se que o link acima é o seu <strong className="text-zinc-300">App da Web</strong> gerado no passo 2.</p>
+               </div>
             </div>
           </div>
 

@@ -2,9 +2,8 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { SectionTitle, Skeleton } from '../components/UI';
 import { PortfolioItem } from '../types';
+import { DRIVE_SCRIPT_URL } from '../config';
 import { X, Maximize2, ChevronLeft, ChevronRight } from 'lucide-react';
-
-const DRIVE_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbzvauekYnaF2p429x0aB2eaAWNIBKdth4INNZtooTpH62GATSPzXEbYhM3jEgwAFedynw/exec"; 
 
 export const Portfolio: React.FC = () => {
   const [items, setItems] = useState<PortfolioItem[]>([]);
@@ -12,7 +11,6 @@ export const Portfolio: React.FC = () => {
   const [activeCategory, setActiveCategory] = useState<string>('All');
   const [selectedIndex, setSelectedIndex] = useState<number | null>(null);
   
-  // Refs para controle de swipe no mobile
   const touchStartX = useRef<number | null>(null);
 
   useEffect(() => {
@@ -54,7 +52,6 @@ export const Portfolio: React.FC = () => {
     ? items 
     : items.filter(item => item.category === activeCategory);
 
-  // Navegação do Carrossel
   const handlePrev = (e?: React.MouseEvent) => {
     e?.stopPropagation();
     if (selectedIndex === null) return;
@@ -67,7 +64,6 @@ export const Portfolio: React.FC = () => {
     setSelectedIndex(prev => (prev !== null && prev < filteredItems.length - 1 ? prev + 1 : 0));
   };
 
-  // Atalhos de teclado
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
       if (selectedIndex === null) return;
@@ -79,7 +75,6 @@ export const Portfolio: React.FC = () => {
     return () => window.removeEventListener('keydown', handleKeyDown);
   }, [selectedIndex, filteredItems]);
 
-  // Gestos Touch (Swipe)
   const handleTouchStart = (e: React.TouchEvent) => {
     touchStartX.current = e.touches[0].clientX;
   };
@@ -89,9 +84,9 @@ export const Portfolio: React.FC = () => {
     const touchEndX = e.changedTouches[0].clientX;
     const diff = touchStartX.current - touchEndX;
 
-    if (Math.abs(diff) > 50) { // Limiar de 50px para o deslize
-      if (diff > 0) handleNext(); // Deslizou para esquerda -> Próximo
-      else handlePrev(); // Deslizou para direita -> Anterior
+    if (Math.abs(diff) > 50) {
+      if (diff > 0) handleNext();
+      else handlePrev();
     }
     touchStartX.current = null;
   };
@@ -126,7 +121,7 @@ export const Portfolio: React.FC = () => {
                  key={cat.id} 
                  onClick={() => {
                    setActiveCategory(cat.id);
-                   setSelectedIndex(null); // Reseta se mudar categoria
+                   setSelectedIndex(null);
                  }} 
                  className={`px-8 py-2.5 rounded-full text-xs tracking-[0.2em] uppercase transition-all duration-500 border ${activeCategory === cat.id ? 'border-gold-500 text-gold-500 bg-gold-500/10' : 'border-zinc-800 text-zinc-500'}`}
                >
@@ -170,7 +165,6 @@ export const Portfolio: React.FC = () => {
         )}
       </div>
 
-      {/* Lightbox / Modal de Carrossel */}
       {selectedItem && (
         <div 
           className="fixed inset-0 z-[100] bg-black/95 flex items-center justify-center animate-in fade-in duration-300"
@@ -178,7 +172,6 @@ export const Portfolio: React.FC = () => {
           onTouchStart={handleTouchStart}
           onTouchEnd={handleTouchEnd}
         >
-          {/* Botão Fechar */}
           <button 
             className="absolute top-6 right-6 text-zinc-500 hover:text-white transition-colors z-[110]"
             onClick={() => setSelectedIndex(null)}
@@ -186,7 +179,6 @@ export const Portfolio: React.FC = () => {
             <X size={40} strokeWidth={1} />
           </button>
 
-          {/* Seta Esquerda */}
           <button 
             className="absolute left-4 md:left-8 top-1/2 -translate-y-1/2 text-zinc-500 hover:text-gold-500 transition-all z-[110] p-2 bg-black/20 rounded-full hover:bg-black/50"
             onClick={handlePrev}
@@ -194,17 +186,15 @@ export const Portfolio: React.FC = () => {
             <ChevronLeft size={48} strokeWidth={1} />
           </button>
 
-          {/* Imagem Central */}
           <div className="relative max-w-7xl max-h-full flex items-center justify-center px-4">
             <img 
-              key={selectedItem.id} // Key força re-render para animação
+              key={selectedItem.id}
               src={selectedItem.imageUrl} 
               alt={selectedItem.title} 
               className="max-w-full max-h-[80vh] object-contain shadow-2xl animate-in zoom-in-95 duration-500 select-none"
               onClick={(e) => e.stopPropagation()} 
             />
             
-            {/* Legenda e Contador */}
             <div className="absolute -bottom-20 left-0 right-0 text-center animate-in slide-in-from-bottom-4 duration-500">
               <h3 className="text-2xl font-serif text-white">{selectedItem.title}</h3>
               <div className="flex items-center justify-center gap-4 mt-2">
@@ -214,7 +204,6 @@ export const Portfolio: React.FC = () => {
             </div>
           </div>
 
-          {/* Seta Direita */}
           <button 
             className="absolute right-4 md:right-8 top-1/2 -translate-y-1/2 text-zinc-500 hover:text-gold-500 transition-all z-[110] p-2 bg-black/20 rounded-full hover:bg-black/50"
             onClick={handleNext}

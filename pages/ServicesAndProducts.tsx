@@ -2,10 +2,9 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { SectionTitle, Button, Card, Skeleton } from '../components/UI';
+import { DRIVE_SCRIPT_URL } from '../config';
 import { Check, Target, Video, Zap, Smartphone, FileText, ClipboardCheck, Sparkles, Cpu, Clock } from 'lucide-react';
 import { Service, Product } from '../types';
-
-const DRIVE_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbzvauekYnaF2p429x0aB2eaAWNIBKdth4INNZtooTpH62GATSPzXEbYhM3jEgwAFedynw/exec";
 
 export const Services: React.FC = () => {
   const getWhatsappLink = (projectName: string) => {
@@ -101,6 +100,8 @@ export const Products: React.FC = () => {
   };
 
   useEffect(() => {
+    if (!DRIVE_SCRIPT_URL) return;
+
     fetch(DRIVE_SCRIPT_URL)
       .then(res => res.json())
       .then(data => {
@@ -225,7 +226,6 @@ export const Products: React.FC = () => {
           ))}
         </div>
 
-        {/* Seção de Mentoria */}
         <div className="bg-zinc-900/50 border border-zinc-800 p-8 md:p-16 flex flex-col md:flex-row items-center gap-16 backdrop-blur-sm relative overflow-hidden">
             <div className="absolute top-0 right-0 w-64 h-64 bg-gold-600/5 rounded-full blur-[100px] pointer-events-none"></div>
             <div className="md:w-1/2 relative z-10">
@@ -234,7 +234,7 @@ export const Products: React.FC = () => {
                 <h4 className="text-gold-500 text-lg font-serif italic mb-8">Mentoria para profissionais • Resultados Reais</h4>
                 
                 <p className="text-zinc-400 mb-10 leading-relaxed font-light text-sm tracking-widest uppercase">
-                    Acompanhamento individual para quem busca a construção de uma imagem que gera lucro, reconhecimento e presença. Retratos que vendem sua autoridade.
+                    Acompanhamento individual para quem busca a construção de uma imagem que gera lucro, recognition e presença. Retratos que vendem sua autoridade.
                 </p>
 
                 <ul className="space-y-5 mb-12">

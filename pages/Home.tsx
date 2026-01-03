@@ -2,10 +2,8 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { SectionTitle, Button, Skeleton } from '../components/UI';
+import { DRIVE_SCRIPT_URL } from '../config';
 import { ArrowRight, MessageCircle } from 'lucide-react';
-
-// MAC: Mantenha este link. Lembre-se de atualizar o ID da PASTA dentro do Google Script!
-const DRIVE_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbzvauekYnaF2p429x0aB2eaAWNIBKdth4INNZtooTpH62GATSPzXEbYhM3jEgwAFedynw/exec";
 
 export const Home: React.FC = () => {
   const [heroImg, setHeroImg] = useState<string>('https://images.unsplash.com/photo-1492691523567-6170f0295dbd?q=80&w=1920&auto=format&fit=crop&grayscale=true');
