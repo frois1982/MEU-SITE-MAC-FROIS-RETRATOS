@@ -41,22 +41,31 @@ export const Blog: React.FC = () => {
       .then(res => res.json())
       .then(data => {
         if (Array.isArray(data)) {
-          // Filtro rigoroso: apenas arquivos que terminam com .txt
+          // MAC: Mudamos aqui de 'post_' para 'blog_' para evitar confusão com 'port_'
           const textFiles = data.filter((f: any) => {
             const name = f.name.toLowerCase();
-            return name.startsWith('post_') && name.endsWith('.txt');
+            return name.startsWith('blog_') && name.endsWith('.txt');
           });
           
           const mappedPosts: BlogPost[] = textFiles.map((file: any) => {
             const parts = file.name.split('_');
+            // Formato esperado: blog_DD-MM-AAAA_CATEGORIA_TITULO.txt
             const rawDate = parts[1] || 'RECENTE';
-            const category = parts[2] || 'ESTRATÉGIA';
+            const category = parts[2] || 'EDITORIAL';
             
             let title = parts[3] || 'SEM TÍTULO';
             title = title.replace(/\.[^/.]+$/, "").replace(/-/g, ' ');
             
+            // Lógica para tratar data DD-MM-AAAA ou AAAA-MM-DD
+            let formattedDate = rawDate;
             const dateParts = rawDate.split('-');
-            const formattedDate = dateParts.length === 3 ? `${dateParts[2]}/${dateParts[1]}/${dateParts[0]}` : rawDate;
+            if (dateParts.length === 3) {
+              if (dateParts[0].length === 4) { // AAAA-MM-DD -> DD/MM/AAAA
+                formattedDate = `${dateParts[2]}/${dateParts[1]}/${dateParts[0]}`;
+              } else { // DD-MM-AAAA -> DD/MM/AAAA
+                formattedDate = `${dateParts[0]}/${dateParts[1]}/${dateParts[2]}`;
+              }
+            }
 
             // Busca da imagem (procura arquivos com mesmo nome mas extensão de imagem)
             const baseName = file.name.replace(/\.[^/.]+$/, "").toLowerCase();
@@ -69,7 +78,7 @@ export const Blog: React.FC = () => {
             return {
               id: file.id,
               title: title.toUpperCase(),
-              excerpt: "A verdade por trás da imagem e o impacto da autoridade visual. Clique para ler o editorial.",
+              excerpt: "A verdade por trás da imagem e o impacto da autoridade visual no branding pessoal.",
               date: formattedDate,
               category: category.toUpperCase(),
               content: "", 
@@ -78,6 +87,7 @@ export const Blog: React.FC = () => {
             };
           });
 
+          // Ordenação por data (os mais recentes primeiro)
           setPosts(mappedPosts.reverse());
         }
         setLoading(false);
@@ -88,19 +98,16 @@ export const Blog: React.FC = () => {
       });
   }, []);
 
-  // Verifica se o texto recebido é lixo digital ou texto real
   const isRealText = (str: string) => {
     if (!str) return false;
     const sample = str.substring(0, 200);
     let printable = 0;
     for (let i = 0; i < sample.length; i++) {
       const code = sample.charCodeAt(i);
-      // Checa se o caractere é uma letra, número, espaço ou acento comum
       if ((code >= 32 && code <= 126) || code === 10 || code === 13 || code >= 160) {
         printable++;
       }
     }
-    // Se menos de 85% do início for texto legível, é um arquivo binário (imagem)
     return (printable / sample.length) > 0.85;
   };
 
@@ -117,24 +124,24 @@ export const Blog: React.FC = () => {
       if (isHtml) {
         setSelectedPost({ 
           ...post, 
-          content: 'ACESSO NEGADO: O arquivo está privado.\n\nCOMO RESOLVER:\nNo Google Drive, clique com o botão direito no arquivo .txt -> Compartilhar -> Mude para "Qualquer pessoa com o link".' 
+          content: 'ACESSO NEGADO: O arquivo no Google Drive não está público.\n\nSOLUÇÃO:\nNo seu Drive, clique no arquivo .txt -> Compartilhar -> Alterar para "Qualquer pessoa com o link".' 
         });
       } else if (!isRealText(text)) {
         setSelectedPost({ 
           ...post, 
-          content: 'ERRO DE SINCRONIZAÇÃO: O Google Drive tentou entregar uma imagem no lugar do texto.\n\nCOMO RESOLVER:\n1. Verifique se não há dois arquivos com nomes idênticos no Drive.\n2. Tente renomear o arquivo .txt para algo único (ex: post_03_v2.txt).\n3. Verifique se você não salvou a imagem com a extensão .txt por engano.' 
+          content: 'CONFLITO DE ARQUIVO: O sistema detectou que você está tentando ler uma imagem como texto.\n\nCOMO RESOLVER:\n1. Certifique-se que o arquivo de texto começa com "blog_" e termina com ".txt".\n2. Verifique se não renomeou uma imagem manualmente para .txt.\n3. O arquivo de texto e a imagem podem ter nomes parecidos, mas a extensão deve estar correta no Drive.' 
         });
       } else {
         const cleanText = text.replace(/^\uFEFF/, '');
         setSelectedPost({ ...post, content: cleanText });
       }
     } catch (e) {
-      setSelectedPost({ ...post, content: 'Falha na conexão com o servidor de arquivos.' });
+      setSelectedPost({ ...post, content: 'Falha na conexão com os arquivos do Google Drive.' });
     }
   };
 
   if (selectedPost) {
-    const hasError = selectedPost.content.includes('ERRO DE') || selectedPost.content.includes('ACESSO NEGADO');
+    const hasError = selectedPost.content.includes('CONFLITO DE') || selectedPost.content.includes('ACESSO NEGADO');
 
     return (
       <div className="pt-32 pb-24 bg-black min-h-screen animate-fade-in">
@@ -170,12 +177,12 @@ export const Blog: React.FC = () => {
                {hasError ? (
                  <div className="bg-zinc-900/50 border border-gold-600/30 p-10 rounded-sm text-center">
                     <AlertTriangle size={32} className="text-gold-500 mx-auto mb-6" />
-                    <h3 className="text-white text-xl font-serif mb-6 tracking-widest uppercase italic">Conflito de Fonte</h3>
+                    <h3 className="text-white text-xl font-serif mb-6 tracking-widest uppercase italic">Aviso de Sincronia</h3>
                     <p className="text-zinc-400 text-xs tracking-[0.2em] uppercase leading-loose whitespace-pre-wrap mb-8">
                       {selectedPost.content}
                     </p>
                     <Button onClick={() => openPost(selectedPost)} variant="outline" className="text-[10px]">
-                      <RefreshCw size={14} className="mr-2" /> Tentar Novamente
+                      <RefreshCw size={14} className="mr-2" /> Tentar Sincronizar Novamente
                     </Button>
                  </div>
                ) : (
@@ -212,8 +219,8 @@ export const Blog: React.FC = () => {
               [1, 2, 3].map(i => <Skeleton key={i} className="h-[450px] w-full" />)
             ) : posts.length === 0 ? (
               <div className="text-center py-32 border border-dashed border-zinc-900 rounded-lg">
-                <p className="text-zinc-700 tracking-[0.5em] uppercase text-xs">O silêncio precede a grande história.</p>
-                <p className="text-zinc-800 text-[10px] mt-4 uppercase tracking-[0.2em]">Crie arquivos com prefixo POST_ no seu Drive para começar.</p>
+                <p className="text-zinc-700 tracking-[0.5em] uppercase text-xs mb-4">O editorial está aguardando suas histórias.</p>
+                <p className="text-zinc-500 text-[10px] uppercase tracking-[0.2em]">Nomeie seus arquivos como: <br/> <span className="text-gold-600">blog_15-05-2024_ESTRATEGIA_TITULO.txt</span></p>
               </div>
             ) : (
               posts.map((post) => (
