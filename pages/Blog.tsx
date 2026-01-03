@@ -31,7 +31,6 @@ export const Blog: React.FC = () => {
       fileId = url.split('/d/')[1]?.split('/')[0] || url.split('id=')[1]?.split('&')[0];
     }
     if (fileId) {
-      // Adicionamos timestamp para evitar cache do Google Drive
       return `https://docs.google.com/uc?id=${fileId}&export=download&t=${Date.now()}`;
     }
     return url;
@@ -42,7 +41,6 @@ export const Blog: React.FC = () => {
       .then(res => res.json())
       .then(data => {
         if (Array.isArray(data)) {
-          // Aceita tanto BLOG_ quanto POST_ para sua conveniência
           const textFiles = data.filter((f: any) => {
             const name = f.name.toLowerCase();
             return (name.startsWith('blog_') || name.startsWith('post_')) && name.endsWith('.txt');
@@ -66,12 +64,14 @@ export const Blog: React.FC = () => {
               }
             }
 
-            // LÓGICA DA CAPA: Procurar imagem que contenha a mesma data e título
-            const baseSearch = `${parts[1]}_${parts[2]}`.toLowerCase();
+            // LÓGICA DA CAPA: Procurar imagem que contenha a mesma data e categoria/titulo
+            const baseSearch = `${parts[1]}`.toLowerCase(); // Busca pela data primeiro
             const imgFile = data.find((f: any) => {
               const fName = f.name.toLowerCase();
               const isImg = fName.endsWith('.jpg') || fName.endsWith('.png') || fName.endsWith('.jpeg') || fName.endsWith('.webp');
-              return isImg && fName.includes(baseSearch);
+              // Tenta achar imagem que comece com o mesmo nome do texto (sem extensão)
+              const baseTxtName = file.name.replace('.txt', '').toLowerCase();
+              return isImg && (fName.startsWith(baseTxtName) || (fName.includes(baseSearch) && fName.includes(parts[2].toLowerCase())));
             });
 
             return {
@@ -100,19 +100,14 @@ export const Blog: React.FC = () => {
 
   const isRealText = (str: string) => {
     if (!str) return false;
-    // Se começar com <!DOCTYPE ou tiver a palavra "google", é um HTML de erro do Drive
     const lower = str.trim().toLowerCase();
-    if (lower.startsWith('<!doctype') || lower.includes('google') || lower.includes('sign in')) return false;
+    // Se for HTML do Google Drive, bloqueia
+    if (lower.includes('<!doctype html>') || lower.includes('<html') || lower.includes('google-signin')) return false;
     
-    const sample = str.substring(0, 300);
-    let printable = 0;
-    for (let i = 0; i < sample.length; i++) {
-      const code = sample.charCodeAt(i);
-      if ((code >= 32 && code <= 126) || code === 10 || code === 13 || code >= 160) {
-        printable++;
-      }
-    }
-    return (printable / sample.length) > 0.8;
+    // Se for muito curto, pode ser erro
+    if (str.length < 10) return false;
+
+    return true;
   };
 
   const openPost = async (post: BlogPost) => {
@@ -124,31 +119,21 @@ export const Blog: React.FC = () => {
       const text = await res.text();
       
       if (!isRealText(text)) {
-        // Se o Google devolver HTML, é porque o arquivo não está com permissão "Qualquer pessoa com o link"
-        const isHtml = text.trim().toLowerCase().includes('<!doctype');
-        
-        if (isHtml) {
-          setSelectedPost({ 
-            ...post, 
-            content: `ACESSO NEGADO: O arquivo "${post.fileName}" não está público.\n\nCOMO RESOLVER:\nNo Google Drive, clique com o botão direito no arquivo -> Compartilhar -> Alterar para "Qualquer pessoa com o link".` 
-          });
-        } else {
-          setSelectedPost({ 
-            ...post, 
-            content: `ERRO DE FORMATO: O sistema detectou dados binários.\n\nCOMO RESOLVER:\n1. Certifique-se que o arquivo termina em .txt.\n2. Não renomeie fotos para .txt manualmente.\n3. Verifique se o conteúdo do arquivo é texto simples (Bloco de Notas).` 
-          });
-        }
+        setSelectedPost({ 
+          ...post, 
+          content: `ACESSO NEGADO OU ERRO DE PASTA: O arquivo "${post.fileName}" não está acessível.\n\nCOMO RESOLVER:\n1. Vá no Google Drive.\n2. Clique no arquivo com o botão direito -> Compartilhar.\n3. Em "Acesso Geral", mude para "Qualquer pessoa com o link".\n4. Faça isso também para a imagem de capa.` 
+        });
       } else {
         const cleanText = text.replace(/^\uFEFF/, '');
         setSelectedPost({ ...post, content: cleanText });
       }
     } catch (e) {
-      setSelectedPost({ ...post, content: 'Falha na conexão. Verifique sua internet ou as permissões do Drive.' });
+      setSelectedPost({ ...post, content: 'Falha na conexão com os servidores do Google Drive.' });
     }
   };
 
   if (selectedPost) {
-    const hasError = selectedPost.content.includes('ERRO DE') || selectedPost.content.includes('ACESSO NEGADO');
+    const hasError = selectedPost.content.includes('ACESSO NEGADO');
 
     return (
       <div className="pt-32 pb-24 bg-black min-h-screen animate-fade-in">

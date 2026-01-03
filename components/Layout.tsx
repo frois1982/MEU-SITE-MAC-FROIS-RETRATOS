@@ -148,18 +148,13 @@ const Footer: React.FC = () => {
           </div>
         </div>
         <div className="border-t border-zinc-900 pt-8 flex flex-col md:flex-row justify-between items-center text-zinc-600 text-[10px] tracking-[0.2em] uppercase relative">
-          <p>&copy; {new Date().getFullYear()} MAC FROIS. TODOS OS DIREITOS RESERVADOS.</p>
+          <p>&copy; {new Date().getFullYear()} MAC FROIS. TODOS OS DIREITOS RESERVADOS. 
+            <Link to="/admin" className="ml-4 opacity-10 hover:opacity-100 hover:text-gold-500 transition-all cursor-default">PAINEL</Link>
+          </p>
           <div className="flex items-center mt-4 md:mt-0 italic opacity-50">
              <Camera size={12} className="mr-2" />
              <span>A verdade é o único filtro que importa.</span>
           </div>
-          
-          {/* LINK SECRETO PARA O ADMIN / LABORATÓRIO */}
-          <Link 
-            to="/admin" 
-            className="absolute bottom-0 right-0 w-2 h-2 bg-gold-600/10 rounded-full hover:bg-gold-600 transition-all cursor-pointer"
-            title="Acesso Administrativo"
-          ></Link>
         </div>
       </div>
     </footer>
