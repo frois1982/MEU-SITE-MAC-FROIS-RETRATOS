@@ -8,6 +8,7 @@ const DRIVE_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbzvauekYnaF2p4
 
 interface BlogPost {
   id: string;
+  fileName: string;
   title: string;
   excerpt: string;
   date: string;
@@ -30,6 +31,7 @@ export const Blog: React.FC = () => {
       fileId = url.split('/d/')[1]?.split('/')[0] || url.split('id=')[1]?.split('&')[0];
     }
     if (fileId) {
+      // Adicionamos timestamp para evitar cache do Google Drive
       return `https://docs.google.com/uc?id=${fileId}&export=download&t=${Date.now()}`;
     }
     return url;
@@ -40,9 +42,10 @@ export const Blog: React.FC = () => {
       .then(res => res.json())
       .then(data => {
         if (Array.isArray(data)) {
+          // Aceita tanto BLOG_ quanto POST_ para sua conveniência
           const textFiles = data.filter((f: any) => {
             const name = f.name.toLowerCase();
-            return name.startsWith('blog_') && name.endsWith('.txt');
+            return (name.startsWith('blog_') || name.startsWith('post_')) && name.endsWith('.txt');
           });
           
           const mappedPosts: BlogPost[] = textFiles.map((file: any) => {
@@ -63,16 +66,17 @@ export const Blog: React.FC = () => {
               }
             }
 
-            // LÓGICA DA CAPA: Procurar imagem com exatamente o mesmo nome base
-            const baseName = file.name.replace(/\.[^/.]+$/, "").toLowerCase();
+            // LÓGICA DA CAPA: Procurar imagem que contenha a mesma data e título
+            const baseSearch = `${parts[1]}_${parts[2]}`.toLowerCase();
             const imgFile = data.find((f: any) => {
               const fName = f.name.toLowerCase();
               const isImg = fName.endsWith('.jpg') || fName.endsWith('.png') || fName.endsWith('.jpeg') || fName.endsWith('.webp');
-              return isImg && fName.startsWith(baseName);
+              return isImg && fName.includes(baseSearch);
             });
 
             return {
               id: file.id,
+              fileName: file.name,
               title: title.toUpperCase(),
               excerpt: "A verdade por trás da imagem e o impacto da autoridade visual no branding pessoal.",
               date: formattedDate,
@@ -96,7 +100,11 @@ export const Blog: React.FC = () => {
 
   const isRealText = (str: string) => {
     if (!str) return false;
-    const sample = str.substring(0, 200);
+    // Se começar com <!DOCTYPE ou tiver a palavra "google", é um HTML de erro do Drive
+    const lower = str.trim().toLowerCase();
+    if (lower.startsWith('<!doctype') || lower.includes('google') || lower.includes('sign in')) return false;
+    
+    const sample = str.substring(0, 300);
     let printable = 0;
     for (let i = 0; i < sample.length; i++) {
       const code = sample.charCodeAt(i);
@@ -104,7 +112,7 @@ export const Blog: React.FC = () => {
         printable++;
       }
     }
-    return (printable / sample.length) > 0.85;
+    return (printable / sample.length) > 0.8;
   };
 
   const openPost = async (post: BlogPost) => {
@@ -115,29 +123,32 @@ export const Blog: React.FC = () => {
       const res = await fetch(post.contentUrl);
       const text = await res.text();
       
-      const isHtml = text.trim().toLowerCase().startsWith('<!doctype html>') || text.includes('google-signin');
-      
-      if (isHtml) {
-        setSelectedPost({ 
-          ...post, 
-          content: 'ACESSO NEGADO: O arquivo no Google Drive não está público.\n\nSOLUÇÃO:\nNo seu Drive, clique no arquivo .txt -> Compartilhar -> Alterar para "Qualquer pessoa com o link".' 
-        });
-      } else if (!isRealText(text)) {
-        setSelectedPost({ 
-          ...post, 
-          content: 'CONFLITO DE ARQUIVO: O sistema detectou que você está tentando ler uma imagem como texto.\n\nCOMO RESOLVER:\n1. Certifique-se que o arquivo de texto termina com ".txt" e não é uma imagem renomeada.\n2. Verifique se não há dois arquivos com nomes idênticos na mesma pasta.' 
-        });
+      if (!isRealText(text)) {
+        // Se o Google devolver HTML, é porque o arquivo não está com permissão "Qualquer pessoa com o link"
+        const isHtml = text.trim().toLowerCase().includes('<!doctype');
+        
+        if (isHtml) {
+          setSelectedPost({ 
+            ...post, 
+            content: `ACESSO NEGADO: O arquivo "${post.fileName}" não está público.\n\nCOMO RESOLVER:\nNo Google Drive, clique com o botão direito no arquivo -> Compartilhar -> Alterar para "Qualquer pessoa com o link".` 
+          });
+        } else {
+          setSelectedPost({ 
+            ...post, 
+            content: `ERRO DE FORMATO: O sistema detectou dados binários.\n\nCOMO RESOLVER:\n1. Certifique-se que o arquivo termina em .txt.\n2. Não renomeie fotos para .txt manualmente.\n3. Verifique se o conteúdo do arquivo é texto simples (Bloco de Notas).` 
+          });
+        }
       } else {
         const cleanText = text.replace(/^\uFEFF/, '');
         setSelectedPost({ ...post, content: cleanText });
       }
     } catch (e) {
-      setSelectedPost({ ...post, content: 'Falha na conexão com os arquivos do Google Drive.' });
+      setSelectedPost({ ...post, content: 'Falha na conexão. Verifique sua internet ou as permissões do Drive.' });
     }
   };
 
   if (selectedPost) {
-    const hasError = selectedPost.content.includes('CONFLITO DE') || selectedPost.content.includes('ACESSO NEGADO');
+    const hasError = selectedPost.content.includes('ERRO DE') || selectedPost.content.includes('ACESSO NEGADO');
 
     return (
       <div className="pt-32 pb-24 bg-black min-h-screen animate-fade-in">
@@ -170,7 +181,7 @@ export const Blog: React.FC = () => {
               {!selectedPost.hasCustomImage && (
                 <div className="absolute bottom-4 right-4 bg-black/60 backdrop-blur-md px-4 py-2 border border-white/10 rounded-full flex items-center gap-2">
                   <ImageIcon size={12} className="text-gold-500" />
-                  <span className="text-[8px] text-zinc-400 tracking-widest uppercase">Usando capa padrão • Suba uma imagem com o mesmo nome para personalizar</span>
+                  <span className="text-[8px] text-zinc-400 tracking-widest uppercase">Usando capa padrão</span>
                 </div>
               )}
             </div>
@@ -192,14 +203,6 @@ export const Blog: React.FC = () => {
                     {selectedPost.content}
                  </div>
                )}
-            </div>
-
-            <div className="mt-32 pt-16 border-t border-zinc-900 flex flex-col items-center text-center">
-               <div className="w-20 h-20 bg-gold-600 rounded-full flex items-center justify-center text-black font-bold text-2xl mb-6 shadow-2xl">MF</div>
-               <h4 className="text-white text-sm font-bold tracking-[0.4em] mb-2 uppercase">Mac Frois</h4>
-               <p className="text-zinc-500 text-xs tracking-widest uppercase max-w-xs leading-relaxed">
-                 Retratista focado em extrair a verdade e construir autoridade através da imagem estratégica.
-               </p>
             </div>
           </article>
         </div>

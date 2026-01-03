@@ -1,7 +1,7 @@
 
 import React, { useState, useEffect } from 'react';
 import { Link, useLocation } from 'react-router-dom';
-import { Menu, X, Instagram, Mail, Phone, MapPin, Camera, Youtube, Check, Loader2, MessageCircle } from 'lucide-react';
+import { Menu, X, Instagram, Mail, Phone, MapPin, Camera, Youtube, Check, Loader2, MessageCircle, Settings } from 'lucide-react';
 
 interface LayoutProps { children: React.ReactNode; }
 
@@ -147,12 +147,19 @@ const Footer: React.FC = () => {
             {status === 'success' && <p className="text-gold-500 text-[10px] mt-2 animate-fade-in tracking-widest">INSCRIÇÃO REALIZADA.</p>}
           </div>
         </div>
-        <div className="border-t border-zinc-900 pt-8 flex flex-col md:flex-row justify-between items-center text-zinc-600 text-[10px] tracking-[0.2em] uppercase">
+        <div className="border-t border-zinc-900 pt-8 flex flex-col md:flex-row justify-between items-center text-zinc-600 text-[10px] tracking-[0.2em] uppercase relative">
           <p>&copy; {new Date().getFullYear()} MAC FROIS. TODOS OS DIREITOS RESERVADOS.</p>
           <div className="flex items-center mt-4 md:mt-0 italic opacity-50">
              <Camera size={12} className="mr-2" />
              <span>A verdade é o único filtro que importa.</span>
           </div>
+          
+          {/* LINK SECRETO PARA O ADMIN / LABORATÓRIO */}
+          <Link 
+            to="/admin" 
+            className="absolute bottom-0 right-0 w-2 h-2 bg-gold-600/10 rounded-full hover:bg-gold-600 transition-all cursor-pointer"
+            title="Acesso Administrativo"
+          ></Link>
         </div>
       </div>
     </footer>
