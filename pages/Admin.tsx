@@ -2,7 +2,6 @@
 import React, { useState, useEffect } from 'react';
 import { GoogleGenAI } from "@google/genai";
 import { Button, Card, SectionTitle } from '../components/UI';
-// Added Info to imports from lucide-react
 import { Sparkles, Image as ImageIcon, Copy, Check, Download, Loader2, Key, FlaskConical, PenTool, ImagePlus, ArrowRight, Save, Info } from 'lucide-react';
 
 export const Admin: React.FC = () => {
@@ -14,20 +13,22 @@ export const Admin: React.FC = () => {
   const [copyStatus, setCopyStatus] = useState(false);
   const [hasKey, setHasKey] = useState(false);
 
-  // Checagem segura de chave para evitar erro de "Connection Refused" no preview
+  // Detecção robusta da chave
   useEffect(() => {
     const checkStatus = async () => {
+      // Se houver API_KEY no process.env, libera imediatamente
+      if (process.env.API_KEY) {
+        setHasKey(true);
+        return;
+      }
+
       try {
-        if (window.aistudio) {
+        if (window.aistudio && typeof window.aistudio.hasSelectedApiKey === 'function') {
           const selected = await window.aistudio.hasSelectedApiKey();
           if (selected) setHasKey(true);
-        } else if (process.env.API_KEY) {
-          setHasKey(true);
         }
       } catch (e) {
-        console.warn("Ambiente de preview restringindo acesso à API do Google AI Studio.");
-        // Se houver API_KEY injetada, assumimos que pode funcionar
-        if (process.env.API_KEY) setHasKey(true);
+        console.warn("Aguardando ativação de chave...");
       }
     };
     checkStatus();
@@ -35,14 +36,18 @@ export const Admin: React.FC = () => {
 
   const handleKeyActivation = async () => {
     try {
-      if (window.aistudio) {
+      if (window.aistudio && typeof window.aistudio.openSelectKey === 'function') {
         await window.aistudio.openSelectKey();
+        // Forçamos a entrada independente de delay de resposta do seletor
         setHasKey(true);
       } else {
-        alert("O seletor de chave só está disponível no ambiente de desenvolvimento do AI Studio.");
+        // Fallback caso esteja rodando fora do iframe mas com a chave injetada
+        if (process.env.API_KEY) setHasKey(true);
       }
     } catch (e) {
       console.error("Falha ao abrir seletor:", e);
+      // Em caso de erro de conexão com o seletor, se houver processo de chave, libera
+      if (process.env.API_KEY) setHasKey(true);
     }
   };
 
@@ -50,7 +55,6 @@ export const Admin: React.FC = () => {
     if (!topic) return;
     setLoadingText(true);
     try {
-      // Create a new GoogleGenAI instance right before making an API call to ensure it always uses the most up-to-date API key
       const ai = new GoogleGenAI({ apiKey: process.env.API_KEY });
       const response = await ai.models.generateContent({
         model: "gemini-3-pro-preview",
@@ -60,11 +64,10 @@ export const Admin: React.FC = () => {
         Tamanho: aprox. 200 palavras. Não use títulos, apenas parágrafos fluidos.`,
         config: { temperature: 0.8 }
       });
-      // Use .text property to extract output
       setGeneratedText(response.text || '');
     } catch (e) {
       console.error(e);
-      alert("Erro ao gerar editorial. Verifique sua chave e plano de faturamento.");
+      alert("Houve um erro técnico. Verifique se o faturamento Pro está ativo no seu console Google Cloud.");
     }
     setLoadingText(false);
   };
@@ -73,7 +76,6 @@ export const Admin: React.FC = () => {
     if (!topic) return;
     setLoadingImg(true);
     try {
-      // Create a new GoogleGenAI instance right before making an API call to ensure it always uses the most up-to-date API key
       const ai = new GoogleGenAI({ apiKey: process.env.API_KEY });
       const response = await ai.models.generateContent({
         model: 'gemini-3-pro-image-preview',
@@ -86,18 +88,19 @@ export const Admin: React.FC = () => {
       });
       
       let foundImg = false;
-      // Iterate through parts to find the image part as per guidelines
-      for (const part of response.candidates[0].content.parts) {
-        if (part.inlineData) {
-          setGeneratedImg(`data:image/png;base64,${part.inlineData.data}`);
-          foundImg = true;
-          break;
+      if (response.candidates && response.candidates[0].content.parts) {
+        for (const part of response.candidates[0].content.parts) {
+          if (part.inlineData) {
+            setGeneratedImg(`data:image/png;base64,${part.inlineData.data}`);
+            foundImg = true;
+            break;
+          }
         }
       }
-      if (!foundImg) alert("Não foi possível gerar a imagem. Tente outro tema.");
+      if (!foundImg) alert("A geração de imagem foi concluída, mas o formato não foi reconhecido. Tente novamente.");
     } catch (e) {
       console.error(e);
-      alert("Erro ao gerar imagem. Verifique se o modelo gemini-3-pro-image-preview está disponível na sua chave.");
+      alert("A geração de imagem falhou. Verifique o saldo do faturamento Pro.");
     }
     setLoadingImg(false);
   };
@@ -117,8 +120,8 @@ export const Admin: React.FC = () => {
              <h1 className="text-4xl font-serif text-white italic tracking-widest">Laboratório Criativo</h1>
            </div>
            {!hasKey ? (
-             <Button onClick={handleKeyActivation} className="bg-gold-600 text-black px-8 py-3 flex items-center gap-3">
-               <Key size={18} /> ATIVAR CHAVE PRO
+             <Button onClick={handleKeyActivation} className="bg-gold-600 text-black px-8 py-3 flex items-center gap-3 font-bold">
+               <Key size={18} /> ATIVAR FERRAMENTAS PRO
              </Button>
            ) : (
              <div className="flex items-center gap-3 text-[10px] text-zinc-500 uppercase tracking-widest border border-zinc-800 px-4 py-2 rounded-full">
@@ -129,7 +132,6 @@ export const Admin: React.FC = () => {
         </div>
 
         <div className="grid lg:grid-cols-12 gap-8">
-          {/* Coluna de Controle */}
           <div className="lg:col-span-4 space-y-6">
             <Card className="bg-zinc-900/50 border-zinc-800">
               <h3 className="text-white text-sm font-bold tracking-widest uppercase mb-6 flex items-center gap-3 border-b border-zinc-800 pb-4">
@@ -175,14 +177,12 @@ export const Admin: React.FC = () => {
                 <Info size={14} /> Dica do Estúdio:
               </h4>
               <p className="text-zinc-500 text-[11px] leading-relaxed uppercase tracking-widest">
-                Ao gerar a imagem, ela usará automaticamente o contexto do seu texto para criar uma composição visual harmônica e estratégica.
+                A geração Pro exige que o projeto vinculado à sua chave API no Google Cloud tenha faturamento ativo (Pay-as-you-go).
               </p>
             </div>
           </div>
 
-          {/* Coluna de Resultados */}
           <div className="lg:col-span-8 space-y-8">
-            {/* Texto Gerado */}
             <div className="space-y-4">
               <div className="flex justify-between items-center px-2">
                 <span className="text-white text-[10px] font-bold tracking-[0.3em] uppercase flex items-center gap-2">
@@ -209,7 +209,6 @@ export const Admin: React.FC = () => {
               </div>
             </div>
 
-            {/* Imagem Gerada */}
             <div className="space-y-4">
               <div className="flex justify-between items-center px-2">
                 <span className="text-white text-[10px] font-bold tracking-[0.3em] uppercase flex items-center gap-2">
