@@ -1,7 +1,7 @@
 
 import React, { useState, useEffect } from 'react';
 import { SectionTitle, Card, Skeleton, Button } from '../components/UI';
-import { Calendar, Clock, ArrowRight, BookOpen, Share2, ChevronLeft, User, AlertTriangle, RefreshCw } from 'lucide-react';
+import { Calendar, Clock, ArrowRight, BookOpen, Share2, ChevronLeft, User, AlertTriangle, RefreshCw, ImageIcon } from 'lucide-react';
 
 // MAC: Mantenha sua URL do script aqui
 const DRIVE_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbzvauekYnaF2p429x0aB2eaAWNIBKdth4INNZtooTpH62GATSPzXEbYhM3jEgwAFedynw/exec";
@@ -15,6 +15,7 @@ interface BlogPost {
   content: string;
   contentUrl: string;
   imageUrl: string;
+  hasCustomImage: boolean;
 }
 
 export const Blog: React.FC = () => {
@@ -22,7 +23,6 @@ export const Blog: React.FC = () => {
   const [loading, setLoading] = useState(true);
   const [selectedPost, setSelectedPost] = useState<BlogPost | null>(null);
 
-  // Função para converter link e evitar cache errado do Google
   const getDirectDownloadUrl = (url: string) => {
     if (!url) return '';
     let fileId = '';
@@ -30,7 +30,6 @@ export const Blog: React.FC = () => {
       fileId = url.split('/d/')[1]?.split('/')[0] || url.split('id=')[1]?.split('&')[0];
     }
     if (fileId) {
-      // Adicionamos um timestamp (t=...) para garantir que o Google não entregue arquivo de cache
       return `https://docs.google.com/uc?id=${fileId}&export=download&t=${Date.now()}`;
     }
     return url;
@@ -41,7 +40,6 @@ export const Blog: React.FC = () => {
       .then(res => res.json())
       .then(data => {
         if (Array.isArray(data)) {
-          // MAC: Mudamos aqui de 'post_' para 'blog_' para evitar confusão com 'port_'
           const textFiles = data.filter((f: any) => {
             const name = f.name.toLowerCase();
             return name.startsWith('blog_') && name.endsWith('.txt');
@@ -49,25 +47,23 @@ export const Blog: React.FC = () => {
           
           const mappedPosts: BlogPost[] = textFiles.map((file: any) => {
             const parts = file.name.split('_');
-            // Formato esperado: blog_DD-MM-AAAA_CATEGORIA_TITULO.txt
             const rawDate = parts[1] || 'RECENTE';
             const category = parts[2] || 'EDITORIAL';
             
             let title = parts[3] || 'SEM TÍTULO';
             title = title.replace(/\.[^/.]+$/, "").replace(/-/g, ' ');
             
-            // Lógica para tratar data DD-MM-AAAA ou AAAA-MM-DD
             let formattedDate = rawDate;
             const dateParts = rawDate.split('-');
             if (dateParts.length === 3) {
-              if (dateParts[0].length === 4) { // AAAA-MM-DD -> DD/MM/AAAA
+              if (dateParts[0].length === 4) {
                 formattedDate = `${dateParts[2]}/${dateParts[1]}/${dateParts[0]}`;
-              } else { // DD-MM-AAAA -> DD/MM/AAAA
+              } else {
                 formattedDate = `${dateParts[0]}/${dateParts[1]}/${dateParts[2]}`;
               }
             }
 
-            // Busca da imagem (procura arquivos com mesmo nome mas extensão de imagem)
+            // LÓGICA DA CAPA: Procurar imagem com exatamente o mesmo nome base
             const baseName = file.name.replace(/\.[^/.]+$/, "").toLowerCase();
             const imgFile = data.find((f: any) => {
               const fName = f.name.toLowerCase();
@@ -83,11 +79,11 @@ export const Blog: React.FC = () => {
               category: category.toUpperCase(),
               content: "", 
               contentUrl: getDirectDownloadUrl(file.url),
-              imageUrl: imgFile ? getDirectDownloadUrl(imgFile.url) : 'https://images.unsplash.com/photo-1455390582262-044cdead277a?q=80&w=800&auto=format&fit=crop&grayscale=true'
+              imageUrl: imgFile ? getDirectDownloadUrl(imgFile.url) : 'https://images.unsplash.com/photo-1455390582262-044cdead277a?q=80&w=1200&auto=format&fit=crop&grayscale=true',
+              hasCustomImage: !!imgFile
             };
           });
 
-          // Ordenação por data (os mais recentes primeiro)
           setPosts(mappedPosts.reverse());
         }
         setLoading(false);
@@ -129,7 +125,7 @@ export const Blog: React.FC = () => {
       } else if (!isRealText(text)) {
         setSelectedPost({ 
           ...post, 
-          content: 'CONFLITO DE ARQUIVO: O sistema detectou que você está tentando ler uma imagem como texto.\n\nCOMO RESOLVER:\n1. Certifique-se que o arquivo de texto começa com "blog_" e termina com ".txt".\n2. Verifique se não renomeou uma imagem manualmente para .txt.\n3. O arquivo de texto e a imagem podem ter nomes parecidos, mas a extensão deve estar correta no Drive.' 
+          content: 'CONFLITO DE ARQUIVO: O sistema detectou que você está tentando ler uma imagem como texto.\n\nCOMO RESOLVER:\n1. Certifique-se que o arquivo de texto termina com ".txt" e não é uma imagem renomeada.\n2. Verifique se não há dois arquivos com nomes idênticos na mesma pasta.' 
         });
       } else {
         const cleanText = text.replace(/^\uFEFF/, '');
@@ -169,8 +165,14 @@ export const Blog: React.FC = () => {
               </div>
             </div>
             
-            <div className="w-full h-[450px] overflow-hidden mb-16 rounded-sm shadow-2xl border border-zinc-900 bg-zinc-900">
+            <div className="w-full h-[450px] overflow-hidden mb-16 rounded-sm shadow-2xl border border-zinc-900 bg-zinc-900 relative">
               <img src={selectedPost.imageUrl} className="w-full h-full object-cover grayscale brightness-75" alt={selectedPost.title} />
+              {!selectedPost.hasCustomImage && (
+                <div className="absolute bottom-4 right-4 bg-black/60 backdrop-blur-md px-4 py-2 border border-white/10 rounded-full flex items-center gap-2">
+                  <ImageIcon size={12} className="text-gold-500" />
+                  <span className="text-[8px] text-zinc-400 tracking-widest uppercase">Usando capa padrão • Suba uma imagem com o mesmo nome para personalizar</span>
+                </div>
+              )}
             </div>
 
             <div className="prose prose-invert max-w-none">
@@ -198,9 +200,6 @@ export const Blog: React.FC = () => {
                <p className="text-zinc-500 text-xs tracking-widest uppercase max-w-xs leading-relaxed">
                  Retratista focado em extrair a verdade e construir autoridade através da imagem estratégica.
                </p>
-               <button className="mt-10 text-gold-500 hover:text-white transition-colors flex items-center gap-2 text-[10px] tracking-[0.3em] uppercase">
-                  <Share2 size={16} /> Compartilhar Visão
-               </button>
             </div>
           </article>
         </div>

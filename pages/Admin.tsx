@@ -1,8 +1,8 @@
 
 import React, { useState } from 'react';
-import { GoogleGenAI, Type } from "@google/genai";
+import { GoogleGenAI } from "@google/genai";
 import { Button, Card, SectionTitle } from '../components/UI';
-import { Sparkles, Image as ImageIcon, Copy, Check, Download, Loader2, Key } from 'lucide-react';
+import { Sparkles, Image as ImageIcon, Copy, Check, Download, Loader2, Key, Info, ArrowUpCircle } from 'lucide-react';
 
 export const Admin: React.FC = () => {
   const [topic, setTopic] = useState('');
@@ -31,9 +31,9 @@ export const Admin: React.FC = () => {
         model: "gemini-3-pro-preview",
         contents: `Escreva um editorial de blog para um fotógrafo retratista de luxo chamado Mac Frois. O tema é: ${topic}. 
         Use um tom sofisticado, estratégico e focado em autoridade visual e branding pessoal. 
-        O texto deve ser impactante, curto (aprox 200 palavras) e focado em convencer o leitor do valor de um retrato profissional real vs artificial. 
+        O texto deve ser impactante, curto (aprox 200 palavras). 
         Não use títulos internos, apenas o corpo do texto com parágrafos bem definidos.`,
-        config: { temperature: 0.8, thinkingConfig: { thinkingBudget: 5000 } }
+        config: { temperature: 0.8 }
       });
       setGeneratedText(response.text || '');
     } catch (e) {
@@ -86,7 +86,6 @@ export const Admin: React.FC = () => {
               Para gerar conteúdos e imagens de alta qualidade, selecione sua chave da API Google Cloud.
             </p>
             <Button onClick={checkKey}>Ativar Laboratório</Button>
-            <p className="mt-4 text-[9px] text-zinc-700">Consulte <a href="https://ai.google.dev/gemini-api/docs/billing" className="underline">documentação de faturamento</a>.</p>
           </div>
         ) : (
           <div className="space-y-12">
@@ -100,9 +99,9 @@ export const Admin: React.FC = () => {
                   placeholder="Ex: A importância do olhar no retrato executivo"
                   className="flex-grow bg-black border border-zinc-800 p-4 text-white focus:border-gold-600 outline-none rounded-sm text-sm"
                 />
-                <Button onClick={generatePost} disabled={loadingText || !topic} className="flex items-center gap-2">
-                  {loadingText ? <Loader2 className="animate-spin" size={18}/> : <Sparkles size={18}/>}
-                  GERAR TEXTO
+                <Button onClick={() => { generatePost(); generateImage(); }} disabled={loadingText || loadingImg || !topic} className="flex items-center gap-2">
+                   {loadingText ? <Loader2 className="animate-spin" size={18}/> : <Sparkles size={18}/>}
+                   GERAR TUDO
                 </Button>
               </div>
             </Card>
@@ -114,39 +113,51 @@ export const Admin: React.FC = () => {
                   <h4 className="text-xs font-bold tracking-widest uppercase text-white">Editorial Sugerido</h4>
                   {generatedText && (
                     <button onClick={copyToClipboard} className="text-gold-500 hover:text-white transition-colors flex items-center gap-2 text-[10px] tracking-widest uppercase">
-                      {copyStatus ? <Check size={14}/> : <Copy size={14}/>} {copyStatus ? 'COPIADO' : 'COPIAR'}
+                      {copyStatus ? <Check size={14}/> : <Copy size={14}/>} {copyStatus ? 'COPIADO' : 'COPIAR TEXTO'}
                     </button>
                   )}
                 </div>
                 <div className="bg-black border border-zinc-900 p-8 min-h-[400px] text-sm leading-loose text-zinc-400 font-light whitespace-pre-wrap rounded-sm italic">
                   {generatedText || "O texto aparecerá aqui..."}
                 </div>
+                <p className="text-[9px] text-zinc-600 uppercase tracking-widest flex items-center gap-2">
+                  <Info size={12} /> Salve este texto em um arquivo .txt no seu Drive.
+                </p>
               </div>
 
               {/* Resultado Imagem */}
               <div className="space-y-4">
                 <div className="flex justify-between items-center">
-                  <h4 className="text-xs font-bold tracking-widest uppercase text-white">Capa Sugerida (IA)</h4>
-                  <Button onClick={generateImage} disabled={loadingImg || !topic} variant="outline" className="!py-2 !px-4 !text-[10px]">
-                    {loadingImg ? <Loader2 className="animate-spin" size={14}/> : <ImageIcon size={14} className="mr-2"/>}
-                    GERAR IMAGEM
-                  </Button>
+                  <h4 className="text-xs font-bold tracking-widest uppercase text-white">Capa Sugerida</h4>
+                  {generatedImg && (
+                    <a href={generatedImg} download={`blog_capa_ia.png`} className="text-gold-500 hover:text-white transition-colors flex items-center gap-2 text-[10px] tracking-widest uppercase">
+                      <Download size={14} /> BAIXAR IMAGEM
+                    </a>
+                  )}
                 </div>
                 <div className="bg-black border border-zinc-900 aspect-video rounded-sm overflow-hidden flex items-center justify-center relative">
                   {generatedImg ? (
-                    <>
-                      <img src={generatedImg} className="w-full h-full object-cover" />
-                      <a href={generatedImg} download={`post-image-${Date.now()}.png`} className="absolute bottom-4 right-4 bg-black/80 p-2 text-gold-500 hover:text-white rounded-full">
-                        <Download size={20} />
-                      </a>
-                    </>
+                    <img src={generatedImg} className="w-full h-full object-cover" />
                   ) : (
-                    <p className="text-zinc-800 text-[10px] uppercase tracking-widest">Aguardando geração...</p>
+                    <div className="text-center p-8">
+                      <ImageIcon className="mx-auto text-zinc-800 mb-4" size={32} />
+                      <p className="text-zinc-800 text-[10px] uppercase tracking-widest">Aguardando geração...</p>
+                    </div>
                   )}
                 </div>
-                <p className="text-[9px] text-zinc-600 uppercase tracking-widest leading-relaxed">
-                  Dica: Use esta imagem como capa salvando-a com o mesmo nome do seu arquivo .txt no Drive.
-                </p>
+                
+                {generatedImg && (
+                  <div className="bg-gold-600/10 border border-gold-600/30 p-6 rounded-sm">
+                    <h5 className="text-gold-500 text-[10px] font-bold tracking-widest uppercase mb-4 flex items-center gap-2">
+                      <ArrowUpCircle size={14} /> Próximos Passos:
+                    </h5>
+                    <ol className="text-[10px] text-zinc-400 space-y-3 tracking-widest uppercase leading-relaxed">
+                      <li>1. Baixe a imagem acima no seu computador.</li>
+                      <li>2. Dê a ela o MESMO NOME do seu arquivo de texto do blog.</li>
+                      <li>3. Suba AMBOS para a sua pasta no Google Drive.</li>
+                    </ol>
+                  </div>
+                )}
               </div>
             </div>
           </div>
