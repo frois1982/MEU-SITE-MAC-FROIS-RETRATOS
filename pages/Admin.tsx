@@ -15,7 +15,6 @@ export const Admin: React.FC = () => {
   const [copyStatus, setCopyStatus] = useState(false);
   const [publishStatus, setPublishStatus] = useState<'idle' | 'success' | 'error'>('idle');
   const [hasKey, setHasKey] = useState(false);
-  const [showHelp, setShowHelp] = useState(false);
   const [currentSyncID, setCurrentSyncID] = useState('');
 
   useEffect(() => {
@@ -46,24 +45,24 @@ export const Admin: React.FC = () => {
   };
 
   const generateSyncID = () => {
-    return "ID" + Math.random().toString(36).substring(2, 7).toUpperCase();
+    // Gera um ID curto e único para ligar Texto e Foto
+    return Math.random().toString(36).substring(2, 6).toUpperCase();
   };
 
   const getCleanFileName = (prefix: string, extension: string) => {
-    const now = new Date();
-    const dateStr = now.toLocaleDateString('pt-BR').replace(/\//g, '-');
     const cleanTopic = topic
       .normalize("NFD").replace(/[\u0300-\u036f]/g, "")
-      .replace(/[^a-zA-Z0-9]/g, "-").toUpperCase().substring(0, 15);
+      .replace(/[^a-zA-Z0-9]/g, "-").toUpperCase().substring(0, 20);
     
-    return `${prefix}_${dateStr}_${currentSyncID}_${cleanTopic}.${extension}`;
+    // FORMATO: PREFIXO_ID_TEMA.extensao
+    // Ex: BLOG_X9Y2_POSICIONAMENTO.txt
+    return `${prefix}_${currentSyncID}_${cleanTopic}.${extension}`;
   };
 
   const generateEditorial = async () => {
     if (!topic) return;
     setLoadingText(true);
     setPublishStatus('idle');
-    // Gera novo ID para cada nova composição
     const newID = generateSyncID();
     setCurrentSyncID(newID);
 
@@ -110,7 +109,7 @@ export const Admin: React.FC = () => {
 
   const downloadText = () => {
     if (!generatedText) return;
-    const blob = new Blob([generatedText], { type: 'text/plain' });
+    const blob = new Blob([generatedText], { type: 'text/plain;charset=utf-8' });
     const url = URL.createObjectURL(blob);
     const a = document.createElement('a');
     a.href = url;
@@ -131,41 +130,13 @@ export const Admin: React.FC = () => {
     document.body.removeChild(a);
   };
 
-  // Mantemos o publish original mas ele agora segue a mesma nomenclatura
-  const publishToBlog = async () => {
-    if (!generatedText || !DRIVE_SCRIPT_URL) return;
-    setLoadingPublish(true);
-    setPublishStatus('idle');
-    try {
-      const fileName = getCleanFileName('BLOG', 'txt').replace('.txt', '');
-      const payload = {
-        fileName: fileName,
-        content: generatedText,
-        image: generatedImg || null
-      };
-
-      await fetch(DRIVE_SCRIPT_URL, {
-        method: 'POST',
-        mode: 'no-cors', 
-        headers: { 'Content-Type': 'text/plain;charset=utf-8' },
-        body: JSON.stringify(payload)
-      });
-
-      setPublishStatus('success');
-      setTimeout(() => setPublishStatus('idle'), 6000);
-    } catch (e) {
-      setPublishStatus('error');
-    }
-    setLoadingPublish(false);
-  };
-
   return (
     <div className="pt-32 pb-24 bg-zinc-950 min-h-screen">
       <div className="container mx-auto px-6">
         <div className="flex flex-col md:flex-row justify-between items-center mb-12 gap-8">
            <div className="text-center md:text-left">
              <h2 className="text-gold-500 text-[10px] font-bold tracking-[0.6em] uppercase mb-2">Editoria Mac Frois</h2>
-             <h1 className="text-4xl font-serif text-white italic tracking-widest">Laboratório Criativo</h1>
+             <h1 className="text-4xl font-serif text-white italic tracking-widest uppercase">Laboratório Criativo</h1>
            </div>
            
            <div className="flex items-center gap-4">
@@ -198,11 +169,11 @@ export const Admin: React.FC = () => {
                 <div className="space-y-4">
                   <Button onClick={generateEditorial} disabled={loadingText || !topic || !hasKey} className="w-full py-6 flex items-center justify-center gap-4 group !bg-gold-600/80 hover:!bg-gold-600 border-none shadow-lg tracking-[0.4em]">
                     {loadingText ? <Loader2 size={18} className="animate-spin" /> : <Sparkles size={18} />}
-                    GERAR CONTEÚDO
+                    MANIFESTAR TEXTO
                   </Button>
                   <Button onClick={generateCover} disabled={loadingImg || !topic || !hasKey} variant="outline" className="w-full py-6 flex items-center justify-center gap-4 border-zinc-800 hover:border-gold-600 tracking-[0.4em]">
                     {loadingImg ? <Loader2 size={18} className="animate-spin" /> : <ImageIcon size={18} />}
-                    GERAR CAPA
+                    MANIFESTAR CAPA
                   </Button>
                 </div>
               </div>
@@ -211,34 +182,27 @@ export const Admin: React.FC = () => {
             {(generatedText || generatedImg) && (
                <div className="bg-zinc-900/60 border border-zinc-800 p-8 rounded-sm space-y-6 shadow-2xl animate-slide-up backdrop-blur-xl border-l-2 border-gold-600">
                   <h4 className="text-white text-[10px] font-bold tracking-[0.4em] uppercase flex items-center gap-3">
-                    <Save size={16} className="text-gold-500" /> Fluxo de Segurança
+                    <Save size={16} className="text-gold-500" /> Downloads de Sincronia
                   </h4>
                   
                   <div className="space-y-3">
                     {generatedText && (
-                      <button onClick={downloadText} className="w-full bg-white/5 hover:bg-white/10 text-white p-4 text-[10px] tracking-[0.3em] uppercase border border-white/10 flex items-center justify-center gap-3 transition-all rounded-sm font-bold">
-                        <FileDown size={14} className="text-gold-500" /> Baixar Editorial (.txt)
+                      <button onClick={downloadText} className="w-full bg-white text-black p-5 text-[10px] tracking-[0.3em] uppercase flex items-center justify-center gap-3 transition-all rounded-sm font-bold shadow-xl hover:bg-gold-500">
+                        <FileDown size={18} /> Baixar Texto (Drive)
                       </button>
                     )}
                     {generatedImg && (
-                      <button onClick={downloadImage} className="w-full bg-white/5 hover:bg-white/10 text-white p-4 text-[10px] tracking-[0.3em] uppercase border border-white/10 flex items-center justify-center gap-3 transition-all rounded-sm font-bold">
-                        <Download size={14} className="text-gold-500" /> Baixar Capa (.png)
+                      <button onClick={downloadImage} className="w-full bg-zinc-800 text-white p-5 text-[10px] tracking-[0.3em] uppercase flex items-center justify-center gap-3 transition-all rounded-sm font-bold border border-zinc-700 hover:bg-zinc-700">
+                        <Download size={18} /> Baixar Imagem (Drive)
                       </button>
                     )}
                   </div>
 
                   <div className="pt-4 border-t border-white/5">
-                    <p className="text-[9px] text-zinc-500 uppercase tracking-widest leading-relaxed mb-6">
-                      Dica: Baixe os arquivos acima e suba manualmente no Drive para 100% de garantia. O site reconhecerá o DNA <span className="text-gold-500 font-bold">{currentSyncID}</span> automaticamente.
+                    <p className="text-[9px] text-zinc-500 uppercase tracking-widest leading-relaxed">
+                      Sincronizador Ativo: <span className="text-gold-500 font-bold">{currentSyncID}</span><br/><br/>
+                      Para postar, apenas suba estes arquivos na sua pasta do Google Drive. O site fará a mágica.
                     </p>
-                    <Button 
-                      onClick={publishToBlog} 
-                      disabled={loadingPublish || !generatedText}
-                      className={`w-full py-4 text-[10px] flex items-center justify-center gap-4 border-none transition-all duration-1000 font-bold tracking-[0.4em] shadow-2xl ${publishStatus === 'success' ? '!bg-green-600 text-white' : '!bg-white/10 text-zinc-300 hover:!bg-white/20'}`}
-                    >
-                      {loadingPublish ? <Loader2 size={16} className="animate-spin" /> : publishStatus === 'success' ? <CheckCircle size={16} /> : <CloudUpload size={16} />}
-                      TENTAR ENVIO DIRETO
-                    </Button>
                   </div>
                </div>
             )}
@@ -248,17 +212,23 @@ export const Admin: React.FC = () => {
             <div className="space-y-4">
               <div className="flex justify-between items-center px-4">
                 <span className="text-zinc-500 text-[10px] font-bold tracking-[0.6em] uppercase flex items-center gap-3">
-                   <FileText size={14} className="text-gold-500" /> Visualização do Editorial
+                   <FileText size={14} className="text-gold-500" /> Editorial em Revelação
                 </span>
                 {generatedText && (
-                  <span className="text-gold-500 text-[9px] font-mono uppercase tracking-widest">DNA: {currentSyncID}</span>
+                  <button onClick={() => {
+                    navigator.clipboard.writeText(generatedText);
+                    setCopyStatus(true);
+                    setTimeout(() => setCopyStatus(false), 2000);
+                  }} className="text-zinc-400 hover:text-white transition-colors flex items-center gap-3 text-[10px] tracking-[0.5em] uppercase font-bold">
+                    {copyStatus ? <Check size={14} /> : <Copy size={14} />} {copyStatus ? 'Copiado' : 'Copiar Texto'}
+                  </button>
                 )}
               </div>
               <div className="bg-zinc-900 border border-zinc-800 p-0 min-h-[500px] relative overflow-hidden rounded-sm shadow-2xl">
                  {loadingText && (
                     <div className="absolute inset-0 bg-black/95 flex flex-col items-center justify-center z-20">
                        <Loader2 size={48} className="text-gold-500 animate-spin mb-6" />
-                       <p className="text-gold-500 text-[11px] tracking-[1em] uppercase font-bold">Revelando a Verdade...</p>
+                       <p className="text-gold-500 text-[11px] tracking-[1em] uppercase font-bold">Manifestando...</p>
                     </div>
                  )}
                  <textarea
@@ -277,7 +247,7 @@ export const Admin: React.FC = () => {
               <div className="bg-zinc-900 border border-zinc-800 aspect-video relative overflow-hidden rounded-sm flex items-center justify-center shadow-2xl">
                  {loadingImg && <Loader2 size={48} className="text-gold-500 animate-spin" />}
                  {generatedImg && (
-                    <img src={generatedImg} alt="Capa" className="w-full h-full object-cover grayscale transition-all duration-1000 hover:grayscale-0" />
+                    <img src={generatedImg} alt="Capa" className="w-full h-full object-cover grayscale transition-all duration-[2s] hover:grayscale-0" />
                  )}
               </div>
             </div>
