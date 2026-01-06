@@ -25,15 +25,25 @@ export const Home: React.FC = () => {
       .then(res => res.json())
       .then(data => {
         if (Array.isArray(data)) {
-          const capa = data.find((f: any) => f.name.toUpperCase().startsWith('CAPA_'));
-          const manif = data.find((f: any) => f.name.toUpperCase().startsWith('MANIF_'));
+          // Filtro restrito: Apenas arquivos que contenham explicitamente HOME ou BANNER
+          const capa = data.find((f: any) => {
+            const name = f.name.toUpperCase();
+            return (name.includes('CAPA_HOME') || name.includes('BANNER_HOME')) && !name.includes('BLOG');
+          });
+          
+          const manif = data.find((f: any) => {
+            const name = f.name.toUpperCase();
+            return name.includes('MANIF_HOME') || (name.startsWith('MANIF_') && !name.includes('BLOG'));
+          });
+
           if (capa) setHeroImg(capa.url);
           if (manif) setManifestoImg(manif.url);
 
           const homeTagged = data.filter((f: any) => f.name.toUpperCase().includes('_HOME'));
           const artFallback = data.filter((f: any) => 
             f.name.toUpperCase().startsWith('ART_') && 
-            !f.name.toUpperCase().includes('_HOME')
+            !f.name.toUpperCase().includes('_HOME') &&
+            !f.name.toUpperCase().includes('BLOG')
           );
 
           const combined = [...homeTagged, ...artFallback]
@@ -93,7 +103,7 @@ export const Home: React.FC = () => {
         </div>
       </section>
 
-      {/* Manifesto Section (Restaurada) */}
+      {/* Manifesto Section */}
       <section className="py-32 bg-black border-y border-zinc-900 overflow-hidden relative">
         <div className="absolute top-0 right-0 w-full h-full bg-gold-600/5 pointer-events-none"></div>
         <div className="container mx-auto px-6 relative z-10">
