@@ -17,21 +17,25 @@ export const Admin: React.FC = () => {
   const [hasKey, setHasKey] = useState(false);
   const [showHelp, setShowHelp] = useState(false);
 
-  // Script do Drive (mesmo ID da pasta que você já usa)
+  // Script do Drive - Use este código no seu Google Apps Script
   const scriptCode = `function doPost(e) {
   var folderId = "1CsNAC51-bP11LKz9YtjwenbwmAgda9IE";
   var folder = DriveApp.getFolderById(folderId);
   var data = JSON.parse(e.postData.contents);
   
   try {
+    // 1. Criar Editorial (.txt)
     var textFileName = data.fileName + ".txt";
     folder.createFile(textFileName, data.content);
+    
+    // 2. Criar Capa (.png)
     if (data.image) {
       var contentType = data.image.split(",")[0].split(":")[1].split(";")[0];
       var bytes = Utilities.base64Decode(data.image.split(",")[1]);
-      var blob = Utilities.newBlob(bytes, contentType, "capa_" + data.fileName + ".png");
+      var blob = Utilities.newBlob(bytes, contentType, "CAPA_" + data.fileName + ".png");
       folder.createFile(blob);
     }
+    
     return ContentService.createTextOutput(JSON.stringify({status: "success"}))
       .setMimeType(ContentService.MimeType.JSON)
       .setHeader('Access-Control-Allow-Origin', '*');
@@ -119,29 +123,35 @@ export const Admin: React.FC = () => {
     setLoadingPublish(true);
     setPublishStatus('idle');
     try {
-      // Gerar um único nome base para AMBOS os arquivos
+      // DNA único do Post para garantir sincronia perfeita
+      const syncID = "ID" + Math.random().toString(36).substring(2, 9).toUpperCase();
       const now = new Date();
-      const timestamp = now.getTime().toString().slice(-6); // DNA do post
       const dateStr = now.toLocaleDateString('pt-BR').replace(/\//g, '-');
       const cleanTopic = topic
         .normalize("NFD").replace(/[\u0300-\u036f]/g, "")
-        .replace(/[^a-zA-Z0-9]/g, "-").toUpperCase().substring(0, 15);
+        .replace(/[^a-zA-Z0-9]/g, "-").toUpperCase().substring(0, 25);
       
-      const syncFileName = `blog_${dateStr}_ID${timestamp}_${cleanTopic}`;
+      const fileName = `BLOG_${dateStr}_${syncID}_${cleanTopic}`;
 
       const payload = {
-        fileName: syncFileName,
+        fileName: fileName,
         content: generatedText,
         image: generatedImg || null
       };
 
+      // Usando mode: 'no-cors' caso o Google não responda com os headers corretos
       await fetch(DRIVE_SCRIPT_URL, {
         method: 'POST',
+        mode: 'no-cors', 
         headers: { 'Content-Type': 'text/plain;charset=utf-8' },
         body: JSON.stringify(payload)
       });
 
+      // Como o no-cors não permite ler a resposta, assumimos sucesso se não houver erro de rede
       setPublishStatus('success');
+      setTopic('');
+      setGeneratedText('');
+      setGeneratedImg('');
       setTimeout(() => setPublishStatus('idle'), 6000);
     } catch (e) {
       console.error(e);
@@ -177,6 +187,10 @@ export const Admin: React.FC = () => {
                 <CloudUpload className="text-gold-500" size={24} />
                 <h4 className="text-white text-xs font-bold tracking-[0.4em] uppercase">Sincronia Editorial Ativa</h4>
              </div>
+             <p className="text-zinc-500 text-[10px] tracking-widest uppercase mb-6 leading-relaxed">
+               Certifique-se de que no Google Scripts você selecionou <br/>
+               <strong className="text-gold-500">"Quem pode acessar: Qualquer Pessoa"</strong> ao implantar.
+             </p>
              <div className="relative">
                 <pre className="bg-black/60 p-6 rounded-sm text-[9px] h-32 overflow-y-auto border border-zinc-800 font-mono text-zinc-600">
                   {scriptCode}
@@ -225,14 +239,24 @@ export const Admin: React.FC = () => {
                     {publishStatus === 'success' && <div className="w-3 h-3 bg-green-500 rounded-full animate-pulse"></div>}
                   </div>
                   
+                  <p className="text-zinc-500 text-[9px] uppercase tracking-[0.3em] leading-loose">
+                    Manifeste seu editorial. O sistema sincronizará o texto e a imagem simultaneamente no Drive.
+                  </p>
+
                   <Button 
                     onClick={publishToBlog} 
                     disabled={loadingPublish || !generatedText}
-                    className={`w-full py-6 flex items-center justify-center gap-4 border-none transition-all duration-1000 font-bold tracking-[0.4em] ${publishStatus === 'success' ? '!bg-green-600 text-white' : '!bg-white text-black hover:!bg-gold-500'}`}
+                    className={`w-full py-6 flex items-center justify-center gap-4 border-none transition-all duration-1000 font-bold tracking-[0.4em] shadow-2xl ${publishStatus === 'success' ? '!bg-green-600 text-white' : '!bg-white text-black hover:!bg-gold-500'}`}
                   >
                     {loadingPublish ? <Loader2 size={20} className="animate-spin" /> : publishStatus === 'success' ? <CheckCircle size={20} /> : <CloudUpload size={20} />}
-                    {publishStatus === 'success' ? 'EDITORIAL PUBLICADO' : 'PUBLICAR NO SITE AGORA'}
+                    {publishStatus === 'success' ? 'EDITORIAL PUBLICADO' : 'PUBLICAR NO DRIVE AGORA'}
                   </Button>
+                  
+                  {publishStatus === 'error' && (
+                    <p className="text-red-500 text-[9px] uppercase tracking-widest text-center animate-pulse">
+                      Erro na conexão. Verifique o Google Script.
+                    </p>
+                  )}
                </div>
             )}
           </div>
@@ -240,7 +264,7 @@ export const Admin: React.FC = () => {
           <div className="lg:col-span-8 space-y-10">
             <div className="space-y-4">
               <span className="text-zinc-500 text-[10px] font-bold tracking-[0.6em] uppercase flex items-center gap-3 ml-4">
-                 <FileText size={14} className="text-gold-500" /> Manuscrito Final
+                 <FileText size={14} className="text-gold-500" /> Manuscrito Editorial
               </span>
               <div className="bg-zinc-900 border border-zinc-800 p-0 min-h-[500px] relative overflow-hidden rounded-sm shadow-2xl">
                  {loadingText && (

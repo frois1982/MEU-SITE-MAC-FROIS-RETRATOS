@@ -38,34 +38,35 @@ export const Blog: React.FC = () => {
       .then(res => res.json())
       .then(data => {
         if (Array.isArray(data)) {
-          // Filtrar apenas arquivos .txt que sejam do BLOG
+          // Filtrar APENAS arquivos .txt para o corpo do blog
           const textFiles = data.filter((f: any) => 
-            f.name.toLowerCase().endsWith('.txt') && f.name.toLowerCase().includes('blog')
+            f.name.toLowerCase().endsWith('.txt') && f.name.toUpperCase().includes('BLOG')
           );
           
           const mappedPosts: BlogPost[] = textFiles.map((file: any) => {
-            const fileName = file.name.toUpperCase();
+            const fileNameUpper = file.name.toUpperCase();
             const parts = file.name.split('_');
             
-            // Extrair o Identificador (ID ou Slug)
-            // Ex: blog_06-01-2026_ID123456_TEMA.txt -> ID123456
-            const identifier = parts.find(p => p.includes('ID')) || parts[parts.length - 1].split('.')[0];
+            // DNA de sincronia (ID Único)
+            const identifier = parts.find(p => p.startsWith('ID')) || parts[2] || 'NO-ID';
             
-            // Busca Inteligente pela imagem:
-            // Procura qualquer imagem que contenha o mesmo Identificador Único
+            // Busca a imagem que contém o MESMO ID do texto
             const imgFile = data.find((f: any) => {
-              const fName = f.name.toUpperCase();
-              const isImg = fName.endsWith('.JPG') || fName.endsWith('.PNG') || fName.endsWith('.JPEG') || fName.endsWith('.WEBP');
-              return isImg && fName.includes(identifier.split('.')[0]);
+              const fNameUpper = f.name.toUpperCase();
+              const isImg = fNameUpper.endsWith('.JPG') || fNameUpper.endsWith('.PNG') || fNameUpper.endsWith('.JPEG') || fNameUpper.endsWith('.WEBP');
+              // Critério rigoroso: Deve ser imagem e conter o ID do post
+              return isImg && fNameUpper.includes(identifier);
             });
 
-            let title = parts[parts.length - 1].split('.')[0].replace(/-/g, ' ');
+            // Extração limpa do título (tudo após o ID)
+            const titlePart = fileNameUpper.split(identifier)[1] || file.name;
+            const title = titlePart.replace('.TXT', '').replace(/_/g, ' ').replace(/-/g, ' ').trim();
             
             return {
               id: file.id,
               fileName: file.name,
-              title: title.toUpperCase(),
-              excerpt: "Manifesto Editorial Mac Frois.",
+              title: title || 'EDITORIAL SEM TÍTULO',
+              excerpt: "Manifesto sobre a verdade visual e o poder do posicionamento.",
               date: parts[1] || 'RECENTE',
               category: 'EDITORIAL',
               content: "", 
@@ -75,6 +76,7 @@ export const Blog: React.FC = () => {
             };
           });
 
+          // Inverter para mostrar os mais novos primeiro
           setPosts(mappedPosts.reverse());
         }
         setLoading(false);
@@ -87,20 +89,25 @@ export const Blog: React.FC = () => {
 
   const openPost = async (post: BlogPost) => {
     window.scrollTo(0, 0);
-    setSelectedPost({ ...post, content: 'Sincronizando...' });
+    setSelectedPost({ ...post, content: 'Manifestando editorial...' });
     
     try {
       const res = await fetch(post.contentUrl);
       const text = await res.text();
       
-      // Se o Drive retornar HTML (erro de permissão), avisa o usuário
+      // Validação: Se o texto começar com o cabeçalho de uma imagem, o Drive enviou o arquivo errado
+      if (text.includes('PNG') || text.includes('JFIF') || text.includes('Exif')) {
+        setSelectedPost({ ...post, content: 'ERRO DE SINCRONIA: O sistema detectou um arquivo de imagem onde deveria estar o texto. Verifique os nomes no Drive.' });
+        return;
+      }
+
       if (text.includes('<!doctype') || text.includes('<html')) {
-        setSelectedPost({ ...post, content: 'ERRO: O arquivo no Drive não está público. Altere para "Qualquer pessoa com o link".' });
+        setSelectedPost({ ...post, content: 'ACESSO PRIVADO: O arquivo no Drive precisa estar compartilhado como "Qualquer pessoa com o link".' });
       } else {
-        setSelectedPost({ ...post, content: text.replace(/[#*`_]/g, '') });
+        setSelectedPost({ ...post, content: text.replace(/[#*`_]/g, '').trim() });
       }
     } catch (e) {
-      setSelectedPost({ ...post, content: 'Falha ao conectar com o servidor de arquivos.' });
+      setSelectedPost({ ...post, content: 'Falha na conexão com o laboratório de arquivos.' });
     }
   };
 
@@ -108,17 +115,26 @@ export const Blog: React.FC = () => {
     return (
       <div className="pt-32 pb-24 bg-black min-h-screen animate-fade-in">
         <div className="container mx-auto px-6 max-w-3xl">
-          <button onClick={() => setSelectedPost(null)} className="flex items-center text-gold-500 text-[10px] tracking-[0.5em] uppercase mb-12 font-bold">
-            <ChevronLeft size={16} className="mr-3" /> Voltar
+          <button onClick={() => setSelectedPost(null)} className="flex items-center text-gold-500 text-[10px] tracking-[0.5em] uppercase mb-12 hover:text-white transition-all group font-bold">
+            <ChevronLeft size={16} className="mr-3 group-hover:-translate-x-1 transition-transform" /> Voltar à Biblioteca
           </button>
           
           <article>
-            <h1 className="text-4xl font-serif text-white mb-8 tracking-widest uppercase italic">{selectedPost.title}</h1>
-            <div className="aspect-video overflow-hidden mb-16 rounded-sm border border-zinc-900 shadow-2xl">
+            <div className="mb-12">
+               <span className="text-gold-600 text-[10px] font-bold tracking-[0.6em] uppercase mb-4 block">{selectedPost.date} • EDITORIAL</span>
+               <h1 className="text-3xl md:text-5xl font-serif text-white mb-8 tracking-widest uppercase italic leading-tight">{selectedPost.title}</h1>
+            </div>
+
+            <div className="aspect-video overflow-hidden mb-16 rounded-sm border border-zinc-900 bg-zinc-900 shadow-2xl">
               <img src={selectedPost.imageUrl} className="w-full h-full object-cover grayscale" alt={selectedPost.title} />
             </div>
+
             <div className="text-zinc-300 text-lg leading-[2.2] font-light italic whitespace-pre-wrap font-serif">
               {selectedPost.content}
+            </div>
+            
+            <div className="mt-24 pt-12 border-t border-zinc-900 text-center">
+               <p className="text-zinc-600 text-[10px] tracking-[0.8em] uppercase font-bold italic">A verdade é o luxo definitivo.</p>
             </div>
           </article>
         </div>
@@ -130,21 +146,36 @@ export const Blog: React.FC = () => {
     <div className="pt-32 pb-24 bg-zinc-950 min-h-screen">
       <div className="container mx-auto px-6 max-w-5xl">
         <SectionTitle title="Jornal Editorial" subtitle="A Verdade em Palavras" />
+        
         <div className="grid gap-20 mt-24">
-          {loading ? <Skeleton className="h-64 w-full" /> : posts.map((post) => (
-            <div key={post.id} onClick={() => openPost(post)} className="group cursor-pointer grid lg:grid-cols-12 gap-12 items-center">
-              <div className="lg:col-span-7 aspect-video overflow-hidden bg-zinc-900 rounded-sm">
-                <img src={post.imageUrl} className="w-full h-full object-cover grayscale opacity-50 group-hover:opacity-100 transition-all duration-700" alt={post.title} />
-              </div>
-              <div className="lg:col-span-5">
-                <span className="text-gold-600 text-[10px] font-bold tracking-[0.6em] uppercase block mb-4">{post.date}</span>
-                <h3 className="text-2xl font-serif text-white mb-6 group-hover:text-gold-500 transition-colors tracking-widest leading-tight uppercase italic">{post.title}</h3>
-                <div className="flex items-center text-gold-500 text-[10px] tracking-[0.4em] uppercase font-bold group-hover:translate-x-3 transition-transform">
-                  LER EDITORIAL <ArrowRight size={14} className="ml-4" />
+          {loading ? (
+             [1, 2, 3].map(i => <Skeleton key={i} className="h-64 w-full" />)
+          ) : posts.length === 0 ? (
+            <div className="text-center py-40 border border-dashed border-zinc-900 rounded-sm">
+              <BookOpen size={48} className="text-zinc-800 mx-auto mb-8 opacity-20" />
+              <p className="text-zinc-700 tracking-[0.6em] uppercase text-xs font-bold">Nenhum manifesto encontrado no Drive.</p>
+            </div>
+          ) : (
+            posts.map((post) => (
+              <div 
+                key={post.id} 
+                onClick={() => openPost(post)} 
+                className="group cursor-pointer grid lg:grid-cols-12 gap-12 items-center hover:bg-white/5 p-4 transition-all rounded-sm"
+              >
+                <div className="lg:col-span-6 aspect-video overflow-hidden bg-zinc-900 rounded-sm shadow-xl relative">
+                  <img src={post.imageUrl} className="w-full h-full object-cover grayscale opacity-50 group-hover:opacity-100 transition-all duration-700 group-hover:scale-105" alt={post.title} />
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent"></div>
+                </div>
+                <div className="lg:col-span-6">
+                  <span className="text-gold-600 text-[10px] font-bold tracking-[0.6em] uppercase block mb-4">{post.date}</span>
+                  <h3 className="text-2xl font-serif text-white mb-6 group-hover:text-gold-500 transition-colors tracking-widest leading-tight uppercase italic">{post.title}</h3>
+                  <div className="flex items-center text-gold-500 text-[10px] tracking-[0.4em] uppercase font-bold group-hover:translate-x-3 transition-transform">
+                    ABRIR EDITORIAL <ArrowRight size={14} className="ml-4" />
+                  </div>
                 </div>
               </div>
-            </div>
-          ))}
+            ))
+          )}
         </div>
       </div>
     </div>
