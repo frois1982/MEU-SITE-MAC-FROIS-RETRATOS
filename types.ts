@@ -1,3 +1,4 @@
+
 export interface BlogPost {
   id: string;
   title: string;
@@ -31,4 +32,11 @@ export interface PortfolioItem {
   title: string;
   category: 'Portrait' | 'Corporate' | 'Artistic';
   imageUrl: string;
+}
+
+export interface AIRecommendation {
+  projeto: string;
+  estrategia: string;
+  arquetipo: string;
+  dicaVisual: string;
 }

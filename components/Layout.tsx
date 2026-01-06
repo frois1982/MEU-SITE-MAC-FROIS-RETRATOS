@@ -175,9 +175,9 @@ const WhatsAppFAB: React.FC = () => {
       <span className="bg-white text-zinc-900 px-4 py-2 rounded-full text-[10px] font-bold tracking-[0.2em] uppercase shadow-2xl opacity-0 translate-x-4 group-hover:opacity-100 group-hover:translate-x-0 transition-all duration-300 hidden md:block">
         Falar com Mac
       </span>
-      <div className="w-14 h-14 bg-emerald-600 rounded-full flex items-center justify-center text-white shadow-[0_10px_30px_rgba(16,185,129,0.4)] hover:bg-emerald-500 transition-all hover:scale-110 active:scale-95 animate-bounce-slow">
+      <div className="w-14 h-14 bg-[#25D366] rounded-full flex items-center justify-center text-white shadow-[0_10px_30px_rgba(37,211,102,0.4)] hover:bg-[#25D366]/90 transition-all hover:scale-110 active:scale-95 animate-bounce-slow">
         <MessageCircle size={28} />
-        <span className="absolute inset-0 rounded-full bg-emerald-600 animate-ping opacity-20"></span>
+        <span className="absolute inset-0 rounded-full bg-[#25D366] animate-ping opacity-20"></span>
       </div>
     </a>
   );

@@ -3,7 +3,7 @@ import React, { useState, useEffect } from 'react';
 import { GoogleGenAI } from "@google/genai";
 import { Button, Card } from '../components/UI';
 import { DRIVE_SCRIPT_URL } from '../config';
-import { Sparkles, Image as ImageIcon, Copy, Check, Download, Loader2, Key, PenTool, ImagePlus, ArrowRight, Save, Info, FileText, FolderOpen, ExternalLink, Code2, HelpCircle, MousePointer2 } from 'lucide-react';
+import { Sparkles, Image as ImageIcon, Copy, Check, Download, Loader2, Key, PenTool, ImagePlus, ArrowRight, Save, Info, FileText, FolderOpen, ExternalLink, Code2, HelpCircle, MousePointer2, Star } from 'lucide-react';
 
 export const Admin: React.FC = () => {
   const [topic, setTopic] = useState('');
@@ -165,16 +165,30 @@ export const Admin: React.FC = () => {
           <div className="mb-12 bg-zinc-900 border border-gold-600/30 p-8 rounded-sm animate-fade-in relative overflow-hidden">
             <div className="absolute top-0 right-0 w-32 h-32 bg-gold-600/5 rounded-full blur-3xl"></div>
             
-            <div className="mb-10 p-6 bg-black/40 border border-zinc-800">
-               <h4 className="text-white text-xs font-bold tracking-widest uppercase mb-4 flex items-center gap-2">
-                 <MousePointer2 size={14} className="text-gold-500" /> Passo 1: Pegar o ID da Pasta
-               </h4>
-               <p className="text-zinc-400 text-[10px] uppercase tracking-[0.2em] mb-4">No seu navegador, dentro da pasta do Drive, olhe a URL:</p>
-               <div className="bg-zinc-900 p-3 font-mono text-xs rounded border border-zinc-800 overflow-x-auto">
-                 <span className="text-zinc-600">...google.com/drive/u/0/folders/</span>
-                 <span className="text-gold-500 font-bold bg-gold-500/10 px-1">1CsNAC51-bP11LKz9YtjwenbwmAgda9IE</span>
-               </div>
-               <p className="text-zinc-500 text-[10px] italic mt-3 tracking-widest uppercase">Copie apenas a parte em destaque dourado.</p>
+            <div className="grid md:grid-cols-2 gap-8 mb-10">
+              <div className="p-6 bg-black/40 border border-zinc-800">
+                <h4 className="text-white text-xs font-bold tracking-widest uppercase mb-4 flex items-center gap-2">
+                  <MousePointer2 size={14} className="text-gold-500" /> Passo 1: ID da Pasta
+                </h4>
+                <p className="text-zinc-400 text-[10px] uppercase tracking-[0.2em] mb-4">No seu navegador, dentro da pasta do Drive, olhe a URL:</p>
+                <div className="bg-zinc-900 p-3 font-mono text-xs rounded border border-zinc-800 overflow-x-auto mb-3">
+                  <span className="text-gold-500 font-bold bg-gold-500/10 px-1">1CsNAC51-bP11LKz9YtjwenbwmAgda9IE</span>
+                </div>
+                <p className="text-zinc-500 text-[10px] italic tracking-widest uppercase">Copie apenas a parte em dourado.</p>
+              </div>
+
+              <div className="p-6 bg-black/40 border border-zinc-800">
+                <h4 className="text-white text-xs font-bold tracking-widest uppercase mb-4 flex items-center gap-2">
+                  <Star size={14} className="text-gold-500" /> Dica: Escolher Fotos da Home
+                </h4>
+                <p className="text-zinc-400 text-[10px] uppercase tracking-[0.2em] mb-4">Para escolher manualmente quais fotos aparecem na Home:</p>
+                <div className="bg-zinc-900 p-3 border border-zinc-800 rounded mb-3">
+                  <p className="text-zinc-300 text-[10px] font-mono">ART_MinhaFoto<span className="text-gold-500 font-bold">_HOME</span>.jpg</p>
+                </div>
+                <p className="text-zinc-500 text-[9px] tracking-widest uppercase leading-relaxed">
+                  Adicione <strong className="text-white">_HOME</strong> em qualquer lugar do nome do arquivo no Drive. O site mostrará estas primeiro (limite de 4).
+                </p>
+              </div>
             </div>
 
             <div className="grid md:grid-cols-2 gap-8">
@@ -183,15 +197,9 @@ export const Admin: React.FC = () => {
                  <Code2 size={14} className="text-gold-500" /> Passo 2: O Script Recursivo
                </h4>
                 <p className="text-zinc-400 text-[10px] leading-relaxed tracking-widest uppercase">
-                  Copie o código ao lado, cole no seu Google Apps Script e substitua o ID. Depois de publicar (Implantar), você terá um link final.
+                  Copie o código ao lado, cole no seu Google Apps Script e substitua o ID. Depois de publicar (Implantar), cole o link no arquivo <strong className="text-white">config.ts</strong>.
                 </p>
                 <div className="pt-4 space-y-4">
-                   <div className="p-4 bg-gold-600/5 border-l-2 border-gold-600">
-                      <p className="text-gold-500 text-[10px] font-bold tracking-widest uppercase mb-2">ONDE COLAR O LINK FINAL NO SITE?</p>
-                      <p className="text-zinc-500 text-[9px] tracking-widest uppercase leading-relaxed">
-                        Abra o arquivo <strong className="text-white">config.ts</strong> no seu projeto e cole o link gerado lá. O site fará o resto.
-                      </p>
-                   </div>
                    <a 
                     href="https://script.google.com/" 
                     target="_blank" 
@@ -222,7 +230,7 @@ export const Admin: React.FC = () => {
           </div>
         )}
 
-        {/* Interface de Criação Continua... */}
+        {/* Interface de Criação */}
         <div className="grid lg:grid-cols-12 gap-8">
           <div className="lg:col-span-4 space-y-6">
             <Card className="bg-zinc-900/50 border-zinc-800">
