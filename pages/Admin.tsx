@@ -16,35 +16,7 @@ export const Admin: React.FC = () => {
   const [publishStatus, setPublishStatus] = useState<'idle' | 'success' | 'error'>('idle');
   const [hasKey, setHasKey] = useState(false);
   const [showHelp, setShowHelp] = useState(false);
-
-  // Script do Drive - Use este código no seu Google Apps Script
-  const scriptCode = `function doPost(e) {
-  var folderId = "1CsNAC51-bP11LKz9YtjwenbwmAgda9IE";
-  var folder = DriveApp.getFolderById(folderId);
-  var data = JSON.parse(e.postData.contents);
-  
-  try {
-    // 1. Criar Editorial (.txt)
-    var textFileName = data.fileName + ".txt";
-    folder.createFile(textFileName, data.content);
-    
-    // 2. Criar Capa (.png)
-    if (data.image) {
-      var contentType = data.image.split(",")[0].split(":")[1].split(";")[0];
-      var bytes = Utilities.base64Decode(data.image.split(",")[1]);
-      var blob = Utilities.newBlob(bytes, contentType, "CAPA_" + data.fileName + ".png");
-      folder.createFile(blob);
-    }
-    
-    return ContentService.createTextOutput(JSON.stringify({status: "success"}))
-      .setMimeType(ContentService.MimeType.JSON)
-      .setHeader('Access-Control-Allow-Origin', '*');
-  } catch (err) {
-    return ContentService.createTextOutput(JSON.stringify({status: "error", message: err.toString()}))
-      .setMimeType(ContentService.MimeType.JSON)
-      .setHeader('Access-Control-Allow-Origin', '*');
-  }
-}`;
+  const [currentSyncID, setCurrentSyncID] = useState('');
 
   useEffect(() => {
     const checkStatus = async () => {
@@ -73,10 +45,28 @@ export const Admin: React.FC = () => {
     }
   };
 
+  const generateSyncID = () => {
+    return "ID" + Math.random().toString(36).substring(2, 7).toUpperCase();
+  };
+
+  const getCleanFileName = (prefix: string, extension: string) => {
+    const now = new Date();
+    const dateStr = now.toLocaleDateString('pt-BR').replace(/\//g, '-');
+    const cleanTopic = topic
+      .normalize("NFD").replace(/[\u0300-\u036f]/g, "")
+      .replace(/[^a-zA-Z0-9]/g, "-").toUpperCase().substring(0, 15);
+    
+    return `${prefix}_${dateStr}_${currentSyncID}_${cleanTopic}.${extension}`;
+  };
+
   const generateEditorial = async () => {
     if (!topic) return;
     setLoadingText(true);
     setPublishStatus('idle');
+    // Gera novo ID para cada nova composição
+    const newID = generateSyncID();
+    setCurrentSyncID(newID);
+
     try {
       const ai = new GoogleGenAI({ apiKey: process.env.API_KEY });
       const response = await ai.models.generateContent({
@@ -118,28 +108,42 @@ export const Admin: React.FC = () => {
     setLoadingImg(false);
   };
 
+  const downloadText = () => {
+    if (!generatedText) return;
+    const blob = new Blob([generatedText], { type: 'text/plain' });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = getCleanFileName('BLOG', 'txt');
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+    URL.revokeObjectURL(url);
+  };
+
+  const downloadImage = () => {
+    if (!generatedImg) return;
+    const a = document.createElement('a');
+    a.href = generatedImg;
+    a.download = getCleanFileName('CAPA', 'png');
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+  };
+
+  // Mantemos o publish original mas ele agora segue a mesma nomenclatura
   const publishToBlog = async () => {
     if (!generatedText || !DRIVE_SCRIPT_URL) return;
     setLoadingPublish(true);
     setPublishStatus('idle');
     try {
-      // DNA único do Post para garantir sincronia perfeita
-      const syncID = "ID" + Math.random().toString(36).substring(2, 9).toUpperCase();
-      const now = new Date();
-      const dateStr = now.toLocaleDateString('pt-BR').replace(/\//g, '-');
-      const cleanTopic = topic
-        .normalize("NFD").replace(/[\u0300-\u036f]/g, "")
-        .replace(/[^a-zA-Z0-9]/g, "-").toUpperCase().substring(0, 25);
-      
-      const fileName = `BLOG_${dateStr}_${syncID}_${cleanTopic}`;
-
+      const fileName = getCleanFileName('BLOG', 'txt').replace('.txt', '');
       const payload = {
         fileName: fileName,
         content: generatedText,
         image: generatedImg || null
       };
 
-      // Usando mode: 'no-cors' caso o Google não responda com os headers corretos
       await fetch(DRIVE_SCRIPT_URL, {
         method: 'POST',
         mode: 'no-cors', 
@@ -147,14 +151,9 @@ export const Admin: React.FC = () => {
         body: JSON.stringify(payload)
       });
 
-      // Como o no-cors não permite ler a resposta, assumimos sucesso se não houver erro de rede
       setPublishStatus('success');
-      setTopic('');
-      setGeneratedText('');
-      setGeneratedImg('');
       setTimeout(() => setPublishStatus('idle'), 6000);
     } catch (e) {
-      console.error(e);
       setPublishStatus('error');
     }
     setLoadingPublish(false);
@@ -170,9 +169,6 @@ export const Admin: React.FC = () => {
            </div>
            
            <div className="flex items-center gap-4">
-             <button onClick={() => setShowHelp(!showHelp)} className={`flex items-center gap-2 text-[10px] uppercase tracking-widest transition-all px-6 py-2.5 border rounded-full font-bold ${showHelp ? 'bg-gold-600 text-black border-gold-600' : 'text-zinc-500 border-zinc-800 hover:text-white'}`}>
-               <Code2 size={14} /> {showHelp ? 'Ocultar Guia' : 'Configurar Sincronia'}
-             </button>
              {!hasKey && (
                <Button onClick={handleKeyActivation} className="bg-gold-600 text-black px-8 py-2.5 flex items-center gap-3 font-bold border-none shadow-xl">
                  <Key size={16} /> ATIVAR IA
@@ -180,24 +176,6 @@ export const Admin: React.FC = () => {
              )}
            </div>
         </div>
-
-        {showHelp && (
-          <div className="mb-12 bg-zinc-900/80 border border-gold-600/30 p-10 rounded-sm animate-fade-in backdrop-blur-xl">
-             <div className="flex items-center gap-4 mb-8">
-                <CloudUpload className="text-gold-500" size={24} />
-                <h4 className="text-white text-xs font-bold tracking-[0.4em] uppercase">Sincronia Editorial Ativa</h4>
-             </div>
-             <p className="text-zinc-500 text-[10px] tracking-widest uppercase mb-6 leading-relaxed">
-               Certifique-se de que no Google Scripts você selecionou <br/>
-               <strong className="text-gold-500">"Quem pode acessar: Qualquer Pessoa"</strong> ao implantar.
-             </p>
-             <div className="relative">
-                <pre className="bg-black/60 p-6 rounded-sm text-[9px] h-32 overflow-y-auto border border-zinc-800 font-mono text-zinc-600">
-                  {scriptCode}
-                </pre>
-             </div>
-          </div>
-        )}
 
         <div className="grid lg:grid-cols-12 gap-10">
           <div className="lg:col-span-4 space-y-8">
@@ -220,64 +198,74 @@ export const Admin: React.FC = () => {
                 <div className="space-y-4">
                   <Button onClick={generateEditorial} disabled={loadingText || !topic || !hasKey} className="w-full py-6 flex items-center justify-center gap-4 group !bg-gold-600/80 hover:!bg-gold-600 border-none shadow-lg tracking-[0.4em]">
                     {loadingText ? <Loader2 size={18} className="animate-spin" /> : <Sparkles size={18} />}
-                    GERAR TEXTO PURO
+                    GERAR CONTEÚDO
                   </Button>
                   <Button onClick={generateCover} disabled={loadingImg || !topic || !hasKey} variant="outline" className="w-full py-6 flex items-center justify-center gap-4 border-zinc-800 hover:border-gold-600 tracking-[0.4em]">
                     {loadingImg ? <Loader2 size={18} className="animate-spin" /> : <ImageIcon size={18} />}
-                    GERAR CAPA VISUAL
+                    GERAR CAPA
                   </Button>
                 </div>
               </div>
             </Card>
 
-            {generatedText && (
+            {(generatedText || generatedImg) && (
                <div className="bg-zinc-900/60 border border-zinc-800 p-8 rounded-sm space-y-6 shadow-2xl animate-slide-up backdrop-blur-xl border-l-2 border-gold-600">
-                  <div className="flex items-center justify-between">
-                    <h4 className="text-white text-[10px] font-bold tracking-[0.4em] uppercase flex items-center gap-3">
-                      <Rocket size={16} className="text-gold-500" /> Publicação Direta
-                    </h4>
-                    {publishStatus === 'success' && <div className="w-3 h-3 bg-green-500 rounded-full animate-pulse"></div>}
+                  <h4 className="text-white text-[10px] font-bold tracking-[0.4em] uppercase flex items-center gap-3">
+                    <Save size={16} className="text-gold-500" /> Fluxo de Segurança
+                  </h4>
+                  
+                  <div className="space-y-3">
+                    {generatedText && (
+                      <button onClick={downloadText} className="w-full bg-white/5 hover:bg-white/10 text-white p-4 text-[10px] tracking-[0.3em] uppercase border border-white/10 flex items-center justify-center gap-3 transition-all rounded-sm font-bold">
+                        <FileDown size={14} className="text-gold-500" /> Baixar Editorial (.txt)
+                      </button>
+                    )}
+                    {generatedImg && (
+                      <button onClick={downloadImage} className="w-full bg-white/5 hover:bg-white/10 text-white p-4 text-[10px] tracking-[0.3em] uppercase border border-white/10 flex items-center justify-center gap-3 transition-all rounded-sm font-bold">
+                        <Download size={14} className="text-gold-500" /> Baixar Capa (.png)
+                      </button>
+                    )}
                   </div>
-                  
-                  <p className="text-zinc-500 text-[9px] uppercase tracking-[0.3em] leading-loose">
-                    Manifeste seu editorial. O sistema sincronizará o texto e a imagem simultaneamente no Drive.
-                  </p>
 
-                  <Button 
-                    onClick={publishToBlog} 
-                    disabled={loadingPublish || !generatedText}
-                    className={`w-full py-6 flex items-center justify-center gap-4 border-none transition-all duration-1000 font-bold tracking-[0.4em] shadow-2xl ${publishStatus === 'success' ? '!bg-green-600 text-white' : '!bg-white text-black hover:!bg-gold-500'}`}
-                  >
-                    {loadingPublish ? <Loader2 size={20} className="animate-spin" /> : publishStatus === 'success' ? <CheckCircle size={20} /> : <CloudUpload size={20} />}
-                    {publishStatus === 'success' ? 'EDITORIAL PUBLICADO' : 'PUBLICAR NO DRIVE AGORA'}
-                  </Button>
-                  
-                  {publishStatus === 'error' && (
-                    <p className="text-red-500 text-[9px] uppercase tracking-widest text-center animate-pulse">
-                      Erro na conexão. Verifique o Google Script.
+                  <div className="pt-4 border-t border-white/5">
+                    <p className="text-[9px] text-zinc-500 uppercase tracking-widest leading-relaxed mb-6">
+                      Dica: Baixe os arquivos acima e suba manualmente no Drive para 100% de garantia. O site reconhecerá o DNA <span className="text-gold-500 font-bold">{currentSyncID}</span> automaticamente.
                     </p>
-                  )}
+                    <Button 
+                      onClick={publishToBlog} 
+                      disabled={loadingPublish || !generatedText}
+                      className={`w-full py-4 text-[10px] flex items-center justify-center gap-4 border-none transition-all duration-1000 font-bold tracking-[0.4em] shadow-2xl ${publishStatus === 'success' ? '!bg-green-600 text-white' : '!bg-white/10 text-zinc-300 hover:!bg-white/20'}`}
+                    >
+                      {loadingPublish ? <Loader2 size={16} className="animate-spin" /> : publishStatus === 'success' ? <CheckCircle size={16} /> : <CloudUpload size={16} />}
+                      TENTAR ENVIO DIRETO
+                    </Button>
+                  </div>
                </div>
             )}
           </div>
 
           <div className="lg:col-span-8 space-y-10">
             <div className="space-y-4">
-              <span className="text-zinc-500 text-[10px] font-bold tracking-[0.6em] uppercase flex items-center gap-3 ml-4">
-                 <FileText size={14} className="text-gold-500" /> Manuscrito Editorial
-              </span>
+              <div className="flex justify-between items-center px-4">
+                <span className="text-zinc-500 text-[10px] font-bold tracking-[0.6em] uppercase flex items-center gap-3">
+                   <FileText size={14} className="text-gold-500" /> Visualização do Editorial
+                </span>
+                {generatedText && (
+                  <span className="text-gold-500 text-[9px] font-mono uppercase tracking-widest">DNA: {currentSyncID}</span>
+                )}
+              </div>
               <div className="bg-zinc-900 border border-zinc-800 p-0 min-h-[500px] relative overflow-hidden rounded-sm shadow-2xl">
                  {loadingText && (
                     <div className="absolute inset-0 bg-black/95 flex flex-col items-center justify-center z-20">
                        <Loader2 size={48} className="text-gold-500 animate-spin mb-6" />
-                       <p className="text-gold-500 text-[11px] tracking-[1em] uppercase font-bold">Processando...</p>
+                       <p className="text-gold-500 text-[11px] tracking-[1em] uppercase font-bold">Revelando a Verdade...</p>
                     </div>
                  )}
                  <textarea
                    value={generatedText}
                    onChange={(e) => setGeneratedText(e.target.value)}
                    className="w-full h-full min-h-[500px] bg-transparent p-16 text-zinc-300 text-lg leading-relaxed font-light italic outline-none font-serif resize-none border-none"
-                   placeholder="O editorial aparecerá aqui..."
+                   placeholder="O editorial será manifestado aqui..."
                  />
               </div>
             </div>
