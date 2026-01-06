@@ -1,44 +1,21 @@
 
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import { SectionTitle, Button, Skeleton, Card } from '../components/UI';
+import { SectionTitle, Button, Skeleton } from '../components/UI';
 import { DRIVE_SCRIPT_URL } from '../config';
-import { ArrowRight, MessageCircle, Sparkles, User, Target, Zap, Loader2, RotateCcw, ShieldCheck, AlertCircle, Key } from 'lucide-react';
-import { GoogleGenAI, Type } from "@google/genai";
-import { AIRecommendation, PortfolioItem } from '../types';
+import { ArrowRight, MessageCircle, Camera, Quote } from 'lucide-react';
+import { PortfolioItem } from '../types';
 
 export const Home: React.FC = () => {
   const navigate = useNavigate();
-  const resultRef = useRef<HTMLDivElement>(null);
   const [heroImg, setHeroImg] = useState<string>('https://images.unsplash.com/photo-1492691523567-6170f0295dbd?q=80&w=1920&auto=format&fit=crop&grayscale=true');
   const [manifestoImg, setManifestoImg] = useState<string>('https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?q=80&w=800&auto=format&fit=crop&grayscale=true');
   const [featuredItems, setFeaturedItems] = useState<PortfolioItem[]>([]);
   const [loading, setLoading] = useState(true);
 
-  // Estados para a Consultoria IA
-  const [profession, setProfession] = useState('');
-  const [goal, setGoal] = useState('');
-  const [aiLoading, setAiLoading] = useState(false);
-  const [recommendation, setRecommendation] = useState<AIRecommendation | null>(null);
-  const [needsKey, setNeedsKey] = useState(false);
-  const [apiError, setApiError] = useState<string | null>(null);
-
   const whatsappUrl = "https://wa.me/5548996231894?text=Olá%20Mac,%20vi%20seu%20site%20e%20gostaria%20de%20saber%20mais%20sobre%20os%20retratos%20de%20posicionamento.";
 
   useEffect(() => {
-    // Verifica se já temos uma chave selecionada ao carregar
-    const checkKey = async () => {
-      // @ts-ignore
-      if (window.aistudio) {
-        // @ts-ignore
-        const hasKey = await window.aistudio.hasSelectedApiKey();
-        if (!hasKey && !process.env.API_KEY) {
-          setNeedsKey(true);
-        }
-      }
-    };
-    checkKey();
-
     if (!DRIVE_SCRIPT_URL) {
       setLoading(false);
       return;
@@ -85,93 +62,6 @@ export const Home: React.FC = () => {
       });
   }, []);
 
-  const handleKeyActivation = async () => {
-    try {
-      // @ts-ignore
-      if (window.aistudio) {
-        // @ts-ignore
-        await window.aistudio.openSelectKey();
-        setNeedsKey(false);
-        setApiError(null);
-      }
-    } catch (e) {
-      console.error("Erro ao abrir seletor:", e);
-    }
-  };
-
-  const handleAiConsultation = async (e: React.FormEvent) => {
-    e.preventDefault();
-    if (!profession || !goal) return;
-
-    setAiLoading(true);
-    setApiError(null);
-
-    try {
-      // @ts-ignore
-      if (window.aistudio) {
-        // @ts-ignore
-        const hasKey = await window.aistudio.hasSelectedApiKey();
-        if (!hasKey && !process.env.API_KEY) {
-          setNeedsKey(true);
-          setAiLoading(false);
-          return;
-        }
-      }
-
-      // Inicializa sempre no momento da chamada para garantir que pega a chave selecionada
-      const ai = new GoogleGenAI({ apiKey: process.env.API_KEY || '' });
-      
-      const response = await ai.models.generateContent({
-        model: "gemini-3-flash-preview",
-        contents: `Analise este perfil para o Estúdio Mac Frois:
-        Profissão: "${profession}"
-        Desejo de Imagem: "${goal}"`,
-        config: { 
-          systemInstruction: `Você é um estrategista de branding e semiótica visual de alto luxo. 
-          Dê um diagnóstico curto e impactante em Português do Brasil.
-          Seja direto, sofisticado e use um tom de autoridade.
-          Escolha um dos projetos: "Van Gogh", "Da Vinci" ou "Apolo 360º".`,
-          responseMimeType: "application/json",
-          responseSchema: {
-            type: Type.OBJECT,
-            properties: {
-              projeto: { type: Type.STRING },
-              estrategia: { type: Type.STRING },
-              arquetipo: { type: Type.STRING },
-              dicaVisual: { type: Type.STRING }
-            },
-            required: ["projeto", "estrategia", "arquetipo", "dicaVisual"]
-          }
-        }
-      });
-      
-      const text = response.text;
-      if (text) {
-        setRecommendation(JSON.parse(text));
-        setTimeout(() => {
-          resultRef.current?.scrollIntoView({ behavior: 'smooth', block: 'center' });
-        }, 300);
-      }
-    } catch (error: any) {
-      console.error("Erro IA:", error);
-      const msg = error.message || "";
-      if (msg.includes("API key") || msg.includes("not found") || msg.includes("403") || msg.includes("401")) {
-        setNeedsKey(true);
-        setApiError("A CHAVE DE ACESSO EXPIROU OU É INVÁLIDA. POR FAVOR, REATIVE-A.");
-      } else {
-        setApiError("SISTEMA TEMPORARIAMENTE INDISPONÍVEL. TENTE NOVAMENTE.");
-      }
-    }
-    setAiLoading(false);
-  };
-
-  const resetConsultation = () => {
-    setRecommendation(null);
-    setProfession('');
-    setGoal('');
-    setApiError(null);
-  };
-
   return (
     <div className="text-zinc-200">
       {/* Hero Section */}
@@ -203,169 +93,62 @@ export const Home: React.FC = () => {
         </div>
       </section>
 
-      {/* Espelho da Autoridade (IA Section) */}
-      <section className="py-32 bg-black border-y border-zinc-900 overflow-hidden relative" id="espelho">
-        <div className="absolute top-0 right-0 w-96 h-96 bg-gold-600/5 rounded-full blur-[120px] pointer-events-none"></div>
+      {/* Manifesto Section (Restaurada) */}
+      <section className="py-32 bg-black border-y border-zinc-900 overflow-hidden relative">
+        <div className="absolute top-0 right-0 w-full h-full bg-gold-600/5 pointer-events-none"></div>
         <div className="container mx-auto px-6 relative z-10">
-          <div className="max-w-4xl mx-auto">
-            <div className="text-center mb-16">
-              <span className="text-gold-500 text-[10px] font-bold uppercase tracking-[0.5em] mb-4 block">Consultoria Estratégica IA</span>
-              <h2 className="text-4xl md:text-6xl font-serif text-white mb-6 italic tracking-widest text-center">Espelho da Autoridade</h2>
-              <p className="text-zinc-500 text-sm tracking-[0.2em] uppercase max-w-xl mx-auto font-light text-center">
-                O diagnóstico preciso para sua próxima narrativa visual.
-              </p>
+          <div className="flex flex-col lg:flex-row items-center gap-16 lg:gap-24">
+            <div className="lg:w-1/2 relative">
+               <div className="absolute -top-10 -left-10 w-40 h-40 border-t border-l border-gold-600/20 hidden lg:block"></div>
+               <div className="absolute -bottom-10 -right-10 w-40 h-40 border-b border-r border-gold-600/20 hidden lg:block"></div>
+               
+               <div className="relative aspect-[4/5] overflow-hidden shadow-2xl rounded-sm border border-zinc-800">
+                  {loading ? <Skeleton className="w-full h-full" /> : (
+                    <img 
+                      src={manifestoImg} 
+                      alt="Mac Frois" 
+                      className="w-full h-full object-cover grayscale opacity-60 hover:opacity-100 transition-all duration-[2s] hover:scale-105" 
+                    />
+                  )}
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent"></div>
+                  <div className="absolute bottom-10 left-10">
+                     <span className="text-gold-500 text-[10px] font-bold tracking-[0.5em] uppercase">Mac Frois</span>
+                     <p className="text-white text-xs tracking-widest uppercase italic font-light mt-1">Retratista</p>
+                  </div>
+               </div>
             </div>
 
-            <div className="grid md:grid-cols-2 gap-12 items-start">
-              <div className="space-y-8">
-                <form onSubmit={handleAiConsultation} className="space-y-6">
-                  <div className="space-y-2">
-                    <label className="text-[10px] text-zinc-400 uppercase tracking-widest font-bold flex items-center gap-2">
-                      <User size={12} className="text-gold-600" /> Qual sua profissão?
-                    </label>
-                    <input 
-                      type="text" 
-                      value={profession}
-                      onChange={(e) => setProfession(e.target.value)}
-                      placeholder="Ex: CEO, Advogada, Arquiteto..."
-                      required
-                      disabled={aiLoading}
-                      className="w-full bg-zinc-900/70 border border-zinc-800 p-5 text-white focus:border-gold-600 outline-none rounded-sm text-sm font-light tracking-wide transition-all backdrop-blur-3xl focus:bg-zinc-900/90 shadow-2xl"
-                    />
-                  </div>
-                  <div className="space-y-2">
-                    <label className="text-[10px] text-zinc-400 uppercase tracking-widest font-bold flex items-center gap-2">
-                      <Target size={12} className="text-gold-600" /> O que deseja transmitir?
-                    </label>
-                    <input 
-                      type="text" 
-                      value={goal}
-                      onChange={(e) => setGoal(e.target.value)}
-                      placeholder="Ex: Confiança e Autoridade..."
-                      required
-                      disabled={aiLoading}
-                      className="w-full bg-zinc-900/70 border border-zinc-800 p-5 text-white focus:border-gold-600 outline-none rounded-sm text-sm font-light tracking-wide transition-all backdrop-blur-3xl focus:bg-zinc-900/90 shadow-2xl"
-                    />
-                  </div>
-                  
-                  {needsKey ? (
-                    <div className="space-y-4 p-8 bg-zinc-900/70 border border-gold-600/30 rounded-sm backdrop-blur-3xl animate-in fade-in zoom-in-95 duration-500 shadow-2xl">
-                      <div className="flex items-center gap-3 mb-4">
-                        <Key size={18} className="text-gold-500 animate-pulse" />
-                        <span className="text-white text-[10px] font-bold uppercase tracking-widest">Ativação Necessária</span>
-                      </div>
-                      <p className="text-zinc-400 text-[10px] uppercase tracking-[0.2em] leading-relaxed mb-6 font-light">
-                        {apiError || "Para acessar o Espelho da Autoridade, é necessário ativar sua chave de inteligência oficial."}
-                      </p>
-                      <Button onClick={handleKeyActivation} className="w-full py-5 !bg-gold-600/80 hover:!bg-gold-600 flex items-center justify-center gap-3 tracking-[0.3em] shadow-xl border-none">
-                        ATIVAR AGORA
-                      </Button>
-                      <p className="text-zinc-600 text-[8px] text-center tracking-widest uppercase mt-4">Uso exclusivo para fins de posicionamento estratégico.</p>
-                    </div>
-                  ) : !recommendation ? (
-                    <Button 
-                      type="submit" 
-                      disabled={aiLoading || !profession || !goal}
-                      className="w-full py-6 flex items-center justify-center gap-4 tracking-[0.4em] !bg-gold-600/80 hover:!bg-gold-600 backdrop-blur-md shadow-[0_10px_40px_rgba(217,119,6,0.15)] transition-all active:scale-[0.98] border-none"
-                    >
-                      {aiLoading ? <Loader2 size={20} className="animate-spin" /> : <Sparkles size={20} />}
-                      {aiLoading ? 'MAPEANDO...' : 'GERAR DIAGNÓSTICO'}
-                    </Button>
-                  ) : (
-                    <Button 
-                      onClick={resetConsultation}
-                      variant="outline"
-                      className="w-full py-6 flex items-center justify-center gap-3 tracking-[0.4em] border-zinc-800 hover:border-gold-500 backdrop-blur-3xl !bg-zinc-900/70"
-                    >
-                      <RotateCcw size={18} />
-                      REFAZER ANÁLISE
-                    </Button>
-                  )}
-                </form>
-                
-                <div className="p-6 border-l-2 border-gold-600/30 bg-zinc-900/70 rounded-r-md backdrop-blur-3xl border border-zinc-800/30">
-                  <div className="flex items-center gap-3 mb-2">
-                    <ShieldCheck size={14} className="text-gold-600" />
-                    <span className="text-white text-[9px] font-bold uppercase tracking-widest">Protocolo Mac Frois</span>
-                  </div>
-                  <p className="text-zinc-600 text-[10px] uppercase leading-relaxed tracking-widest font-medium">
-                    Análise baseada em semiótica avançada e branding pessoal de alto padrão.
+            <div className="lg:w-1/2 space-y-10">
+               <div className="space-y-4">
+                 <span className="text-gold-500 text-[10px] font-bold uppercase tracking-[0.6em] block">O Manifesto</span>
+                 <h2 className="text-4xl md:text-6xl font-serif text-white italic tracking-widest leading-tight">
+                   A Verdade é o único <br/>
+                   <span className="text-gold-500/90">filtro que importa.</span>
+                 </h2>
+               </div>
+
+               <div className="relative p-10 bg-zinc-900/70 backdrop-blur-3xl border border-zinc-800/50 rounded-sm shadow-2xl">
+                  <Quote className="text-gold-600/20 absolute -top-4 -left-4 w-16 h-16" />
+                  <p className="text-zinc-300 text-lg md:text-xl font-light leading-relaxed tracking-wide font-serif italic mb-8">
+                    "Minha missão não é criar uma máscara, mas revelar a autoridade que já habita em você. Através da luz e da semiótica, traduzimos sua essência em um ativo estratégico de poder."
                   </p>
-                </div>
-              </div>
+                  <p className="text-zinc-500 text-sm uppercase tracking-[0.2em] leading-loose font-light">
+                    Não fazemos apenas fotos. Criamos narrativas visuais que posicionam você no topo do seu mercado. Em um mundo saturado de filtros, a autenticidade é o luxo definitivo.
+                  </p>
+               </div>
 
-              <div className="relative min-h-[460px]" ref={resultRef}>
-                <div className={`transition-all duration-1000 transform h-full ${recommendation ? 'opacity-100 translate-y-0 scale-100' : 'opacity-10 blur-2xl pointer-events-none translate-y-10 scale-95'}`}>
-                  <Card className="border-gold-600/30 bg-zinc-900/70 backdrop-blur-3xl h-full flex flex-col justify-between shadow-2xl relative overflow-hidden group p-10">
-                    <div className="absolute top-0 right-0 w-64 h-64 bg-gold-600/10 rounded-full blur-[80px] group-hover:bg-gold-600/15 transition-all"></div>
-                    <div className="relative z-10">
-                      <h4 className="text-gold-500 text-[10px] font-bold tracking-[0.5em] uppercase mb-12 border-b border-zinc-800/50 pb-6 flex items-center gap-3">
-                        <Zap size={16} className="animate-pulse" /> Estratégia Recomendada
-                      </h4>
-                      
-                      {recommendation && (
-                        <div className="space-y-12 animate-in fade-in duration-1000">
-                          <div>
-                            <span className="text-zinc-500 text-[9px] uppercase tracking-widest block mb-3 font-bold opacity-60">Projeto Ideal</span>
-                            <p className="text-white text-5xl font-serif tracking-[0.1em] uppercase italic bg-gradient-to-r from-white via-zinc-200 to-zinc-500 bg-clip-text text-transparent">
-                              {recommendation.projeto}
-                            </p>
-                          </div>
-                          <div>
-                            <span className="text-zinc-500 text-[9px] uppercase tracking-widest block mb-3 font-bold opacity-60">Conceito Visual</span>
-                            <p className="text-zinc-200 text-sm font-light tracking-widest italic leading-loose border-l-2 border-gold-600/60 pl-8 py-2">
-                              "{recommendation.estrategia}"
-                            </p>
-                          </div>
-                          <div className="grid grid-cols-2 gap-6 pt-4">
-                            <div className="bg-black/60 p-6 rounded-sm border border-zinc-800/60 backdrop-blur-md">
-                              <span className="text-zinc-500 text-[9px] uppercase tracking-widest block mb-3 font-bold">Arquétipo</span>
-                              <p className="text-gold-600 text-[12px] font-bold tracking-[0.2em] uppercase">{recommendation.arquetipo}</p>
-                            </div>
-                            <div className="bg-black/60 p-6 rounded-sm border border-zinc-800/60 backdrop-blur-md">
-                              <span className="text-zinc-500 text-[9px] uppercase tracking-widest block mb-3 font-bold">Dress Code</span>
-                              <p className="text-zinc-400 text-[10px] uppercase tracking-wider font-light leading-snug">{recommendation.dicaVisual}</p>
-                            </div>
-                          </div>
-                        </div>
-                      )}
-                    </div>
-
-                    <div className="mt-16 flex flex-col gap-4 relative z-10">
-                      <Link to="/servicos">
-                        <Button className="w-full py-5 text-[11px] tracking-[0.4em] !bg-gold-600/90 hover:!bg-gold-600 shadow-2xl border-none">
-                          RESERVAR SESSÃO <ArrowRight size={14} className="ml-3 inline" />
-                        </Button>
-                      </Link>
-                      <a href={whatsappUrl} target="_blank" rel="noopener noreferrer">
-                        <Button variant="outline" className="w-full py-5 text-[11px] tracking-[0.4em] !border-zinc-800 hover:!border-gold-600/40 backdrop-blur-3xl !bg-zinc-900/70">
-                          CONSULTAR MAC
-                        </Button>
-                      </a>
-                    </div>
-                  </Card>
-                </div>
-                
-                {!recommendation && !aiLoading && !needsKey && (
-                  <div className="absolute inset-0 flex flex-col items-center justify-center text-center px-12 animate-pulse">
-                    <div className="relative mb-10">
-                       <div className="absolute inset-0 bg-gold-600/10 blur-3xl rounded-full"></div>
-                       <Sparkles size={64} className="text-zinc-800 relative z-10" />
-                    </div>
-                    <p className="text-zinc-700 text-[11px] tracking-[0.6em] uppercase font-bold max-w-[240px] leading-loose">Aguardando dados para análise semiótica...</p>
-                  </div>
-                )}
-                
-                {aiLoading && (
-                  <div className="absolute inset-0 flex flex-col items-center justify-center text-center px-12 z-20">
-                    <div className="w-56 h-1 bg-zinc-900 mb-12 overflow-hidden rounded-full relative">
-                       <div className="absolute inset-0 bg-gold-600/60 animate-[loading_2s_ease-in-out_infinite] shadow-[0_0_20px_rgba(217,119,6,0.5)]"></div>
-                    </div>
-                    <Loader2 size={64} className="text-gold-500 animate-spin mb-10 opacity-70" />
-                    <p className="text-gold-500 text-[11px] tracking-[0.5em] uppercase font-bold animate-pulse">Mapeando Autoridade Visual...</p>
-                  </div>
-                )}
-              </div>
+               <div className="flex flex-col sm:flex-row gap-6 pt-4">
+                  <Link to="/contato">
+                    <Button className="w-full sm:w-auto px-10 py-5 tracking-[0.3em] !bg-gold-600/80 hover:!bg-gold-600 border-none shadow-xl">
+                      AGENDAR SESSÃO
+                    </Button>
+                  </Link>
+                  <Link to="/blog">
+                    <Button variant="outline" className="w-full sm:w-auto px-10 py-5 tracking-[0.3em] !bg-transparent !border-zinc-800 hover:!border-gold-500 backdrop-blur-sm">
+                      LER EDITORIAL
+                    </Button>
+                  </Link>
+               </div>
             </div>
           </div>
         </div>
