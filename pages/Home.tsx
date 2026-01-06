@@ -1,14 +1,15 @@
 
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { SectionTitle, Button, Skeleton, Card } from '../components/UI';
 import { DRIVE_SCRIPT_URL } from '../config';
-import { ArrowRight, MessageCircle, Sparkles, User, Target, Zap, Loader2 } from 'lucide-react';
-import { GoogleGenAI } from "@google/genai";
+import { ArrowRight, MessageCircle, Sparkles, User, Target, Zap, Loader2, RotateCcw, ShieldCheck } from 'lucide-react';
+import { GoogleGenAI, Type } from "@google/genai";
 import { AIRecommendation, PortfolioItem } from '../types';
 
 export const Home: React.FC = () => {
   const navigate = useNavigate();
+  const resultRef = useRef<HTMLDivElement>(null);
   const [heroImg, setHeroImg] = useState<string>('https://images.unsplash.com/photo-1492691523567-6170f0295dbd?q=80&w=1920&auto=format&fit=crop&grayscale=true');
   const [manifestoImg, setManifestoImg] = useState<string>('https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?q=80&w=800&auto=format&fit=crop&grayscale=true');
   const [featuredItems, setFeaturedItems] = useState<PortfolioItem[]>([]);
@@ -32,15 +33,11 @@ export const Home: React.FC = () => {
       .then(res => res.json())
       .then(data => {
         if (Array.isArray(data)) {
-          // Busca Capa e Manifesto
           const capa = data.find((f: any) => f.name.toUpperCase().startsWith('CAPA_'));
           const manif = data.find((f: any) => f.name.toUpperCase().startsWith('MANIF_'));
           if (capa) setHeroImg(capa.url);
           if (manif) setManifestoImg(manif.url);
 
-          // Lógica de Escolha de Fotos para a Home:
-          // 1. Prioriza fotos que contenham a tag '_HOME' no nome (independente da categoria)
-          // 2. Completa as 4 vagas com fotos 'ART_' (Conceito ART) caso não existam 4 com '_HOME'
           const homeTagged = data.filter((f: any) => f.name.toUpperCase().includes('_HOME'));
           const artFallback = data.filter((f: any) => 
             f.name.toUpperCase().startsWith('ART_') && 
@@ -82,24 +79,42 @@ export const Home: React.FC = () => {
       const ai = new GoogleGenAI({ apiKey: process.env.API_KEY });
       const response = await ai.models.generateContent({
         model: "gemini-3-flash-preview",
-        contents: `Analise o perfil para um retrato estratégico: Profissão: "${profession}". Objetivo de Imagem: "${goal}". 
-        Retorne um JSON com: 
-        "projeto": (escolha entre 'Van Gogh', 'Da Vinci' ou 'Apolo 360º'),
-        "estrategia": (uma frase sobre a narrativa visual),
-        "arquetipo": (qual arquétipo melhor se encaixa),
-        "dicaVisual": (dica de vestimenta ou iluminação). 
-        Seja sofisticado.`,
+        contents: `Analise o perfil para um retrato estratégico:
+        Profissão: "${profession}"
+        Objetivo de Imagem: "${goal}"`,
         config: { 
-          responseMimeType: "application/json"
+          systemInstruction: "Você é o consultor de imagem do Estúdio Mac Frois. Seu tom é sofisticado, minimalista e focado em autoridade. Analise o perfil e sugira um dos projetos: 'Van Gogh' (Essencial), 'Da Vinci' (Storytelling) ou 'Apolo 360º' (Gestão Completa).",
+          responseMimeType: "application/json",
+          responseSchema: {
+            type: Type.OBJECT,
+            properties: {
+              projeto: { type: Type.STRING, description: "Nome do projeto sugerido" },
+              estrategia: { type: Type.STRING, description: "Uma frase impactante sobre a narrativa visual" },
+              arquetipo: { type: Type.STRING, description: "O arquétipo que melhor comunica o objetivo" },
+              dicaVisual: { type: Type.STRING, description: "Dica curta de vestimenta ou tom de iluminação" }
+            },
+            required: ["projeto", "estrategia", "arquetipo", "dicaVisual"]
+          }
         }
       });
       
       const data = JSON.parse(response.text || '{}');
       setRecommendation(data);
+      
+      // Scroll suave para o resultado em dispositivos móveis
+      setTimeout(() => {
+        resultRef.current?.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      }, 100);
     } catch (error) {
       console.error("Erro na consultoria IA:", error);
     }
     setAiLoading(false);
+  };
+
+  const resetConsultation = () => {
+    setRecommendation(null);
+    setProfession('');
+    setGoal('');
   };
 
   return (
@@ -156,107 +171,143 @@ export const Home: React.FC = () => {
         </div>
       </section>
 
-      {/* Consultoria de Imagem IA */}
-      <section className="py-32 bg-black border-y border-zinc-900 overflow-hidden relative">
+      {/* Seção Funcional: Espelho da Autoridade */}
+      <section className="py-32 bg-black border-y border-zinc-900 overflow-hidden relative" id="espelho">
         <div className="absolute top-0 right-0 w-96 h-96 bg-gold-600/5 rounded-full blur-[120px] pointer-events-none"></div>
         <div className="container mx-auto px-6 relative z-10">
           <div className="max-w-4xl mx-auto">
             <div className="text-center mb-16">
-              <span className="text-gold-500 text-[10px] font-bold uppercase tracking-[0.5em] mb-4 block">Tecnologia & Estratégia</span>
+              <span className="text-gold-500 text-[10px] font-bold uppercase tracking-[0.5em] mb-4 block">Consultoria com IA</span>
               <h2 className="text-4xl md:text-6xl font-serif text-white mb-6 italic tracking-widest">Espelho da Autoridade</h2>
               <p className="text-zinc-500 text-sm tracking-[0.2em] uppercase max-w-xl mx-auto font-light">
-                Descubra em segundos qual a melhor estratégia visual para o seu momento profissional atual.
+                Descubra em segundos a estratégia visual que elevará seu ticket médio e percepção de valor.
               </p>
             </div>
 
-            <div className="grid md:grid-cols-2 gap-12">
+            <div className="grid md:grid-cols-2 gap-12 items-start">
               <div className="space-y-8">
                 <form onSubmit={handleAiConsultation} className="space-y-6">
                   <div className="space-y-2">
                     <label className="text-[10px] text-zinc-400 uppercase tracking-widest font-bold flex items-center gap-2">
-                      <User size={12} className="text-gold-600" /> Qual sua profissão?
+                      <User size={12} className="text-gold-600" /> Sua Profissão Atual
                     </label>
                     <input 
                       type="text" 
                       value={profession}
                       onChange={(e) => setProfession(e.target.value)}
-                      placeholder="Ex: Advogado, Executivo, Artista..."
-                      className="w-full bg-zinc-900/50 border border-zinc-800 p-4 text-white focus:border-gold-600 outline-none rounded-sm text-sm font-light tracking-wide transition-all"
+                      placeholder="Ex: CEO, Advogada, Arquiteto..."
+                      required
+                      disabled={!!recommendation || aiLoading}
+                      className="w-full bg-zinc-900/50 border border-zinc-800 p-4 text-white focus:border-gold-600 outline-none rounded-sm text-sm font-light tracking-wide transition-all disabled:opacity-50"
                     />
                   </div>
                   <div className="space-y-2">
                     <label className="text-[10px] text-zinc-400 uppercase tracking-widest font-bold flex items-center gap-2">
-                      <Target size={12} className="text-gold-600" /> O que deseja transmitir?
+                      <Target size={12} className="text-gold-600" /> Objetivo de Imagem
                     </label>
                     <input 
                       type="text" 
                       value={goal}
                       onChange={(e) => setGoal(e.target.value)}
-                      placeholder="Ex: Confiança, Criatividade, Poder..."
-                      className="w-full bg-zinc-900/50 border border-zinc-800 p-4 text-white focus:border-gold-600 outline-none rounded-sm text-sm font-light tracking-wide transition-all"
+                      placeholder="Ex: Transmitir confiança e luxo..."
+                      required
+                      disabled={!!recommendation || aiLoading}
+                      className="w-full bg-zinc-900/50 border border-zinc-800 p-4 text-white focus:border-gold-600 outline-none rounded-sm text-sm font-light tracking-wide transition-all disabled:opacity-50"
                     />
                   </div>
-                  <Button 
-                    type="submit" 
-                    disabled={aiLoading || !profession || !goal}
-                    className="w-full py-5 flex items-center justify-center gap-3 tracking-[0.3em]"
-                  >
-                    {aiLoading ? <Loader2 size={18} className="animate-spin" /> : <Sparkles size={18} />}
-                    CONSULTORIA INSTANTÂNEA
-                  </Button>
+                  
+                  {!recommendation ? (
+                    <Button 
+                      type="submit" 
+                      disabled={aiLoading || !profession || !goal}
+                      className="w-full py-5 flex items-center justify-center gap-3 tracking-[0.3em] shadow-[0_10px_30px_rgba(217,119,6,0.1)]"
+                    >
+                      {aiLoading ? <Loader2 size={18} className="animate-spin" /> : <Sparkles size={18} />}
+                      {aiLoading ? 'ANALISANDO PERFIL...' : 'OBTER DIAGNÓSTICO'}
+                    </Button>
+                  ) : (
+                    <Button 
+                      onClick={resetConsultation}
+                      variant="outline"
+                      className="w-full py-5 flex items-center justify-center gap-3 tracking-[0.3em] border-zinc-800 hover:border-gold-500"
+                    >
+                      <RotateCcw size={18} />
+                      NOVA CONSULTA
+                    </Button>
+                  )}
                 </form>
                 
-                <div className="p-6 border-l-2 border-zinc-800 bg-zinc-900/20">
-                  <p className="text-zinc-500 text-[10px] uppercase leading-relaxed tracking-widest">
-                    *Esta análise utiliza inteligência artificial baseada nos princípios de semiótica e branding pessoal aplicados pelo Estúdio Mac Frois.
+                <div className="p-6 border-l-2 border-zinc-900 bg-zinc-900/20 rounded-r-md">
+                  <div className="flex items-center gap-3 mb-2">
+                    <ShieldCheck size={14} className="text-gold-600" />
+                    <span className="text-white text-[9px] font-bold uppercase tracking-widest">Tecnologia Segura</span>
+                  </div>
+                  <p className="text-zinc-600 text-[10px] uppercase leading-relaxed tracking-widest">
+                    Algoritmo exclusivo baseado em semiótica e arquétipos aplicados pelo Estúdio Mac Frois.
                   </p>
                 </div>
               </div>
 
-              <div className="relative">
-                <div className={`transition-all duration-700 ${recommendation ? 'opacity-100 translate-y-0' : 'opacity-20 blur-sm pointer-events-none'}`}>
-                  <Card className="border-gold-600/30 bg-zinc-900/50 backdrop-blur-md h-full flex flex-col justify-between">
+              <div className="relative min-h-[400px]" ref={resultRef}>
+                <div className={`transition-all duration-700 transform ${recommendation ? 'opacity-100 translate-y-0' : 'opacity-20 blur-md pointer-events-none translate-y-10'}`}>
+                  <Card className="border-gold-600/30 bg-zinc-900/50 backdrop-blur-xl h-full flex flex-col justify-between shadow-2xl">
                     <div>
                       <h4 className="text-gold-500 text-xs font-bold tracking-[0.4em] uppercase mb-8 border-b border-zinc-800 pb-4 flex items-center gap-3">
-                        <Zap size={16} /> Diagnóstico Visual
+                        <Zap size={16} /> Diagnóstico de Autoridade
                       </h4>
                       
                       {recommendation && (
-                        <div className="space-y-8">
+                        <div className="space-y-8 animate-fade-in">
                           <div>
-                            <span className="text-zinc-500 text-[10px] uppercase tracking-widest block mb-2">Projeto Sugerido</span>
-                            <p className="text-white text-2xl font-serif tracking-widest uppercase italic">{recommendation.projeto}</p>
+                            <span className="text-zinc-500 text-[10px] uppercase tracking-widest block mb-2 font-bold">Projeto Recomendado</span>
+                            <p className="text-white text-3xl font-serif tracking-widest uppercase italic group flex items-center gap-3">
+                              {recommendation.projeto}
+                            </p>
                           </div>
                           <div>
-                            <span className="text-zinc-500 text-[10px] uppercase tracking-widest block mb-2">Estratégia Narrativa</span>
-                            <p className="text-zinc-300 text-sm font-light tracking-wide italic leading-relaxed">"{recommendation.estrategia}"</p>
+                            <span className="text-zinc-500 text-[10px] uppercase tracking-widest block mb-2 font-bold">Estratégia Narrativa</span>
+                            <p className="text-zinc-200 text-sm font-light tracking-wide italic leading-relaxed border-l border-gold-600/50 pl-4 py-1">
+                              "{recommendation.estrategia}"
+                            </p>
                           </div>
-                          <div className="grid grid-cols-2 gap-4">
-                            <div>
-                              <span className="text-zinc-500 text-[10px] uppercase tracking-widest block mb-2">Arquétipo</span>
+                          <div className="grid grid-cols-2 gap-6">
+                            <div className="bg-black/20 p-4 rounded-sm border border-zinc-800/50">
+                              <span className="text-zinc-500 text-[9px] uppercase tracking-widest block mb-2">Arquétipo</span>
                               <p className="text-gold-600 text-[11px] font-bold tracking-[0.2em] uppercase">{recommendation.arquetipo}</p>
                             </div>
-                            <div>
-                              <span className="text-zinc-500 text-[10px] uppercase tracking-widest block mb-2">Dica de Look</span>
-                              <p className="text-zinc-400 text-[10px] uppercase tracking-wider">{recommendation.dicaVisual}</p>
+                            <div className="bg-black/20 p-4 rounded-sm border border-zinc-800/50">
+                              <span className="text-zinc-500 text-[9px] uppercase tracking-widest block mb-2">Direção de Look</span>
+                              <p className="text-zinc-300 text-[10px] uppercase tracking-wider font-light">{recommendation.dicaVisual}</p>
                             </div>
                           </div>
                         </div>
                       )}
                     </div>
 
-                    <div className="mt-12">
+                    <div className="mt-12 flex flex-col gap-3">
                       <Link to="/servicos">
-                        <Button variant="outline" className="w-full py-4 text-[10px] tracking-[0.3em]">
-                          VER DETALHES DO PROJETO <ArrowRight size={14} className="ml-2 inline" />
+                        <Button className="w-full py-4 text-[10px] tracking-[0.3em] !bg-gold-600 hover:!bg-gold-500">
+                          SOLICITAR ESTE PROJETO <ArrowRight size={14} className="ml-2 inline" />
                         </Button>
                       </Link>
+                      <a href={whatsappUrl} target="_blank" rel="noopener noreferrer">
+                        <Button variant="outline" className="w-full py-4 text-[10px] tracking-[0.3em] border-zinc-800">
+                          Falar com o Retratista
+                        </Button>
+                      </a>
                     </div>
                   </Card>
                 </div>
                 {!recommendation && !aiLoading && (
-                  <div className="absolute inset-0 flex items-center justify-center text-center px-12">
+                  <div className="absolute inset-0 flex flex-col items-center justify-center text-center px-12 animate-pulse">
+                    <Sparkles size={48} className="text-zinc-800 mb-6" />
                     <p className="text-zinc-700 text-xs tracking-[0.5em] uppercase font-bold">Aguardando dados para diagnóstico...</p>
+                  </div>
+                )}
+                {aiLoading && (
+                  <div className="absolute inset-0 flex flex-col items-center justify-center text-center px-12">
+                    <Loader2 size={48} className="text-gold-600 animate-spin mb-6" />
+                    <p className="text-gold-500 text-xs tracking-[0.5em] uppercase font-bold">Consultando a Ciência do Retrato...</p>
                   </div>
                 )}
               </div>
@@ -265,7 +316,7 @@ export const Home: React.FC = () => {
         </div>
       </section>
 
-      {/* Featured Portfolio Mini Grid - Exibindo Fotos Escolhidas ou Artísticas */}
+      {/* Featured Portfolio Mini Grid */}
       <section className="py-32 bg-zinc-950">
         <div className="container mx-auto px-6 text-center">
           <SectionTitle title="A Estética da Verdade" subtitle="Recortes do Portfólio" />
