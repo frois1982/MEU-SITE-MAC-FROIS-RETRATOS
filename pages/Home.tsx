@@ -3,7 +3,7 @@ import React, { useState, useEffect, useRef } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { SectionTitle, Button, Skeleton, Card } from '../components/UI';
 import { DRIVE_SCRIPT_URL } from '../config';
-import { ArrowRight, MessageCircle, Sparkles, User, Target, Zap, Loader2, RotateCcw, ShieldCheck, AlertCircle, Key } from 'lucide-center';
+import { ArrowRight, MessageCircle, Sparkles, User, Target, Zap, Loader2, RotateCcw, ShieldCheck, AlertCircle, Key } from 'lucide-react';
 import { GoogleGenAI, Type } from "@google/genai";
 import { AIRecommendation, PortfolioItem } from '../types';
 
@@ -78,9 +78,8 @@ export const Home: React.FC = () => {
         // @ts-ignore
         await window.aistudio.openSelectKey();
         setApiError(null);
-        // Após selecionar, tentamos rodar a consulta de novo se os campos estiverem cheios
         if (profession && goal) {
-           handleAiConsultation(new Event('submit') as any);
+           handleAiConsultation(null as any);
         }
       }
     } catch (e) {
@@ -88,7 +87,7 @@ export const Home: React.FC = () => {
     }
   };
 
-  const handleAiConsultation = async (e: React.FormEvent) => {
+  const handleAiConsultation = async (e?: React.FormEvent) => {
     if (e) e.preventDefault();
     if (!profession || !goal) return;
 
@@ -96,7 +95,7 @@ export const Home: React.FC = () => {
     setApiError(null);
 
     try {
-      // Inicializa a IA sempre no momento do clique para garantir a chave mais recente
+      // Cria instância nova para garantir que pega a chave injetada pela Vercel ou selecionada
       const ai = new GoogleGenAI({ apiKey: process.env.API_KEY || '' });
       
       const response = await ai.models.generateContent({
@@ -105,7 +104,7 @@ export const Home: React.FC = () => {
         Profissão: "${profession}"
         Objetivo Visual: "${goal}"`,
         config: { 
-          systemInstruction: `Você é o estrategista de imagem de luxo do Estúdio Mac Frois. 
+          systemInstruction: `Você é o estrategista de imagem de luxo do Estúdio Mac Frois em Florianópolis. 
           Sua missão é dar um diagnóstico curto e impactante sobre o posicionamento visual do cliente.
           O tom deve ser sofisticado, minimalista e autoritário. Use Português do Brasil.
           Escolha um dos projetos: "Van Gogh", "Da Vinci" ou "Apolo 360º".`,
@@ -132,12 +131,11 @@ export const Home: React.FC = () => {
       }
     } catch (error: any) {
       console.error("Erro na IA:", error);
-      
-      const errorMsg = error.message || "";
-      if (errorMsg.includes("API key") || errorMsg.includes("not found") || errorMsg.includes("403") || errorMsg.includes("401")) {
-        setApiError("CONEXÃO COM A INTELIGÊNCIA INDISPONÍVEL. ATIVE SUA CHAVE ABAIXO PARA CONTINUAR.");
+      const msg = error.message || "";
+      if (msg.includes("API key") || msg.includes("403") || msg.includes("401") || msg.includes("not found")) {
+        setApiError("CONEXÃO COM A INTELIGÊNCIA REQUER ATIVAÇÃO. SE VOCÊ É O ADMINISTRADOR, ATIVE ABAIXO.");
       } else {
-        setApiError("ERRO TEMPORÁRIO NA REDE. TENTE NOVAMENTE EM INSTANTES.");
+        setApiError("ERRO DE COMUNICAÇÃO. TENTE NOVAMENTE EM ALGUNS SEGUNDOS.");
       }
     }
     setAiLoading(false);
@@ -188,8 +186,8 @@ export const Home: React.FC = () => {
           <div className="max-w-4xl mx-auto">
             <div className="text-center mb-16">
               <span className="text-gold-500 text-[10px] font-bold uppercase tracking-[0.5em] mb-4 block">Consultoria Estratégica IA</span>
-              <h2 className="text-4xl md:text-6xl font-serif text-white mb-6 italic tracking-widest">Espelho da Autoridade</h2>
-              <p className="text-zinc-500 text-sm tracking-[0.2em] uppercase max-w-xl mx-auto font-light">
+              <h2 className="text-4xl md:text-6xl font-serif text-white mb-6 italic tracking-widest text-center">Espelho da Autoridade</h2>
+              <p className="text-zinc-500 text-sm tracking-[0.2em] uppercase max-w-xl mx-auto font-light text-center">
                 O diagnóstico preciso para sua próxima narrativa visual.
               </p>
             </div>
