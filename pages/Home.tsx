@@ -20,11 +20,25 @@ export const Home: React.FC = () => {
   const [goal, setGoal] = useState('');
   const [aiLoading, setAiLoading] = useState(false);
   const [recommendation, setRecommendation] = useState<AIRecommendation | null>(null);
+  const [needsKey, setNeedsKey] = useState(false);
   const [apiError, setApiError] = useState<string | null>(null);
 
   const whatsappUrl = "https://wa.me/5548996231894?text=Olá%20Mac,%20vi%20seu%20site%20e%20gostaria%20de%20saber%20mais%20sobre%20os%20retratos%20de%20posicionamento.";
 
   useEffect(() => {
+    // Verifica se já temos uma chave selecionada ao carregar
+    const checkKey = async () => {
+      // @ts-ignore
+      if (window.aistudio) {
+        // @ts-ignore
+        const hasKey = await window.aistudio.hasSelectedApiKey();
+        if (!hasKey && !process.env.API_KEY) {
+          setNeedsKey(true);
+        }
+      }
+    };
+    checkKey();
+
     if (!DRIVE_SCRIPT_URL) {
       setLoading(false);
       return;
@@ -74,39 +88,48 @@ export const Home: React.FC = () => {
   const handleKeyActivation = async () => {
     try {
       // @ts-ignore
-      if (window.aistudio && typeof window.aistudio.openSelectKey === 'function') {
+      if (window.aistudio) {
         // @ts-ignore
         await window.aistudio.openSelectKey();
+        setNeedsKey(false);
         setApiError(null);
-        if (profession && goal) {
-           handleAiConsultation(null as any);
-        }
       }
     } catch (e) {
-      console.error("Erro ao abrir seletor de chaves:", e);
+      console.error("Erro ao abrir seletor:", e);
     }
   };
 
-  const handleAiConsultation = async (e?: React.FormEvent) => {
-    if (e) e.preventDefault();
+  const handleAiConsultation = async (e: React.FormEvent) => {
+    e.preventDefault();
     if (!profession || !goal) return;
 
     setAiLoading(true);
     setApiError(null);
 
     try {
-      // Cria instância nova para garantir que pega a chave injetada pela Vercel ou selecionada
+      // @ts-ignore
+      if (window.aistudio) {
+        // @ts-ignore
+        const hasKey = await window.aistudio.hasSelectedApiKey();
+        if (!hasKey && !process.env.API_KEY) {
+          setNeedsKey(true);
+          setAiLoading(false);
+          return;
+        }
+      }
+
+      // Inicializa sempre no momento da chamada para garantir que pega a chave selecionada
       const ai = new GoogleGenAI({ apiKey: process.env.API_KEY || '' });
       
       const response = await ai.models.generateContent({
         model: "gemini-3-flash-preview",
-        contents: `CLIENTE: 
+        contents: `Analise este perfil para o Estúdio Mac Frois:
         Profissão: "${profession}"
-        Objetivo Visual: "${goal}"`,
+        Desejo de Imagem: "${goal}"`,
         config: { 
-          systemInstruction: `Você é o estrategista de imagem de luxo do Estúdio Mac Frois em Florianópolis. 
-          Sua missão é dar um diagnóstico curto e impactante sobre o posicionamento visual do cliente.
-          O tom deve ser sofisticado, minimalista e autoritário. Use Português do Brasil.
+          systemInstruction: `Você é um estrategista de branding e semiótica visual de alto luxo. 
+          Dê um diagnóstico curto e impactante em Português do Brasil.
+          Seja direto, sofisticado e use um tom de autoridade.
           Escolha um dos projetos: "Van Gogh", "Da Vinci" ou "Apolo 360º".`,
           responseMimeType: "application/json",
           responseSchema: {
@@ -130,12 +153,13 @@ export const Home: React.FC = () => {
         }, 300);
       }
     } catch (error: any) {
-      console.error("Erro na IA:", error);
+      console.error("Erro IA:", error);
       const msg = error.message || "";
-      if (msg.includes("API key") || msg.includes("403") || msg.includes("401") || msg.includes("not found")) {
-        setApiError("CONEXÃO COM A INTELIGÊNCIA REQUER ATIVAÇÃO. SE VOCÊ É O ADMINISTRADOR, ATIVE ABAIXO.");
+      if (msg.includes("API key") || msg.includes("not found") || msg.includes("403") || msg.includes("401")) {
+        setNeedsKey(true);
+        setApiError("A CHAVE DE ACESSO EXPIROU OU É INVÁLIDA. POR FAVOR, REATIVE-A.");
       } else {
-        setApiError("ERRO DE COMUNICAÇÃO. TENTE NOVAMENTE EM ALGUNS SEGUNDOS.");
+        setApiError("SISTEMA TEMPORARIAMENTE INDISPONÍVEL. TENTE NOVAMENTE.");
       }
     }
     setAiLoading(false);
@@ -206,7 +230,7 @@ export const Home: React.FC = () => {
                       placeholder="Ex: CEO, Advogada, Arquiteto..."
                       required
                       disabled={aiLoading}
-                      className="w-full bg-zinc-900/70 border border-zinc-800 p-5 text-white focus:border-gold-600 outline-none rounded-sm text-sm font-light tracking-wide transition-all backdrop-blur-xl focus:bg-zinc-900/90"
+                      className="w-full bg-zinc-900/70 border border-zinc-800 p-5 text-white focus:border-gold-600 outline-none rounded-sm text-sm font-light tracking-wide transition-all backdrop-blur-3xl focus:bg-zinc-900/90 shadow-2xl"
                     />
                   </div>
                   <div className="space-y-2">
@@ -220,24 +244,23 @@ export const Home: React.FC = () => {
                       placeholder="Ex: Confiança e Autoridade..."
                       required
                       disabled={aiLoading}
-                      className="w-full bg-zinc-900/70 border border-zinc-800 p-5 text-white focus:border-gold-600 outline-none rounded-sm text-sm font-light tracking-wide transition-all backdrop-blur-xl focus:bg-zinc-900/90"
+                      className="w-full bg-zinc-900/70 border border-zinc-800 p-5 text-white focus:border-gold-600 outline-none rounded-sm text-sm font-light tracking-wide transition-all backdrop-blur-3xl focus:bg-zinc-900/90 shadow-2xl"
                     />
                   </div>
                   
-                  {apiError ? (
-                    <div className="space-y-4 animate-in fade-in slide-in-from-top-2">
-                      <div className="p-5 bg-red-900/20 border border-red-800/50 rounded-sm flex items-start gap-3 backdrop-blur-md">
-                        <AlertCircle size={18} className="text-red-500 shrink-0 mt-0.5" />
-                        <p className="text-red-200 text-[10px] uppercase tracking-[0.2em] leading-relaxed font-bold">{apiError}</p>
+                  {needsKey ? (
+                    <div className="space-y-4 p-8 bg-zinc-900/70 border border-gold-600/30 rounded-sm backdrop-blur-3xl animate-in fade-in zoom-in-95 duration-500 shadow-2xl">
+                      <div className="flex items-center gap-3 mb-4">
+                        <Key size={18} className="text-gold-500 animate-pulse" />
+                        <span className="text-white text-[10px] font-bold uppercase tracking-widest">Ativação Necessária</span>
                       </div>
-                      <div className="flex gap-2">
-                         <Button onClick={handleKeyActivation} variant="primary" className="flex-1 py-4 text-[10px] !bg-gold-600/80">
-                           <Key size={14} className="mr-2" /> ATIVAR INTELIGÊNCIA
-                         </Button>
-                         <Button onClick={() => setApiError(null)} variant="secondary" className="px-5 !bg-zinc-800/50 backdrop-blur-md">
-                           <RotateCcw size={14} />
-                         </Button>
-                      </div>
+                      <p className="text-zinc-400 text-[10px] uppercase tracking-[0.2em] leading-relaxed mb-6 font-light">
+                        {apiError || "Para acessar o Espelho da Autoridade, é necessário ativar sua chave de inteligência oficial."}
+                      </p>
+                      <Button onClick={handleKeyActivation} className="w-full py-5 !bg-gold-600/80 hover:!bg-gold-600 flex items-center justify-center gap-3 tracking-[0.3em] shadow-xl border-none">
+                        ATIVAR AGORA
+                      </Button>
+                      <p className="text-zinc-600 text-[8px] text-center tracking-widest uppercase mt-4">Uso exclusivo para fins de posicionamento estratégico.</p>
                     </div>
                   ) : !recommendation ? (
                     <Button 
@@ -252,7 +275,7 @@ export const Home: React.FC = () => {
                     <Button 
                       onClick={resetConsultation}
                       variant="outline"
-                      className="w-full py-6 flex items-center justify-center gap-3 tracking-[0.4em] border-zinc-800 hover:border-gold-500 backdrop-blur-md !bg-zinc-900/70"
+                      className="w-full py-6 flex items-center justify-center gap-3 tracking-[0.4em] border-zinc-800 hover:border-gold-500 backdrop-blur-3xl !bg-zinc-900/70"
                     >
                       <RotateCcw size={18} />
                       REFAZER ANÁLISE
@@ -260,7 +283,7 @@ export const Home: React.FC = () => {
                   )}
                 </form>
                 
-                <div className="p-6 border-l-2 border-gold-600/30 bg-zinc-900/70 rounded-r-md backdrop-blur-xl border border-zinc-800/30">
+                <div className="p-6 border-l-2 border-gold-600/30 bg-zinc-900/70 rounded-r-md backdrop-blur-3xl border border-zinc-800/30">
                   <div className="flex items-center gap-3 mb-2">
                     <ShieldCheck size={14} className="text-gold-600" />
                     <span className="text-white text-[9px] font-bold uppercase tracking-widest">Protocolo Mac Frois</span>
@@ -273,7 +296,7 @@ export const Home: React.FC = () => {
 
               <div className="relative min-h-[460px]" ref={resultRef}>
                 <div className={`transition-all duration-1000 transform h-full ${recommendation ? 'opacity-100 translate-y-0 scale-100' : 'opacity-10 blur-2xl pointer-events-none translate-y-10 scale-95'}`}>
-                  <Card className="border-gold-600/30 bg-zinc-900/70 backdrop-blur-2xl h-full flex flex-col justify-between shadow-2xl relative overflow-hidden group p-10">
+                  <Card className="border-gold-600/30 bg-zinc-900/70 backdrop-blur-3xl h-full flex flex-col justify-between shadow-2xl relative overflow-hidden group p-10">
                     <div className="absolute top-0 right-0 w-64 h-64 bg-gold-600/10 rounded-full blur-[80px] group-hover:bg-gold-600/15 transition-all"></div>
                     <div className="relative z-10">
                       <h4 className="text-gold-500 text-[10px] font-bold tracking-[0.5em] uppercase mb-12 border-b border-zinc-800/50 pb-6 flex items-center gap-3">
@@ -315,7 +338,7 @@ export const Home: React.FC = () => {
                         </Button>
                       </Link>
                       <a href={whatsappUrl} target="_blank" rel="noopener noreferrer">
-                        <Button variant="outline" className="w-full py-5 text-[11px] tracking-[0.4em] !border-zinc-800 hover:!border-gold-600/40 backdrop-blur-md !bg-zinc-900/70">
+                        <Button variant="outline" className="w-full py-5 text-[11px] tracking-[0.4em] !border-zinc-800 hover:!border-gold-600/40 backdrop-blur-3xl !bg-zinc-900/70">
                           CONSULTAR MAC
                         </Button>
                       </a>
@@ -323,7 +346,7 @@ export const Home: React.FC = () => {
                   </Card>
                 </div>
                 
-                {!recommendation && !aiLoading && !apiError && (
+                {!recommendation && !aiLoading && !needsKey && (
                   <div className="absolute inset-0 flex flex-col items-center justify-center text-center px-12 animate-pulse">
                     <div className="relative mb-10">
                        <div className="absolute inset-0 bg-gold-600/10 blur-3xl rounded-full"></div>
@@ -371,7 +394,7 @@ export const Home: React.FC = () => {
                     className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-[2000ms] opacity-60 group-hover:opacity-100"
                   />
                   <div className="absolute inset-0 bg-black/50 backdrop-blur-[2px] opacity-0 group-hover:opacity-100 transition-all duration-700 flex items-center justify-center p-6">
-                     <div className="text-center border border-white/10 bg-white/5 backdrop-blur-xl p-8 w-full h-full flex flex-col items-center justify-center scale-90 group-hover:scale-100 transition-transform duration-700">
+                     <div className="text-center border border-white/10 bg-white/5 backdrop-blur-3xl p-8 w-full h-full flex flex-col items-center justify-center scale-90 group-hover:scale-100 transition-transform duration-700">
                        <span className="text-white text-[11px] tracking-[0.5em] uppercase border-b border-gold-600/50 pb-3 block mb-4 font-bold">Ver Obra</span>
                        <span className="text-gold-500 text-[9px] tracking-[0.4em] uppercase opacity-80 italic font-medium">{item.title}</span>
                      </div>
