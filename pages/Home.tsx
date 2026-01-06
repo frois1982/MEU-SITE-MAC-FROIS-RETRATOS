@@ -24,6 +24,16 @@ export const Home: React.FC = () => {
 
   const whatsappUrl = "https://wa.me/5548996231894?text=Olá%20Mac,%20vi%20seu%20site%20e%20gostaria%20de%20saber%20mais%20sobre%20os%20retratos%20de%20posicionamento.";
 
+  // Função segura para pegar a API KEY
+  const getApiKey = () => {
+    try {
+      // @ts-ignore
+      return (typeof process !== 'undefined' && process.env?.API_KEY) || window.API_KEY || '';
+    } catch (e) {
+      return '';
+    }
+  };
+
   useEffect(() => {
     if (!DRIVE_SCRIPT_URL) {
       setLoading(false);
@@ -73,9 +83,13 @@ export const Home: React.FC = () => {
 
   const handleKeyActivation = async () => {
     try {
+      // @ts-ignore
       if (window.aistudio && typeof window.aistudio.openSelectKey === 'function') {
+        // @ts-ignore
         await window.aistudio.openSelectKey();
         setApiError(null);
+      } else {
+        alert("Para ativar no celular ou Vercel, certifique-se de que a variável API_KEY está configurada no painel da Vercel e faça um novo deploy.");
       }
     } catch (e) {
       console.error("Erro ao abrir seletor de chaves:", e);
@@ -89,14 +103,15 @@ export const Home: React.FC = () => {
     setAiLoading(true);
     setApiError(null);
 
-    try {
-      // Tenta usar a chave do ambiente (Vercel) ou a do seletor do Studio
-      const apiKey = process.env.API_KEY;
-      
-      if (!apiKey) {
-        throw new Error("Chave de API não configurada.");
-      }
+    const apiKey = getApiKey();
+    
+    if (!apiKey) {
+      setApiError("CHAVE DE API AUSENTE. SE VOCÊ FOR O ADMINISTRADOR, ATIVE-A ABAIXO.");
+      setAiLoading(false);
+      return;
+    }
 
+    try {
       const ai = new GoogleGenAI({ apiKey });
       const response = await ai.models.generateContent({
         model: "gemini-3-flash-preview",
@@ -106,7 +121,7 @@ export const Home: React.FC = () => {
         config: { 
           systemInstruction: `Você é o estrategista de imagem de luxo do Estúdio Mac Frois. 
           Sua missão é dar um diagnóstico curto e impactante sobre o posicionamento visual do cliente.
-          O tom deve ser sofisticado e minimalista.
+          O tom deve ser sofisticado e minimalista. Use português do Brasil.
           Escolha um dos projetos: "Van Gogh", "Da Vinci" ou "Apolo 360º".`,
           responseMimeType: "application/json",
           responseSchema: {
@@ -131,10 +146,10 @@ export const Home: React.FC = () => {
       }
     } catch (error: any) {
       console.error("Erro na IA:", error);
-      if (error.message?.includes("Chave")) {
-        setApiError("Chave de API ausente. Se você for o administrador, ative-a abaixo.");
+      if (error.message?.includes("404") || error.message?.includes("not found")) {
+        setApiError("Erro de configuração. Tente ativar a chave novamente.");
       } else {
-        setApiError("Erro de conexão com o servidor de IA. Tente novamente.");
+        setApiError("ERRO DE CONEXÃO. VERIFIQUE SE SUA CHAVE TEM CRÉDITOS OU ESTÁ ATIVA.");
       }
     }
     setAiLoading(false);
@@ -230,7 +245,7 @@ export const Home: React.FC = () => {
                       placeholder="Ex: CEO, Advogada, Arquiteto..."
                       required
                       disabled={aiLoading}
-                      className="w-full bg-zinc-900/40 border border-zinc-800 p-4 text-white focus:border-gold-600 outline-none rounded-sm text-sm font-light tracking-wide transition-all backdrop-blur-md focus:bg-zinc-900/60"
+                      className="w-full bg-zinc-900/70 border border-zinc-800 p-4 text-white focus:border-gold-600 outline-none rounded-sm text-sm font-light tracking-wide transition-all backdrop-blur-md focus:bg-zinc-900/90"
                     />
                   </div>
                   <div className="space-y-2">
@@ -244,7 +259,7 @@ export const Home: React.FC = () => {
                       placeholder="Ex: Confiança e Autoridade..."
                       required
                       disabled={aiLoading}
-                      className="w-full bg-zinc-900/40 border border-zinc-800 p-4 text-white focus:border-gold-600 outline-none rounded-sm text-sm font-light tracking-wide transition-all backdrop-blur-md focus:bg-zinc-900/60"
+                      className="w-full bg-zinc-900/70 border border-zinc-800 p-4 text-white focus:border-gold-600 outline-none rounded-sm text-sm font-light tracking-wide transition-all backdrop-blur-md focus:bg-zinc-900/90"
                     />
                   </div>
                   
@@ -255,10 +270,10 @@ export const Home: React.FC = () => {
                         <p className="text-red-200 text-[10px] uppercase tracking-widest leading-relaxed">{apiError}</p>
                       </div>
                       <div className="flex gap-2">
-                         <Button onClick={handleKeyActivation} variant="outline" className="flex-1 py-4 text-[10px] border-zinc-800">
+                         <Button onClick={handleKeyActivation} variant="outline" className="flex-1 py-4 text-[10px] border-zinc-800 !bg-zinc-900/70 backdrop-blur-md">
                            <Key size={14} className="mr-2" /> ATIVAR CHAVE
                          </Button>
-                         <Button onClick={resetConsultation} variant="secondary" className="px-4">
+                         <Button onClick={resetConsultation} variant="secondary" className="px-4 !bg-zinc-800/70 backdrop-blur-md">
                            <RotateCcw size={14} />
                          </Button>
                       </div>
@@ -267,7 +282,7 @@ export const Home: React.FC = () => {
                     <Button 
                       type="submit" 
                       disabled={aiLoading || !profession || !goal}
-                      className="w-full py-5 flex items-center justify-center gap-3 tracking-[0.3em] !bg-gold-600/70 hover:!bg-gold-600 backdrop-blur-md shadow-[0_10px_30px_rgba(217,119,6,0.1)] transition-all active:scale-[0.98]"
+                      className="w-full py-5 flex items-center justify-center gap-3 tracking-[0.3em] !bg-gold-600/80 hover:!bg-gold-600 backdrop-blur-md shadow-[0_10px_30px_rgba(217,119,6,0.1)] transition-all active:scale-[0.98]"
                     >
                       {aiLoading ? <Loader2 size={18} className="animate-spin" /> : <Sparkles size={18} />}
                       {aiLoading ? 'ANALISANDO...' : 'OBTER DIAGNÓSTICO'}
@@ -276,7 +291,7 @@ export const Home: React.FC = () => {
                     <Button 
                       onClick={resetConsultation}
                       variant="outline"
-                      className="w-full py-5 flex items-center justify-center gap-3 tracking-[0.3em] border-zinc-800 hover:border-gold-500 backdrop-blur-sm"
+                      className="w-full py-5 flex items-center justify-center gap-3 tracking-[0.3em] border-zinc-800 hover:border-gold-500 backdrop-blur-md !bg-zinc-900/70"
                     >
                       <RotateCcw size={18} />
                       REFAZER ANÁLISE
@@ -284,7 +299,7 @@ export const Home: React.FC = () => {
                   )}
                 </form>
                 
-                <div className="p-6 border-l-2 border-zinc-900 bg-zinc-900/40 rounded-r-md backdrop-blur-md border border-zinc-800/30">
+                <div className="p-6 border-l-2 border-zinc-900 bg-zinc-900/70 rounded-r-md backdrop-blur-md border border-zinc-800/30">
                   <div className="flex items-center gap-3 mb-2">
                     <ShieldCheck size={14} className="text-gold-600" />
                     <span className="text-white text-[9px] font-bold uppercase tracking-widest">Tecnologia Mac Frois</span>
@@ -297,7 +312,7 @@ export const Home: React.FC = () => {
 
               <div className="relative min-h-[420px]" ref={resultRef}>
                 <div className={`transition-all duration-700 transform h-full ${recommendation ? 'opacity-100 translate-y-0 scale-100' : 'opacity-10 blur-xl pointer-events-none translate-y-10 scale-95'}`}>
-                  <Card className="border-gold-600/30 bg-zinc-900/70 backdrop-blur-2xl h-full flex flex-col justify-between shadow-2xl relative overflow-hidden group">
+                  <Card className="border-gold-600/30 bg-zinc-900/80 backdrop-blur-2xl h-full flex flex-col justify-between shadow-2xl relative overflow-hidden group">
                     <div className="absolute top-0 right-0 w-48 h-48 bg-gold-600/10 rounded-full blur-[60px] group-hover:bg-gold-600/15 transition-all"></div>
                     <div className="relative z-10">
                       <h4 className="text-gold-500 text-[10px] font-bold tracking-[0.5em] uppercase mb-10 border-b border-zinc-800 pb-4 flex items-center gap-3">
@@ -319,11 +334,11 @@ export const Home: React.FC = () => {
                             </p>
                           </div>
                           <div className="grid grid-cols-2 gap-4">
-                            <div className="bg-black/40 p-5 rounded-sm border border-zinc-800/60 backdrop-blur-md">
+                            <div className="bg-black/60 p-5 rounded-sm border border-zinc-800/60 backdrop-blur-md">
                               <span className="text-zinc-500 text-[9px] uppercase tracking-widest block mb-2 font-bold">Arquétipo</span>
                               <p className="text-gold-600 text-[11px] font-bold tracking-[0.2em] uppercase">{recommendation.arquetipo}</p>
                             </div>
-                            <div className="bg-black/40 p-5 rounded-sm border border-zinc-800/60 backdrop-blur-md">
+                            <div className="bg-black/60 p-5 rounded-sm border border-zinc-800/60 backdrop-blur-md">
                               <span className="text-zinc-500 text-[9px] uppercase tracking-widest block mb-2 font-bold">Look e Estilo</span>
                               <p className="text-zinc-400 text-[10px] uppercase tracking-wider font-light leading-snug">{recommendation.dicaVisual}</p>
                             </div>
@@ -334,12 +349,12 @@ export const Home: React.FC = () => {
 
                     <div className="mt-12 flex flex-col gap-3 relative z-10">
                       <Link to="/servicos">
-                        <Button className="w-full py-5 text-[10px] tracking-[0.4em] !bg-gold-600/80 hover:!bg-gold-600 shadow-xl">
+                        <Button className="w-full py-5 text-[10px] tracking-[0.4em] !bg-gold-600/90 hover:!bg-gold-600 shadow-xl">
                           RESERVAR PROJETO <ArrowRight size={14} className="ml-2 inline" />
                         </Button>
                       </Link>
                       <a href={whatsappUrl} target="_blank" rel="noopener noreferrer">
-                        <Button variant="outline" className="w-full py-5 text-[10px] tracking-[0.4em] !border-zinc-800 hover:!border-gold-600/40 backdrop-blur-sm">
+                        <Button variant="outline" className="w-full py-5 text-[10px] tracking-[0.4em] !border-zinc-800 hover:!border-gold-600/40 backdrop-blur-sm !bg-zinc-900/70">
                           Consultar Retratista
                         </Button>
                       </a>
@@ -358,7 +373,7 @@ export const Home: React.FC = () => {
                 {aiLoading && (
                   <div className="absolute inset-0 flex flex-col items-center justify-center text-center px-12 z-20">
                     <div className="w-48 h-1 bg-zinc-900 mb-10 overflow-hidden rounded-full relative">
-                       <div className="absolute inset-0 bg-gold-600/40 animate-[loading_1.5s_ease-in-out_infinite] shadow-[0_0_15px_rgba(217,119,6,0.4)]"></div>
+                       <div className="absolute inset-0 bg-gold-600/60 animate-[loading_1.5s_ease-in-out_infinite] shadow-[0_0_15px_rgba(217,119,6,0.4)]"></div>
                     </div>
                     <Loader2 size={56} className="text-gold-500 animate-spin mb-8 opacity-80" />
                     <p className="text-gold-500 text-[10px] tracking-[0.5em] uppercase font-bold animate-pulse">Mapeando Autoridade...</p>
