@@ -2,8 +2,7 @@
 import React, { useState, useEffect } from 'react';
 import { GoogleGenAI } from "@google/genai";
 import { Button, Card } from '../components/UI';
-import { DRIVE_SCRIPT_URL } from '../config';
-import { Sparkles, Image as ImageIcon, Copy, Check, Download, Loader2, Key, PenTool, FileText, Save, FileDown, Code2, CloudUpload } from 'lucide-react';
+import { Sparkles, Image as ImageIcon, Copy, Check, Download, Loader2, Key, PenTool, FileText, Save, FileDown, Rocket } from 'lucide-react';
 
 export const Admin: React.FC = () => {
   const [topic, setTopic] = useState('');
@@ -11,39 +10,9 @@ export const Admin: React.FC = () => {
   const [loadingImg, setLoadingImg] = useState(false);
   const [generatedText, setGeneratedText] = useState('');
   const [generatedImg, setGeneratedImg] = useState('');
+  const [copyStatus, setCopyStatus] = useState(false);
   const [hasKey, setHasKey] = useState(false);
   const [syncID, setSyncID] = useState('');
-  const [showHelp, setShowHelp] = useState(false);
-
-  // NOVO SCRIPT PARA O GOOGLE APPS SCRIPT (COPIE ESTE!)
-  const scriptCode = `function doGet() {
-  var folderId = "1CsNAC51-bP11LKz9YtjwenbwmAgda9IE";
-  var folder = DriveApp.getFolderById(folderId);
-  var files = folder.getFiles();
-  var result = [];
-  
-  while (files.hasNext()) {
-    var file = files.next();
-    var name = file.getName();
-    var content = "";
-    
-    // Se for texto, o script já lê o conteúdo para o site
-    if (name.toLowerCase().endsWith(".txt")) {
-      content = file.getBlob().getDataAsString();
-    }
-    
-    result.push({
-      id: file.getId(),
-      name: name,
-      url: "https://docs.google.com/uc?id=" + file.getId() + "&export=download",
-      content: content
-    });
-  }
-  
-  return ContentService.createTextOutput(JSON.stringify(result))
-    .setMimeType(ContentService.MimeType.JSON)
-    .setHeader('Access-Control-Allow-Origin', '*');
-}`;
 
   useEffect(() => {
     const checkStatus = async () => {
@@ -74,13 +43,17 @@ export const Admin: React.FC = () => {
 
   const getCleanTopic = () => {
     return topic
-      .normalize("NFD").replace(/[\u0300-\u036f]/g, "")
-      .replace(/[^a-zA-Z0-9]/g, "-").toUpperCase().substring(0, 10);
+      .normalize("NFD")
+      .replace(/[\u0300-\u036f]/g, "")
+      .replace(/[^a-zA-Z0-9]/g, "-")
+      .toUpperCase()
+      .substring(0, 15);
   };
 
   const generateEditorial = async () => {
     if (!topic) return;
     setLoadingText(true);
+    // Gera um ID curto e memorável como no vídeo
     const newID = Math.random().toString(36).substring(2, 7).toUpperCase();
     setSyncID(newID);
 
@@ -128,6 +101,7 @@ export const Admin: React.FC = () => {
   };
 
   const downloadJPG = () => {
+    // Converte base64 para Blob para garantir download correto
     fetch(generatedImg)
       .then(res => res.blob())
       .then(blob => {
@@ -146,32 +120,12 @@ export const Admin: React.FC = () => {
              <h2 className="text-gold-500 text-[10px] font-bold tracking-[0.6em] uppercase mb-2">Editoria Mac Frois</h2>
              <h1 className="text-4xl font-serif text-white italic tracking-widest uppercase">Creative Lab</h1>
            </div>
-           <div className="flex gap-4">
-             <button onClick={() => setShowHelp(!showHelp)} className="text-zinc-500 hover:text-white flex items-center gap-2 text-[10px] uppercase tracking-widest border border-zinc-800 px-4 py-2 rounded-sm transition-all">
-                <Code2 size={14} /> {showHelp ? 'Fechar Guia' : 'Configurar Script'}
-             </button>
-             {!hasKey && (
-               <Button onClick={handleKeyActivation} className="bg-gold-600 text-black px-8 py-3 font-bold border-none shadow-xl">
-                 <Key size={16} className="mr-3" /> ATIVAR IA
-               </Button>
-             )}
-           </div>
+           {!hasKey && (
+             <Button onClick={handleKeyActivation} className="bg-gold-600 text-black px-8 py-3 font-bold border-none shadow-xl">
+               <Key size={16} className="mr-3" /> ATIVAR IA
+             </Button>
+           )}
         </div>
-
-        {showHelp && (
-          <div className="mb-12 bg-zinc-900/80 border border-gold-600/20 p-8 rounded-sm animate-fade-in backdrop-blur-xl">
-             <div className="flex items-center gap-4 mb-4">
-                <CloudUpload className="text-gold-500" size={20} />
-                <h4 className="text-white text-xs font-bold tracking-[0.4em] uppercase">Instruções de Sincronia</h4>
-             </div>
-             <p className="text-zinc-500 text-[10px] tracking-widest uppercase mb-6 leading-relaxed">
-               Para que o blog funcione sem erros de "Conteúdo não processado", você precisa atualizar o seu script no Google com este novo código:
-             </p>
-             <pre className="bg-black/60 p-6 rounded-sm text-[9px] h-48 overflow-y-auto border border-zinc-800 font-mono text-zinc-400">
-               {scriptCode}
-             </pre>
-          </div>
-        )}
 
         <div className="grid lg:grid-cols-12 gap-12">
           <div className="lg:col-span-4 space-y-8">
@@ -182,12 +136,12 @@ export const Admin: React.FC = () => {
               <textarea 
                 value={topic}
                 onChange={(e) => setTopic(e.target.value)}
-                placeholder="Conceito central..."
+                placeholder="Conceito central do manifesto..."
                 className="w-full bg-black border border-zinc-800 p-6 text-white focus:border-gold-600 outline-none rounded-sm text-sm font-light tracking-widest h-40 mb-8"
               />
               <div className="space-y-4">
                 <Button onClick={generateEditorial} disabled={loadingText || !topic || !hasKey} className="w-full py-5 flex items-center justify-center gap-4 !bg-gold-600 text-black border-none font-bold tracking-[0.3em]">
-                  {loadingText ? <Loader2 size={18} className="animate-spin" /> : <Sparkles size={18} />} GERAR TEXTO
+                  {loadingText ? <Loader2 size={18} className="animate-spin" /> : <Sparkles size={18} />} GERAR CONTEÚDO
                 </Button>
                 <Button onClick={generateCover} disabled={loadingImg || !topic || !hasKey} variant="outline" className="w-full py-5 flex items-center justify-center gap-4 border-zinc-800 hover:border-gold-500 tracking-[0.3em]">
                   {loadingImg ? <Loader2 size={18} className="animate-spin" /> : <ImageIcon size={18} />} GERAR CAPA
@@ -198,15 +152,22 @@ export const Admin: React.FC = () => {
             {syncID && (
                <div className="bg-zinc-900 border border-gold-600/30 p-8 rounded-sm space-y-6 animate-slide-up shadow-2xl">
                   <div className="flex items-center justify-between mb-4">
-                    <h4 className="text-white text-[10px] font-bold tracking-[0.4em] uppercase">DNA: <span className="text-gold-500">{syncID}</span></h4>
-                    <Save size={16} className="text-gold-500" />
+                    <div className="flex items-center gap-3">
+                      <Save size={18} className="text-gold-500" />
+                      <h4 className="text-white text-[10px] font-bold tracking-[0.4em] uppercase">Sincronia Manual</h4>
+                    </div>
+                    <span className="text-gold-500 text-[10px] font-mono font-bold bg-gold-600/10 px-2 py-1 rounded-sm">{syncID}</span>
                   </div>
                   
-                  <button onClick={downloadTXT} disabled={!generatedText} className="w-full bg-white text-black p-5 text-[10px] tracking-[0.3em] uppercase flex items-center justify-center gap-4 font-black rounded-sm hover:bg-gold-500 transition-colors">
-                    <FileDown size={20} /> BAIXAR TEXTO
+                  <p className="text-zinc-500 text-[9px] uppercase tracking-widest leading-relaxed mb-4">
+                    Baixe os arquivos abaixo e coloque-os na sua pasta <strong className="text-white">CONTEUDO_BLOG</strong> no Drive.
+                  </p>
+
+                  <button onClick={downloadTXT} disabled={!generatedText} className="w-full bg-white text-black p-5 text-[10px] tracking-[0.3em] uppercase flex items-center justify-center gap-4 font-black rounded-sm hover:bg-gold-500 transition-colors disabled:opacity-20">
+                    <FileDown size={22} /> BAIXAR TEXTO (.txt)
                   </button>
-                  <button onClick={downloadJPG} disabled={!generatedImg} className="w-full bg-zinc-800 text-white p-5 text-[10px] tracking-[0.3em] uppercase flex items-center justify-center gap-4 font-black border border-zinc-700 rounded-sm hover:border-gold-500 transition-colors">
-                    <ImageIcon size={20} /> BAIXAR FOTO
+                  <button onClick={downloadJPG} disabled={!generatedImg} className="w-full bg-zinc-800 text-white p-5 text-[10px] tracking-[0.3em] uppercase flex items-center justify-center gap-4 font-black border border-zinc-700 rounded-sm hover:border-gold-500 transition-colors disabled:opacity-20">
+                    <Download size={22} /> BAIXAR CAPA (.jpg)
                   </button>
                </div>
             )}
@@ -217,7 +178,7 @@ export const Admin: React.FC = () => {
                {loadingText && (
                  <div className="absolute inset-0 bg-black/95 flex flex-col items-center justify-center z-20">
                     <Loader2 size={48} className="text-gold-500 animate-spin mb-4" />
-                    <p className="text-gold-500 text-[10px] tracking-[0.5em] uppercase font-bold">Processando...</p>
+                    <p className="text-gold-500 text-[10px] tracking-[0.5em] uppercase font-bold">Manifestando Editorial...</p>
                  </div>
                )}
                <textarea 
@@ -226,9 +187,17 @@ export const Admin: React.FC = () => {
                  className="w-full bg-transparent text-zinc-300 text-xl md:text-2xl leading-[2.2] font-light italic outline-none font-serif h-[600px] resize-none" 
                  placeholder="O manifesto aparecerá aqui..." 
                />
+               <div className="absolute bottom-8 right-8 text-[9px] text-zinc-700 tracking-[0.4em] font-bold uppercase">
+                 DNA: {syncID}
+               </div>
             </div>
             {generatedImg && (
-              <img src={generatedImg} className="w-full aspect-video object-cover grayscale border border-zinc-800 rounded-sm shadow-2xl" />
+              <div className="relative group">
+                <img src={generatedImg} className="w-full aspect-video object-cover grayscale border border-zinc-800 rounded-sm shadow-2xl" />
+                <div className="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
+                   <p className="text-white text-[10px] tracking-[0.5em] font-bold uppercase">Capa Visual Ativa</p>
+                </div>
+              </div>
             )}
           </div>
         </div>

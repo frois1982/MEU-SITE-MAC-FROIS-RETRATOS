@@ -25,9 +25,9 @@ export const Blog: React.FC = () => {
       .then(res => res.json())
       .then(data => {
         if (Array.isArray(data)) {
-          // 1. Filtrar arquivos de texto (POST_..._TEXTO.txt)
+          // FILTRAGEM: Busca arquivos de texto que contenham POST_ no nome
           const textFiles = data.filter((f: any) => 
-            f.name.toUpperCase().startsWith('POST_') && 
+            f.name.toUpperCase().includes('POST_') && 
             f.name.toUpperCase().endsWith('.TXT')
           );
           
@@ -35,18 +35,18 @@ export const Blog: React.FC = () => {
             const fileNameUpper = file.name.toUpperCase();
             const parts = fileNameUpper.split('_');
             
-            // O ID é sempre a segunda parte: POST_[ID]_...
-            const syncID = parts[1] || 'POST';
+            // O ID de sincronia costuma ser a segunda parte: POST_[ID]_...
+            // Mas vamos buscar qualquer parte que tenha 5 caracteres (nosso padrão de ID)
+            const syncID = parts.find(p => p.length === 5) || parts[1] || 'POST';
             
-            // 2. Busca a imagem correspondente pelo SyncID
+            // Busca a imagem correspondente que tenha o mesmo SyncID e contenha FOTO ou CAPA
             const imgFile = data.find((f: any) => {
               const fNameUpper = f.name.toUpperCase();
               const isImg = fNameUpper.endsWith('.JPG') || fNameUpper.endsWith('.JPEG') || fNameUpper.endsWith('.PNG');
-              // A imagem deve conter o ID e NÃO ser um arquivo de texto
               return isImg && fNameUpper.includes(syncID);
             });
 
-            // 3. Limpeza do título (tudo entre o ID e _TEXTO)
+            // Limpeza do título: remove prefixos e sufixos
             let title = file.name
               .replace(/POST_/gi, '')
               .replace(new RegExp(syncID, 'gi'), '')
@@ -60,13 +60,13 @@ export const Blog: React.FC = () => {
               id: file.id,
               syncID: syncID,
               title: title.toUpperCase() || 'MANIFESTO EDITORIAL',
-              content: file.content || 'Erro: Conteúdo não processado pelo script.',
+              content: file.content || 'CONTEÚDO NÃO ENCONTRADO NO ARQUIVO.',
               imageUrl: imgFile ? imgFile.url : 'https://images.unsplash.com/photo-1455390582262-044cdead277a?q=80&w=1200&auto=format&fit=crop&grayscale=true',
-              date: new Date().toLocaleDateString('pt-BR')
+              date: new Date().toLocaleDateString('pt-BR') // Fallback para data
             };
           });
 
-          // Inverter para mostrar os mais novos primeiro
+          // Mostra os mais recentes primeiro
           setPosts(mapped.reverse());
         }
         setLoading(false);
@@ -87,13 +87,13 @@ export const Blog: React.FC = () => {
           
           <article>
             <div className="mb-20 text-center">
-               <span className="text-gold-600 text-[10px] font-bold tracking-[0.8em] uppercase mb-6 block">Editorial • DNA {selectedPost.syncID}</span>
-               <h1 className="text-3xl md:text-5xl font-serif text-white tracking-widest uppercase italic leading-tight">{selectedPost.title}</h1>
+               <span className="text-gold-600 text-[10px] font-bold tracking-[0.8em] uppercase mb-6 block">Editorial • {selectedPost.syncID}</span>
+               <h1 className="text-4xl md:text-6xl font-serif text-white tracking-widest uppercase italic leading-tight">{selectedPost.title}</h1>
                <div className="w-24 h-px bg-gold-600/40 mx-auto mt-12"></div>
             </div>
 
             <div className="relative aspect-video mb-24 rounded-sm border border-zinc-900 overflow-hidden shadow-2xl">
-              <img src={selectedPost.imageUrl} className="w-full h-full object-cover grayscale brightness-75 transition-all duration-700 hover:grayscale-0" alt={selectedPost.title} />
+              <img src={selectedPost.imageUrl} className="w-full h-full object-cover grayscale brightness-75" alt={selectedPost.title} />
               <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent"></div>
             </div>
 
@@ -125,7 +125,7 @@ export const Blog: React.FC = () => {
               <BookOpen size={48} className="text-zinc-800 mx-auto mb-8 opacity-20" />
               <h3 className="text-white text-lg font-serif mb-4 tracking-widest italic">Nenhum Manifesto Encontrado</h3>
               <p className="text-zinc-700 tracking-[0.4em] uppercase text-[10px] font-bold max-w-md mx-auto leading-loose">
-                Suba os arquivos <strong className="text-gold-500">POST_</strong> e <strong className="text-gold-500">FOTO_</strong> na pasta do Drive e certifique-se de que estão públicos.
+                Certifique-se de que os arquivos na pasta do Drive começam com <strong className="text-gold-500">POST_</strong> e estão como <strong className="text-gold-500">Públicos</strong>.
               </p>
             </div>
           ) : (
@@ -135,11 +135,13 @@ export const Blog: React.FC = () => {
                   <img src={post.imageUrl} className="w-full h-full object-cover grayscale opacity-40 group-hover:opacity-100 transition-all duration-[1.5s] group-hover:scale-105" alt={post.title} />
                   <div className="absolute inset-0 bg-gradient-to-t from-black via-transparent to-transparent"></div>
                   <div className="absolute top-6 left-6">
-                    <span className="bg-black/60 backdrop-blur-md border border-white/10 text-white text-[9px] px-3 py-1 tracking-widest uppercase font-bold">DNA {post.syncID}</span>
+                    <span className="bg-black/60 backdrop-blur-md border border-white/10 text-white text-[9px] px-3 py-1 tracking-widest uppercase font-bold">{post.syncID}</span>
                   </div>
                 </div>
                 <div className="lg:col-span-5">
-                  <span className="text-gold-600 text-[10px] font-bold tracking-[0.8em] uppercase block mb-6">EDITORIAL</span>
+                  <span className="text-gold-600 text-[10px] font-bold tracking-[0.8em] uppercase block mb-6 flex items-center gap-4">
+                    <Clock size={12} /> EDITORIAL
+                  </span>
                   <h3 className="text-3xl font-serif text-white mb-10 group-hover:text-gold-500 transition-all tracking-[0.1em] leading-tight uppercase italic decoration-gold-600/0 group-hover:decoration-gold-600/50 underline underline-offset-8 duration-700">
                     {post.title}
                   </h3>
