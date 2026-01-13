@@ -2,7 +2,7 @@
 import React, { useState, useEffect } from 'react';
 import { SectionTitle, Skeleton, Button } from '../components/UI';
 import { DRIVE_SCRIPT_URL } from '../config';
-import { ArrowRight, ChevronLeft, BookOpen, RefreshCw, Quote, AlertCircle } from 'lucide-react';
+import { ArrowRight, ChevronLeft, BookOpen, RefreshCw, AlertCircle } from 'lucide-react';
 
 interface BlogPost {
   id: string;
@@ -18,18 +18,22 @@ export const Blog: React.FC = () => {
   const [selectedPost, setSelectedPost] = useState<BlogPost | null>(null);
 
   const fetchPosts = () => {
-    if (!DRIVE_SCRIPT_URL) return;
+    if (!DRIVE_SCRIPT_URL) {
+      setLoading(false);
+      return;
+    }
     setLoading(true);
     fetch(DRIVE_SCRIPT_URL)
       .then(res => res.json())
       .then(data => {
+        // O Script já filtra os posts válidos
         if (Array.isArray(data)) {
           setPosts(data);
         }
         setLoading(false);
       })
       .catch(err => {
-        console.error("Erro Blog Sincronia:", err);
+        console.error("Erro Sincronia Blog:", err);
         setLoading(false);
       });
   };
@@ -39,10 +43,6 @@ export const Blog: React.FC = () => {
   }, []);
 
   if (selectedPost) {
-    // Adicionado ?. para evitar o erro de tela preta se o conteúdo for nulo
-    const isError = selectedPost.content?.includes("AVISO:");
-    const displayContent = selectedPost.content || "Este manifesto ainda está sendo revelado no laboratório criativo...";
-
     return (
       <div className="pt-32 pb-24 bg-black min-h-screen animate-fade-in">
         <div className="container mx-auto px-6 max-w-4xl">
@@ -58,26 +58,19 @@ export const Blog: React.FC = () => {
             </div>
 
             <div className="relative aspect-video mb-24 rounded-sm border border-zinc-900 overflow-hidden shadow-2xl bg-zinc-900">
-              <img src={selectedPost.imageUrl || 'https://images.unsplash.com/photo-1455390582262-044cdead277a?q=80&w=1200&auto=format&fit=crop&grayscale=true'} className="w-full h-full object-cover grayscale brightness-75" alt={selectedPost.title} />
+              <img 
+                src={selectedPost.imageUrl || 'https://images.unsplash.com/photo-1455390582262-044cdead277a?q=80&w=1200&auto=format&fit=crop&grayscale=true'} 
+                className="w-full h-full object-cover grayscale brightness-75" 
+                alt={selectedPost.title} 
+                onError={(e) => e.currentTarget.src = 'https://images.unsplash.com/photo-1455390582262-044cdead277a?q=80&w=1200&auto=format&fit=crop&grayscale=true'}
+              />
               <div className="absolute inset-0 bg-gradient-to-t from-black/80 to-transparent"></div>
             </div>
 
             <div className="max-w-3xl mx-auto">
-               {isError ? (
-                 <div className="bg-zinc-900/50 border border-gold-600/30 p-12 rounded-sm text-center">
-                    <AlertCircle size={32} className="text-gold-500 mx-auto mb-6" />
-                    <p className="text-zinc-300 text-sm tracking-widest uppercase leading-loose font-bold italic mb-8">
-                      Arquivo de formato inválido detectado.
-                    </p>
-                    <Button onClick={() => window.open('https://drive.google.com/drive/u/0/folders/12-yHrlnrMXkBuaKrExeUQCQt8bPq3Ya', '_blank')} variant="outline" className="text-[10px] tracking-widest">
-                      REPARAR NO DRIVE
-                    </Button>
-                 </div>
-               ) : (
-                 <div className="text-zinc-300 text-xl md:text-2xl leading-[2.4] font-light italic whitespace-pre-wrap font-serif selection:bg-gold-600/30">
-                    {displayContent}
-                 </div>
-               )}
+               <div className="text-zinc-300 text-xl md:text-2xl leading-[2.4] font-light italic whitespace-pre-wrap font-serif selection:bg-gold-600/30">
+                  {selectedPost.content || "O conteúdo está sendo processado pelo laboratório..."}
+               </div>
             </div>
             
             <div className="mt-32 pt-12 border-t border-zinc-900 text-center">
@@ -96,7 +89,7 @@ export const Blog: React.FC = () => {
           <SectionTitle title="Jornal Editorial" subtitle="A Verdade em Palavras" />
           <button onClick={fetchPosts} className="text-gold-500 hover:text-white transition-colors mb-4 md:mb-12 flex items-center gap-3 text-[10px] tracking-[0.5em] uppercase font-bold bg-zinc-900/50 px-6 py-3 rounded-full border border-zinc-800">
             <RefreshCw size={14} className={loading ? 'animate-spin text-gold-500' : ''} /> 
-            {loading ? 'Sincronizando...' : 'Sincronizar Agora'}
+            {loading ? 'Sincronizando...' : 'Atualizar Editorial'}
           </button>
         </div>
         
@@ -106,17 +99,22 @@ export const Blog: React.FC = () => {
           ) : posts.length === 0 ? (
             <div className="text-center py-48 border border-dashed border-zinc-900 rounded-sm bg-zinc-900/20">
               <BookOpen size={48} className="text-zinc-800 mx-auto mb-8 opacity-20" />
-              <h3 className="text-white text-lg font-serif mb-4 tracking-widest italic">Nenhum Manifesto Encontrado</h3>
+              <h3 className="text-white text-lg font-serif mb-4 tracking-widest italic">O laboratório está vazio</h3>
               <p className="text-zinc-700 tracking-[0.4em] uppercase text-[10px] font-bold max-w-md mx-auto leading-loose">
-                Sincronize sua pasta no Drive. <br/>
-                Certifique-se de que os arquivos são <strong className="text-white">.txt</strong> e <strong className="text-white">.png</strong> reais (não Google Docs).
+                Não encontramos manifestos válidos na sua pasta.<br/>
+                Certifique-se de que enviou arquivos <strong className="text-white">.txt</strong> e <strong className="text-white">.png</strong> reais (não Google Docs).
               </p>
             </div>
           ) : (
             posts.map((post) => (
               <div key={post.id} onClick={() => setSelectedPost(post)} className="group cursor-pointer grid lg:grid-cols-12 gap-16 items-center animate-fade-in">
                 <div className="lg:col-span-7 aspect-[16/9] overflow-hidden bg-zinc-900 rounded-sm shadow-2xl relative border border-zinc-800">
-                  <img src={post.imageUrl || 'https://images.unsplash.com/photo-1455390582262-044cdead277a?q=80&w=1200&auto=format&fit=crop&grayscale=true'} className="w-full h-full object-cover grayscale opacity-40 group-hover:opacity-100 transition-all duration-[1.5s] group-hover:scale-105" alt={post.title} />
+                  <img 
+                    src={post.imageUrl} 
+                    className="w-full h-full object-cover grayscale opacity-40 group-hover:opacity-100 transition-all duration-[1.5s] group-hover:scale-105" 
+                    alt={post.title} 
+                    onError={(e) => e.currentTarget.src = 'https://images.unsplash.com/photo-1455390582262-044cdead277a?q=80&w=1200&auto=format&fit=crop&grayscale=true'}
+                  />
                   <div className="absolute inset-0 bg-gradient-to-t from-black via-transparent to-transparent"></div>
                 </div>
                 <div className="lg:col-span-5">

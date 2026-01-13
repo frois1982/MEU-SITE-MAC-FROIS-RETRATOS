@@ -2,7 +2,7 @@
 import React, { useState, useEffect } from 'react';
 import { GoogleGenAI } from "@google/genai";
 import { Button, Card } from '../components/UI';
-import { Sparkles, Image as ImageIcon, Copy, Check, Download, Loader2, Key, PenTool, FileText, Save, FileDown, Info, AlertTriangle, ExternalLink } from 'lucide-react';
+import { Sparkles, Image as ImageIcon, Download, Loader2, Key, PenTool, Save, FileDown, AlertTriangle, ExternalLink, CheckCircle } from 'lucide-react';
 
 export const Admin: React.FC = () => {
   const [topic, setTopic] = useState('');
@@ -156,35 +156,35 @@ export const Admin: React.FC = () => {
                <div className="bg-zinc-900 border border-gold-600/30 p-8 rounded-sm space-y-6 animate-slide-up shadow-2xl">
                   <div className="flex items-center gap-3 mb-4">
                     <Save size={18} className="text-gold-500" />
-                    <h4 className="text-white text-[10px] font-bold tracking-[0.4em] uppercase">Passo de Sincronia</h4>
+                    <h4 className="text-white text-[10px] font-bold tracking-[0.4em] uppercase">Sincronia Definitiva</h4>
                   </div>
                   
                   <div className="bg-gold-600/10 border border-gold-600/30 p-5 rounded-sm space-y-4">
                     <div className="flex items-start gap-4">
                       <AlertTriangle className="text-gold-500 shrink-0" size={20} />
                       <p className="text-[10px] text-gold-500 font-bold uppercase tracking-widest leading-relaxed">
-                        Atenção: Não clique em "Novo > Google Doc" no Drive. <br/>
-                        Baixe os arquivos abaixo e arraste-os para a pasta.
+                        Atenção Mac: O site não lê "Google Docs" (ícone azul). <br/><br/>
+                        1. Baixe os 2 arquivos abaixo.<br/>
+                        2. Arraste-os para a pasta no Drive.
                       </p>
                     </div>
-                    <button 
-                      onClick={() => window.open('https://drive.google.com/drive/u/0/folders/12-yHrlnrMXkBuaKrExeUQCQt8bPq3Ya', '_blank')}
-                      className="text-gold-500 text-[9px] underline flex items-center gap-2 hover:text-white transition-colors uppercase font-bold tracking-widest"
-                    >
-                      Abrir Pasta no Drive <ExternalLink size={12} />
-                    </button>
                   </div>
 
                   <div className="grid grid-cols-1 gap-4">
                     <Button onClick={downloadTextFile} className="w-full py-5 flex flex-col items-center justify-center gap-1 !bg-white text-black hover:!bg-gold-500 border-none font-bold tracking-[0.2em] text-[11px]">
-                      <div className="flex items-center gap-3"><FileDown size={18} /> BAIXAR TEXTO</div>
-                      <span className="text-[8px] opacity-40 font-mono tracking-normal">.txt</span>
+                      <div className="flex items-center gap-3"><FileDown size={18} /> BAIXAR TEXTO (.txt)</div>
                     </Button>
                     <Button onClick={downloadImageFile} disabled={!generatedImg} variant="outline" className="w-full py-5 flex flex-col items-center justify-center gap-1 border-zinc-800 text-zinc-300 hover:border-white font-bold tracking-[0.2em] text-[11px]">
-                      <div className="flex items-center gap-3"><ImageIcon size={18} /> BAIXAR CAPA</div>
-                      <span className="text-[8px] opacity-40 font-mono tracking-normal">.png</span>
+                      <div className="flex items-center gap-3"><ImageIcon size={18} /> BAIXAR CAPA (.png)</div>
                     </Button>
                   </div>
+
+                  <button 
+                    onClick={() => window.open('https://drive.google.com/drive/u/0/folders/12-yHrlnrMXkBuaKrExeUQCQt8bPq3Ya', '_blank')}
+                    className="w-full text-gold-500 text-[10px] border border-gold-600/20 py-3 flex items-center justify-center gap-3 hover:bg-gold-600/10 transition-colors uppercase font-bold tracking-widest"
+                  >
+                    Abrir Pasta Editorial <ExternalLink size={14} />
+                  </button>
                </div>
             )}
           </div>
@@ -194,18 +194,15 @@ export const Admin: React.FC = () => {
                {loadingText && (
                  <div className="absolute inset-0 bg-black/95 flex flex-col items-center justify-center z-20">
                     <Loader2 size={48} className="text-gold-500 animate-spin mb-4" />
-                    <p className="text-gold-500 text-[10px] tracking-[0.5em] uppercase font-bold">Revelando manifesto...</p>
+                    <p className="text-gold-500 text-[10px] tracking-[0.5em] uppercase font-bold">Gerando Manifesto...</p>
                  </div>
                )}
                <textarea 
                  value={generatedText} 
                  onChange={(e) => setGeneratedText(e.target.value)}
                  className="w-full bg-transparent text-zinc-300 text-xl md:text-2xl leading-[2.2] font-light italic outline-none font-serif h-[600px] resize-none" 
-                 placeholder="O manifesto aparecerá aqui..." 
+                 placeholder="O conteúdo editorial aparecerá aqui..." 
                />
-               <div className="absolute bottom-8 right-8 text-[10px] text-zinc-800 tracking-[0.4em] font-bold uppercase">
-                 REF: {syncID || '---'}
-               </div>
             </div>
             {generatedImg && (
               <div className="relative group rounded-sm overflow-hidden border border-zinc-800">
