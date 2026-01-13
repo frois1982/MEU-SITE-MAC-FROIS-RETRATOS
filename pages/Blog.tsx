@@ -24,7 +24,6 @@ export const Blog: React.FC = () => {
       .then(res => res.json())
       .then(data => {
         if (Array.isArray(data)) {
-          // O script agora já filtra posts inválidos
           setPosts(data);
         }
         setLoading(false);
@@ -40,7 +39,9 @@ export const Blog: React.FC = () => {
   }, []);
 
   if (selectedPost) {
-    const isError = selectedPost.content.includes("AVISO:");
+    // Adicionado ?. para evitar o erro de tela preta se o conteúdo for nulo
+    const isError = selectedPost.content?.includes("AVISO:");
+    const displayContent = selectedPost.content || "Este manifesto ainda está sendo revelado no laboratório criativo...";
 
     return (
       <div className="pt-32 pb-24 bg-black min-h-screen animate-fade-in">
@@ -66,7 +67,7 @@ export const Blog: React.FC = () => {
                  <div className="bg-zinc-900/50 border border-gold-600/30 p-12 rounded-sm text-center">
                     <AlertCircle size={32} className="text-gold-500 mx-auto mb-6" />
                     <p className="text-zinc-300 text-sm tracking-widest uppercase leading-loose font-bold italic mb-8">
-                      {selectedPost.content}
+                      Arquivo de formato inválido detectado.
                     </p>
                     <Button onClick={() => window.open('https://drive.google.com/drive/u/0/folders/12-yHrlnrMXkBuaKrExeUQCQt8bPq3Ya', '_blank')} variant="outline" className="text-[10px] tracking-widest">
                       REPARAR NO DRIVE
@@ -74,7 +75,7 @@ export const Blog: React.FC = () => {
                  </div>
                ) : (
                  <div className="text-zinc-300 text-xl md:text-2xl leading-[2.4] font-light italic whitespace-pre-wrap font-serif selection:bg-gold-600/30">
-                    {selectedPost.content || "Conteúdo editorial em processo de revelação..."}
+                    {displayContent}
                  </div>
                )}
             </div>
@@ -91,10 +92,11 @@ export const Blog: React.FC = () => {
   return (
     <div className="pt-32 pb-24 bg-zinc-950 min-h-screen">
       <div className="container mx-auto px-6 max-w-6xl">
-        <div className="flex justify-between items-end mb-16">
+        <div className="flex flex-col md:flex-row justify-between items-center md:items-end mb-16 gap-8">
           <SectionTitle title="Jornal Editorial" subtitle="A Verdade em Palavras" />
-          <button onClick={fetchPosts} className="text-gold-500 hover:text-white transition-colors mb-12 flex items-center gap-2 text-[10px] tracking-widest uppercase font-bold">
-            <RefreshCw size={14} className={loading ? 'animate-spin' : ''} /> Atualizar
+          <button onClick={fetchPosts} className="text-gold-500 hover:text-white transition-colors mb-4 md:mb-12 flex items-center gap-3 text-[10px] tracking-[0.5em] uppercase font-bold bg-zinc-900/50 px-6 py-3 rounded-full border border-zinc-800">
+            <RefreshCw size={14} className={loading ? 'animate-spin text-gold-500' : ''} /> 
+            {loading ? 'Sincronizando...' : 'Sincronizar Agora'}
           </button>
         </div>
         
@@ -106,8 +108,8 @@ export const Blog: React.FC = () => {
               <BookOpen size={48} className="text-zinc-800 mx-auto mb-8 opacity-20" />
               <h3 className="text-white text-lg font-serif mb-4 tracking-widest italic">Nenhum Manifesto Encontrado</h3>
               <p className="text-zinc-700 tracking-[0.4em] uppercase text-[10px] font-bold max-w-md mx-auto leading-loose">
-                Sincronize sua pasta <strong className="text-gold-500">MAC_FROIS_EDITORIAL</strong>. <br/>
-                Certifique-se de que os arquivos são <strong className="text-white">.txt</strong> e <strong className="text-white">.png</strong> reais.
+                Sincronize sua pasta no Drive. <br/>
+                Certifique-se de que os arquivos são <strong className="text-white">.txt</strong> e <strong className="text-white">.png</strong> reais (não Google Docs).
               </p>
             </div>
           ) : (
