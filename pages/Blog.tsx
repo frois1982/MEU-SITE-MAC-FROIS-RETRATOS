@@ -1,8 +1,8 @@
 
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useMemo } from 'react';
 import { SectionTitle } from '../components/UI';
 import { EDITORIAL_DATABASE } from '../config';
-import { ArrowRight, ChevronLeft, BookOpen, Quote, Clock, Share2, ArrowUpRight, Image as ImageIcon } from 'lucide-react';
+import { ArrowRight, ChevronLeft, BookOpen, Quote, Clock, Share2, ArrowUpRight, AlertTriangle } from 'lucide-react';
 
 interface BlogPost {
   id: string;
@@ -15,7 +15,18 @@ interface BlogPost {
 export const Blog: React.FC = () => {
   const [selectedPost, setSelectedPost] = useState<BlogPost | null>(null);
   
-  const posts = EDITORIAL_DATABASE;
+  // ESCUDO DE PROTEÇÃO: Filtra apenas posts que estão formatados corretamente
+  const posts = useMemo(() => {
+    try {
+      if (!Array.isArray(EDITORIAL_DATABASE)) return [];
+      return EDITORIAL_DATABASE.filter(post => 
+        post && post.id && post.title && post.content
+      );
+    } catch (e) {
+      console.error("Erro crítico no banco de dados editorial:", e);
+      return [];
+    }
+  }, []);
 
   useEffect(() => {
     window.scrollTo(0, 0);
@@ -25,13 +36,8 @@ export const Blog: React.FC = () => {
     e.currentTarget.style.display = 'none';
     const parent = e.currentTarget.parentElement;
     if (parent) {
-      parent.classList.add('flex', 'items-center', 'justify-center', 'bg-zinc-900');
-      const icon = document.createElement('div');
-      icon.innerHTML = `<div class="text-zinc-800 flex flex-col items-center gap-4">
-        <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"><rect width="18" height="18" x="3" y="3" rx="2" ry="2"/><circle cx="9" cy="9" r="2"/><path d="m21 15-3.086-3.086a2 2 0 0 0-2.828 0L6 21"/></svg>
-        <span class="text-[9px] tracking-[0.5em] uppercase font-bold opacity-20">Imagem indisponível</span>
-      </div>`;
-      parent.appendChild(icon);
+      parent.classList.add('bg-zinc-900', 'flex', 'items-center', 'justify-center');
+      parent.innerHTML = '<div class="text-zinc-800 text-[10px] tracking-widest uppercase font-bold opacity-30">Capa em processamento</div>';
     }
   };
 
@@ -44,7 +50,7 @@ export const Blog: React.FC = () => {
             className="flex items-center text-gold-500 text-[10px] tracking-[0.5em] uppercase mb-16 hover:text-white transition-all group font-bold"
           >
             <ChevronLeft size={16} className="mr-3 group-hover:-translate-x-1 transition-transform" /> 
-            Biblioteca Editorial
+            Voltar ao Editorial
           </button>
           
           <article className="animate-slide-up">
@@ -69,7 +75,7 @@ export const Blog: React.FC = () => {
               <div className="absolute inset-0 bg-gradient-to-t from-black via-transparent to-transparent opacity-80"></div>
               <div className="absolute bottom-8 left-8 border-l border-gold-600 pl-6">
                  <p className="text-white text-[10px] tracking-[0.4em] uppercase font-bold">Mac Frois</p>
-                 <p className="text-zinc-500 text-[9px] tracking-[0.3em] uppercase italic">Retratista de Posicionamento</p>
+                 <p className="text-zinc-500 text-[9px] tracking-[0.3em] uppercase italic">Retratista</p>
               </div>
             </div>
 
@@ -81,7 +87,7 @@ export const Blog: React.FC = () => {
                <div className="mt-32 pt-16 border-t border-zinc-900 flex flex-col items-center">
                   <Quote className="text-gold-600/20 w-16 h-16 mb-8" />
                   <p className="text-zinc-700 text-xs tracking-[0.6em] uppercase font-bold italic text-center max-w-sm">
-                    A verdade é o único luxo que resiste ao tempo.
+                    A verdade é o luxo definitivo.
                   </p>
                </div>
             </div>
@@ -102,7 +108,12 @@ export const Blog: React.FC = () => {
           {posts.length === 0 ? (
             <div className="text-center py-48 border border-dashed border-zinc-900 rounded-sm bg-zinc-900/20">
               <BookOpen size={48} className="text-zinc-800 mx-auto mb-8 opacity-20" />
-              <p className="text-zinc-700 tracking-[0.4em] uppercase text-[10px] font-bold">O Cofre Editorial está aguardando o primeiro manifesto.</p>
+              <p className="text-zinc-700 tracking-[0.4em] uppercase text-[10px] font-bold">O Cofre Editorial está aguardando novos manifestos.</p>
+              {EDITORIAL_DATABASE.length > 0 && (
+                <div className="mt-8 flex items-center justify-center gap-2 text-red-500 text-[9px] tracking-widest font-bold uppercase">
+                  <AlertTriangle size={14} /> Erro de Sintaxe no Banco de Dados
+                </div>
+              )}
             </div>
           ) : (
             posts.map((post, idx) => (
@@ -128,7 +139,7 @@ export const Blog: React.FC = () => {
                     <span className="h-px w-8 bg-gold-600/30"></span>
                   </div>
                   
-                  <h3 className="text-3xl md:text-4xl font-serif text-white mb-10 group-hover:text-gold-500 transition-all duration-500 tracking-widest uppercase italic leading-tight group-hover:translate-x-2 transition-transform">
+                  <h3 className="text-3xl md:text-4xl font-serif text-white mb-10 group-hover:text-gold-500 transition-all duration-500 tracking-widest uppercase italic leading-tight">
                     {post.title}
                   </h3>
                   
@@ -137,21 +148,13 @@ export const Blog: React.FC = () => {
                   </p>
                   
                   <div className={`flex items-center text-gold-500 text-[10px] tracking-[0.5em] uppercase font-bold group-hover:text-white transition-all ${idx % 2 !== 0 ? 'justify-end' : ''}`}>
-                    {idx % 2 !== 0 && <ArrowUpRight size={16} className="mr-4 opacity-0 group-hover:opacity-100 transition-all" />}
-                    LER MANIFESTO COMPLETO 
+                    Ler Manifesto Completo 
                     {idx % 2 === 0 && <ArrowRight size={18} className="ml-6 group-hover:translate-x-4 transition-transform" />}
                   </div>
                 </div>
               </div>
             ))
           )}
-        </div>
-
-        <div className="mt-60 border-t border-zinc-900 pt-20 text-center">
-           <h4 className="text-white text-sm font-serif italic tracking-[0.4em] uppercase mb-6">Assine a Verdade</h4>
-           <p className="text-zinc-600 text-[9px] tracking-[0.4em] uppercase font-bold max-w-sm mx-auto leading-loose">
-             Receba as reflexões de Mac Frois sobre estética e posicionamento diretamente.
-           </p>
         </div>
       </div>
     </div>

@@ -1,10 +1,14 @@
 
 // MAC FROIS - EDITORIAL DATABASE
-// Este é o coração do seu blog. Para publicar, basta colar o novo post gerado no Admin abaixo do marcador.
+// ==========================================
+// INSTRUÇÕES DE PUBLICAÇÃO:
+// 1. Gere o código no /admin
+// 2. Cole SEMPRE dentro dos colchetes [ ] abaixo.
+// 3. Certifique-se de que cada post termine com uma vírgula ,
+// ==========================================
 
 export const EDITORIAL_DATABASE = [
-  // === NOVO POST ABAIXO DESTA LINHA ===
-  
+  // COLE SEU NOVO POST ABAIXO DESTA LINHA
   {
     id: "MANIFESTO-ESTETICA-VERDADE",
     date: "2024-05-24",
@@ -21,5 +25,4 @@ export const EDITORIAL_DATABASE = [
   }
 ];
 
-// A URL do Drive permanece APENAS para o portfólio de fotos (Página Portfólio), que exige volume.
 export const DRIVE_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbzrgGD1f9-c4wP2HVm2ypzPltsM41VtP-jd2-_W6qTQBfoP8W-V3RaHNyOdXWGT9ZDP1Q/exec";
