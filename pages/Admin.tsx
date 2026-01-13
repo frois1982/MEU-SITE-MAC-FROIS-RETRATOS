@@ -2,7 +2,7 @@
 import React, { useState, useEffect } from 'react';
 import { GoogleGenAI } from "@google/genai";
 import { Button, Card } from '../components/UI';
-import { Sparkles, Image as ImageIcon, Copy, Check, Download, Loader2, Key, PenTool, FileText, Save, FileDown, Info } from 'lucide-react';
+import { Sparkles, Image as ImageIcon, Copy, Check, Download, Loader2, Key, PenTool, FileText, Save, FileDown, Info, AlertTriangle } from 'lucide-react';
 
 export const Admin: React.FC = () => {
   const [topic, setTopic] = useState('');
@@ -95,28 +95,24 @@ export const Admin: React.FC = () => {
     setLoadingImg(false);
   };
 
-  const downloadManualPack = () => {
+  const downloadTextFile = () => {
     const date = getFormattedDate();
     const topicSlug = getCleanTopic();
-    
-    // Baixar Texto
-    const textBlob = new Blob([generatedText], { type: 'text/plain' });
-    const textLink = document.createElement('a');
-    textLink.href = URL.createObjectURL(textBlob);
-    textLink.download = `EDITORIAL_${date}_${syncID}_${topicSlug}_TEXTO.txt`;
-    textLink.click();
+    const blob = new Blob([generatedText], { type: 'text/plain;charset=utf-8' });
+    const link = document.createElement('a');
+    link.href = URL.createObjectURL(blob);
+    link.download = `EDITORIAL_${date}_${syncID}_${topicSlug}_TEXTO.txt`;
+    link.click();
+  };
 
-    // Baixar Imagem (se existir)
-    if (generatedImg) {
-      fetch(generatedImg)
-        .then(res => res.blob())
-        .then(blob => {
-          const imgLink = document.createElement('a');
-          imgLink.href = URL.createObjectURL(blob);
-          imgLink.download = `EDITORIAL_${date}_${syncID}_${topicSlug}_IMG.png`;
-          imgLink.click();
-        });
-    }
+  const downloadImageFile = () => {
+    if (!generatedImg) return;
+    const date = getFormattedDate();
+    const topicSlug = getCleanTopic();
+    const link = document.createElement('a');
+    link.href = generatedImg;
+    link.download = `EDITORIAL_${date}_${syncID}_${topicSlug}_IMG.png`;
+    link.click();
   };
 
   return (
@@ -160,19 +156,25 @@ export const Admin: React.FC = () => {
                <div className="bg-zinc-900 border border-gold-600/30 p-8 rounded-sm space-y-6 animate-slide-up shadow-2xl">
                   <div className="flex items-center gap-3 mb-4">
                     <Save size={18} className="text-gold-500" />
-                    <h4 className="text-white text-[10px] font-bold tracking-[0.4em] uppercase">Manual Sync Pack</h4>
+                    <h4 className="text-white text-[10px] font-bold tracking-[0.4em] uppercase">Exportação Manual</h4>
                   </div>
                   
-                  <p className="text-zinc-500 text-[10px] uppercase tracking-widest leading-loose bg-black/40 p-4 border border-zinc-800">
-                    Clique no botão abaixo para baixar os dois arquivos já nomeados. Basta arrastá-los para sua pasta <strong className="text-gold-500">MAC_FROIS_EDITORIAL</strong>.
-                  </p>
+                  <div className="bg-gold-600/10 border border-gold-600/30 p-5 rounded-sm flex items-start gap-4">
+                    <AlertTriangle className="text-gold-500 shrink-0" size={20} />
+                    <p className="text-[10px] text-gold-500 font-bold uppercase tracking-widest leading-relaxed">
+                      IMPORTANTE: Baixe os arquivos e <span className="underline">arraste</span> para o Drive. <br/>
+                      Não crie "Google Docs" manualmente no Drive, pois a IA não conseguirá ler o texto.
+                    </p>
+                  </div>
 
-                  <Button onClick={downloadManualPack} className="w-full py-6 flex flex-col items-center justify-center gap-2 !bg-white text-black hover:!bg-gold-500 border-none transition-all">
-                    <div className="flex items-center gap-3 font-black tracking-[0.2em] text-[11px]">
-                      <FileDown size={20} /> BAIXAR PACOTE DE POSTAGEM
-                    </div>
-                    <span className="text-[9px] opacity-60 font-mono tracking-normal">{syncID} • {getCleanTopic()}</span>
-                  </Button>
+                  <div className="grid grid-cols-1 gap-4">
+                    <Button onClick={downloadTextFile} className="w-full py-5 flex items-center justify-center gap-3 !bg-white text-black hover:!bg-gold-500 border-none font-bold tracking-[0.2em] text-[11px]">
+                      <FileDown size={18} /> BAIXAR TEXTO (.TXT)
+                    </Button>
+                    <Button onClick={downloadImageFile} disabled={!generatedImg} variant="outline" className="w-full py-5 flex items-center justify-center gap-3 border-zinc-800 text-zinc-300 hover:border-white font-bold tracking-[0.2em] text-[11px]">
+                      <ImageIcon size={18} /> BAIXAR CAPA (.PNG)
+                    </Button>
+                  </div>
                </div>
             )}
           </div>
@@ -192,7 +194,7 @@ export const Admin: React.FC = () => {
                  placeholder="O manifesto aparecerá aqui..." 
                />
                <div className="absolute bottom-8 right-8 text-[10px] text-zinc-800 tracking-[0.4em] font-bold uppercase">
-                 REF: {syncID}
+                 ID DE SINCRONIA: {syncID || '---'}
                </div>
             </div>
             {generatedImg && (

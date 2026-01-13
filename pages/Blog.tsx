@@ -2,7 +2,7 @@
 import React, { useState, useEffect } from 'react';
 import { SectionTitle, Skeleton, Button } from '../components/UI';
 import { DRIVE_SCRIPT_URL } from '../config';
-import { ArrowRight, ChevronLeft, BookOpen, Clock, Quote } from 'lucide-react';
+import { ArrowRight, ChevronLeft, BookOpen, RefreshCw, Quote, AlertCircle } from 'lucide-react';
 
 interface BlogPost {
   id: string;
@@ -17,15 +17,14 @@ export const Blog: React.FC = () => {
   const [loading, setLoading] = useState(true);
   const [selectedPost, setSelectedPost] = useState<BlogPost | null>(null);
 
-  useEffect(() => {
+  const fetchPosts = () => {
     if (!DRIVE_SCRIPT_URL) return;
-
-    // Agora o script já entrega tudo pronto, não precisamos mais fazer lógica complexa no front
+    setLoading(true);
     fetch(DRIVE_SCRIPT_URL)
       .then(res => res.json())
       .then(data => {
         if (Array.isArray(data)) {
-          // Os posts já vêm ordenados e vinculados do novo script
+          // O script agora já filtra posts inválidos
           setPosts(data);
         }
         setLoading(false);
@@ -34,9 +33,15 @@ export const Blog: React.FC = () => {
         console.error("Erro Blog Sincronia:", err);
         setLoading(false);
       });
+  };
+
+  useEffect(() => {
+    fetchPosts();
   }, []);
 
   if (selectedPost) {
+    const isError = selectedPost.content.includes("AVISO:");
+
     return (
       <div className="pt-32 pb-24 bg-black min-h-screen animate-fade-in">
         <div className="container mx-auto px-6 max-w-4xl">
@@ -57,9 +62,21 @@ export const Blog: React.FC = () => {
             </div>
 
             <div className="max-w-3xl mx-auto">
-               <div className="text-zinc-300 text-xl md:text-2xl leading-[2.4] font-light italic whitespace-pre-wrap font-serif selection:bg-gold-600/30">
-                  {selectedPost.content || "Conteúdo editorial em processo de revelação..."}
-               </div>
+               {isError ? (
+                 <div className="bg-zinc-900/50 border border-gold-600/30 p-12 rounded-sm text-center">
+                    <AlertCircle size={32} className="text-gold-500 mx-auto mb-6" />
+                    <p className="text-zinc-300 text-sm tracking-widest uppercase leading-loose font-bold italic mb-8">
+                      {selectedPost.content}
+                    </p>
+                    <Button onClick={() => window.open('https://drive.google.com/drive/u/0/folders/12-yHrlnrMXkBuaKrExeUQCQt8bPq3Ya', '_blank')} variant="outline" className="text-[10px] tracking-widest">
+                      REPARAR NO DRIVE
+                    </Button>
+                 </div>
+               ) : (
+                 <div className="text-zinc-300 text-xl md:text-2xl leading-[2.4] font-light italic whitespace-pre-wrap font-serif selection:bg-gold-600/30">
+                    {selectedPost.content || "Conteúdo editorial em processo de revelação..."}
+                 </div>
+               )}
             </div>
             
             <div className="mt-32 pt-12 border-t border-zinc-900 text-center">
@@ -74,9 +91,14 @@ export const Blog: React.FC = () => {
   return (
     <div className="pt-32 pb-24 bg-zinc-950 min-h-screen">
       <div className="container mx-auto px-6 max-w-6xl">
-        <SectionTitle title="Jornal Editorial" subtitle="A Verdade em Palavras" />
+        <div className="flex justify-between items-end mb-16">
+          <SectionTitle title="Jornal Editorial" subtitle="A Verdade em Palavras" />
+          <button onClick={fetchPosts} className="text-gold-500 hover:text-white transition-colors mb-12 flex items-center gap-2 text-[10px] tracking-widest uppercase font-bold">
+            <RefreshCw size={14} className={loading ? 'animate-spin' : ''} /> Atualizar
+          </button>
+        </div>
         
-        <div className="grid gap-32 mt-32">
+        <div className="grid gap-32 mt-16">
           {loading ? (
              [1, 2, 3].map(i => <Skeleton key={i} className="h-96 w-full" />)
           ) : posts.length === 0 ? (
@@ -85,8 +107,7 @@ export const Blog: React.FC = () => {
               <h3 className="text-white text-lg font-serif mb-4 tracking-widest italic">Nenhum Manifesto Encontrado</h3>
               <p className="text-zinc-700 tracking-[0.4em] uppercase text-[10px] font-bold max-w-md mx-auto leading-loose">
                 Sincronize sua pasta <strong className="text-gold-500">MAC_FROIS_EDITORIAL</strong>. <br/>
-                Arquivos devem seguir o padrão: <br/>
-                <code className="text-gold-600 lowercase bg-black px-2 mt-4 block">EDITORIAL_DATA_ID_TITULO_TEXTO.txt</code>
+                Certifique-se de que os arquivos são <strong className="text-white">.txt</strong> e <strong className="text-white">.png</strong> reais.
               </p>
             </div>
           ) : (
