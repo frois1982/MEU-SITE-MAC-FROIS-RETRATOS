@@ -47,12 +47,12 @@ export const Admin: React.FC = () => {
       const response = await ai.models.generateContent({
         model: "gemini-3-pro-preview",
         contents: `Aja como o Diretor Criativo da Vogue. Escreva um manifesto intelectual e profundo sobre "${topic}" para o retratista Mac Frois.
-        REGRAS DE OURO: 
-        1. O TÍTULO deve ser curto, impactante e em caixa alta (máximo 4 palavras).
-        2. O CONTEÚDO deve ser um texto corrido, denso, sem tópicos, focado em autoridade visual.
-        3. Formate rigorosamente assim:
-        TITULO: [Título]
-        CONTEUDO: [Texto]`,
+        REGRAS CRÍTICAS DE FORMATAÇÃO: 
+        1. O TÍTULO deve ser extremamente curto (ex: "A LUZ DO SER" ou "VERDADE PURA"). Máximo 3 palavras.
+        2. O CONTEÚDO deve ser um texto denso e poético.
+        3. Responda APENAS seguindo este modelo:
+        TITULO: [Título aqui]
+        CONTEUDO: [Texto aqui]`,
       });
       
       const fullText = response.text || '';
@@ -74,7 +74,7 @@ export const Admin: React.FC = () => {
       const ai = new GoogleGenAI({ apiKey: process.env.API_KEY });
       const response = await ai.models.generateContent({
         model: 'gemini-3-pro-image-preview',
-        contents: { parts: [{ text: `Black and white high-end fashion photography, 8k resolution, cinematic lighting, sharp focus on eyes, dramatic shadows, editorial style for Mac Frois, theme: ${topic}` }] },
+        contents: { parts: [{ text: `Minimalist black and white fine art portrait, high contrast, heavy shadows, sharp focus, cinematic light, editorial fashion style, theme: ${topic}` }] },
         config: { imageConfig: { aspectRatio: "16:9", imageSize: "1K" } },
       });
       if (response.candidates?.[0]?.content?.parts) {
@@ -141,7 +141,7 @@ export const Admin: React.FC = () => {
               <textarea 
                 value={topic}
                 onChange={(e) => setTopic(e.target.value)}
-                placeholder="Ex: A Geometria da Verdade na Luz..."
+                placeholder="Ex: A Geometria da Verdade..."
                 className="w-full bg-black border border-zinc-800 p-6 text-white focus:border-gold-600 outline-none rounded-sm text-sm font-light tracking-widest h-32 mb-8"
               />
               
@@ -161,7 +161,7 @@ export const Admin: React.FC = () => {
                   <div className="bg-gold-950/20 border border-gold-600/20 p-4 rounded-sm flex gap-3">
                      <Info size={16} className="text-gold-500 shrink-0" />
                      <p className="text-[9px] text-gold-400 uppercase tracking-widest leading-loose">
-                       Texto e Imagem prontos. Clique abaixo e cole no <span className="text-white">config.ts</span>.
+                       Manifesto concluído. Copie o código e cole no <span className="text-white">config.ts</span>.
                      </p>
                   </div>
                   <Button onClick={copyToClipboard} className={`w-full py-6 flex flex-col items-center justify-center gap-1 border-none transition-all duration-500 ${copied ? 'bg-green-600 text-white' : 'bg-white text-black hover:bg-gold-500 shadow-xl'}`}>
@@ -181,21 +181,20 @@ export const Admin: React.FC = () => {
                  <input 
                    value={title}
                    onChange={(e) => setTitle(e.target.value.toUpperCase())}
-                   placeholder="TÍTULO DO MANIFESTO"
+                   placeholder="TÍTULO"
                    className="w-full bg-transparent border-b border-zinc-800 pb-4 mb-8 text-white font-serif text-3xl italic outline-none focus:border-gold-600"
                  />
                  <textarea 
                    value={generatedText} 
                    onChange={(e) => setGeneratedText(e.target.value)}
                    className="w-full bg-transparent text-zinc-300 text-xl leading-[2.2] font-light italic outline-none font-serif h-[500px] resize-none" 
-                   placeholder="O texto editorial aparecerá aqui..." 
+                   placeholder="Conteúdo do Manifesto..." 
                  />
               </div>
               
               {generatedImg && (
                 <div className="rounded-sm overflow-hidden border border-zinc-800 shadow-2xl relative aspect-video">
                   <img src={generatedImg} className="w-full h-full object-cover grayscale" alt="Capa" />
-                  <div className="absolute inset-0 bg-gradient-to-t from-black via-transparent opacity-60"></div>
                 </div>
               )}
             </div>
