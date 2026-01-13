@@ -2,7 +2,7 @@
 import React, { useState, useEffect } from 'react';
 import { GoogleGenAI } from "@google/genai";
 import { Button, Card } from '../components/UI';
-import { Sparkles, Image as ImageIcon, Check, Loader2, Key, PenTool, Code, Terminal, Save, Eye, Layout } from 'lucide-react';
+import { Sparkles, Image as ImageIcon, Check, Loader2, Key, PenTool, Code, Terminal, Save, Eye, Layout, Info, AlertTriangle } from 'lucide-react';
 
 export const Admin: React.FC = () => {
   const [topic, setTopic] = useState('');
@@ -80,14 +80,17 @@ export const Admin: React.FC = () => {
   const getFullPostObject = () => {
     const id = "POST-" + Math.random().toString(36).substring(2, 7).toUpperCase();
     const date = new Date().toISOString().split('T')[0];
-    const postObj = {
-      id,
-      date,
-      title: topic.toUpperCase(),
-      content: generatedText,
-      imageUrl: generatedImg || "LINK_DA_FOTO_AQUI"
-    };
-    return JSON.stringify(postObj, null, 2) + ",";
+    
+    // O código gerado já é um objeto pronto para o array do config.ts
+    const code = `  {
+    id: "${id}",
+    date: "${date}",
+    title: "${topic.toUpperCase()}",
+    content: \`${generatedText}\`,
+    imageUrl: "${generatedImg || 'URL_DA_SUA_FOTO_AQUI'}"
+  },`;
+    
+    return code;
   };
 
   const copyToClipboard = () => {
@@ -127,7 +130,7 @@ export const Admin: React.FC = () => {
           {/* Coluna de Configuração */}
           <div className="lg:col-span-4 space-y-8">
             <Card className="bg-zinc-900/60 border-zinc-800 p-8 shadow-2xl sticky top-32">
-              <label className="text-white text-[10px] font-bold tracking-[0.4em] uppercase mb-4 block">Definir Pauta</label>
+              <label className="text-white text-[10px] font-bold tracking-[0.4em] uppercase mb-4 block">1. Definir Pauta</label>
               <textarea 
                 value={topic}
                 onChange={(e) => setTopic(e.target.value)}
@@ -142,7 +145,7 @@ export const Admin: React.FC = () => {
                   className="w-full py-5 !bg-gold-600 text-black border-none font-bold tracking-[0.3em] flex items-center justify-center gap-3"
                 >
                   {loadingText ? <Loader2 size={18} className="animate-spin" /> : <Sparkles size={18} />} 
-                  {loadingText ? "CONCEBENDO..." : "GERAR MANIFESTO"}
+                  {loadingText ? "CONCEBENDO..." : "GERAR TEXTO"}
                 </Button>
                 
                 <Button 
@@ -159,19 +162,37 @@ export const Admin: React.FC = () => {
               {generatedText && (
                 <div className="mt-12 pt-8 border-t border-zinc-800 space-y-6 animate-fade-in">
                   <div className="flex items-center gap-3 mb-2">
-                    <Save size={18} className="text-gold-500" />
-                    <h4 className="text-white text-[10px] font-bold tracking-[0.4em] uppercase">Publicação Direta</h4>
+                    <Check className="text-green-500" size={18} />
+                    <h4 className="text-white text-[10px] font-bold tracking-[0.4em] uppercase">Post Finalizado</h4>
                   </div>
-                  <p className="text-zinc-500 text-[9px] uppercase tracking-widest leading-loose">
-                    Post pronto. Copie o código e cole no final do arquivo <code className="text-gold-500">config.ts</code>.
-                  </p>
+                  
+                  <div className="bg-blue-900/20 border border-blue-500/30 p-4 rounded-sm flex gap-3">
+                     <Info size={16} className="text-blue-400 shrink-0" />
+                     <p className="text-[9px] text-blue-300 uppercase tracking-widest leading-loose">
+                       A imagem gerada pela IA já está embutida no código. Você não precisa de links externos.
+                     </p>
+                  </div>
+
                   <Button 
                     onClick={copyToClipboard} 
-                    className={`w-full py-6 flex items-center justify-center gap-3 border-none transition-all duration-500 ${copied ? 'bg-green-600 text-white' : 'bg-white text-black hover:bg-gold-500 shadow-xl'}`}
+                    className={`w-full py-6 flex flex-col items-center justify-center gap-1 border-none transition-all duration-500 ${copied ? 'bg-green-600 text-white' : 'bg-white text-black hover:bg-gold-500 shadow-xl'}`}
                   >
-                    {copied ? <Check size={20} /> : <Terminal size={20} />}
-                    <span className="font-black tracking-[0.2em] text-[11px]">{copied ? "PRONTO PARA COLAR!" : "COPIAR CÓDIGO DO POST"}</span>
+                    <div className="flex items-center gap-2">
+                       {copied ? <Check size={20} /> : <Terminal size={20} />}
+                       <span className="font-black tracking-[0.2em] text-[11px]">{copied ? "COPIADO!" : "COPIAR CÓDIGO"}</span>
+                    </div>
                   </Button>
+
+                  <div className="pt-4 space-y-3">
+                     <div className="flex items-center gap-2 text-[9px] text-zinc-500 uppercase tracking-widest">
+                        <div className="w-1.5 h-1.5 bg-gold-600 rounded-full"></div>
+                        Vá no arquivo <span className="text-white">config.ts</span>
+                     </div>
+                     <div className="flex items-center gap-2 text-[9px] text-zinc-500 uppercase tracking-widest">
+                        <div className="w-1.5 h-1.5 bg-gold-600 rounded-full"></div>
+                        Cole abaixo do marcador de "Novo Post"
+                     </div>
+                  </div>
                 </div>
               )}
             </Card>
@@ -198,8 +219,8 @@ export const Admin: React.FC = () => {
               <div className="space-y-8 animate-fade-in">
                 <div className="bg-zinc-900/40 border border-zinc-800 p-8 md:p-12 relative rounded-sm backdrop-blur-md">
                    <div className="flex items-center justify-between mb-8 border-b border-zinc-800 pb-4">
-                      <span className="text-zinc-500 text-[10px] font-bold uppercase tracking-[0.4em]">Editor de Texto Profundo</span>
-                      <span className="text-zinc-700 text-[9px] font-mono tracking-widest uppercase">ID: AUTO-GEN</span>
+                      <span className="text-zinc-500 text-[10px] font-bold uppercase tracking-[0.4em]">Refinar Manifesto (Opcional)</span>
+                      <span className="text-zinc-700 text-[9px] font-mono tracking-widest uppercase">EDITOR ATIVO</span>
                    </div>
                    <textarea 
                      value={generatedText} 

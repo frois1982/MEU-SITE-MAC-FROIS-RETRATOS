@@ -2,7 +2,7 @@
 import React, { useState, useEffect } from 'react';
 import { SectionTitle } from '../components/UI';
 import { EDITORIAL_DATABASE } from '../config';
-import { ArrowRight, ChevronLeft, BookOpen, Quote, Clock, Share2, ArrowUpRight } from 'lucide-react';
+import { ArrowRight, ChevronLeft, BookOpen, Quote, Clock, Share2, ArrowUpRight, Image as ImageIcon } from 'lucide-react';
 
 interface BlogPost {
   id: string;
@@ -15,13 +15,25 @@ interface BlogPost {
 export const Blog: React.FC = () => {
   const [selectedPost, setSelectedPost] = useState<BlogPost | null>(null);
   
-  // O blog agora consome diretamente do arquivo de configuração, sem necessidade de fetch ou scripts externos.
-  // Isso garante que o conteúdo esteja SEMPRE disponível e nunca dê erro de carregamento.
   const posts = EDITORIAL_DATABASE;
 
   useEffect(() => {
     window.scrollTo(0, 0);
   }, [selectedPost]);
+
+  const handleImageError = (e: React.SyntheticEvent<HTMLImageElement, Event>) => {
+    e.currentTarget.style.display = 'none';
+    const parent = e.currentTarget.parentElement;
+    if (parent) {
+      parent.classList.add('flex', 'items-center', 'justify-center', 'bg-zinc-900');
+      const icon = document.createElement('div');
+      icon.innerHTML = `<div class="text-zinc-800 flex flex-col items-center gap-4">
+        <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"><rect width="18" height="18" x="3" y="3" rx="2" ry="2"/><circle cx="9" cy="9" r="2"/><path d="m21 15-3.086-3.086a2 2 0 0 0-2.828 0L6 21"/></svg>
+        <span class="text-[9px] tracking-[0.5em] uppercase font-bold opacity-20">Imagem indisponível</span>
+      </div>`;
+      parent.appendChild(icon);
+    }
+  };
 
   if (selectedPost) {
     return (
@@ -50,6 +62,7 @@ export const Blog: React.FC = () => {
             <div className="relative aspect-video mb-24 rounded-sm border border-zinc-900 overflow-hidden shadow-[0_0_100px_rgba(0,0,0,1)] bg-zinc-900 group">
               <img 
                 src={selectedPost.imageUrl} 
+                onError={handleImageError}
                 className="w-full h-full object-cover grayscale brightness-50 group-hover:brightness-75 transition-all duration-[2s] scale-105 group-hover:scale-100" 
                 alt={selectedPost.title} 
               />
@@ -101,6 +114,7 @@ export const Blog: React.FC = () => {
                 <div className={`lg:col-span-7 aspect-[16/10] overflow-hidden bg-zinc-900 rounded-sm shadow-2xl relative border border-zinc-900 ${idx % 2 !== 0 ? 'lg:order-2' : ''}`}>
                   <img 
                     src={post.imageUrl} 
+                    onError={handleImageError}
                     className="w-full h-full object-cover grayscale opacity-30 group-hover:opacity-100 transition-all duration-[2s] group-hover:scale-105" 
                     alt={post.title} 
                   />
