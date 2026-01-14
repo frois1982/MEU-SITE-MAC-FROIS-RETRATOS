@@ -2,7 +2,7 @@
 import React, { useState, useEffect, useMemo } from 'react';
 import { SectionTitle } from '../components/UI';
 import { EDITORIAL_DATABASE } from '../config';
-import { ArrowRight, ChevronLeft, BookOpen, Quote } from 'lucide-react';
+import { ArrowRight, ChevronLeft, BookOpen, Quote, AlertCircle } from 'lucide-react';
 
 interface BlogPost {
   id: string;
@@ -15,15 +15,15 @@ interface BlogPost {
 export const Blog: React.FC = () => {
   const [selectedPost, setSelectedPost] = useState<BlogPost | null>(null);
   
+  // PROTEÇÃO: Garante que o site não quebre se EDITORIAL_DATABASE for malformado
   const posts = useMemo(() => {
     try {
       if (!Array.isArray(EDITORIAL_DATABASE)) return [];
-      // Filtra posts válidos e garante que a ordem seja a da colagem (topo primeiro)
-      return EDITORIAL_DATABASE.filter(post => 
-        post && post.id && post.title && post.content
-      );
+      return [...EDITORIAL_DATABASE].filter(post => 
+        post && typeof post === 'object' && post.id && post.title
+      ).reverse(); // Mais recentes primeiro
     } catch (e) {
-      console.error("Erro banco de dados:", e);
+      console.error("Erro ao ler banco de dados editorial:", e);
       return [];
     }
   }, []);
@@ -45,24 +45,18 @@ export const Blog: React.FC = () => {
           </button>
           
           <article className="animate-slide-up">
-            {/* HERO IMAGE NO TOPO DO ARTIGO */}
             <div className="relative w-full mb-16 overflow-hidden rounded-sm shadow-2xl border border-zinc-900 group bg-zinc-900 aspect-video md:aspect-[16/7]">
               <img 
                 src={selectedPost.imageUrl} 
+                loading="lazy"
                 className="w-full h-full object-cover grayscale brightness-90 group-hover:brightness-110 transition-all duration-[3s] scale-105 group-hover:scale-100" 
                 alt={selectedPost.title} 
               />
               <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent opacity-60"></div>
-              <div className="absolute bottom-6 left-6 border-l-2 border-gold-600 pl-4">
-                 <p className="text-white text-[10px] tracking-[0.4em] uppercase font-bold">Mac Frois • Retratista</p>
-                 <p className="text-zinc-500 text-[8px] tracking-[0.3em] uppercase italic">Estúdio Editorial</p>
-              </div>
             </div>
 
             <header className="mb-16 text-center">
-               <div className="flex items-center justify-center gap-4 mb-6">
-                  <span className="text-gold-600 text-[9px] font-bold tracking-[0.6em] uppercase block">MANIFESTO EDITORIAL • {selectedPost.date}</span>
-               </div>
+               <span className="text-gold-600 text-[9px] font-bold tracking-[0.6em] uppercase block mb-6">MANIFESTO • {selectedPost.date}</span>
                <h1 className="text-3xl md:text-6xl font-serif text-white tracking-[0.2em] uppercase italic leading-tight mb-8">
                  {selectedPost.title}
                </h1>
@@ -77,7 +71,7 @@ export const Blog: React.FC = () => {
                <div className="mt-32 pt-16 border-t border-zinc-900 flex flex-col items-center opacity-40">
                   <Quote className="text-gold-600 w-10 h-10 mb-6" />
                   <p className="text-zinc-500 text-[9px] tracking-[0.6em] uppercase font-bold italic text-center max-w-sm">
-                    A verdade é a única estrutura que não cede ao tempo.
+                    A verdade é o luxo definitivo.
                   </p>
                </div>
             </div>
@@ -96,9 +90,14 @@ export const Blog: React.FC = () => {
         
         <div className="grid gap-32">
           {posts.length === 0 ? (
-            <div className="text-center py-40 border border-dashed border-zinc-900 rounded-sm opacity-50">
-              <BookOpen size={40} className="text-zinc-800 mx-auto mb-6" />
-              <p className="text-zinc-700 tracking-[0.4em] uppercase text-[9px] font-bold">O arquivo está sendo atualizado.</p>
+            <div className="text-center py-40 border border-dashed border-zinc-900 rounded-sm opacity-50 flex flex-col items-center">
+              <BookOpen size={40} className="text-zinc-800 mb-6" />
+              <p className="text-zinc-700 tracking-[0.4em] uppercase text-[9px] font-bold">Aguardando novos manifestos no cofre.</p>
+              {EDITORIAL_DATABASE.length > 0 && (
+                <div className="mt-4 flex items-center gap-2 text-red-500 text-[10px] animate-pulse">
+                  <AlertCircle size={14} /> Erro de Sintaxe no config.ts Detectado
+                </div>
+              )}
             </div>
           ) : (
             posts.map((post, idx) => (
@@ -110,6 +109,7 @@ export const Blog: React.FC = () => {
                 <div className={`lg:col-span-6 aspect-[16/9] overflow-hidden bg-zinc-900 rounded-sm shadow-xl relative border border-zinc-900 ${idx % 2 !== 0 ? 'lg:order-2' : ''}`}>
                   <img 
                     src={post.imageUrl} 
+                    loading="lazy"
                     className="w-full h-full object-cover grayscale opacity-50 group-hover:opacity-100 transition-all duration-[2s] group-hover:scale-105" 
                     alt={post.title} 
                   />

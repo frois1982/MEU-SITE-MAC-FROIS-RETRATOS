@@ -2,7 +2,7 @@
 import React, { useState, useEffect } from 'react';
 import { GoogleGenAI } from "@google/genai";
 import { Button, Card } from '../components/UI';
-import { Sparkles, Image as ImageIcon, Check, Loader2, Terminal, Trash2, Layout, Info } from 'lucide-react';
+import { Sparkles, Image as ImageIcon, Check, Loader2, Terminal, Trash2, Layout, Info, Code } from 'lucide-react';
 
 export const Admin: React.FC = () => {
   const [topic, setTopic] = useState('');
@@ -46,13 +46,10 @@ export const Admin: React.FC = () => {
       const ai = new GoogleGenAI({ apiKey: process.env.API_KEY });
       const response = await ai.models.generateContent({
         model: "gemini-3-pro-preview",
-        contents: `Aja como o Diretor Criativo da Vogue. Escreva um manifesto intelectual e profundo sobre "${topic}" para o retratista Mac Frois.
-        REGRAS CRÍTICAS DE FORMATAÇÃO: 
-        1. O TÍTULO deve ser extremamente curto (ex: "A LUZ DO SER" ou "VERDADE PURA"). Máximo 3 palavras.
-        2. O CONTEÚDO deve ser um texto denso e poético.
-        3. Responda APENAS seguindo este modelo:
-        TITULO: [Título aqui]
-        CONTEUDO: [Texto aqui]`,
+        contents: `Aja como o Diretor Criativo da Vogue. Escreva um manifesto intelectual sobre "${topic}" para o retratista Mac Frois.
+        REGRAS: 1. Título curto (máximo 3 palavras). 2. Texto denso e poético. 3. Responda assim:
+        TITULO: [Título]
+        CONTEUDO: [Texto]`,
       });
       
       const fullText = response.text || '';
@@ -74,7 +71,7 @@ export const Admin: React.FC = () => {
       const ai = new GoogleGenAI({ apiKey: process.env.API_KEY });
       const response = await ai.models.generateContent({
         model: 'gemini-3-pro-image-preview',
-        contents: { parts: [{ text: `Minimalist black and white fine art portrait, high contrast, heavy shadows, sharp focus, cinematic light, editorial fashion style, theme: ${topic}` }] },
+        contents: { parts: [{ text: `Minimalist black and white editorial photography, high contrast, cinematic light, luxury style, theme: ${topic}` }] },
         config: { imageConfig: { aspectRatio: "16:9", imageSize: "1K" } },
       });
       if (response.candidates?.[0]?.content?.parts) {
@@ -97,21 +94,20 @@ export const Admin: React.FC = () => {
     setCopied(false);
   };
 
-  const getFullPostObject = () => {
-    const id = "POST-" + Math.random().toString(36).substring(2, 7).toUpperCase();
-    const date = new Date().toLocaleDateString('pt-BR');
-    const postData = {
-      id: id,
-      date: date,
+  const getFormattedCode = () => {
+    const postObj = {
+      id: "POST-" + Math.random().toString(36).substring(2, 7).toUpperCase(),
+      date: new Date().toLocaleDateString('pt-BR'),
       title: title || topic.toUpperCase(),
       content: generatedText,
-      imageUrl: generatedImg || "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?grayscale=true"
+      imageUrl: generatedImg || "URL_DA_IMAGEM"
     };
-    return JSON.stringify(postData, null, 2) + ",";
+    // Stringify garante que as aspas e quebras de linha não quebrem o código TS
+    return JSON.stringify(postObj, null, 2) + ",";
   };
 
   const copyToClipboard = () => {
-    navigator.clipboard.writeText(getFullPostObject());
+    navigator.clipboard.writeText(getFormattedCode());
     setCopied(true);
     setTimeout(() => setCopied(false), 3000);
   };
@@ -122,52 +118,57 @@ export const Admin: React.FC = () => {
         <div className="flex flex-col md:flex-row justify-between items-end mb-16 border-b border-zinc-900 pb-12 gap-8">
            <div className="flex-grow">
              <div className="flex items-center gap-4 mb-4">
-                <Layout className="text-gold-500" size={20} />
-                <h2 className="text-gold-500 text-[10px] font-bold tracking-[0.6em] uppercase">Estúdio Editorial</h2>
+                <Code className="text-gold-500" size={20} />
+                <h2 className="text-gold-500 text-[10px] font-bold tracking-[0.6em] uppercase">Estúdio de Publicação</h2>
              </div>
-             <h1 className="text-5xl font-serif text-white italic tracking-tighter uppercase">Creative Lab</h1>
+             <h1 className="text-5xl font-serif text-white italic tracking-tighter uppercase">Editorial Lab</h1>
            </div>
            <div className="flex gap-4">
              <Button onClick={resetStudio} variant="secondary" className="px-6 border-zinc-800">
-               <Trash2 size={18} className="mr-2" /> REINICIAR
+               <Trash2 size={18} className="mr-2" /> LIMPAR
              </Button>
+             {!hasKey && (
+               <Button onClick={handleKeyActivation} className="bg-gold-600 text-black px-8 py-4 font-bold border-none">
+                 ATIVAR IA
+               </Button>
+             )}
            </div>
         </div>
 
         <div className="grid lg:grid-cols-12 gap-12">
           <div className="lg:col-span-4 space-y-8">
             <Card className="bg-zinc-900/60 border-zinc-800 p-8 shadow-2xl sticky top-32">
-              <label className="text-white text-[10px] font-bold tracking-[0.4em] uppercase mb-4 block">1. Tema do Manifesto</label>
+              <label className="text-white text-[10px] font-bold tracking-[0.4em] uppercase mb-4 block">Pauta Editorial</label>
               <textarea 
                 value={topic}
                 onChange={(e) => setTopic(e.target.value)}
-                placeholder="Ex: A Geometria da Verdade..."
+                placeholder="Ex: A força do silêncio..."
                 className="w-full bg-black border border-zinc-800 p-6 text-white focus:border-gold-600 outline-none rounded-sm text-sm font-light tracking-widest h-32 mb-8"
               />
               
               <div className="space-y-4">
                 <Button onClick={generateEditorial} disabled={loadingText || !topic || !hasKey} className="w-full py-5 !bg-gold-600 text-black border-none font-bold tracking-[0.3em] flex items-center justify-center gap-3">
                   {loadingText ? <Loader2 size={18} className="animate-spin" /> : <Sparkles size={18} />} 
-                  CRIAR TEXTO
+                  {loadingText ? "ESCREVENDO..." : "GERAR TEXTO"}
                 </Button>
                 <Button onClick={generateCover} disabled={loadingImg || !topic || !hasKey} variant="outline" className="w-full py-5 border-zinc-800 hover:border-gold-500 tracking-[0.3em] flex items-center justify-center gap-3">
                   {loadingImg ? <Loader2 size={18} className="animate-spin" /> : <ImageIcon size={18} />} 
-                  GERAR IMAGEM
+                  {loadingImg ? "CRIANDO..." : "GERAR CAPA"}
                 </Button>
               </div>
 
               {generatedText && (
-                <div className="mt-12 pt-8 border-t border-zinc-800 space-y-6">
-                  <div className="bg-gold-950/20 border border-gold-600/20 p-4 rounded-sm flex gap-3">
-                     <Info size={16} className="text-gold-500 shrink-0" />
-                     <p className="text-[9px] text-gold-400 uppercase tracking-widest leading-loose">
-                       Manifesto concluído. Copie o código e cole no <span className="text-white">config.ts</span>.
+                <div className="mt-12 pt-8 border-t border-zinc-800 space-y-6 animate-fade-in">
+                  <div className="bg-blue-900/10 border border-blue-500/20 p-4 rounded-sm flex gap-3">
+                     <Info size={16} className="text-blue-400 shrink-0" />
+                     <p className="text-[9px] text-blue-300 uppercase tracking-widest leading-loose">
+                       O código agora é blindado. Cole no final da lista no <span className="text-white">config.ts</span>.
                      </p>
                   </div>
                   <Button onClick={copyToClipboard} className={`w-full py-6 flex flex-col items-center justify-center gap-1 border-none transition-all duration-500 ${copied ? 'bg-green-600 text-white' : 'bg-white text-black hover:bg-gold-500 shadow-xl'}`}>
                     <div className="flex items-center gap-2">
                        {copied ? <Check size={20} /> : <Terminal size={20} />}
-                       <span className="font-black tracking-[0.2em] text-[11px] uppercase">{copied ? "CÓDIGO COPIADO!" : "COPIAR CÓDIGO DO POST"}</span>
+                       <span className="font-black tracking-[0.2em] text-[11px] uppercase">{copied ? "COPIADO!" : "COPIAR PARA PUBLICAR"}</span>
                     </div>
                   </Button>
                 </div>
@@ -181,14 +182,14 @@ export const Admin: React.FC = () => {
                  <input 
                    value={title}
                    onChange={(e) => setTitle(e.target.value.toUpperCase())}
-                   placeholder="TÍTULO"
+                   placeholder="TÍTULO DO MANIFESTO"
                    className="w-full bg-transparent border-b border-zinc-800 pb-4 mb-8 text-white font-serif text-3xl italic outline-none focus:border-gold-600"
                  />
                  <textarea 
                    value={generatedText} 
                    onChange={(e) => setGeneratedText(e.target.value)}
                    className="w-full bg-transparent text-zinc-300 text-xl leading-[2.2] font-light italic outline-none font-serif h-[500px] resize-none" 
-                   placeholder="Conteúdo do Manifesto..." 
+                   placeholder="Conteúdo..." 
                  />
               </div>
               
