@@ -1,0 +1,43 @@
+name: Publicar Post Automático — Método Frois
+
+on:
+  schedule:
+    # Segunda, Quarta e Sexta às 8h (horário de Brasília = 11h UTC)
+    - cron: '0 11 * * 1'
+    - cron: '0 11 * * 3'
+    - cron: '0 11 * * 5'
+  workflow_dispatch: # permite rodar manualmente também
+
+jobs:
+  gerar-post:
+    runs-on: ubuntu-latest
+
+    permissions:
+      contents: write
+
+    steps:
+      - name: Checkout do repositório
+        uses: actions/checkout@v4
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Configurar Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Instalar dependências
+        run: npm install node-fetch@3
+
+      - name: Gerar post com IA
+        env:
+          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+        run: node scripts/generate-post.js
+
+      - name: Commit e push do novo post
+        run: |
+          git config --global user.name "Método Frois Bot"
+          git config --global user.email "frois.mac@gmail.com"
+          git add config.ts
+          git diff --staged --quiet || git commit -m "feat(blog): post automático SEO — $(date +'%d/%m/%Y')"
+          git push
