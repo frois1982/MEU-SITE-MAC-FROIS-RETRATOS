@@ -1,194 +1,112 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-<meta charset="UTF-8"/><meta name="viewport" content="width=device-width,initial-scale=1.0"/>
-<title>Imagem com Intenção — E-book Gratuito — Método Frois</title>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+<title>Imagem com Intenção — E-book Gratuito · Método Frois</title>
 <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700&family=Montserrat:wght@200;300;400;500;600;700&display=swap" rel="stylesheet"/>
 <style>
-
-  :root {
-    --bg:     #faf8f5;
-    --bg2:    #f2ede6;
-    --bg3:    #ece5da;
-    --txt:    #1c1917;
-    --txt2:   #44403c;
-    --dim:    #78716c;
-    --dimlt:  #a8a29e;
-    --gold:   #d97706;
-    --goldb:  #b45309;
-    --goldbr: #f59e0b;
-    --goldbg: #fef3c7;
-    --border: #e7e2da;
-    --bordg:  #d6c9b0;
-    --line:   #c8bfb0;
-    --white:  #faf8f5;
-  }
-  *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
-  html{scroll-behavior:smooth}
-  body{background:var(--bg);color:var(--txt);font-family:'Montserrat',sans-serif;
-       font-weight:300;line-height:1.75;letter-spacing:.015em}
-  h1,h2,h3,h4{font-family:'Cinzel',serif;text-transform:uppercase;letter-spacing:.1em;font-weight:700}
-  a{color:inherit;text-decoration:none}
-  img{max-width:100%;display:block}
-
-  /* ── Nav ─────────────────────────────────────────── */
-  nav{position:fixed;top:0;left:0;right:0;z-index:100;
-      padding:14px 40px;display:flex;justify-content:space-between;align-items:center;
-      background:rgba(250,248,245,.96);backdrop-filter:blur(10px);
-      border-bottom:1px solid var(--border)}
-  .nav-logo{font-family:'Cinzel',serif;font-size:12px;letter-spacing:.3em;
-             color:var(--goldb);text-transform:uppercase}
-  .nav-cta{background:var(--gold);color:var(--white);font-size:10px;font-weight:700;
-            letter-spacing:.2em;text-transform:uppercase;padding:9px 20px;
-            border:none;cursor:pointer;transition:background .2s;display:inline-block}
-  .nav-cta:hover{background:var(--goldb)}
-
-  /* ── Layout ──────────────────────────────────────── */
-  section{padding:80px 24px}
-  .container{max-width:920px;margin:0 auto}
-  .container-sm{max-width:640px;margin:0 auto}
-
-  /* ── Labels & Headings ───────────────────────────── */
-  .eyebrow{font-size:9px;letter-spacing:.4em;color:var(--gold);text-transform:uppercase;
-           margin-bottom:14px;font-family:'Montserrat',sans-serif;font-weight:600}
-  .sec-title{font-size:clamp(20px,3vw,34px);color:var(--txt);margin-bottom:8px}
-  .rule{width:44px;height:2.5px;background:var(--gold);margin:14px 0 28px}
-  .rule.center{margin-left:auto;margin-right:auto}
-
-  /* ── Buttons ─────────────────────────────────────── */
-  .btn{display:inline-block;background:var(--gold);color:var(--white);
-       font-family:'Montserrat',sans-serif;font-size:11px;font-weight:700;
-       letter-spacing:.22em;text-transform:uppercase;padding:15px 38px;
-       border:none;cursor:pointer;transition:all .22s}
-  .btn:hover{background:var(--goldb);transform:translateY(-2px)}
-  .btn-outline{background:transparent;border:1.5px solid var(--gold);color:var(--gold)}
-  .btn-outline:hover{background:var(--gold);color:var(--white);transform:translateY(-2px)}
-
-  /* ── Cards ───────────────────────────────────────── */
-  .card{background:var(--bg2);padding:24px;border-top:2.5px solid var(--gold)}
-  .card-highlight{background:var(--goldbg);border-top-color:var(--goldb)}
-  .card-soft{background:var(--bg3);border-top:2.5px solid var(--bordg)}
-
-  /* ── Alt backgrounds ─────────────────────────────── */
-  .alt{background:var(--bg2)}
-  .alt2{background:var(--bg3)}
-
-  /* ── Utilities ───────────────────────────────────── */
-  .text-gold{color:var(--gold)}
-  .text-dim{color:var(--dim)}
-  .text-center{text-align:center}
-  .mt-sm{margin-top:16px} .mt-md{margin-top:32px} .mt-lg{margin-top:56px}
-
-  /* ── Grid helpers ────────────────────────────────── */
-  .grid-2{display:grid;grid-template-columns:1fr 1fr;gap:24px}
-  .grid-3{display:grid;grid-template-columns:repeat(3,1fr);gap:20px}
-  .grid-4{display:grid;grid-template-columns:repeat(4,1fr);gap:16px}
-  @media(max-width:768px){.grid-2,.grid-3,.grid-4{grid-template-columns:1fr}}
-
-  /* ── Check & arrow lists ─────────────────────────── */
-  .list-check{list-style:none;padding:0}
-  .list-check li{padding:10px 0;border-bottom:1px solid var(--border);
-                  font-size:14px;display:flex;gap:12px;align-items:flex-start}
-  .list-check li::before{content:'✓';color:var(--gold);font-weight:700;flex-shrink:0;margin-top:1px}
-  .list-arrow li::before{content:'→';color:var(--gold)}
-  .list-x li::before{content:'✕';color:var(--dimlt)}
-
-  /* ── Step timeline ───────────────────────────────── */
-  .steps{display:flex;flex-direction:column;gap:12px}
-  .step{display:flex;gap:18px;align-items:flex-start}
-  .step-num{background:var(--gold);color:var(--white);font-size:12px;font-weight:700;
-             width:34px;height:34px;display:flex;align-items:center;justify-content:center;
-             flex-shrink:0}
-  .step-body h4{font-family:'Cinzel',serif;font-size:11px;color:var(--goldb);
-                margin-bottom:5px;letter-spacing:.07em}
-  .step-body p{font-size:13px;color:var(--txt2);line-height:1.65}
-
-  /* ── FAQ accordion ───────────────────────────────── */
-  .faq-list{display:flex;flex-direction:column;gap:2px;margin-top:24px}
-  details{background:var(--bg2);border-left:2.5px solid var(--border)}
-  details[open]{border-left-color:var(--gold)}
-  summary{padding:16px 20px;cursor:pointer;font-family:'Cinzel',serif;font-size:11px;
-           letter-spacing:.07em;color:var(--txt);list-style:none;
-           display:flex;justify-content:space-between;align-items:center;user-select:none}
-  summary::after{content:'+';font-family:'Montserrat',sans-serif;font-size:18px;color:var(--gold)}
-  details[open] summary::after{content:'−'}
-  details p{padding:0 20px 16px;font-size:13px;color:var(--txt2);line-height:1.7}
-
-  /* ── Plan cards ──────────────────────────────────── */
-  .plan-card{background:var(--bg2);padding:30px 24px;border-top:2.5px solid var(--border);position:relative}
-  .plan-card.featured{border-top-color:var(--goldb);background:var(--goldbg)}
-  .plan-badge{position:absolute;top:-11px;left:50%;transform:translateX(-50%);
-               background:var(--gold);color:var(--white);font-size:8px;font-weight:700;
-               letter-spacing:.2em;text-transform:uppercase;padding:3px 14px;white-space:nowrap}
-  .plan-name{font-size:9px;letter-spacing:.3em;color:var(--gold);text-transform:uppercase;
-              font-family:'Montserrat',sans-serif;font-weight:700;margin-bottom:10px}
-  .plan-price{font-family:'Cinzel',serif;font-size:36px;color:var(--goldb);line-height:1}
-  .plan-price sup{font-size:16px;vertical-align:top;margin-top:6px;display:inline-block}
-  .plan-price .unit{font-family:'Montserrat',sans-serif;font-size:13px;font-weight:300;color:var(--dim)}
-  .plan-cond{font-size:11px;color:var(--dim);margin:6px 0 18px}
-  .plan-desc{font-size:12px;font-style:italic;color:var(--txt2);margin-bottom:18px;line-height:1.6}
-  .plan-items{list-style:none;margin-bottom:24px}
-  .plan-items li{font-size:13px;padding:7px 0;border-bottom:1px solid var(--border);
-                  display:flex;gap:10px;align-items:flex-start}
-  .plan-items li::before{content:'·';color:var(--gold);font-weight:700;flex-shrink:0}
-  .plan-link{display:block;text-align:center;padding:13px;font-size:10px;letter-spacing:.18em;
-              text-transform:uppercase;font-weight:700;transition:all .2s;font-family:'Montserrat',sans-serif}
-  .plan-link.gold{background:var(--gold);color:var(--white)}
-  .plan-link.gold:hover{background:var(--goldb)}
-  .plan-link.outline{border:1.5px solid var(--gold);color:var(--gold)}
-  .plan-link.outline:hover{background:var(--gold);color:var(--white)}
-
-  /* ── CTA section ─────────────────────────────────── */
-  .cta-section{background:var(--bg3);text-align:center;padding:90px 24px}
-  .cta-section h2{font-size:clamp(22px,4vw,40px);color:var(--txt);margin-bottom:14px}
-  .cta-section p{font-size:15px;color:var(--txt2);max-width:480px;margin:0 auto 36px}
-
-  /* ── Footer ──────────────────────────────────────── */
-  footer{background:var(--bg);border-top:1px solid var(--border);
-          padding:36px 24px;text-align:center}
-  footer p{font-size:12px;color:var(--dim)}
-  footer a{color:var(--gold)}
-
-
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --bg:#faf8f5;--bg2:#f2ede6;--bg3:#ece5da;
+  --txt:#1c1917;--txt2:#44403c;--dim:#78716c;--dimlt:#a8a29e;
+  --gold:#d97706;--goldb:#b45309;--goldbr:#f59e0b;--goldbg:#fef3c7;
+  --border:#e7e2da;--line:#c8bfb0;--white:#faf8f5;
+  --red:#dc2626;--redbg:#fef2f2;--green:#16a34a;--greenbg:#f0fdf4;
+}
+html{scroll-behavior:smooth}
+body{background:var(--bg);color:var(--txt);font-family:'Montserrat',sans-serif;
+     font-weight:300;line-height:1.75;min-height:100vh;display:flex;flex-direction:column}
+h1,h2,h3{font-family:'Cinzel',serif;text-transform:uppercase;letter-spacing:.1em;font-weight:700}
+main{flex:1;display:flex;align-items:center;justify-content:center;padding:48px 24px}
+.wrap{width:100%;max-width:500px}
+.eyebrow{font-size:9px;letter-spacing:.4em;color:var(--gold);text-transform:uppercase;
+         font-family:'Montserrat',sans-serif;font-weight:600;margin-bottom:14px}
+.rule{width:44px;height:2.5px;background:var(--gold);margin:16px 0 20px}
+.hero-title{font-size:clamp(32px,7vw,52px);line-height:1.05;margin-bottom:6px;color:var(--txt)}
+.hero-title span{color:var(--gold)}
+.hero-sub{font-size:14px;color:var(--dim);margin-bottom:28px;line-height:1.7}
+.form-box{background:var(--bg2);padding:32px;border-top:3px solid var(--gold)}
+.form-box label{display:block;font-size:10px;letter-spacing:.2em;color:var(--gold);
+                text-transform:uppercase;font-weight:700;margin-bottom:6px}
+.form-box input{width:100%;background:var(--bg);border:1.5px solid var(--border);
+                color:var(--txt);font-family:'Montserrat',sans-serif;font-size:14px;
+                font-weight:300;padding:12px 14px;margin-bottom:18px;outline:none;
+                transition:border-color .2s}
+.form-box input:focus{border-color:var(--gold)}
+.form-box input.error{border-color:var(--red)}
+.btn-submit{width:100%;background:var(--gold);color:var(--white);
+            font-family:'Montserrat',sans-serif;font-size:12px;font-weight:700;
+            letter-spacing:.22em;text-transform:uppercase;padding:15px;
+            border:none;cursor:pointer;transition:background .2s;
+            display:flex;align-items:center;justify-content:center;gap:10px}
+.btn-submit:hover:not(:disabled){background:var(--goldb)}
+.btn-submit:disabled{opacity:.6;cursor:not-allowed}
+.spinner{width:16px;height:16px;border:2px solid rgba(250,248,245,.4);
+         border-top-color:var(--white);border-radius:50%;animation:spin .7s linear infinite}
+@keyframes spin{to{transform:rotate(360deg)}}
+.msg{display:none;padding:14px 16px;font-size:13px;line-height:1.6;margin-top:14px}
+.msg.error{display:block;background:var(--redbg);border-left:3px solid var(--red);color:var(--red)}
+.msg.info{display:block;background:var(--bg3);border-left:3px solid var(--line);color:var(--dim)}
+.success-box{display:none;background:var(--greenbg);padding:28px;border-top:3px solid var(--green);text-align:center}
+.success-box h3{font-family:'Cinzel',serif;font-size:14px;color:var(--green);
+               text-transform:uppercase;letter-spacing:.08em;margin-bottom:10px}
+.success-box p{font-size:13px;color:var(--txt2);margin-bottom:20px;line-height:1.65}
+.btn-download{display:inline-block;background:var(--green);color:var(--white);
+              font-family:'Montserrat',sans-serif;font-size:11px;font-weight:700;
+              letter-spacing:.18em;text-transform:uppercase;padding:14px 28px;
+              text-decoration:none;transition:background .2s}
+.btn-download:hover{background:#15803d}
+.success-note{font-size:11px;color:var(--dimlt);margin-top:14px}
+.learns{margin-top:32px}
+.learns-title{font-size:9px;letter-spacing:.3em;color:var(--gold);text-transform:uppercase;
+              font-weight:700;margin-bottom:14px;font-family:'Montserrat',sans-serif}
+.learn-list{list-style:none;padding:0}
+.learn-list li{padding:9px 0;border-bottom:1px solid var(--border);font-size:13px;
+               color:var(--txt2);display:flex;gap:10px;align-items:flex-start}
+.learn-list li::before{content:'→';color:var(--gold);font-weight:700;flex-shrink:0;margin-top:1px}
+footer{text-align:center;padding:28px 24px;border-top:1px solid var(--border)}
+footer p{font-size:11px;color:var(--dimlt)}
+footer a{color:var(--gold);text-decoration:none}
 </style>
 </head>
 <body>
+<main>
+  <div class="wrap">
+    <p class="eyebrow">Método Frois · E-book Gratuito</p>
+    <div class="rule"></div>
+    <h1 class="hero-title">Imagem com<br/><span>Intenção</span></h1>
+    <p class="hero-sub">Descubra seu arquétipo de identidade visual e aprenda a construir uma presença que te representa — baseado nos 12 arquétipos de Carol S. Pearson.</p>
 
-<div style="min-height:100vh;display:flex;align-items:center;justify-content:center;padding:60px 24px;background:var(--bg)">
-  <div class="container-sm" style="text-align:center">
-    <p class="eyebrow" style="justify-content:center;display:flex">Método Frois · E-book Gratuito</p>
-    <div style="width:50px;height:3px;background:var(--gold);margin:0 auto 20px"></div>
-    <h1 style="font-size:clamp(32px,6vw,56px);line-height:1.1;color:var(--txt);margin-bottom:10px">
-      Imagem com<br/><span class="text-gold">Intenção</span>
-    </h1>
-    <p style="font-size:15px;color:var(--txt2);max-width:440px;margin:16px auto 36px;line-height:1.7">
-      Descubra seu arquétipo de identidade visual e aprenda a construir uma presença 
-      que te representa — baseado nos 12 arquétipos de Carol S. Pearson.
-    </p>
-
-    <div style="background:var(--bg2);padding:36px;border-top:3px solid var(--gold);text-align:left;margin-bottom:32px">
-      <label style="display:block;font-size:10px;letter-spacing:.2em;color:var(--gold);
-                    text-transform:uppercase;margin-bottom:7px;font-weight:700">Seu nome</label>
-      <input type="text" placeholder="Como posso te chamar?"
-             style="width:100%;background:var(--bg);border:1px solid var(--border);
-                    color:var(--txt);font-family:'Montserrat',sans-serif;font-size:14px;
-                    padding:12px 14px;margin-bottom:18px;outline:none"/>
-      <label style="display:block;font-size:10px;letter-spacing:.2em;color:var(--gold);
-                    text-transform:uppercase;margin-bottom:7px;font-weight:700">Seu melhor e-mail</label>
-      <input type="email" placeholder="voce@email.com"
-             style="width:100%;background:var(--bg);border:1px solid var(--border);
-                    color:var(--txt);font-family:'Montserrat',sans-serif;font-size:14px;
-                    padding:12px 14px;margin-bottom:22px;outline:none"/>
-      <a href="downloads/ebook-imagem-com-intencao.pdf" download class="btn" style="width:100%;font-size:12px;display:block;text-align:center">Quero o E-book Gratuito →</a>
-      <p style="font-size:11px;color:var(--dimlt);text-align:center;margin-top:12px">
-        Sem spam. Cancele quando quiser.
-      </p>
+    <div id="form-section">
+      <div class="form-box">
+        <label for="nome">Seu nome</label>
+        <input type="text" id="nome" name="nome" placeholder="Como posso te chamar?" autocomplete="given-name"/>
+        <label for="email">Seu melhor e-mail <span style="color:var(--red)">*</span></label>
+        <input type="email" id="email" name="email" placeholder="voce@email.com" autocomplete="email" required/>
+        <button class="btn-submit" id="btn-submit" type="button" onclick="handleSubmit()">
+          <span id="btn-text">Quero o E-book Gratuito →</span>
+          <span class="spinner" id="spinner" style="display:none"></span>
+        </button>
+        <div class="msg" id="msg-error"></div>
+        <div class="msg info" id="msg-exists" style="display:none">
+          Esse e-mail já está cadastrado.
+          <a href="/metodo-frois/downloads/ebook-imagem-com-intencao.pdf" download style="color:var(--gold);font-weight:600">Clique aqui para baixar o e-book →</a>
+        </div>
+      </div>
+      <p style="font-size:11px;color:var(--dimlt);text-align:center;margin-top:10px">Sem spam. Seus dados estão seguros. Cancele quando quiser.</p>
     </div>
 
-    <div style="text-align:left">
-      <p style="font-size:10px;letter-spacing:.25em;color:var(--gold);text-transform:uppercase;
-                font-weight:700;margin-bottom:14px">O que você vai aprender</p>
-      <ul class="list-check list-arrow">
+    <div class="success-box" id="success-box">
+      <h3>E-book pronto para você!</h3>
+      <p>Cadastro confirmado. O download vai começar automaticamente.<br/>Também enviamos o link para o seu e-mail.</p>
+      <a href="/metodo-frois/downloads/ebook-imagem-com-intencao.pdf" download="Imagem-com-Intencao-Metodo-Frois.pdf" class="btn-download">↓ Baixar Agora — Imagem com Intenção</a>
+      <p class="success-note">Fique de olho no e-mail — você também vai receber a vídeo-aula gratuita nos próximos dias.</p>
+    </div>
+
+    <div class="learns">
+      <p class="learns-title">O que você vai aprender</p>
+      <ul class="learn-list">
         <li>Os 12 arquétipos de identidade visual — e como identificar o seu</li>
         <li>O que sua imagem comunica antes de você falar uma palavra</li>
         <li>Os 3 erros que destroem a imagem profissional de qualquer pessoa</li>
@@ -197,11 +115,64 @@
       </ul>
     </div>
   </div>
-</div>
+</main>
+
 <footer>
   <p><a href="https://www.macfrois.com.br">macfrois.com.br</a> · <a href="https://instagram.com/froisretratista">@froisretratista</a> · contato@macfrois.com.br</p>
   <p style="margin-top:6px">© 2025 Mac Frois — Método Frois. Todos os direitos reservados.</p>
 </footer>
 
+<script>
+const API_URL="/api/captura";
+function setLoading(on){
+  document.getElementById("btn-submit").disabled=on;
+  document.getElementById("btn-text").style.display=on?"none":"inline";
+  document.getElementById("spinner").style.display=on?"block":"none";
+}
+function showError(msg){
+  const el=document.getElementById("msg-error");
+  el.textContent=msg;el.className="msg error";
+}
+function clearError(){
+  const el=document.getElementById("msg-error");
+  el.className="msg";el.textContent="";
+}
+async function handleSubmit(){
+  clearError();
+  const nome=document.getElementById("nome").value.trim();
+  const email=document.getElementById("email").value.trim();
+  const emailInput=document.getElementById("email");
+  if(!email||!email.includes("@")){
+    emailInput.classList.add("error");
+    showError("Por favor, informe um e-mail válido.");
+    emailInput.focus();return;
+  }
+  emailInput.classList.remove("error");
+  setLoading(true);
+  try{
+    const res=await fetch(API_URL,{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({nome,email})});
+    const data=await res.json();
+    if(data.ok){
+      document.getElementById("form-section").style.display="none";
+      document.getElementById("success-box").style.display="block";
+      setTimeout(()=>{
+        const a=document.createElement("a");
+        a.href="/metodo-frois/downloads/ebook-imagem-com-intencao.pdf";
+        a.download="Imagem-com-Intencao-Metodo-Frois.pdf";
+        a.click();
+      },800);
+    }else if(data.error&&(data.error.includes("Member Exists")||data.error.includes("já"))){
+      document.getElementById("msg-exists").style.display="block";
+    }else{
+      showError(data.error??"Algo deu errado. Por favor, tente novamente.");
+    }
+  }catch(err){
+    showError("Erro de conexão. Verifique sua internet e tente novamente.");
+  }finally{
+    setLoading(false);
+  }
+}
+document.getElementById("email").addEventListener("keydown",function(e){if(e.key==="Enter")handleSubmit();});
+</script>
 </body>
 </html>
