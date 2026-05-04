@@ -1,0 +1,302 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8"/><meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+<title>Pacote Presença Digital Recorrente — Método Frois</title>
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700&family=Montserrat:wght@200;300;400;500;600;700&display=swap" rel="stylesheet"/>
+<style>
+
+  :root {
+    --bg:     #faf8f5;
+    --bg2:    #f2ede6;
+    --bg3:    #ece5da;
+    --txt:    #1c1917;
+    --txt2:   #44403c;
+    --dim:    #78716c;
+    --dimlt:  #a8a29e;
+    --gold:   #d97706;
+    --goldb:  #b45309;
+    --goldbr: #f59e0b;
+    --goldbg: #fef3c7;
+    --border: #e7e2da;
+    --bordg:  #d6c9b0;
+    --line:   #c8bfb0;
+    --white:  #faf8f5;
+  }
+  *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+  html{scroll-behavior:smooth}
+  body{background:var(--bg);color:var(--txt);font-family:'Montserrat',sans-serif;
+       font-weight:300;line-height:1.75;letter-spacing:.015em}
+  h1,h2,h3,h4{font-family:'Cinzel',serif;text-transform:uppercase;letter-spacing:.1em;font-weight:700}
+  a{color:inherit;text-decoration:none}
+  img{max-width:100%;display:block}
+
+  /* ── Nav ─────────────────────────────────────────── */
+  nav{position:fixed;top:0;left:0;right:0;z-index:100;
+      padding:14px 40px;display:flex;justify-content:space-between;align-items:center;
+      background:rgba(250,248,245,.96);backdrop-filter:blur(10px);
+      border-bottom:1px solid var(--border)}
+  .nav-logo{font-family:'Cinzel',serif;font-size:12px;letter-spacing:.3em;
+             color:var(--goldb);text-transform:uppercase}
+  .nav-cta{background:var(--gold);color:var(--white);font-size:10px;font-weight:700;
+            letter-spacing:.2em;text-transform:uppercase;padding:9px 20px;
+            border:none;cursor:pointer;transition:background .2s;display:inline-block}
+  .nav-cta:hover{background:var(--goldb)}
+
+  /* ── Layout ──────────────────────────────────────── */
+  section{padding:80px 24px}
+  .container{max-width:920px;margin:0 auto}
+  .container-sm{max-width:640px;margin:0 auto}
+
+  /* ── Labels & Headings ───────────────────────────── */
+  .eyebrow{font-size:9px;letter-spacing:.4em;color:var(--gold);text-transform:uppercase;
+           margin-bottom:14px;font-family:'Montserrat',sans-serif;font-weight:600}
+  .sec-title{font-size:clamp(20px,3vw,34px);color:var(--txt);margin-bottom:8px}
+  .rule{width:44px;height:2.5px;background:var(--gold);margin:14px 0 28px}
+  .rule.center{margin-left:auto;margin-right:auto}
+
+  /* ── Buttons ─────────────────────────────────────── */
+  .btn{display:inline-block;background:var(--gold);color:var(--white);
+       font-family:'Montserrat',sans-serif;font-size:11px;font-weight:700;
+       letter-spacing:.22em;text-transform:uppercase;padding:15px 38px;
+       border:none;cursor:pointer;transition:all .22s}
+  .btn:hover{background:var(--goldb);transform:translateY(-2px)}
+  .btn-outline{background:transparent;border:1.5px solid var(--gold);color:var(--gold)}
+  .btn-outline:hover{background:var(--gold);color:var(--white);transform:translateY(-2px)}
+
+  /* ── Cards ───────────────────────────────────────── */
+  .card{background:var(--bg2);padding:24px;border-top:2.5px solid var(--gold)}
+  .card-highlight{background:var(--goldbg);border-top-color:var(--goldb)}
+  .card-soft{background:var(--bg3);border-top:2.5px solid var(--bordg)}
+
+  /* ── Alt backgrounds ─────────────────────────────── */
+  .alt{background:var(--bg2)}
+  .alt2{background:var(--bg3)}
+
+  /* ── Utilities ───────────────────────────────────── */
+  .text-gold{color:var(--gold)}
+  .text-dim{color:var(--dim)}
+  .text-center{text-align:center}
+  .mt-sm{margin-top:16px} .mt-md{margin-top:32px} .mt-lg{margin-top:56px}
+
+  /* ── Grid helpers ────────────────────────────────── */
+  .grid-2{display:grid;grid-template-columns:1fr 1fr;gap:24px}
+  .grid-3{display:grid;grid-template-columns:repeat(3,1fr);gap:20px}
+  .grid-4{display:grid;grid-template-columns:repeat(4,1fr);gap:16px}
+  @media(max-width:768px){.grid-2,.grid-3,.grid-4{grid-template-columns:1fr}}
+
+  /* ── Check & arrow lists ─────────────────────────── */
+  .list-check{list-style:none;padding:0}
+  .list-check li{padding:10px 0;border-bottom:1px solid var(--border);
+                  font-size:14px;display:flex;gap:12px;align-items:flex-start}
+  .list-check li::before{content:'✓';color:var(--gold);font-weight:700;flex-shrink:0;margin-top:1px}
+  .list-arrow li::before{content:'→';color:var(--gold)}
+  .list-x li::before{content:'✕';color:var(--dimlt)}
+
+  /* ── Step timeline ───────────────────────────────── */
+  .steps{display:flex;flex-direction:column;gap:12px}
+  .step{display:flex;gap:18px;align-items:flex-start}
+  .step-num{background:var(--gold);color:var(--white);font-size:12px;font-weight:700;
+             width:34px;height:34px;display:flex;align-items:center;justify-content:center;
+             flex-shrink:0}
+  .step-body h4{font-family:'Cinzel',serif;font-size:11px;color:var(--goldb);
+                margin-bottom:5px;letter-spacing:.07em}
+  .step-body p{font-size:13px;color:var(--txt2);line-height:1.65}
+
+  /* ── FAQ accordion ───────────────────────────────── */
+  .faq-list{display:flex;flex-direction:column;gap:2px;margin-top:24px}
+  details{background:var(--bg2);border-left:2.5px solid var(--border)}
+  details[open]{border-left-color:var(--gold)}
+  summary{padding:16px 20px;cursor:pointer;font-family:'Cinzel',serif;font-size:11px;
+           letter-spacing:.07em;color:var(--txt);list-style:none;
+           display:flex;justify-content:space-between;align-items:center;user-select:none}
+  summary::after{content:'+';font-family:'Montserrat',sans-serif;font-size:18px;color:var(--gold)}
+  details[open] summary::after{content:'−'}
+  details p{padding:0 20px 16px;font-size:13px;color:var(--txt2);line-height:1.7}
+
+  /* ── Plan cards ──────────────────────────────────── */
+  .plan-card{background:var(--bg2);padding:30px 24px;border-top:2.5px solid var(--border);position:relative}
+  .plan-card.featured{border-top-color:var(--goldb);background:var(--goldbg)}
+  .plan-badge{position:absolute;top:-11px;left:50%;transform:translateX(-50%);
+               background:var(--gold);color:var(--white);font-size:8px;font-weight:700;
+               letter-spacing:.2em;text-transform:uppercase;padding:3px 14px;white-space:nowrap}
+  .plan-name{font-size:9px;letter-spacing:.3em;color:var(--gold);text-transform:uppercase;
+              font-family:'Montserrat',sans-serif;font-weight:700;margin-bottom:10px}
+  .plan-price{font-family:'Cinzel',serif;font-size:36px;color:var(--goldb);line-height:1}
+  .plan-price sup{font-size:16px;vertical-align:top;margin-top:6px;display:inline-block}
+  .plan-price .unit{font-family:'Montserrat',sans-serif;font-size:13px;font-weight:300;color:var(--dim)}
+  .plan-cond{font-size:11px;color:var(--dim);margin:6px 0 18px}
+  .plan-desc{font-size:12px;font-style:italic;color:var(--txt2);margin-bottom:18px;line-height:1.6}
+  .plan-items{list-style:none;margin-bottom:24px}
+  .plan-items li{font-size:13px;padding:7px 0;border-bottom:1px solid var(--border);
+                  display:flex;gap:10px;align-items:flex-start}
+  .plan-items li::before{content:'·';color:var(--gold);font-weight:700;flex-shrink:0}
+  .plan-link{display:block;text-align:center;padding:13px;font-size:10px;letter-spacing:.18em;
+              text-transform:uppercase;font-weight:700;transition:all .2s;font-family:'Montserrat',sans-serif}
+  .plan-link.gold{background:var(--gold);color:var(--white)}
+  .plan-link.gold:hover{background:var(--goldb)}
+  .plan-link.outline{border:1.5px solid var(--gold);color:var(--gold)}
+  .plan-link.outline:hover{background:var(--gold);color:var(--white)}
+
+  /* ── CTA section ─────────────────────────────────── */
+  .cta-section{background:var(--bg3);text-align:center;padding:90px 24px}
+  .cta-section h2{font-size:clamp(22px,4vw,40px);color:var(--txt);margin-bottom:14px}
+  .cta-section p{font-size:15px;color:var(--txt2);max-width:480px;margin:0 auto 36px}
+
+  /* ── Footer ──────────────────────────────────────── */
+  footer{background:var(--bg);border-top:1px solid var(--border);
+          padding:36px 24px;text-align:center}
+  footer p{font-size:12px;color:var(--dim)}
+  footer a{color:var(--gold)}
+
+
+</style>
+</head>
+<body>
+
+<nav>
+  <a href="https://www.macfrois.com.br" class="nav-logo">Mac Frois</a>
+  <a href="#planos" class="nav-cta">Ver Planos</a>
+</nav>
+
+<section style="min-height:100vh;display:flex;align-items:center;padding-top:100px">
+  <div class="container text-center">
+    <p class="eyebrow" style="display:flex;justify-content:center">Método Frois · Assinatura Mensal</p>
+    <h1 style="font-size:clamp(28px,5vw,60px);line-height:1.1;margin-bottom:10px">
+      Sua presença digital<br/><span class="text-gold">profissional todo mês</span>
+    </h1>
+    <div class="rule center"></div>
+    <p style="font-size:15px;color:var(--txt2);max-width:540px;margin:0 auto 36px;line-height:1.75">
+      Uma sessão mensal de foto + vídeo + estratégia de conteúdo no Studio Frois. 
+      Você sai com um mês inteiro de conteúdo profissional pronto para publicar.
+    </p>
+    <a href="#planos" class="btn">Ver Planos e Assinar</a>
+  </div>
+</section>
+
+<!-- O PROBLEMA -->
+<section class="alt">
+  <div class="container">
+    <p class="eyebrow">O Problema</p>
+    <h2 class="sec-title">Você reconhece esse cenário?</h2>
+    <div class="rule"></div>
+    <div class="grid-4">
+      <div class="card-soft card"><p style="font-size:24px;margin-bottom:10px">📱</p><p style="font-size:13px;color:var(--txt2)">Improvisa fotos no celular quando precisa postar — e sente que não representam a qualidade do seu trabalho.</p></div>
+      <div class="card-soft card"><p style="font-size:24px;margin-bottom:10px">⏱</p><p style="font-size:13px;color:var(--txt2)">Passa horas pensando em conteúdo para redes sociais — tempo que deveria estar no seu negócio.</p></div>
+      <div class="card-soft card"><p style="font-size:24px;margin-bottom:10px">😰</p><p style="font-size:13px;color:var(--txt2)">Fica semanas sem postar porque não tem material visual profissional disponível.</p></div>
+      <div class="card-soft card"><p style="font-size:24px;margin-bottom:10px">🎯</p><p style="font-size:13px;color:var(--txt2)">Sabe que imagem profissional é fundamental mas não tem estrutura para produzir consistentemente.</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- O QUE ENTREGA -->
+<section>
+  <div class="container">
+    <p class="eyebrow">O que cada sessão entrega</p>
+    <h2 class="sec-title">Um mês de conteúdo em uma tarde</h2>
+    <div class="rule"></div>
+    <div style="display:flex;flex-direction:column;gap:12px">
+      <div style="display:flex;gap:18px;background:var(--bg2);padding:22px;border-left:3px solid var(--gold)">
+        <div style="font-size:26px;flex-shrink:0;width:36px;text-align:center;margin-top:2px">📸</div>
+        <div><h4 style="margin-bottom:6px">Fotografia Profissional</h4><p style="font-size:13px;color:var(--txt2)">Fotos editadas em alta resolução com tratamento de cor consistente com sua identidade visual. Prontas para redes sociais, site e materiais de comunicação.</p></div>
+      </div>
+      <div style="display:flex;gap:18px;background:var(--bg2);padding:22px;border-left:3px solid var(--gold)">
+        <div style="font-size:26px;flex-shrink:0;width:36px;text-align:center;margin-top:2px">🎬</div>
+        <div><h4 style="margin-bottom:6px">Vídeos para Redes Sociais</h4><p style="font-size:13px;color:var(--txt2)">Cortes otimizados para Reels, Shorts e Stories. Roteiro, gravação e edição inclusos. Formatos vertical e horizontal disponíveis.</p></div>
+      </div>
+      <div style="display:flex;gap:18px;background:var(--bg2);padding:22px;border-left:3px solid var(--gold)">
+        <div style="font-size:26px;flex-shrink:0;width:36px;text-align:center;margin-top:2px">📝</div>
+        <div><h4 style="margin-bottom:6px">Estratégia de Conteúdo</h4><p style="font-size:13px;color:var(--txt2)">Calendário editorial, sugestão de legendas e hashtags organizados por semana. Só publicar — sem pensar no assunto até o mês seguinte.</p></div>
+      </div>
+      <div style="display:flex;gap:18px;background:var(--bg2);padding:22px;border-left:3px solid var(--gold)">
+        <div style="font-size:26px;flex-shrink:0;width:36px;text-align:center;margin-top:2px">🎯</div>
+        <div><h4 style="margin-bottom:6px">Consultoria de Imagem</h4><p style="font-size:13px;color:var(--txt2)">Tempo dedicado a alinhamento de posicionamento e ajustes na narrativa visual da sua marca a cada sessão.</p></div>
+      </div>
+    </div>
+    <div class="card-highlight card" style="text-align:center;margin-top:32px">
+      <h3 style="font-size:clamp(18px,2.5vw,26px);margin-bottom:12px">Uma sessão por mês. Um mês de conteúdo resolvido.</h3>
+      <div style="display:flex;justify-content:center;gap:36px;margin-top:20px">
+        <div><p style="font-family:'Cinzel',serif;font-size:32px;color:var(--goldb);line-height:1">1×</p><p style="font-size:10px;color:var(--dim);text-transform:uppercase;letter-spacing:.1em">sessão/mês</p></div>
+        <div><p style="font-family:'Cinzel',serif;font-size:32px;color:var(--goldb);line-height:1">4–6h</p><p style="font-size:10px;color:var(--dim);text-transform:uppercase;letter-spacing:.1em">por sessão</p></div>
+        <div><p style="font-family:'Cinzel',serif;font-size:32px;color:var(--goldb);line-height:1">30+</p><p style="font-size:10px;color:var(--dim);text-transform:uppercase;letter-spacing:.1em">dias de conteúdo</p></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PLANOS COM ANCORAGEM -->
+<section id="planos" class="alt2">
+  <div class="container">
+    <p class="eyebrow">Investimento Mensal</p>
+    <h2 class="sec-title">Escolha seu plano</h2>
+    <div class="rule"></div>
+    <p style="font-size:13px;color:var(--dim);max-width:540px;margin:0 0 32px">
+      Três planos com âncora de preço: o <strong>Profissional</strong> é o centro de gravidade — 
+      o melhor custo-benefício para a maioria dos clientes. O Essencial é a porta de entrada. 
+      O Executivo é para quem precisa de presença máxima.
+    </p>
+    <div class="grid-3">
+      <div class="plan-card">
+        <p class="plan-name">Essencial</p>
+        <div class="plan-price">R$ 890 <span class="unit">/mês</span></div>
+        <p class="plan-cond">Fidelidade mínima: 3 meses</p>
+        <p class="plan-desc">Para profissionais iniciando seu posicionamento digital.</p>
+        <ul class="plan-items">
+          <li>1 sessão mensal de até 1 hora</li>
+          <li>15 fotos editadas entregues</li>
+          <li>2 cortes de vídeo para redes</li>
+          <li>Calendário editorial mensal</li>
+          <li>Entrega em até 10 dias úteis</li>
+        </ul>
+        <a href="mailto:contato@macfrois.com.br?subject=Pacote Essencial" class="plan-link outline">Assinar agora</a>
+        <p style="font-size:10px;color:var(--dimlt);text-align:center;margin-top:10px">Cancele após 3 meses com 30 dias de aviso</p>
+      </div>
+      <div class="plan-card featured">
+        <div class="plan-badge">Mais Contratado</div>
+        <p class="plan-name">Profissional</p>
+        <div class="plan-price">R$ 1.490 <span class="unit">/mês</span></div>
+        <p class="plan-cond">Fidelidade mínima: 3 meses · 10% no trimestral</p>
+        <p class="plan-desc">Para profissionais estabelecidos com necessidade de presença consistente.</p>
+        <ul class="plan-items">
+          <li>1 sessão mensal de até 2 horas</li>
+          <li>25 fotos editadas entregues</li>
+          <li>4 cortes de vídeo para redes</li>
+          <li>Estratégia + legendas prontas</li>
+          <li>Consultoria de imagem (30 min)</li>
+          <li>Entrega em até 10 dias úteis</li>
+        </ul>
+        <a href="mailto:contato@macfrois.com.br?subject=Pacote Profissional" class="plan-link gold">Assinar agora</a>
+        <p style="font-size:10px;color:var(--dimlt);text-align:center;margin-top:10px">10% de desconto no pagamento trimestral</p>
+      </div>
+      <div class="plan-card">
+        <p class="plan-name">Executivo</p>
+        <div class="plan-price">R$ 2.290 <span class="unit">/mês</span></div>
+        <p class="plan-cond">Fidelidade mínima: 6 meses · 15% no semestral</p>
+        <p class="plan-desc">Para executivos com necessidade de produção intensiva de conteúdo.</p>
+        <ul class="plan-items">
+          <li>2 sessões mensais de até 2h cada</li>
+          <li>Fotos ilimitadas das sessões</li>
+          <li>6 cortes de vídeo para redes</li>
+          <li>Gestão de conteúdo completa</li>
+          <li>Consultoria de imagem em cada sessão</li>
+          <li>Entrega em até 7 dias úteis</li>
+        </ul>
+        <a href="mailto:contato@macfrois.com.br?subject=Pacote Executivo" class="plan-link outline">Assinar agora</a>
+        <p style="font-size:10px;color:var(--dimlt);text-align:center;margin-top:10px">15% de desconto no pagamento semestral</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="cta-section">
+  <h2>Comece a construir<br/>sua presença agora</h2>
+  <p>Entre em contato para verificar vagas disponíveis e receber a proposta com contrato.</p>
+  <a href="mailto:contato@macfrois.com.br?subject=Quero o Pacote Presença Digital" class="btn">Falar com Mac Frois</a>
+</section>
+<footer>
+  <p><a href="https://www.macfrois.com.br">macfrois.com.br</a> · <a href="https://instagram.com/froisretratista">@froisretratista</a> · contato@macfrois.com.br</p>
+  <p style="margin-top:6px">© 2025 Mac Frois — Método Frois</p>
+</footer>
+
+</body>
+</html>

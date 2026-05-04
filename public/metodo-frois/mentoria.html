@@ -1,0 +1,345 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8"/><meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+<title>Mentoria para Fotógrafos — Método Frois</title>
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700&family=Montserrat:wght@200;300;400;500;600;700&display=swap" rel="stylesheet"/>
+<style>
+
+  :root {
+    --bg:     #faf8f5;
+    --bg2:    #f2ede6;
+    --bg3:    #ece5da;
+    --txt:    #1c1917;
+    --txt2:   #44403c;
+    --dim:    #78716c;
+    --dimlt:  #a8a29e;
+    --gold:   #d97706;
+    --goldb:  #b45309;
+    --goldbr: #f59e0b;
+    --goldbg: #fef3c7;
+    --border: #e7e2da;
+    --bordg:  #d6c9b0;
+    --line:   #c8bfb0;
+    --white:  #faf8f5;
+  }
+  *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+  html{scroll-behavior:smooth}
+  body{background:var(--bg);color:var(--txt);font-family:'Montserrat',sans-serif;
+       font-weight:300;line-height:1.75;letter-spacing:.015em}
+  h1,h2,h3,h4{font-family:'Cinzel',serif;text-transform:uppercase;letter-spacing:.1em;font-weight:700}
+  a{color:inherit;text-decoration:none}
+  img{max-width:100%;display:block}
+
+  /* ── Nav ─────────────────────────────────────────── */
+  nav{position:fixed;top:0;left:0;right:0;z-index:100;
+      padding:14px 40px;display:flex;justify-content:space-between;align-items:center;
+      background:rgba(250,248,245,.96);backdrop-filter:blur(10px);
+      border-bottom:1px solid var(--border)}
+  .nav-logo{font-family:'Cinzel',serif;font-size:12px;letter-spacing:.3em;
+             color:var(--goldb);text-transform:uppercase}
+  .nav-cta{background:var(--gold);color:var(--white);font-size:10px;font-weight:700;
+            letter-spacing:.2em;text-transform:uppercase;padding:9px 20px;
+            border:none;cursor:pointer;transition:background .2s;display:inline-block}
+  .nav-cta:hover{background:var(--goldb)}
+
+  /* ── Layout ──────────────────────────────────────── */
+  section{padding:80px 24px}
+  .container{max-width:920px;margin:0 auto}
+  .container-sm{max-width:640px;margin:0 auto}
+
+  /* ── Labels & Headings ───────────────────────────── */
+  .eyebrow{font-size:9px;letter-spacing:.4em;color:var(--gold);text-transform:uppercase;
+           margin-bottom:14px;font-family:'Montserrat',sans-serif;font-weight:600}
+  .sec-title{font-size:clamp(20px,3vw,34px);color:var(--txt);margin-bottom:8px}
+  .rule{width:44px;height:2.5px;background:var(--gold);margin:14px 0 28px}
+  .rule.center{margin-left:auto;margin-right:auto}
+
+  /* ── Buttons ─────────────────────────────────────── */
+  .btn{display:inline-block;background:var(--gold);color:var(--white);
+       font-family:'Montserrat',sans-serif;font-size:11px;font-weight:700;
+       letter-spacing:.22em;text-transform:uppercase;padding:15px 38px;
+       border:none;cursor:pointer;transition:all .22s}
+  .btn:hover{background:var(--goldb);transform:translateY(-2px)}
+  .btn-outline{background:transparent;border:1.5px solid var(--gold);color:var(--gold)}
+  .btn-outline:hover{background:var(--gold);color:var(--white);transform:translateY(-2px)}
+
+  /* ── Cards ───────────────────────────────────────── */
+  .card{background:var(--bg2);padding:24px;border-top:2.5px solid var(--gold)}
+  .card-highlight{background:var(--goldbg);border-top-color:var(--goldb)}
+  .card-soft{background:var(--bg3);border-top:2.5px solid var(--bordg)}
+
+  /* ── Alt backgrounds ─────────────────────────────── */
+  .alt{background:var(--bg2)}
+  .alt2{background:var(--bg3)}
+
+  /* ── Utilities ───────────────────────────────────── */
+  .text-gold{color:var(--gold)}
+  .text-dim{color:var(--dim)}
+  .text-center{text-align:center}
+  .mt-sm{margin-top:16px} .mt-md{margin-top:32px} .mt-lg{margin-top:56px}
+
+  /* ── Grid helpers ────────────────────────────────── */
+  .grid-2{display:grid;grid-template-columns:1fr 1fr;gap:24px}
+  .grid-3{display:grid;grid-template-columns:repeat(3,1fr);gap:20px}
+  .grid-4{display:grid;grid-template-columns:repeat(4,1fr);gap:16px}
+  @media(max-width:768px){.grid-2,.grid-3,.grid-4{grid-template-columns:1fr}}
+
+  /* ── Check & arrow lists ─────────────────────────── */
+  .list-check{list-style:none;padding:0}
+  .list-check li{padding:10px 0;border-bottom:1px solid var(--border);
+                  font-size:14px;display:flex;gap:12px;align-items:flex-start}
+  .list-check li::before{content:'✓';color:var(--gold);font-weight:700;flex-shrink:0;margin-top:1px}
+  .list-arrow li::before{content:'→';color:var(--gold)}
+  .list-x li::before{content:'✕';color:var(--dimlt)}
+
+  /* ── Step timeline ───────────────────────────────── */
+  .steps{display:flex;flex-direction:column;gap:12px}
+  .step{display:flex;gap:18px;align-items:flex-start}
+  .step-num{background:var(--gold);color:var(--white);font-size:12px;font-weight:700;
+             width:34px;height:34px;display:flex;align-items:center;justify-content:center;
+             flex-shrink:0}
+  .step-body h4{font-family:'Cinzel',serif;font-size:11px;color:var(--goldb);
+                margin-bottom:5px;letter-spacing:.07em}
+  .step-body p{font-size:13px;color:var(--txt2);line-height:1.65}
+
+  /* ── FAQ accordion ───────────────────────────────── */
+  .faq-list{display:flex;flex-direction:column;gap:2px;margin-top:24px}
+  details{background:var(--bg2);border-left:2.5px solid var(--border)}
+  details[open]{border-left-color:var(--gold)}
+  summary{padding:16px 20px;cursor:pointer;font-family:'Cinzel',serif;font-size:11px;
+           letter-spacing:.07em;color:var(--txt);list-style:none;
+           display:flex;justify-content:space-between;align-items:center;user-select:none}
+  summary::after{content:'+';font-family:'Montserrat',sans-serif;font-size:18px;color:var(--gold)}
+  details[open] summary::after{content:'−'}
+  details p{padding:0 20px 16px;font-size:13px;color:var(--txt2);line-height:1.7}
+
+  /* ── Plan cards ──────────────────────────────────── */
+  .plan-card{background:var(--bg2);padding:30px 24px;border-top:2.5px solid var(--border);position:relative}
+  .plan-card.featured{border-top-color:var(--goldb);background:var(--goldbg)}
+  .plan-badge{position:absolute;top:-11px;left:50%;transform:translateX(-50%);
+               background:var(--gold);color:var(--white);font-size:8px;font-weight:700;
+               letter-spacing:.2em;text-transform:uppercase;padding:3px 14px;white-space:nowrap}
+  .plan-name{font-size:9px;letter-spacing:.3em;color:var(--gold);text-transform:uppercase;
+              font-family:'Montserrat',sans-serif;font-weight:700;margin-bottom:10px}
+  .plan-price{font-family:'Cinzel',serif;font-size:36px;color:var(--goldb);line-height:1}
+  .plan-price sup{font-size:16px;vertical-align:top;margin-top:6px;display:inline-block}
+  .plan-price .unit{font-family:'Montserrat',sans-serif;font-size:13px;font-weight:300;color:var(--dim)}
+  .plan-cond{font-size:11px;color:var(--dim);margin:6px 0 18px}
+  .plan-desc{font-size:12px;font-style:italic;color:var(--txt2);margin-bottom:18px;line-height:1.6}
+  .plan-items{list-style:none;margin-bottom:24px}
+  .plan-items li{font-size:13px;padding:7px 0;border-bottom:1px solid var(--border);
+                  display:flex;gap:10px;align-items:flex-start}
+  .plan-items li::before{content:'·';color:var(--gold);font-weight:700;flex-shrink:0}
+  .plan-link{display:block;text-align:center;padding:13px;font-size:10px;letter-spacing:.18em;
+              text-transform:uppercase;font-weight:700;transition:all .2s;font-family:'Montserrat',sans-serif}
+  .plan-link.gold{background:var(--gold);color:var(--white)}
+  .plan-link.gold:hover{background:var(--goldb)}
+  .plan-link.outline{border:1.5px solid var(--gold);color:var(--gold)}
+  .plan-link.outline:hover{background:var(--gold);color:var(--white)}
+
+  /* ── CTA section ─────────────────────────────────── */
+  .cta-section{background:var(--bg3);text-align:center;padding:90px 24px}
+  .cta-section h2{font-size:clamp(22px,4vw,40px);color:var(--txt);margin-bottom:14px}
+  .cta-section p{font-size:15px;color:var(--txt2);max-width:480px;margin:0 auto 36px}
+
+  /* ── Footer ──────────────────────────────────────── */
+  footer{background:var(--bg);border-top:1px solid var(--border);
+          padding:36px 24px;text-align:center}
+  footer p{font-size:12px;color:var(--dim)}
+  footer a{color:var(--gold)}
+
+
+</style>
+</head>
+<body>
+
+<nav>
+  <a href="https://www.macfrois.com.br" class="nav-logo">Mac Frois</a>
+  <a href="#planos" class="nav-cta">Ver Planos</a>
+</nav>
+
+<section style="min-height:100vh;display:flex;align-items:center;padding-top:100px">
+  <div class="container text-center">
+    <p class="eyebrow" style="display:flex;justify-content:center">Método Frois · Mentoria Individual</p>
+    <h1 style="font-size:clamp(30px,5.5vw,64px);line-height:1.1;margin-bottom:10px">
+      Transforme seu trabalho<br/>em <span class="text-gold">referência</span>
+    </h1>
+    <div class="rule center"></div>
+    <p style="font-size:16px;color:var(--txt2);max-width:520px;margin:0 auto 36px;line-height:1.75">
+      6 encontros individuais para fotógrafos que querem técnica, posicionamento e identidade visual 
+      alinhados — e cobrar o que o trabalho realmente vale.
+    </p>
+    <div style="display:inline-flex;gap:0;margin-bottom:36px">
+      <div style="background:var(--bg2);padding:12px 20px;border-top:2.5px solid var(--gold);text-align:center"><strong style="display:block;font-family:'Cinzel',serif;font-size:14px;color:var(--goldb)">6</strong><span style="font-size:9px;color:var(--dim);text-transform:uppercase;letter-spacing:.1em">encontros</span></div>
+      <div style="background:var(--bg2);padding:12px 20px;border-top:2.5px solid var(--gold);text-align:center;border-left:1px solid var(--border)"><strong style="display:block;font-family:'Cinzel',serif;font-size:14px;color:var(--goldb)">1h30</strong><span style="font-size:9px;color:var(--dim);text-transform:uppercase;letter-spacing:.1em">por sessão</span></div>
+      <div style="background:var(--bg2);padding:12px 20px;border-top:2.5px solid var(--gold);text-align:center;border-left:1px solid var(--border)"><strong style="display:block;font-family:'Cinzel',serif;font-size:14px;color:var(--goldb)">Individual</strong><span style="font-size:9px;color:var(--dim);text-transform:uppercase;letter-spacing:.1em">exclusivo</span></div>
+      <div style="background:var(--bg2);padding:12px 20px;border-top:2.5px solid var(--gold);text-align:center;border-left:1px solid var(--border)"><strong style="display:block;font-family:'Cinzel',serif;font-size:14px;color:var(--goldb)">Online</strong><span style="font-size:9px;color:var(--dim);text-transform:uppercase;letter-spacing:.1em">ou presencial</span></div>
+    </div>
+    <a href="#planos" class="btn">Ver Planos e Investimento</a>
+    &nbsp;&nbsp;
+    <a href="#encontros" class="btn btn-outline">Como funciona</a>
+  </div>
+</section>
+
+<!-- PARA QUEM -->
+<section class="alt">
+  <div class="container">
+    <p class="eyebrow">Elegibilidade</p>
+    <h2 class="sec-title">Para quem é esta mentoria</h2>
+    <div class="rule"></div>
+    <div class="grid-2">
+      <div>
+        <p style="font-size:13px;color:var(--dim);margin-bottom:16px">A mentoria foi desenhada para fotógrafos que:</p>
+        <ul class="list-check list-arrow">
+          <li>Já trabalham no mercado e querem reposicionamento com mais clareza</li>
+          <li>Sentem que seu trabalho vale mais do que conseguem cobrar</li>
+          <li>Querem atrair clientes de maior qualidade sem aumentar volume</li>
+          <li>Desejam criar uma identidade visual consistente e reconhecível</li>
+          <li>Buscam construir autoridade e referência no nicho</li>
+        </ul>
+      </div>
+      <div>
+        <p style="font-size:13px;color:var(--dim);margin-bottom:16px">Não é o momento certo se você:</p>
+        <ul class="list-check list-x" style="color:var(--dimlt)">
+          <li>Busca fórmulas prontas sem comprometimento real com o processo</li>
+          <li>Não está disposto a refletir sobre identidade e propósito</li>
+          <li>Espera resultados sem agir entre os encontros</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- OS 6 ENCONTROS -->
+<section id="encontros">
+  <div class="container">
+    <p class="eyebrow">Estrutura do Programa</p>
+    <h2 class="sec-title">Os 6 Encontros</h2>
+    <div class="rule"></div>
+    <div style="display:flex;flex-direction:column;gap:10px">
+      <div style="display:flex;gap:18px;background:var(--bg2);padding:20px;border-left:3px solid var(--gold)">
+        <div style="font-family:'Cinzel',serif;font-size:26px;color:var(--gold);flex-shrink:0;width:36px;line-height:1">01</div>
+        <div><h4 style="margin-bottom:6px">Diagnóstico &amp; Identidade</h4><p style="font-size:13px;color:var(--txt2)">Mapeamento completo da trajetória, estilo e posicionamento atual. Identificação do arquétipo visual e definição da essência que guiará toda a mentoria.</p></div>
+      </div>
+      <div style="display:flex;gap:18px;background:var(--bg2);padding:20px;border-left:3px solid var(--gold)">
+        <div style="font-family:'Cinzel',serif;font-size:26px;color:var(--gold);flex-shrink:0;width:36px;line-height:1">02</div>
+        <div><h4 style="margin-bottom:6px">Portfólio com Intenção</h4><p style="font-size:13px;color:var(--txt2)">Análise crítica do portfólio existente. Curadoria estratégica para comunicar especialidade e atrair o cliente certo com mais precisão.</p></div>
+      </div>
+      <div style="display:flex;gap:18px;background:var(--bg2);padding:20px;border-left:3px solid var(--gold)">
+        <div style="font-family:'Cinzel',serif;font-size:26px;color:var(--gold);flex-shrink:0;width:36px;line-height:1">03</div>
+        <div><h4 style="margin-bottom:6px">Técnica a Serviço da Identidade</h4><p style="font-size:13px;color:var(--txt2)">Iluminação, enquadramento e direção de cena como extensões da linguagem visual. Consistência técnica e estilística como diferencial de mercado.</p></div>
+      </div>
+      <div style="display:flex;gap:18px;background:var(--bg2);padding:20px;border-left:3px solid var(--gold)">
+        <div style="font-family:'Cinzel',serif;font-size:26px;color:var(--gold);flex-shrink:0;width:36px;line-height:1">04</div>
+        <div><h4 style="margin-bottom:6px">Precificação &amp; Posicionamento</h4><p style="font-size:13px;color:var(--txt2)">Estrutura de pacotes, tabela de preços e argumentação de valor. Como cobrar o que o trabalho vale e comunicar isso com confiança.</p></div>
+      </div>
+      <div style="display:flex;gap:18px;background:var(--bg2);padding:20px;border-left:3px solid var(--gold)">
+        <div style="font-family:'Cinzel',serif;font-size:26px;color:var(--gold);flex-shrink:0;width:36px;line-height:1">05</div>
+        <div><h4 style="margin-bottom:6px">Presença Digital Estratégica</h4><p style="font-size:13px;color:var(--txt2)">Narrativa para Instagram, site e canais digitais. Transformar conteúdo em autoridade sem precisar postar todo dia.</p></div>
+      </div>
+      <div style="display:flex;gap:18px;background:var(--bg2);padding:20px;border-left:3px solid var(--gold)">
+        <div style="font-family:'Cinzel',serif;font-size:26px;color:var(--gold);flex-shrink:0;width:36px;line-height:1">06</div>
+        <div><h4 style="margin-bottom:6px">Plano de Ação 90 Dias</h4><p style="font-size:13px;color:var(--txt2)">Consolidação de todos os aprendizados em um plano prático com metas, próximos passos e indicadores de sucesso para os 90 dias seguintes.</p></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- INCLUSO -->
+<section class="alt2">
+  <div class="container">
+    <p class="eyebrow">O que está incluso</p>
+    <h2 class="sec-title">Tudo que você recebe</h2>
+    <div class="rule"></div>
+    <div class="grid-3">
+      <div class="card"><h4 style="margin-bottom:8px">6 Sessões Individuais</h4><p style="font-size:13px;color:var(--txt2)">1h30 cada, online ou presencial no Studio Frois em Florianópolis.</p></div>
+      <div class="card"><h4 style="margin-bottom:8px">Gravação Completa</h4><p style="font-size:13px;color:var(--txt2)">Todas as sessões gravadas para revisão posterior a qualquer momento.</p></div>
+      <div class="card"><h4 style="margin-bottom:8px">Análise de Portfólio</h4><p style="font-size:13px;color:var(--txt2)">Feedback detalhado e escrito com plano de curadoria estratégica.</p></div>
+      <div class="card"><h4 style="margin-bottom:8px">Plano Personalizado</h4><p style="font-size:13px;color:var(--txt2)">Documento escrito de posicionamento desenvolvido especificamente para você.</p></div>
+      <div class="card"><h4 style="margin-bottom:8px">Canal Direto</h4><p style="font-size:13px;color:var(--txt2)">WhatsApp entre sessões para dúvidas rápidas — resposta em até 48 horas.</p></div>
+      <div class="card"><h4 style="margin-bottom:8px">Sessão de Revisão</h4><p style="font-size:13px;color:var(--txt2)">1 encontro bônus 30 dias após o encerramento para avaliar progresso.</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- PLANOS -->
+<section id="planos">
+  <div class="container">
+    <p class="eyebrow">Investimento</p>
+    <h2 class="sec-title">Escolha seu plano</h2>
+    <div class="rule"></div>
+    <div class="grid-3">
+      <div class="plan-card">
+        <p class="plan-name">Básico</p>
+        <div class="plan-price">R$ 2.000 <span class="unit">à vista</span></div>
+        <p class="plan-cond">ou 4× R$ 530</p>
+        <ul class="plan-items">
+          <li>6 encontros online (1h30 cada)</li>
+          <li>Materiais de apoio exclusivos</li>
+          <li>Canal WhatsApp entre sessões</li>
+          <li>Plano de Ação 90 Dias</li>
+          <li>Gravação de todas as sessões</li>
+        </ul>
+        <a href="mailto:contato@macfrois.com.br?subject=Mentoria Básico" class="plan-link outline">Quero este plano</a>
+      </div>
+      <div class="plan-card featured">
+        <div class="plan-badge">Mais Escolhido</div>
+        <p class="plan-name">Premium</p>
+        <div class="plan-price">R$ 3.000 <span class="unit">à vista</span></div>
+        <p class="plan-cond">ou 3× R$ 1.100</p>
+        <ul class="plan-items">
+          <li>Tudo do Básico</li>
+          <li>1 encontro presencial no Studio</li>
+          <li>Mini-sessão fotográfica inclusa</li>
+          <li>Análise completa de presença digital</li>
+          <li>Sessão de revisão 30 dias pós-mentoria</li>
+        </ul>
+        <a href="mailto:contato@macfrois.com.br?subject=Mentoria Premium" class="plan-link gold">Quero este plano</a>
+      </div>
+      <div class="plan-card">
+        <p class="plan-name">VIP</p>
+        <div class="plan-price">R$ 5.000 <span class="unit">à vista</span></div>
+        <p class="plan-cond">ou 5× R$ 1.100</p>
+        <ul class="plan-items">
+          <li>Tudo do Premium</li>
+          <li>2 encontros presenciais no Studio</li>
+          <li>Sessão fotográfica completa</li>
+          <li>Kit de conteúdo para redes sociais</li>
+          <li>Acompanhamento por 90 dias</li>
+        </ul>
+        <a href="mailto:contato@macfrois.com.br?subject=Mentoria VIP" class="plan-link outline">Quero este plano</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PROCESSO -->
+<section class="alt">
+  <div class="container">
+    <p class="eyebrow">Do interesse ao início</p>
+    <h2 class="sec-title">Como funciona</h2>
+    <div class="rule"></div>
+    <div class="steps">
+      <div class="step"><div class="step-num">1</div><div class="step-body"><h4>Candidatura</h4><p>Entre em contato via e-mail ou Instagram. As vagas são limitadas por ciclo para garantir atenção individualizada.</p></div></div>
+      <div class="step"><div class="step-num">2</div><div class="step-body"><h4>Conversa Gratuita (30 min)</h4><p>Alinhamos expectativas, entendemos seu momento atual e confirmamos o encaixe da mentoria com seus objetivos.</p></div></div>
+      <div class="step"><div class="step-num">3</div><div class="step-body"><h4>Confirmação &amp; Pagamento</h4><p>Contrato simples e link de pagamento. Sem burocracia.</p></div></div>
+      <div class="step"><div class="step-num">4</div><div class="step-body"><h4>Agendamento das Sessões</h4><p>6 encontros agendados em datas que funcionem para você. Recomendamos frequência quinzenal.</p></div></div>
+      <div class="step"><div class="step-num">5</div><div class="step-body"><h4>Início da Mentoria</h4><p>Você recebe material de preparação antes do primeiro encontro para aproveitarmos cada minuto juntos.</p></div></div>
+    </div>
+  </div>
+</section>
+
+<section class="cta-section">
+  <p class="eyebrow" style="display:flex;justify-content:center">Vagas Limitadas por Ciclo</p>
+  <h2>Pronto para dar<br/>o próximo passo?</h2>
+  <p>Conversa gratuita de 30 minutos para alinhar expectativas. Sem compromisso.</p>
+  <a href="mailto:contato@macfrois.com.br?subject=Quero a Mentoria Frois" class="btn">Falar com Mac Frois</a>
+</section>
+<footer>
+  <p><a href="https://www.macfrois.com.br">macfrois.com.br</a> · <a href="https://instagram.com/froisretratista">@froisretratista</a> · contato@macfrois.com.br</p>
+  <p style="margin-top:6px">© 2025 Mac Frois — Método Frois</p>
+</footer>
+
+</body>
+</html>
