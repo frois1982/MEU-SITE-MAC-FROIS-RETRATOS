@@ -1,6 +1,6 @@
-
 {
   "rewrites": [
+    { "source": "/metodo-frois/(.*)", "destination": "/metodo-frois/$1" },
     { "source": "/(.*)", "destination": "/index.html" }
   ]
 }
