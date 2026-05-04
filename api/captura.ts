@@ -1,13 +1,4 @@
-/**
- * POST /api/captura
- * Recebe nome + email, adiciona à lista do Mailchimp e retorna o link do e-book.
- *
- * Variáveis de ambiente necessárias no Vercel:
- *   MAILCHIMP_API_KEY  → sua chave de API do Mailchimp  (ex: abc123-us21)
- *   MAILCHIMP_LIST_ID  → ID da sua Audience/Lista       (ex: a1b2c3d4e5)
- */
-
-export const config = { runtime: "nodejs20.x" };
+export const config = { runtime: "nodejs" };
 
 export default async function handler(req: any, res: any) {
   if (req.method !== "POST") {
@@ -32,7 +23,6 @@ export default async function handler(req: any, res: any) {
   const listId = process.env.MAILCHIMP_LIST_ID;
 
   if (!apiKey || !listId) {
-    console.error("Variáveis MAILCHIMP_API_KEY ou MAILCHIMP_LIST_ID não configuradas.");
     return res.status(500).json({ error: "Configuração do servidor incompleta." });
   }
 
@@ -66,13 +56,11 @@ export default async function handler(req: any, res: any) {
       });
     }
 
-    console.error("Mailchimp error:", mcData);
     return res.status(400).json({
       error: mcData?.detail ?? "Não foi possível realizar o cadastro. Tente novamente.",
     });
 
   } catch (err) {
-    console.error("Fetch error:", err);
     return res.status(500).json({ error: "Erro interno. Tente novamente em instantes." });
   }
 }
