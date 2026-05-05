@@ -10,61 +10,48 @@
 :root{
   --bg:#faf8f5;--bg2:#f2ede6;--bg3:#ece5da;
   --txt:#1c1917;--txt2:#44403c;--dim:#78716c;--dimlt:#a8a29e;
-  --gold:#d97706;--goldb:#b45309;--goldbr:#f59e0b;--goldbg:#fef3c7;
-  --border:#e7e2da;--line:#c8bfb0;--white:#faf8f5;
-  --red:#dc2626;--redbg:#fef2f2;--green:#16a34a;--greenbg:#f0fdf4;
+  --gold:#d97706;--goldb:#b45309;--border:#e7e2da;--white:#faf8f5;
+  --green:#16a34a;--greenbg:#f0fdf4;--red:#dc2626;--redbg:#fef2f2;
 }
-html{scroll-behavior:smooth}
+*{box-sizing:border-box}
 body{background:var(--bg);color:var(--txt);font-family:'Montserrat',sans-serif;
      font-weight:300;line-height:1.75;min-height:100vh;display:flex;flex-direction:column}
-h1,h2,h3{font-family:'Cinzel',serif;text-transform:uppercase;letter-spacing:.1em;font-weight:700}
+h1{font-family:'Cinzel',serif;text-transform:uppercase;letter-spacing:.1em;font-weight:700}
 main{flex:1;display:flex;align-items:center;justify-content:center;padding:48px 24px}
 .wrap{width:100%;max-width:500px}
-.eyebrow{font-size:9px;letter-spacing:.4em;color:var(--gold);text-transform:uppercase;
-         font-family:'Montserrat',sans-serif;font-weight:600;margin-bottom:14px}
+.eyebrow{font-size:9px;letter-spacing:.4em;color:var(--gold);text-transform:uppercase;font-weight:600;margin-bottom:14px}
 .rule{width:44px;height:2.5px;background:var(--gold);margin:16px 0 20px}
-.hero-title{font-size:clamp(32px,7vw,52px);line-height:1.05;margin-bottom:6px;color:var(--txt)}
+.hero-title{font-size:clamp(32px,7vw,52px);line-height:1.05;margin-bottom:6px}
 .hero-title span{color:var(--gold)}
 .hero-sub{font-size:14px;color:var(--dim);margin-bottom:28px;line-height:1.7}
 .form-box{background:var(--bg2);padding:32px;border-top:3px solid var(--gold)}
-.form-box label{display:block;font-size:10px;letter-spacing:.2em;color:var(--gold);
-                text-transform:uppercase;font-weight:700;margin-bottom:6px}
-.form-box input{width:100%;background:var(--bg);border:1.5px solid var(--border);
-                color:var(--txt);font-family:'Montserrat',sans-serif;font-size:14px;
-                font-weight:300;padding:12px 14px;margin-bottom:18px;outline:none;
-                transition:border-color .2s}
-.form-box input:focus{border-color:var(--gold)}
-.form-box input.error{border-color:var(--red)}
-.btn-submit{width:100%;background:var(--gold);color:var(--white);
-            font-family:'Montserrat',sans-serif;font-size:12px;font-weight:700;
-            letter-spacing:.22em;text-transform:uppercase;padding:15px;
-            border:none;cursor:pointer;transition:background .2s;
-            display:flex;align-items:center;justify-content:center;gap:10px}
-.btn-submit:hover:not(:disabled){background:var(--goldb)}
-.btn-submit:disabled{opacity:.6;cursor:not-allowed}
+label{display:block;font-size:10px;letter-spacing:.2em;color:var(--gold);text-transform:uppercase;font-weight:700;margin-bottom:6px}
+input{width:100%;background:var(--bg);border:1.5px solid var(--border);color:var(--txt);
+      font-family:'Montserrat',sans-serif;font-size:14px;padding:12px 14px;margin-bottom:18px;
+      outline:none;transition:border-color .2s}
+input:focus{border-color:var(--gold)}
+.btn{width:100%;background:var(--gold);color:var(--white);font-family:'Montserrat',sans-serif;
+     font-size:12px;font-weight:700;letter-spacing:.22em;text-transform:uppercase;
+     padding:15px;border:none;cursor:pointer;transition:background .2s;
+     display:flex;align-items:center;justify-content:center;gap:10px}
+.btn:hover:not(:disabled){background:var(--goldb)}
+.btn:disabled{opacity:.6;cursor:not-allowed}
 .spinner{width:16px;height:16px;border:2px solid rgba(250,248,245,.4);
-         border-top-color:var(--white);border-radius:50%;animation:spin .7s linear infinite}
+         border-top-color:var(--white);border-radius:50%;animation:spin .7s linear infinite;display:none}
 @keyframes spin{to{transform:rotate(360deg)}}
-.msg{display:none;padding:14px 16px;font-size:13px;line-height:1.6;margin-top:14px}
-.msg.error{display:block;background:var(--redbg);border-left:3px solid var(--red);color:var(--red)}
-.msg.info{display:block;background:var(--bg3);border-left:3px solid var(--line);color:var(--dim)}
 .success-box{display:none;background:var(--greenbg);padding:28px;border-top:3px solid var(--green);text-align:center}
-.success-box h3{font-family:'Cinzel',serif;font-size:14px;color:var(--green);
-               text-transform:uppercase;letter-spacing:.08em;margin-bottom:10px}
+.success-box h3{font-family:'Cinzel',serif;font-size:14px;color:var(--green);text-transform:uppercase;letter-spacing:.08em;margin-bottom:10px}
 .success-box p{font-size:13px;color:var(--txt2);margin-bottom:20px;line-height:1.65}
-.btn-download{display:inline-block;background:var(--green);color:var(--white);
-              font-family:'Montserrat',sans-serif;font-size:11px;font-weight:700;
-              letter-spacing:.18em;text-transform:uppercase;padding:14px 28px;
-              text-decoration:none;transition:background .2s}
+.btn-download{display:inline-block;background:var(--green);color:var(--white);font-family:'Montserrat',sans-serif;
+              font-size:11px;font-weight:700;letter-spacing:.18em;text-transform:uppercase;
+              padding:14px 28px;text-decoration:none;transition:background .2s}
 .btn-download:hover{background:#15803d}
 .success-note{font-size:11px;color:var(--dimlt);margin-top:14px}
 .learns{margin-top:32px}
-.learns-title{font-size:9px;letter-spacing:.3em;color:var(--gold);text-transform:uppercase;
-              font-weight:700;margin-bottom:14px;font-family:'Montserrat',sans-serif}
-.learn-list{list-style:none;padding:0}
-.learn-list li{padding:9px 0;border-bottom:1px solid var(--border);font-size:13px;
-               color:var(--txt2);display:flex;gap:10px;align-items:flex-start}
-.learn-list li::before{content:'→';color:var(--gold);font-weight:700;flex-shrink:0;margin-top:1px}
+.learns-title{font-size:9px;letter-spacing:.3em;color:var(--gold);text-transform:uppercase;font-weight:700;margin-bottom:14px}
+.learn-list{list-style:none}
+.learn-list li{padding:9px 0;border-bottom:1px solid var(--border);font-size:13px;color:var(--txt2);display:flex;gap:10px}
+.learn-list li::before{content:'→';color:var(--gold);font-weight:700;flex-shrink:0}
 footer{text-align:center;padding:28px 24px;border-top:1px solid var(--border)}
 footer p{font-size:11px;color:var(--dimlt)}
 footer a{color:var(--gold);text-decoration:none}
@@ -78,30 +65,30 @@ footer a{color:var(--gold);text-decoration:none}
     <h1 class="hero-title">Imagem com<br/><span>Intenção</span></h1>
     <p class="hero-sub">Descubra seu arquétipo de identidade visual e aprenda a construir uma presença que te representa — baseado nos 12 arquétipos de Carol S. Pearson.</p>
 
+    <!-- FORMULÁRIO -->
     <div id="form-section">
       <div class="form-box">
         <label for="nome">Seu nome</label>
-        <input type="text" id="nome" name="nome" placeholder="Como posso te chamar?" autocomplete="given-name"/>
-        <label for="email">Seu melhor e-mail <span style="color:var(--red)">*</span></label>
-        <input type="email" id="email" name="email" placeholder="voce@email.com" autocomplete="email" required/>
-        <button class="btn-submit" id="btn-submit" type="button" onclick="handleSubmit()">
-          <span id="btn-text">Quero o E-book Gratuito →</span>
-          <span class="spinner" id="spinner" style="display:none"></span>
+        <input type="text" id="nome" placeholder="Como posso te chamar?" autocomplete="given-name"/>
+        <label for="email">Seu melhor e-mail *</label>
+        <input type="email" id="email" placeholder="voce@email.com" autocomplete="email" required/>
+        <button class="btn" id="btn" type="button" onclick="enviar()">
+          <span id="btn-txt">Quero o E-book Gratuito →</span>
+          <span class="spinner" id="spin"></span>
         </button>
-        <div class="msg" id="msg-error"></div>
-        <div class="msg info" id="msg-exists" style="display:none">
-          Esse e-mail já está cadastrado.
-          <a href="/metodo-frois/downloads/ebook-imagem-com-intencao.pdf" download style="color:var(--gold);font-weight:600">Clique aqui para baixar o e-book →</a>
-        </div>
+        <p id="msg-erro" style="display:none;color:var(--red);font-size:13px;margin-top:12px;padding:12px;background:var(--redbg);border-left:3px solid var(--red)"></p>
       </div>
       <p style="font-size:11px;color:var(--dimlt);text-align:center;margin-top:10px">Sem spam. Seus dados estão seguros. Cancele quando quiser.</p>
     </div>
 
-    <div class="success-box" id="success-box">
+    <!-- SUCESSO -->
+    <div class="success-box" id="sucesso">
       <h3>E-book pronto para você!</h3>
-      <p>Cadastro confirmado. O download vai começar automaticamente.<br/>Também enviamos o link para o seu e-mail.</p>
-      <a href="/metodo-frois/downloads/ebook-imagem-com-intencao.pdf" download="Imagem-com-Intencao-Metodo-Frois.pdf" class="btn-download">↓ Baixar Agora — Imagem com Intenção</a>
-      <p class="success-note">Fique de olho no e-mail — você também vai receber a vídeo-aula gratuita nos próximos dias.</p>
+      <p>Cadastro confirmado! Clique abaixo para baixar.<br/>Você também vai receber o link no seu e-mail.</p>
+      <a href="/metodo-frois/downloads/ebook-imagem-com-intencao.pdf"
+         download="Imagem-com-Intencao-Metodo-Frois.pdf"
+         class="btn-download">↓ Baixar Agora — Imagem com Intenção</a>
+      <p class="success-note">Fique de olho no e-mail — você vai receber a vídeo-aula gratuita em breve.</p>
     </div>
 
     <div class="learns">
@@ -123,56 +110,60 @@ footer a{color:var(--gold);text-decoration:none}
 </footer>
 
 <script>
-const API_URL="/api/captura";
-function setLoading(on){
-  document.getElementById("btn-submit").disabled=on;
-  document.getElementById("btn-text").style.display=on?"none":"inline";
-  document.getElementById("spinner").style.display=on?"block":"none";
-}
-function showError(msg){
-  const el=document.getElementById("msg-error");
-  el.textContent=msg;el.className="msg error";
-}
-function clearError(){
-  const el=document.getElementById("msg-error");
-  el.className="msg";el.textContent="";
-}
-async function handleSubmit(){
-  clearError();
-  const nome=document.getElementById("nome").value.trim();
-  const email=document.getElementById("email").value.trim();
-  const emailInput=document.getElementById("email");
-  if(!email||!email.includes("@")){
-    emailInput.classList.add("error");
-    showError("Por favor, informe um e-mail válido.");
-    emailInput.focus();return;
+// ⚠️ SUBSTITUA pelo seu ID do Formspree (ex: xyzabc12)
+const FORMSPREE_ID = "MREJQJA0";
+
+async function enviar() {
+  const nome  = document.getElementById("nome").value.trim();
+  const email = document.getElementById("email").value.trim();
+  const erro  = document.getElementById("msg-erro");
+
+  erro.style.display = "none";
+
+  if (!email || !email.includes("@")) {
+    erro.textContent = "Por favor, informe um e-mail válido.";
+    erro.style.display = "block";
+    return;
   }
-  emailInput.classList.remove("error");
-  setLoading(true);
-  try{
-    const res=await fetch(API_URL,{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({nome,email})});
-    const data=await res.json();
-    if(data.ok){
-      document.getElementById("form-section").style.display="none";
-      document.getElementById("success-box").style.display="block";
-      setTimeout(()=>{
-        const a=document.createElement("a");
-        a.href="/metodo-frois/downloads/ebook-imagem-com-intencao.pdf";
-        a.download="Imagem-com-Intencao-Metodo-Frois.pdf";
+
+  // Loading
+  document.getElementById("btn").disabled = true;
+  document.getElementById("btn-txt").style.display = "none";
+  document.getElementById("spin").style.display = "block";
+
+  try {
+    const res = await fetch(`https://formspree.io/f/${FORMSPREE_ID}`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json", "Accept": "application/json" },
+      body: JSON.stringify({ nome, email, _subject: "Novo lead — E-book Método Frois" }),
+    });
+
+    const data = await res.json();
+
+    if (res.ok) {
+      document.getElementById("form-section").style.display = "none";
+      document.getElementById("sucesso").style.display = "block";
+      // Download automático após 1 segundo
+      setTimeout(() => {
+        const a = document.createElement("a");
+        a.href = "/metodo-frois/downloads/ebook-imagem-com-intencao.pdf";
+        a.download = "Imagem-com-Intencao-Metodo-Frois.pdf";
         a.click();
-      },800);
-    }else if(data.error&&(data.error.includes("Member Exists")||data.error.includes("já"))){
-      document.getElementById("msg-exists").style.display="block";
-    }else{
-      showError(data.error??"Algo deu errado. Por favor, tente novamente.");
+      }, 1000);
+    } else {
+      throw new Error(data?.errors?.[0]?.message ?? "Erro no envio.");
     }
-  }catch(err){
-    showError("Erro de conexão. Verifique sua internet e tente novamente.");
-  }finally{
-    setLoading(false);
+
+  } catch(e) {
+    erro.textContent = "Algo deu errado. Tente novamente em instantes.";
+    erro.style.display = "block";
+    document.getElementById("btn").disabled = false;
+    document.getElementById("btn-txt").style.display = "inline";
+    document.getElementById("spin").style.display = "none";
   }
 }
-document.getElementById("email").addEventListener("keydown",function(e){if(e.key==="Enter")handleSubmit();});
+
+document.getElementById("email").addEventListener("keydown", e => { if(e.key === "Enter") enviar(); });
 </script>
 </body>
 </html>
