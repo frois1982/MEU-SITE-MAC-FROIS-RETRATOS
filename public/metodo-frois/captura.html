@@ -30,23 +30,17 @@ input[type=text],input[type=email]{
   font-family:'Montserrat',sans-serif;font-size:14px;padding:12px 14px;margin-bottom:18px;
   outline:none;transition:border-color .2s}
 input:focus{border-color:var(--gold)}
+input.erro{border-color:var(--red)}
 .btn{width:100%;background:var(--gold);color:var(--white);font-family:'Montserrat',sans-serif;
      font-size:12px;font-weight:700;letter-spacing:.22em;text-transform:uppercase;
      padding:15px;border:none;cursor:pointer;transition:background .2s;
      display:flex;align-items:center;justify-content:center;gap:10px}
-.btn:hover:not(:disabled){background:var(--goldb)}
-.btn:disabled{opacity:.6;cursor:not-allowed}
-.spinner{width:16px;height:16px;border:2px solid rgba(250,248,245,.4);
-         border-top-color:var(--white);border-radius:50%;animation:spin .7s linear infinite;display:none}
-@keyframes spin{to{transform:rotate(360deg)}}
-.success-box{display:none;background:var(--greenbg);padding:28px;border-top:3px solid var(--green);text-align:center}
-.success-box h3{font-family:'Cinzel',serif;font-size:14px;color:var(--green);text-transform:uppercase;letter-spacing:.08em;margin-bottom:10px}
-.success-box p{font-size:13px;color:var(--txt2);margin-bottom:20px;line-height:1.65}
-.btn-download{display:inline-block;background:var(--green);color:var(--white);font-family:'Montserrat',sans-serif;
-              font-size:11px;font-weight:700;letter-spacing:.18em;text-transform:uppercase;
-              padding:14px 28px;text-decoration:none;transition:background .2s}
-.btn-download:hover{background:#15803d}
-.success-note{font-size:11px;color:var(--dimlt);margin-top:14px}
+.btn:hover{background:var(--goldb)}
+.msg-erro{display:none;color:var(--red);font-size:13px;margin-top:12px;
+          padding:12px;background:var(--redbg);border-left:3px solid var(--red)}
+.aviso{background:var(--goldbg,#fef3c7);border-left:3px solid var(--gold);
+       padding:14px 16px;font-size:13px;color:var(--txt2);margin-top:14px;
+       line-height:1.6;display:none}
 .learns{margin-top:32px}
 .learns-title{font-size:9px;letter-spacing:.3em;color:var(--gold);text-transform:uppercase;font-weight:700;margin-bottom:14px}
 .learn-list{list-style:none}
@@ -65,29 +59,43 @@ footer a{color:var(--gold);text-decoration:none}
     <h1 class="hero-title">Imagem com<br/><span>Intenção</span></h1>
     <p class="hero-sub">Descubra seu arquétipo de identidade visual e aprenda a construir uma presença que te representa — baseado nos 12 arquétipos de Carol S. Pearson.</p>
 
-    <div id="form-section">
-      <div class="form-box">
-        <label for="nome">Seu nome</label>
-        <input type="text" id="nome" placeholder="Como posso te chamar?" autocomplete="given-name"/>
-        <label for="email">Seu melhor e-mail *</label>
-        <input type="email" id="email" placeholder="voce@email.com" autocomplete="email" required/>
-        <button class="btn" id="btn" type="button" onclick="enviar()">
-          <span id="btn-txt">Quero o E-book Gratuito →</span>
-          <span class="spinner" id="spin"></span>
-        </button>
-        <p id="msg-erro" style="display:none;color:var(--red);font-size:13px;margin-top:12px;padding:12px;background:var(--redbg);border-left:3px solid var(--red)"></p>
-      </div>
-      <p style="font-size:11px;color:var(--dimlt);text-align:center;margin-top:10px">Sem spam. Seus dados estão seguros. Cancele quando quiser.</p>
-    </div>
+    <!-- Formulário envia direto para Mailchimp -->
+    <form id="mc-form"
+          action="https://macfrois.us16.list-manage.com/subscribe/post"
+          method="POST"
+          target="_blank"
+          onsubmit="return validar()">
 
-    <div class="success-box" id="sucesso">
-      <h3>E-book pronto para você!</h3>
-      <p>Cadastro confirmado! Clique abaixo para baixar.<br/>Você também vai receber o link no seu e-mail.</p>
-      <a href="/metodo-frois/downloads/ebook-imagem-com-intencao.pdf"
-         download="Imagem-com-Intencao-Metodo-Frois.pdf"
-         class="btn-download">↓ Baixar Agora — Imagem com Intenção</a>
-      <p class="success-note">Fique de olho no e-mail — você vai receber a vídeo-aula gratuita em breve.</p>
-    </div>
+      <!-- Campos ocultos obrigatórios do Mailchimp -->
+      <input type="hidden" name="u" value="0a6d6646c039b26e87bf25fe9"/>
+      <input type="hidden" name="id" value="5af7ebf8f8"/>
+      <!-- Honeypot anti-spam do Mailchimp -->
+      <div style="position:absolute;left:-5000px" aria-hidden="true">
+        <input type="text" name="b_0a6d6646c039b26e87bf25fe9_5af7ebf8f8" tabindex="-1" value=""/>
+      </div>
+
+      <div class="form-box">
+        <label for="FNAME">Seu nome</label>
+        <input type="text" id="FNAME" name="MERGE1" placeholder="Como posso te chamar?" autocomplete="given-name"/>
+
+        <label for="EMAIL">Seu melhor e-mail *</label>
+        <input type="email" id="EMAIL" name="MERGE0" placeholder="voce@email.com" autocomplete="email" required/>
+
+        <button class="btn" type="submit">Quero o E-book Gratuito →</button>
+
+        <p class="msg-erro" id="msg-erro"></p>
+
+        <div class="aviso" id="aviso">
+          ✅ Quase lá! Uma aba vai abrir para confirmar seu e-mail no Mailchimp.
+          Após confirmar, <a href="/metodo-frois/downloads/ebook-imagem-com-intencao.pdf"
+          download style="color:var(--gold);font-weight:600">clique aqui para baixar o e-book →</a>
+        </div>
+      </div>
+
+      <p style="font-size:11px;color:var(--dimlt);text-align:center;margin-top:10px">
+        Sem spam. Seus dados estão seguros. Cancele quando quiser.
+      </p>
+    </form>
 
     <div class="learns">
       <p class="learns-title">O que você vai aprender</p>
@@ -108,88 +116,34 @@ footer a{color:var(--gold);text-decoration:none}
 </footer>
 
 <script>
-// Configuração Mailchimp — direto na lista Studio Frois
-const MC_URL = "https://macfrois.us16.list-manage.com/subscribe/post-json";
-const MC_U   = "0a6d6646c039b26e87bf25fe9";
-const MC_ID  = "5af7ebf8f8";
-
-function setLoading(on) {
-  document.getElementById("btn").disabled = on;
-  document.getElementById("btn-txt").style.display = on ? "none" : "inline";
-  document.getElementById("spin").style.display = on ? "block" : "none";
-}
-
-function showErro(msg) {
-  const el = document.getElementById("msg-erro");
-  el.textContent = msg;
-  el.style.display = "block";
-}
-
-async function enviar() {
-  document.getElementById("msg-erro").style.display = "none";
-
-  const nome  = document.getElementById("nome").value.trim();
-  const email = document.getElementById("email").value.trim();
+function validar() {
+  const email = document.getElementById("EMAIL").value.trim();
+  const erro  = document.getElementById("msg-erro");
+  const aviso = document.getElementById("aviso");
 
   if (!email || !email.includes("@")) {
-    showErro("Por favor, informe um e-mail válido.");
-    document.getElementById("email").focus();
-    return;
+    erro.textContent = "Por favor, informe um e-mail válido.";
+    erro.style.display = "block";
+    document.getElementById("EMAIL").classList.add("erro");
+    return false;
   }
 
-  setLoading(true);
+  erro.style.display = "none";
+  document.getElementById("EMAIL").classList.remove("erro");
 
-  // Mailchimp JSONP — funciona direto do browser sem backend
-  const cb = "mc_callback_" + Date.now();
-  const params = new URLSearchParams({
-    u: MC_U, id: MC_ID, EMAIL: email,
-    FNAME: nome, c: cb
-  });
+  // Mostra aviso com link de download após envio
+  setTimeout(() => { aviso.style.display = "block"; }, 500);
 
-  const script = document.createElement("script");
-  script.src = `${MC_URL}?${params.toString()}`;
-
-  // Timeout de segurança — 8 segundos
-  const timeout = setTimeout(() => {
-    cleanup();
-    // Mesmo sem confirmação, mostra sucesso — o Mailchimp quase sempre aceita
-    mostrarSucesso();
-  }, 8000);
-
-  window[cb] = function(data) {
-    clearTimeout(timeout);
-    cleanup();
-    if (data.result === "success" || data.result === "error" && data.msg && data.msg.includes("already subscribed")) {
-      mostrarSucesso();
-    } else {
-      setLoading(false);
-      showErro("Não foi possível realizar o cadastro. Tente novamente.");
-    }
-  };
-
-  function cleanup() {
-    delete window[cb];
-    if (script.parentNode) script.parentNode.removeChild(script);
-  }
-
-  document.head.appendChild(script);
-}
-
-function mostrarSucesso() {
-  document.getElementById("form-section").style.display = "none";
-  document.getElementById("sucesso").style.display = "block";
-  // Download automático após 1 segundo
+  // Inicia download automático após 1.5 segundos
   setTimeout(() => {
     const a = document.createElement("a");
     a.href = "/metodo-frois/downloads/ebook-imagem-com-intencao.pdf";
     a.download = "Imagem-com-Intencao-Metodo-Frois.pdf";
     a.click();
-  }, 1000);
-}
+  }, 1500);
 
-document.getElementById("email").addEventListener("keydown", e => {
-  if (e.key === "Enter") enviar();
-});
+  return true; // Permite o submit para o Mailchimp
+}
 </script>
 </body>
 </html>
