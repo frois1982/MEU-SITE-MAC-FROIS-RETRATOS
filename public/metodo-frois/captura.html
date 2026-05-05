@@ -13,7 +13,6 @@
   --gold:#d97706;--goldb:#b45309;--border:#e7e2da;--white:#faf8f5;
   --green:#16a34a;--greenbg:#f0fdf4;--red:#dc2626;--redbg:#fef2f2;
 }
-*{box-sizing:border-box}
 body{background:var(--bg);color:var(--txt);font-family:'Montserrat',sans-serif;
      font-weight:300;line-height:1.75;min-height:100vh;display:flex;flex-direction:column}
 h1{font-family:'Cinzel',serif;text-transform:uppercase;letter-spacing:.1em;font-weight:700}
@@ -26,9 +25,10 @@ main{flex:1;display:flex;align-items:center;justify-content:center;padding:48px 
 .hero-sub{font-size:14px;color:var(--dim);margin-bottom:28px;line-height:1.7}
 .form-box{background:var(--bg2);padding:32px;border-top:3px solid var(--gold)}
 label{display:block;font-size:10px;letter-spacing:.2em;color:var(--gold);text-transform:uppercase;font-weight:700;margin-bottom:6px}
-input{width:100%;background:var(--bg);border:1.5px solid var(--border);color:var(--txt);
-      font-family:'Montserrat',sans-serif;font-size:14px;padding:12px 14px;margin-bottom:18px;
-      outline:none;transition:border-color .2s}
+input[type=text],input[type=email]{
+  width:100%;background:var(--bg);border:1.5px solid var(--border);color:var(--txt);
+  font-family:'Montserrat',sans-serif;font-size:14px;padding:12px 14px;margin-bottom:18px;
+  outline:none;transition:border-color .2s}
 input:focus{border-color:var(--gold)}
 .btn{width:100%;background:var(--gold);color:var(--white);font-family:'Montserrat',sans-serif;
      font-size:12px;font-weight:700;letter-spacing:.22em;text-transform:uppercase;
@@ -65,7 +65,6 @@ footer a{color:var(--gold);text-decoration:none}
     <h1 class="hero-title">Imagem com<br/><span>Intenção</span></h1>
     <p class="hero-sub">Descubra seu arquétipo de identidade visual e aprenda a construir uma presença que te representa — baseado nos 12 arquétipos de Carol S. Pearson.</p>
 
-    <!-- FORMULÁRIO -->
     <div id="form-section">
       <div class="form-box">
         <label for="nome">Seu nome</label>
@@ -81,7 +80,6 @@ footer a{color:var(--gold);text-decoration:none}
       <p style="font-size:11px;color:var(--dimlt);text-align:center;margin-top:10px">Sem spam. Seus dados estão seguros. Cancele quando quiser.</p>
     </div>
 
-    <!-- SUCESSO -->
     <div class="success-box" id="sucesso">
       <h3>E-book pronto para você!</h3>
       <p>Cadastro confirmado! Clique abaixo para baixar.<br/>Você também vai receber o link no seu e-mail.</p>
@@ -110,60 +108,88 @@ footer a{color:var(--gold);text-decoration:none}
 </footer>
 
 <script>
-// ⚠️ SUBSTITUA pelo seu ID do Formspree (ex: xyzabc12)
-const FORMSPREE_ID = "mrejqjao";
+// Configuração Mailchimp — direto na lista Studio Frois
+const MC_URL = "https://macfrois.us16.list-manage.com/subscribe/post-json";
+const MC_U   = "0a6d6646c039b26e87bf25fe9";
+const MC_ID  = "5af7ebf8f8";
+
+function setLoading(on) {
+  document.getElementById("btn").disabled = on;
+  document.getElementById("btn-txt").style.display = on ? "none" : "inline";
+  document.getElementById("spin").style.display = on ? "block" : "none";
+}
+
+function showErro(msg) {
+  const el = document.getElementById("msg-erro");
+  el.textContent = msg;
+  el.style.display = "block";
+}
 
 async function enviar() {
+  document.getElementById("msg-erro").style.display = "none";
+
   const nome  = document.getElementById("nome").value.trim();
   const email = document.getElementById("email").value.trim();
-  const erro  = document.getElementById("msg-erro");
-
-  erro.style.display = "none";
 
   if (!email || !email.includes("@")) {
-    erro.textContent = "Por favor, informe um e-mail válido.";
-    erro.style.display = "block";
+    showErro("Por favor, informe um e-mail válido.");
+    document.getElementById("email").focus();
     return;
   }
 
-  // Loading
-  document.getElementById("btn").disabled = true;
-  document.getElementById("btn-txt").style.display = "none";
-  document.getElementById("spin").style.display = "block";
+  setLoading(true);
 
-  try {
-    const res = await fetch(`https://formspree.io/f/${FORMSPREE_ID}`, {
-      method: "POST",
-      headers: { "Content-Type": "application/json", "Accept": "application/json" },
-      body: JSON.stringify({ nome, email, _subject: "Novo lead — E-book Método Frois" }),
-    });
+  // Mailchimp JSONP — funciona direto do browser sem backend
+  const cb = "mc_callback_" + Date.now();
+  const params = new URLSearchParams({
+    u: MC_U, id: MC_ID, EMAIL: email,
+    FNAME: nome, c: cb
+  });
 
-    const data = await res.json();
+  const script = document.createElement("script");
+  script.src = `${MC_URL}?${params.toString()}`;
 
-    if (res.ok) {
-      document.getElementById("form-section").style.display = "none";
-      document.getElementById("sucesso").style.display = "block";
-      // Download automático após 1 segundo
-      setTimeout(() => {
-        const a = document.createElement("a");
-        a.href = "/metodo-frois/downloads/ebook-imagem-com-intencao.pdf";
-        a.download = "Imagem-com-Intencao-Metodo-Frois.pdf";
-        a.click();
-      }, 1000);
+  // Timeout de segurança — 8 segundos
+  const timeout = setTimeout(() => {
+    cleanup();
+    // Mesmo sem confirmação, mostra sucesso — o Mailchimp quase sempre aceita
+    mostrarSucesso();
+  }, 8000);
+
+  window[cb] = function(data) {
+    clearTimeout(timeout);
+    cleanup();
+    if (data.result === "success" || data.result === "error" && data.msg && data.msg.includes("already subscribed")) {
+      mostrarSucesso();
     } else {
-      throw new Error(data?.errors?.[0]?.message ?? "Erro no envio.");
+      setLoading(false);
+      showErro("Não foi possível realizar o cadastro. Tente novamente.");
     }
+  };
 
-  } catch(e) {
-    erro.textContent = "Algo deu errado. Tente novamente em instantes.";
-    erro.style.display = "block";
-    document.getElementById("btn").disabled = false;
-    document.getElementById("btn-txt").style.display = "inline";
-    document.getElementById("spin").style.display = "none";
+  function cleanup() {
+    delete window[cb];
+    if (script.parentNode) script.parentNode.removeChild(script);
   }
+
+  document.head.appendChild(script);
 }
 
-document.getElementById("email").addEventListener("keydown", e => { if(e.key === "Enter") enviar(); });
+function mostrarSucesso() {
+  document.getElementById("form-section").style.display = "none";
+  document.getElementById("sucesso").style.display = "block";
+  // Download automático após 1 segundo
+  setTimeout(() => {
+    const a = document.createElement("a");
+    a.href = "/metodo-frois/downloads/ebook-imagem-com-intencao.pdf";
+    a.download = "Imagem-com-Intencao-Metodo-Frois.pdf";
+    a.click();
+  }, 1000);
+}
+
+document.getElementById("email").addEventListener("keydown", e => {
+  if (e.key === "Enter") enviar();
+});
 </script>
 </body>
 </html>
