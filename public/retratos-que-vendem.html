@@ -7,7 +7,6 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,600&family=Jost:wght@300;400;500;600&display=swap" rel="stylesheet">
 <style>
-/* ─── VARIABLES ─── */
 :root {
   --navy: #001021;
   --navy-mid: #001830;
@@ -23,1481 +22,287 @@
   --font-body: 'Jost', 'Century Gothic', sans-serif;
   --transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
 }
-
-/* ─── RESET ─── */
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 html { scroll-behavior: smooth; }
-body {
-  background: var(--navy);
-  color: var(--white);
-  font-family: var(--font-body);
-  font-weight: 300;
-  line-height: 1.7;
-  overflow-x: hidden;
-}
-
-/* ─── TYPOGRAPHY ─── */
+body { background: var(--navy); color: var(--white); font-family: var(--font-body); font-weight: 300; line-height: 1.7; overflow-x: hidden; }
 h1, h2, h3, h4 { font-family: var(--font-display); font-weight: 600; line-height: 1.2; }
 h1 { font-size: clamp(2.2rem, 5vw, 4rem); }
 h2 { font-size: clamp(1.8rem, 3.5vw, 2.8rem); }
 h3 { font-size: clamp(1.3rem, 2.5vw, 1.8rem); }
 p { font-size: clamp(0.95rem, 1.5vw, 1.05rem); color: var(--text-body); }
-
-/* ─── GOLD TEXT ─── */
 .gold { color: var(--gold); }
 .gold-light { color: var(--gold-light); }
 .gold-pale { color: var(--gold-pale); }
-
-/* ─── DIVIDER ─── */
-.divider {
-  width: 80px; height: 1px;
-  background: linear-gradient(90deg, transparent, var(--gold), transparent);
-  margin: 2rem auto;
-}
+.divider { width: 80px; height: 1px; background: linear-gradient(90deg, transparent, var(--gold), transparent); margin: 2rem auto; }
 .divider-left { margin: 2rem 0; }
-
-/* ─── GOLD LINE ─── */
-.section-label {
-  font-family: var(--font-body);
-  font-size: 0.7rem;
-  font-weight: 500;
-  letter-spacing: 0.3em;
-  text-transform: uppercase;
-  color: var(--gold);
-  display: flex;
-  align-items: center;
-  gap: 1rem;
-  margin-bottom: 1.5rem;
-}
-.section-label::before {
-  content: '';
-  width: 40px; height: 1px;
-  background: var(--gold);
-}
-
-/* ─── CONTAINER ─── */
+.section-label { font-family: var(--font-body); font-size: 0.7rem; font-weight: 500; letter-spacing: 0.3em; text-transform: uppercase; color: var(--gold); display: flex; align-items: center; gap: 1rem; margin-bottom: 1.5rem; }
+.section-label::before { content: ''; width: 40px; height: 1px; background: var(--gold); }
 .container { max-width: 900px; margin: 0 auto; padding: 0 2rem; }
 .container-wide { max-width: 1100px; margin: 0 auto; padding: 0 2rem; }
-
-/* ─── BUTTONS ─── */
-.btn-cta {
-  display: inline-block;
-  background: linear-gradient(135deg, var(--gold) 0%, var(--gold-light) 50%, var(--gold) 100%);
-  color: var(--navy);
-  font-family: var(--font-body);
-  font-size: 1rem;
-  font-weight: 600;
-  letter-spacing: 0.05em;
-  text-transform: uppercase;
-  padding: 1.2rem 3rem;
-  border: none;
-  cursor: pointer;
-  text-decoration: none;
-  transition: var(--transition);
-  position: relative;
-  overflow: hidden;
-}
-.btn-cta::before {
-  content: '';
-  position: absolute;
-  top: 0; left: -100%;
-  width: 100%; height: 100%;
-  background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent);
-  transition: left 0.6s ease;
-}
+.btn-cta { display: inline-block; background: linear-gradient(135deg, var(--gold) 0%, var(--gold-light) 50%, var(--gold) 100%); color: var(--navy); font-family: var(--font-body); font-size: 1rem; font-weight: 600; letter-spacing: 0.05em; text-transform: uppercase; padding: 1.2rem 3rem; border: none; cursor: pointer; text-decoration: none; transition: var(--transition); position: relative; overflow: hidden; }
+.btn-cta::before { content: ''; position: absolute; top: 0; left: -100%; width: 100%; height: 100%; background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent); transition: left 0.6s ease; }
 .btn-cta:hover::before { left: 100%; }
 .btn-cta:hover { transform: translateY(-2px); box-shadow: 0 8px 40px rgba(201,168,76,0.4); }
+.btn-cta-large { font-size: 1.1rem; padding: 1.4rem 4rem; display: block; text-align: center; max-width: 480px; margin: 0 auto; }
+.ornament { text-align: center; color: var(--gold); font-size: 1.4rem; opacity: 0.6; letter-spacing: 0.5em; margin: 1rem 0; }
 
-.btn-cta-large {
-  font-size: 1.1rem;
-  padding: 1.4rem 4rem;
-  display: block;
-  text-align: center;
-  max-width: 480px;
-  margin: 0 auto;
-}
+/* HEADER */
+.site-header { position: fixed; top: 0; left: 0; right: 0; z-index: 100; padding: 1.2rem 2rem; display: flex; justify-content: center; align-items: center; background: rgba(0,16,33,0.9); backdrop-filter: blur(12px); border-bottom: 1px solid rgba(201,168,76,0.15); }
+.logo-header { font-family: var(--font-display); font-size: 1.1rem; font-weight: 400; letter-spacing: 0.2em; color: var(--gold); text-transform: uppercase; }
 
-/* ─── ORNAMENT ─── */
-.ornament {
-  text-align: center;
-  color: var(--gold);
-  font-size: 1.4rem;
-  opacity: 0.6;
-  letter-spacing: 0.5em;
-  margin: 1rem 0;
-}
-
-/* ═══════════════════════════════════════════
-   HEADER / NAV
-═══════════════════════════════════════════ */
-.site-header {
-  position: fixed; top: 0; left: 0; right: 0;
-  z-index: 100;
-  padding: 1.2rem 2rem;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  background: rgba(0, 16, 33, 0.9);
-  backdrop-filter: blur(12px);
-  border-bottom: 1px solid rgba(201,168,76,0.15);
-}
-.logo-header {
-  font-family: var(--font-display);
-  font-size: 1.1rem;
-  font-weight: 400;
-  letter-spacing: 0.2em;
-  color: var(--gold);
-  text-transform: uppercase;
-}
-
-/* ═══════════════════════════════════════════
-   BLOCO 01 — HERO
-═══════════════════════════════════════════ */
-.hero {
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  text-align: center;
-  padding: 7rem 2rem 5rem;
-  position: relative;
-  overflow: hidden;
-}
-.hero::before {
-  content: '';
-  position: absolute;
-  inset: 0;
-  background: 
-    radial-gradient(ellipse 80% 60% at 50% 100%, rgba(201,168,76,0.06) 0%, transparent 70%),
-    radial-gradient(ellipse 60% 40% at 20% 50%, rgba(0,34,68,0.8) 0%, transparent 60%);
-  pointer-events: none;
-}
-.hero-eyebrow {
-  font-family: var(--font-body);
-  font-size: 0.7rem;
-  font-weight: 500;
-  letter-spacing: 0.4em;
-  text-transform: uppercase;
-  color: var(--gold);
-  margin-bottom: 2rem;
-  opacity: 0;
-  animation: fadeUp 0.8s ease 0.2s forwards;
-}
-.hero h1 {
-  font-size: clamp(2.4rem, 6vw, 4.5rem);
-  font-weight: 600;
-  color: var(--white);
-  margin-bottom: 0.5rem;
-  opacity: 0;
-  animation: fadeUp 0.8s ease 0.4s forwards;
-  max-width: 800px;
-}
-.hero h1 em {
-  font-style: italic;
-  color: var(--gold-light);
-}
-.hero-sub {
-  font-family: var(--font-display);
-  font-size: clamp(1.1rem, 2.5vw, 1.5rem);
-  font-weight: 300;
-  font-style: italic;
-  color: var(--text-body);
-  margin: 1.5rem auto 0;
-  max-width: 640px;
-  opacity: 0;
-  animation: fadeUp 0.8s ease 0.6s forwards;
-}
-
-/* ─── VSL PLAYER ─── */
-.vsl-wrapper {
-  width: 100%;
-  max-width: 760px;
-  margin: 3rem auto 2.5rem;
-  opacity: 0;
-  animation: fadeUp 0.8s ease 0.8s forwards;
-}
-.vsl-container {
-  position: relative;
-  width: 100%;
-  aspect-ratio: 16/9;
-  background: var(--navy-mid);
-  border: 1px solid rgba(201,168,76,0.3);
-  overflow: hidden;
-}
-.vsl-placeholder {
-  position: absolute;
-  inset: 0;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  gap: 1rem;
-  background: linear-gradient(135deg, var(--navy-mid), var(--navy-light));
-}
-.vsl-play-btn {
-  width: 80px; height: 80px;
-  border: 2px solid var(--gold);
-  border-radius: 50%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  cursor: pointer;
-  transition: var(--transition);
-  background: rgba(201,168,76,0.1);
-}
-.vsl-play-btn:hover {
-  background: rgba(201,168,76,0.2);
-  transform: scale(1.1);
-}
+/* HERO */
+.hero { min-height: 100vh; display: flex; flex-direction: column; justify-content: center; align-items: center; text-align: center; padding: 7rem 2rem 5rem; position: relative; overflow: hidden; }
+.hero::before { content: ''; position: absolute; inset: 0; background: radial-gradient(ellipse 80% 60% at 50% 100%, rgba(201,168,76,0.06) 0%, transparent 70%), radial-gradient(ellipse 60% 40% at 20% 50%, rgba(0,34,68,0.8) 0%, transparent 60%); pointer-events: none; }
+.hero-eyebrow { font-family: var(--font-body); font-size: 0.7rem; font-weight: 500; letter-spacing: 0.4em; text-transform: uppercase; color: var(--gold); margin-bottom: 2rem; opacity: 0; animation: fadeUp 0.8s ease 0.2s forwards; }
+.hero h1 { font-size: clamp(2.4rem, 6vw, 4.5rem); font-weight: 600; color: var(--white); margin-bottom: 0.5rem; opacity: 0; animation: fadeUp 0.8s ease 0.4s forwards; max-width: 800px; }
+.hero h1 em { font-style: italic; color: var(--gold-light); }
+.hero-sub { font-family: var(--font-display); font-size: clamp(1.1rem, 2.5vw, 1.5rem); font-weight: 300; font-style: italic; color: var(--text-body); margin: 1.5rem auto 0; max-width: 640px; opacity: 0; animation: fadeUp 0.8s ease 0.6s forwards; }
+.vsl-wrapper { width: 100%; max-width: 760px; margin: 3rem auto 2.5rem; opacity: 0; animation: fadeUp 0.8s ease 0.8s forwards; }
+.vsl-container { position: relative; width: 100%; aspect-ratio: 16/9; background: var(--navy-mid); border: 1px solid rgba(201,168,76,0.3); overflow: hidden; }
+.vsl-placeholder { position: absolute; inset: 0; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 1rem; background: linear-gradient(135deg, var(--navy-mid), var(--navy-light)); }
+.vsl-play-btn { width: 80px; height: 80px; border: 2px solid var(--gold); border-radius: 50%; display: flex; align-items: center; justify-content: center; cursor: pointer; transition: var(--transition); background: rgba(201,168,76,0.1); }
+.vsl-play-btn:hover { background: rgba(201,168,76,0.2); transform: scale(1.1); }
 .vsl-play-btn svg { margin-left: 6px; }
-.vsl-label {
-  font-family: var(--font-body);
-  font-size: 0.75rem;
-  letter-spacing: 0.2em;
-  color: var(--gold);
-  text-transform: uppercase;
-}
-
-.hero-cta-wrap {
-  opacity: 0;
-  animation: fadeUp 0.8s ease 1s forwards;
-  width: 100%;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 1rem;
-}
-.security-badges {
-  display: flex;
-  align-items: center;
-  gap: 1.5rem;
-  flex-wrap: wrap;
-  justify-content: center;
-  font-size: 0.75rem;
-  letter-spacing: 0.1em;
-  color: var(--text-muted);
-  font-family: var(--font-body);
-}
+.vsl-label { font-family: var(--font-body); font-size: 0.75rem; letter-spacing: 0.2em; color: var(--gold); text-transform: uppercase; }
+.hero-cta-wrap { opacity: 0; animation: fadeUp 0.8s ease 1s forwards; width: 100%; display: flex; flex-direction: column; align-items: center; gap: 1rem; }
+.security-badges { display: flex; align-items: center; gap: 1.5rem; flex-wrap: wrap; justify-content: center; font-size: 0.75rem; letter-spacing: 0.1em; color: var(--text-muted); font-family: var(--font-body); }
 .security-badges span { display: flex; align-items: center; gap: 0.4rem; }
 
-/* ═══════════════════════════════════════════
-   BLOCO 02 — TRANSFORMAÇÃO
-═══════════════════════════════════════════ */
-.transform-section {
-  padding: 7rem 2rem;
-  background: linear-gradient(180deg, var(--navy) 0%, var(--navy-mid) 50%, var(--navy) 100%);
-  position: relative;
-}
-.transform-section::before {
-  content: '';
-  position: absolute;
-  top: 0; left: 0; right: 0;
-  height: 1px;
-  background: linear-gradient(90deg, transparent, var(--gold), transparent);
-}
-.transform-inner {
-  max-width: 700px;
-  margin: 0 auto;
-  text-align: center;
-}
-.transform-inner h2 {
-  color: var(--gold-light);
-  margin-bottom: 3rem;
-  font-style: italic;
-  font-weight: 300;
-}
-.transform-scene {
-  text-align: left;
-  font-family: var(--font-display);
-  font-size: clamp(1.1rem, 2vw, 1.3rem);
-  font-weight: 300;
-  line-height: 1.9;
-  color: var(--text-body);
-}
-.transform-scene .highlight {
-  color: var(--white);
-  font-style: italic;
-}
-.transform-scene .gold-moment {
-  color: var(--gold-light);
-  font-style: italic;
-  font-size: 1.1em;
-}
-.transform-quote {
-  border-left: 2px solid var(--gold);
-  padding: 1.5rem 2rem;
-  margin: 2.5rem 0;
-  background: rgba(201,168,76,0.05);
-  font-family: var(--font-display);
-  font-size: 1.2rem;
-  font-style: italic;
-  color: var(--white);
-}
+/* TRANSFORM */
+.transform-section { padding: 7rem 2rem; background: linear-gradient(180deg, var(--navy) 0%, var(--navy-mid) 50%, var(--navy) 100%); position: relative; }
+.transform-section::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 1px; background: linear-gradient(90deg, transparent, var(--gold), transparent); }
+.transform-inner { max-width: 700px; margin: 0 auto; text-align: center; }
+.transform-inner h2 { color: var(--gold-light); margin-bottom: 3rem; font-style: italic; font-weight: 300; }
+.transform-scene { text-align: left; font-family: var(--font-display); font-size: clamp(1.1rem, 2vw, 1.3rem); font-weight: 300; line-height: 1.9; color: var(--text-body); }
+.transform-scene .highlight { color: var(--white); font-style: italic; }
+.transform-scene .gold-moment { color: var(--gold-light); font-style: italic; font-size: 1.1em; }
+.transform-quote { border-left: 2px solid var(--gold); padding: 1.5rem 2rem; margin: 2.5rem 0; background: rgba(201,168,76,0.05); font-family: var(--font-display); font-size: 1.2rem; font-style: italic; color: var(--white); }
 
-/* ═══════════════════════════════════════════
-   BLOCO 03 — PROBLEMA REAL
-═══════════════════════════════════════════ */
-.problem-section {
-  padding: 6rem 2rem;
-  background: var(--navy-mid);
-  position: relative;
-}
+/* PROBLEM */
+.problem-section { padding: 6rem 2rem; background: var(--navy-mid); position: relative; }
 .problem-inner { max-width: 740px; margin: 0 auto; }
-.problem-inner h2 {
-  color: var(--white);
-  margin-bottom: 2rem;
-}
+.problem-inner h2 { color: var(--white); margin-bottom: 2rem; }
 .problem-inner h2 em { color: var(--gold-light); font-style: italic; }
 .problem-body p { margin-bottom: 1.2rem; }
-.problem-hook {
-  font-family: var(--font-display);
-  font-size: clamp(1.5rem, 3vw, 2rem);
-  font-style: italic;
-  color: var(--gold-light);
-  text-align: center;
-  margin: 3rem 0 1rem;
-}
+.problem-hook { font-family: var(--font-display); font-size: clamp(1.5rem, 3vw, 2rem); font-style: italic; color: var(--gold-light); text-align: center; margin: 3rem 0 1rem; }
 
-/* ═══════════════════════════════════════════
-   BLOCO 04 — DOR PROFUNDA
-═══════════════════════════════════════════ */
-.pain-section {
-  padding: 6rem 2rem;
-  background: var(--navy);
-  position: relative;
-}
-.pain-section::before {
-  content: '';
-  position: absolute;
-  top: 0; left: 0; right: 0;
-  height: 1px;
-  background: linear-gradient(90deg, transparent, rgba(201,168,76,0.3), transparent);
-}
+/* PAIN */
+.pain-section { padding: 6rem 2rem; background: var(--navy); position: relative; }
+.pain-section::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 1px; background: linear-gradient(90deg, transparent, rgba(201,168,76,0.3), transparent); }
 .pain-inner { max-width: 720px; margin: 0 auto; }
 .pain-inner h2 { color: var(--white); margin-bottom: 3rem; }
 .pain-inner h2 span { color: var(--gold-light); }
+.pain-sequence { margin: 2.5rem 0; padding: 2rem 2.5rem; border: 1px solid rgba(201,168,76,0.2); background: rgba(0,0,0,0.2); position: relative; }
+.pain-sequence::before { content: '"'; position: absolute; top: -0.5rem; left: 1.5rem; font-family: var(--font-display); font-size: 5rem; color: var(--gold); opacity: 0.2; line-height: 1; }
+.pain-steps { display: flex; flex-direction: column; gap: 0.6rem; }
+.pain-steps p { font-family: var(--font-display); font-size: 1.05rem; font-style: italic; color: var(--text-body); line-height: 1.5; }
+.pain-steps p.heavy { color: var(--white); font-weight: 500; font-style: normal; }
+.pain-revelation { margin-top: 3rem; font-family: var(--font-display); font-size: clamp(1.3rem, 2.5vw, 1.7rem); font-style: italic; color: var(--gold-light); text-align: center; line-height: 1.5; }
 
-.pain-sequence {
-  margin: 2.5rem 0;
-  padding: 2rem 2.5rem;
-  border: 1px solid rgba(201,168,76,0.2);
-  background: rgba(0,0,0,0.2);
-  position: relative;
-}
-.pain-sequence::before {
-  content: '"';
-  position: absolute;
-  top: -0.5rem;
-  left: 1.5rem;
-  font-family: var(--font-display);
-  font-size: 5rem;
-  color: var(--gold);
-  opacity: 0.2;
-  line-height: 1;
-}
-.pain-steps {
-  display: flex;
-  flex-direction: column;
-  gap: 0.6rem;
-}
-.pain-steps p {
-  font-family: var(--font-display);
-  font-size: 1.05rem;
-  font-style: italic;
-  color: var(--text-body);
-  line-height: 1.5;
-}
-.pain-steps p.heavy {
-  color: var(--white);
-  font-weight: 500;
-  font-style: normal;
-}
-
-.pain-revelation {
-  margin-top: 3rem;
-  font-family: var(--font-display);
-  font-size: clamp(1.3rem, 2.5vw, 1.7rem);
-  font-style: italic;
-  color: var(--gold-light);
-  text-align: center;
-  line-height: 1.5;
-}
-
-/* ═══════════════════════════════════════════
-   BLOCO 05 — CULPA NÃO É SUA
-═══════════════════════════════════════════ */
-.blame-section {
-  padding: 6rem 2rem;
-  background: linear-gradient(135deg, var(--navy-mid), var(--navy));
-  position: relative;
-  overflow: hidden;
-}
-.blame-section::after {
-  content: '✦';
-  position: absolute;
-  right: -2rem;
-  top: 50%;
-  transform: translateY(-50%);
-  font-size: 20rem;
-  color: var(--gold);
-  opacity: 0.02;
-  pointer-events: none;
-}
+/* BLAME */
+.blame-section { padding: 6rem 2rem; background: linear-gradient(135deg, var(--navy-mid), var(--navy)); position: relative; overflow: hidden; }
+.blame-section::after { content: '✦'; position: absolute; right: -2rem; top: 50%; transform: translateY(-50%); font-size: 20rem; color: var(--gold); opacity: 0.02; pointer-events: none; }
 .blame-inner { max-width: 720px; margin: 0 auto; }
-.blame-title {
-  font-family: var(--font-display);
-  font-size: clamp(1.8rem, 4vw, 3rem);
-  font-weight: 600;
-  color: var(--gold-light);
-  margin-bottom: 3rem;
-  font-style: italic;
-}
-.blame-list {
-  list-style: none;
-  display: flex;
-  flex-direction: column;
-  gap: 1.2rem;
-  margin: 2rem 0 3rem;
-}
-.blame-list li {
-  display: flex;
-  gap: 1rem;
-  align-items: flex-start;
-  font-family: var(--font-display);
-  font-size: 1.1rem;
-  color: var(--text-body);
-  line-height: 1.6;
-}
-.blame-list li::before {
-  content: '✕';
-  color: var(--gold);
-  opacity: 0.6;
-  font-size: 0.9rem;
-  margin-top: 0.2rem;
-  flex-shrink: 0;
-}
-.blame-conclusion {
-  font-family: var(--font-display);
-  font-size: clamp(1.2rem, 2.5vw, 1.6rem);
-  font-style: italic;
-  color: var(--white);
-  border-left: 3px solid var(--gold);
-  padding: 1rem 1.5rem;
-  margin-top: 2rem;
-}
+.blame-title { font-family: var(--font-display); font-size: clamp(1.8rem, 4vw, 3rem); font-weight: 600; color: var(--gold-light); margin-bottom: 3rem; font-style: italic; }
+.blame-list { list-style: none; display: flex; flex-direction: column; gap: 1.2rem; margin: 2rem 0 3rem; }
+.blame-list li { display: flex; gap: 1rem; align-items: flex-start; font-family: var(--font-display); font-size: 1.1rem; color: var(--text-body); line-height: 1.6; }
+.blame-list li::before { content: '✕'; color: var(--gold); opacity: 0.6; font-size: 0.9rem; margin-top: 0.2rem; flex-shrink: 0; }
+.blame-conclusion { font-family: var(--font-display); font-size: clamp(1.2rem, 2.5vw, 1.6rem); font-style: italic; color: var(--white); border-left: 3px solid var(--gold); padding: 1rem 1.5rem; margin-top: 2rem; }
 
-/* ═══════════════════════════════════════════
-   BLOCO 06 — AUTORIDADE / MAC FROIS
-═══════════════════════════════════════════ */
-.authority-section {
-  padding: 7rem 2rem;
-  background: var(--navy);
-  position: relative;
-}
-.authority-section::before {
-  content: '';
-  position: absolute;
-  top: 0; left: 0; right: 0;
-  height: 1px;
-  background: linear-gradient(90deg, transparent, var(--gold), transparent);
-}
-.authority-inner {
-  max-width: 820px;
-  margin: 0 auto;
-  display: grid;
-  grid-template-columns: 260px 1fr;
-  gap: 4rem;
-  align-items: center;
-}
-@media (max-width: 680px) {
-  .authority-inner {
-    grid-template-columns: 1fr;
-    text-align: center;
-  }
-  .authority-photo { margin: 0 auto; }
-  .section-label { justify-content: center; }
-  .section-label::before { display: none; }
-}
-.authority-photo {
-  width: 240px;
-  aspect-ratio: 3/4;
-  background: var(--navy-mid);
-  border: 1px solid rgba(201,168,76,0.3);
-  position: relative;
-  overflow: hidden;
-  flex-shrink: 0;
-}
-.authority-photo::before {
-  content: 'FOTO\A MAC FROIS';
-  white-space: pre;
-  position: absolute;
-  inset: 0;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-family: var(--font-body);
-  font-size: 0.7rem;
-  letter-spacing: 0.2em;
-  color: var(--gold);
-  opacity: 0.4;
-  text-align: center;
-  padding-top: 50%;
-}
-.authority-photo img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  display: block;
-}
-.authority-photo-corner {
-  position: absolute;
-  bottom: -1px; right: -1px;
-  width: 40px; height: 40px;
-  border-right: 2px solid var(--gold);
-  border-bottom: 2px solid var(--gold);
-}
-.authority-photo-corner2 {
-  position: absolute;
-  top: -1px; left: -1px;
-  width: 40px; height: 40px;
-  border-left: 2px solid var(--gold);
-  border-top: 2px solid var(--gold);
-}
+/* AUTHORITY */
+.authority-section { padding: 7rem 2rem; background: var(--navy); position: relative; }
+.authority-section::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 1px; background: linear-gradient(90deg, transparent, var(--gold), transparent); }
+.authority-inner { max-width: 820px; margin: 0 auto; display: grid; grid-template-columns: 260px 1fr; gap: 4rem; align-items: center; }
+@media (max-width: 680px) { .authority-inner { grid-template-columns: 1fr; text-align: center; } .authority-photo { margin: 0 auto; } .section-label { justify-content: center; } .section-label::before { display: none; } }
+.authority-photo { width: 240px; aspect-ratio: 3/4; background: var(--navy-mid); border: 1px solid rgba(201,168,76,0.3); position: relative; overflow: hidden; flex-shrink: 0; }
+.authority-photo img { width: 100%; height: 100%; object-fit: cover; display: block; }
+.authority-photo-corner { position: absolute; bottom: -1px; right: -1px; width: 40px; height: 40px; border-right: 2px solid var(--gold); border-bottom: 2px solid var(--gold); }
+.authority-photo-corner2 { position: absolute; top: -1px; left: -1px; width: 40px; height: 40px; border-left: 2px solid var(--gold); border-top: 2px solid var(--gold); }
 .authority-content h2 { color: var(--white); margin-bottom: 1.5rem; }
 .authority-content p { margin-bottom: 1rem; }
-.authority-name {
-  font-family: var(--font-display);
-  font-size: 2rem;
-  font-style: italic;
-  color: var(--gold-light);
-  margin-top: 2rem;
-  display: block;
-}
-.authority-title-name {
-  font-family: var(--font-body);
-  font-size: 0.7rem;
-  letter-spacing: 0.3em;
-  text-transform: uppercase;
-  color: var(--text-muted);
-}
+.authority-name { font-family: var(--font-display); font-size: 2rem; font-style: italic; color: var(--gold-light); margin-top: 2rem; display: block; }
+.authority-title-name { font-family: var(--font-body); font-size: 0.7rem; letter-spacing: 0.3em; text-transform: uppercase; color: var(--text-muted); }
 
-/* ═══════════════════════════════════════════
-   BLOCO 07 — APRESENTAÇÃO DO CURSO
-═══════════════════════════════════════════ */
-.course-intro {
-  padding: 7rem 2rem;
-  background: var(--navy-mid);
-  text-align: center;
-  position: relative;
-}
-.course-intro::before, .course-intro::after {
-  content: '';
-  position: absolute;
-  left: 0; right: 0;
-  height: 1px;
-  background: linear-gradient(90deg, transparent, rgba(201,168,76,0.4), transparent);
-}
-.course-intro::before { top: 0; }
-.course-intro::after { bottom: 0; }
-.course-logo-area {
-  margin-bottom: 3rem;
-}
-.course-name-display {
-  font-family: var(--font-display);
-  font-size: clamp(2.5rem, 6vw, 5rem);
-  font-weight: 700;
-  color: var(--white);
-  letter-spacing: 0.05em;
-  line-height: 1;
-  margin-bottom: 0.5rem;
-}
-.course-name-sub {
-  font-family: var(--font-body);
-  font-size: 0.75rem;
-  letter-spacing: 0.4em;
-  text-transform: uppercase;
-  color: var(--gold);
-}
-.course-intro-body {
-  max-width: 680px;
-  margin: 0 auto;
-}
+/* COURSE INTRO */
+.course-intro { padding: 7rem 2rem; background: var(--navy-mid); text-align: center; position: relative; }
+.course-intro::before, .course-intro::after { content: ''; position: absolute; left: 0; right: 0; height: 1px; background: linear-gradient(90deg, transparent, rgba(201,168,76,0.4), transparent); }
+.course-intro::before { top: 0; } .course-intro::after { bottom: 0; }
+.course-logo-area { margin-bottom: 3rem; }
+.course-name-display { font-family: var(--font-display); font-size: clamp(2.5rem, 6vw, 5rem); font-weight: 700; color: var(--white); letter-spacing: 0.05em; line-height: 1; margin-bottom: 0.5rem; }
+.course-name-sub { font-family: var(--font-body); font-size: 0.75rem; letter-spacing: 0.4em; text-transform: uppercase; color: var(--gold); }
+.course-intro-body { max-width: 680px; margin: 0 auto; }
 .course-intro-body p { margin-bottom: 1.2rem; text-align: left; }
-.course-promise {
-  font-family: var(--font-display);
-  font-size: clamp(1.2rem, 2.5vw, 1.6rem);
-  font-style: italic;
-  color: var(--gold-light);
-  text-align: center;
-  margin: 2.5rem 0;
-  line-height: 1.5;
-}
+.course-promise { font-family: var(--font-display); font-size: clamp(1.2rem, 2.5vw, 1.6rem); font-style: italic; color: var(--gold-light); text-align: center; margin: 2.5rem 0; line-height: 1.5; }
 
-/* ═══════════════════════════════════════════
-   BLOCO 08 — MÓDULOS
-═══════════════════════════════════════════ */
-.modules-section {
-  padding: 7rem 2rem;
-  background: var(--navy);
-}
-.modules-section h2 {
-  text-align: center;
-  color: var(--white);
-  margin-bottom: 4rem;
-}
+/* MODULES */
+.modules-section { padding: 7rem 2rem; background: var(--navy); }
+.modules-section h2 { text-align: center; color: var(--white); margin-bottom: 4rem; }
 .modules-section h2 span { color: var(--gold); }
-.modules-grid {
-  max-width: 880px;
-  margin: 0 auto;
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(380px, 1fr));
-  gap: 1px;
-  background: rgba(201,168,76,0.1);
-  border: 1px solid rgba(201,168,76,0.1);
-}
-@media (max-width: 820px) {
-  .modules-grid { grid-template-columns: 1fr; }
-}
-.module-card {
-  background: var(--navy);
-  padding: 1.8rem 2rem;
-  display: flex;
-  gap: 1.2rem;
-  align-items: flex-start;
-  transition: var(--transition);
-  position: relative;
-}
-.module-card::before {
-  content: '';
-  position: absolute;
-  bottom: 0; left: 0;
-  width: 0; height: 1px;
-  background: var(--gold);
-  transition: width 0.4s ease;
-}
+.modules-grid { max-width: 880px; margin: 0 auto; display: grid; grid-template-columns: repeat(auto-fit, minmax(380px, 1fr)); gap: 1px; background: rgba(201,168,76,0.1); border: 1px solid rgba(201,168,76,0.1); }
+@media (max-width: 820px) { .modules-grid { grid-template-columns: 1fr; } }
+.module-card { background: var(--navy); padding: 1.8rem 2rem; display: flex; gap: 1.2rem; align-items: flex-start; transition: var(--transition); position: relative; }
+.module-card::before { content: ''; position: absolute; bottom: 0; left: 0; width: 0; height: 1px; background: var(--gold); transition: width 0.4s ease; }
 .module-card:hover { background: var(--navy-mid); }
 .module-card:hover::before { width: 100%; }
-.module-number {
-  font-family: var(--font-display);
-  font-size: 2rem;
-  font-weight: 700;
-  color: var(--gold);
-  opacity: 0.3;
-  line-height: 1;
-  flex-shrink: 0;
-  min-width: 2.5rem;
-}
-.module-info h3 {
-  font-size: 0.95rem;
-  font-family: var(--font-body);
-  font-weight: 500;
-  letter-spacing: 0.05em;
-  text-transform: uppercase;
-  color: var(--white);
-  margin-bottom: 0.4rem;
-}
-.module-info p {
-  font-size: 0.85rem;
-  color: var(--text-muted);
-  line-height: 1.5;
-}
-.modules-total {
-  max-width: 880px;
-  margin: 2rem auto 0;
-  text-align: center;
-  padding: 1.5rem;
-  border: 1px solid rgba(201,168,76,0.2);
-  display: flex;
-  justify-content: center;
-  gap: 3rem;
-  flex-wrap: wrap;
-  background: rgba(201,168,76,0.04);
-}
+.module-number { font-family: var(--font-display); font-size: 2rem; font-weight: 700; color: var(--gold); opacity: 0.3; line-height: 1; flex-shrink: 0; min-width: 2.5rem; }
+.module-info h3 { font-size: 0.95rem; font-family: var(--font-body); font-weight: 500; letter-spacing: 0.05em; text-transform: uppercase; color: var(--white); margin-bottom: 0.4rem; }
+.module-info p { font-size: 0.85rem; color: var(--text-muted); line-height: 1.5; }
+.modules-total { max-width: 880px; margin: 2rem auto 0; text-align: center; padding: 1.5rem; border: 1px solid rgba(201,168,76,0.2); display: flex; justify-content: center; gap: 3rem; flex-wrap: wrap; background: rgba(201,168,76,0.04); }
 .modules-stat { text-align: center; }
-.modules-stat .num {
-  font-family: var(--font-display);
-  font-size: 2.5rem;
-  font-weight: 700;
-  color: var(--gold);
-  display: block;
-  line-height: 1;
-}
-.modules-stat .label {
-  font-family: var(--font-body);
-  font-size: 0.7rem;
-  letter-spacing: 0.2em;
-  text-transform: uppercase;
-  color: var(--text-muted);
-}
+.modules-stat .num { font-family: var(--font-display); font-size: 2.5rem; font-weight: 700; color: var(--gold); display: block; line-height: 1; }
+.modules-stat .label { font-family: var(--font-body); font-size: 0.7rem; letter-spacing: 0.2em; text-transform: uppercase; color: var(--text-muted); }
 
-/* ═══════════════════════════════════════════
-   BLOCO 09 — PARA QUEM É
-═══════════════════════════════════════════ */
-.audience-section {
-  padding: 7rem 2rem;
-  background: var(--navy-mid);
-}
-.audience-section h2 {
-  text-align: center;
-  color: var(--white);
-  margin-bottom: 4rem;
-}
-.audience-grid {
-  max-width: 820px;
-  margin: 0 auto;
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 2rem;
-}
+/* AUDIENCE */
+.audience-section { padding: 7rem 2rem; background: var(--navy-mid); }
+.audience-section h2 { text-align: center; color: var(--white); margin-bottom: 4rem; }
+.audience-grid { max-width: 820px; margin: 0 auto; display: grid; grid-template-columns: 1fr 1fr; gap: 2rem; }
 @media (max-width: 640px) { .audience-grid { grid-template-columns: 1fr; } }
-.audience-box {
-  padding: 2.5rem;
-  border: 1px solid;
-  position: relative;
-}
-.audience-box.yes {
-  border-color: rgba(201,168,76,0.3);
-  background: rgba(201,168,76,0.04);
-}
-.audience-box.no {
-  border-color: rgba(255,255,255,0.08);
-  background: rgba(0,0,0,0.15);
-}
-.audience-box-title {
-  font-family: var(--font-body);
-  font-size: 0.7rem;
-  letter-spacing: 0.3em;
-  text-transform: uppercase;
-  margin-bottom: 1.5rem;
-  display: block;
-}
+.audience-box { padding: 2.5rem; border: 1px solid; position: relative; }
+.audience-box.yes { border-color: rgba(201,168,76,0.3); background: rgba(201,168,76,0.04); }
+.audience-box.no { border-color: rgba(255,255,255,0.08); background: rgba(0,0,0,0.15); }
+.audience-box-title { font-family: var(--font-body); font-size: 0.7rem; letter-spacing: 0.3em; text-transform: uppercase; margin-bottom: 1.5rem; display: block; }
 .audience-box.yes .audience-box-title { color: var(--gold); }
 .audience-box.no .audience-box-title { color: var(--text-muted); }
 .audience-list { list-style: none; display: flex; flex-direction: column; gap: 0.9rem; }
-.audience-list li {
-  display: flex;
-  gap: 0.8rem;
-  font-size: 0.9rem;
-  color: var(--text-body);
-  line-height: 1.5;
-}
+.audience-list li { display: flex; gap: 0.8rem; font-size: 0.9rem; color: var(--text-body); line-height: 1.5; }
 .audience-list li .icon { flex-shrink: 0; margin-top: 0.1rem; font-size: 0.8rem; }
 .audience-box.yes .icon { color: var(--gold); }
 .audience-box.no .icon { color: rgba(255,255,255,0.25); }
 
-/* ═══════════════════════════════════════════
-   BLOCO 10 — PROVA SOCIAL
-═══════════════════════════════════════════ */
-.social-proof {
-  padding: 7rem 2rem;
-  background: var(--navy);
-  position: relative;
-}
-.social-proof h2 {
-  text-align: center;
-  color: var(--white);
-  margin-bottom: 4rem;
-}
-.testimonials-grid {
-  max-width: 900px;
-  margin: 0 auto;
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
-  gap: 1.5rem;
-}
-.testimonial-card {
-  background: var(--navy-mid);
-  border: 1px solid rgba(201,168,76,0.15);
-  padding: 2rem;
-  position: relative;
-}
-.testimonial-card::before {
-  content: '"';
-  position: absolute;
-  top: 0.5rem;
-  right: 1.5rem;
-  font-family: var(--font-display);
-  font-size: 5rem;
-  color: var(--gold);
-  opacity: 0.15;
-  line-height: 1;
-}
-.testimonial-text {
-  font-family: var(--font-display);
-  font-size: 1rem;
-  font-style: italic;
-  color: var(--text-body);
-  line-height: 1.7;
-  margin-bottom: 1.5rem;
-}
-.testimonial-author {
-  display: flex;
-  align-items: center;
-  gap: 1rem;
-}
-.author-avatar {
-  width: 44px; height: 44px;
-  border-radius: 50%;
-  background: var(--navy-light);
-  border: 1px solid rgba(201,168,76,0.3);
-  flex-shrink: 0;
-  overflow: hidden;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-family: var(--font-display);
-  font-size: 1.2rem;
-  color: var(--gold);
-}
-.author-name {
-  font-family: var(--font-body);
-  font-size: 0.85rem;
-  font-weight: 500;
-  color: var(--white);
-  display: block;
-}
-.author-location {
-  font-size: 0.75rem;
-  color: var(--text-muted);
-}
-.testimonials-note {
-  text-align: center;
-  margin-top: 2rem;
-  font-size: 0.8rem;
-  color: var(--text-muted);
-  font-style: italic;
-}
+/* SOCIAL PROOF */
+.social-proof { padding: 7rem 2rem; background: var(--navy); position: relative; }
+.social-proof h2 { text-align: center; color: var(--white); margin-bottom: 4rem; }
+.testimonials-grid { max-width: 900px; margin: 0 auto; display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 1.5rem; }
+.testimonial-card { background: var(--navy-mid); border: 1px solid rgba(201,168,76,0.15); padding: 2rem; position: relative; }
+.testimonial-card::before { content: '"'; position: absolute; top: 0.5rem; right: 1.5rem; font-family: var(--font-display); font-size: 5rem; color: var(--gold); opacity: 0.15; line-height: 1; }
+.testimonial-text { font-family: var(--font-display); font-size: 1rem; font-style: italic; color: var(--text-body); line-height: 1.7; margin-bottom: 1.5rem; }
+.testimonial-author { display: flex; align-items: center; gap: 1rem; }
+.author-avatar { width: 44px; height: 44px; border-radius: 50%; background: var(--navy-light); border: 1px solid rgba(201,168,76,0.3); flex-shrink: 0; overflow: hidden; display: flex; align-items: center; justify-content: center; font-family: var(--font-display); font-size: 1.2rem; color: var(--gold); }
+.author-name { font-family: var(--font-body); font-size: 0.85rem; font-weight: 500; color: var(--white); display: block; }
+.author-location { font-size: 0.75rem; color: var(--text-muted); }
+.testimonials-note { text-align: center; margin-top: 2rem; font-size: 0.8rem; color: var(--text-muted); font-style: italic; }
 
-/* ═══════════════════════════════════════════
-   BLOCO 11 — BÔNUS
-═══════════════════════════════════════════ */
-.bonus-section {
-  padding: 7rem 2rem;
-  background: linear-gradient(180deg, var(--navy-mid), var(--navy));
-  position: relative;
-}
-.bonus-section::before {
-  content: '';
-  position: absolute;
-  top: 0; left: 0; right: 0;
-  height: 1px;
-  background: linear-gradient(90deg, transparent, var(--gold), transparent);
-}
-.bonus-section h2 {
-  text-align: center;
-  color: var(--white);
-  margin-bottom: 0.5rem;
-}
+/* BONUS */
+.bonus-section { padding: 7rem 2rem; background: linear-gradient(180deg, var(--navy-mid), var(--navy)); position: relative; }
+.bonus-section::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 1px; background: linear-gradient(90deg, transparent, var(--gold), transparent); }
+.bonus-section h2 { text-align: center; color: var(--white); margin-bottom: 0.5rem; }
 .bonus-section h2 em { color: var(--gold-light); font-style: italic; }
-.bonus-subtitle {
-  text-align: center;
-  font-family: var(--font-display);
-  font-style: italic;
-  color: var(--text-muted);
-  margin-bottom: 4rem;
-  font-size: 1.1rem;
-}
-.bonus-list {
-  max-width: 780px;
-  margin: 0 auto;
-  display: flex;
-  flex-direction: column;
-  gap: 1.5rem;
-}
-.bonus-item {
-  display: grid;
-  grid-template-columns: 60px 1fr auto;
-  gap: 1.5rem;
-  align-items: center;
-  padding: 1.8rem 2rem;
-  border: 1px solid rgba(201,168,76,0.15);
-  background: rgba(0,0,0,0.15);
-  transition: var(--transition);
-}
-.bonus-item:hover {
-  border-color: rgba(201,168,76,0.35);
-  background: rgba(201,168,76,0.04);
-}
-.bonus-item.featured {
-  border-color: rgba(201,168,76,0.4);
-  background: rgba(201,168,76,0.06);
-  position: relative;
-}
-.bonus-item.featured::before {
-  content: 'SUPER BÔNUS';
-  position: absolute;
-  top: -0.7rem;
-  left: 1.5rem;
-  font-family: var(--font-body);
-  font-size: 0.6rem;
-  letter-spacing: 0.25em;
-  color: var(--navy);
-  background: var(--gold);
-  padding: 0.2rem 0.8rem;
-}
-/* Super bônus especial — borda mais vibrante */
-.bonus-item.super {
-  border-color: rgba(201,168,76,0.55);
-  background: rgba(201,168,76,0.09);
-  position: relative;
-}
-.bonus-item.super::before {
-  content: 'SUPER BÔNUS';
-  position: absolute;
-  top: -0.7rem;
-  left: 1.5rem;
-  font-family: var(--font-body);
-  font-size: 0.6rem;
-  letter-spacing: 0.25em;
-  color: var(--navy);
-  background: linear-gradient(90deg, var(--gold), var(--gold-light));
-  padding: 0.2rem 0.8rem;
-}
-@media (max-width: 600px) {
-  .bonus-item { grid-template-columns: 44px 1fr; }
-  .bonus-value { display: none; }
-}
-.bonus-number {
-  font-family: var(--font-display);
-  font-size: 2rem;
-  font-weight: 700;
-  color: var(--gold);
-  opacity: 0.4;
-  line-height: 1;
-  text-align: center;
-}
-.bonus-item.super .bonus-number {
-  opacity: 0.7;
-}
-.bonus-content h3 {
-  font-family: var(--font-body);
-  font-size: 0.9rem;
-  font-weight: 500;
-  letter-spacing: 0.05em;
-  text-transform: uppercase;
-  color: var(--white);
-  margin-bottom: 0.4rem;
-}
+.bonus-subtitle { text-align: center; font-family: var(--font-display); font-style: italic; color: var(--text-muted); margin-bottom: 4rem; font-size: 1.1rem; }
+.bonus-list { max-width: 780px; margin: 0 auto; display: flex; flex-direction: column; gap: 1.5rem; }
+.bonus-item { display: grid; grid-template-columns: 60px 1fr auto; gap: 1.5rem; align-items: center; padding: 1.8rem 2rem; border: 1px solid rgba(201,168,76,0.15); background: rgba(0,0,0,0.15); transition: var(--transition); }
+.bonus-item:hover { border-color: rgba(201,168,76,0.35); background: rgba(201,168,76,0.04); }
+.bonus-item.super { border-color: rgba(201,168,76,0.55); background: rgba(201,168,76,0.09); position: relative; }
+.bonus-item.super::before { content: 'SUPER BÔNUS'; position: absolute; top: -0.7rem; left: 1.5rem; font-family: var(--font-body); font-size: 0.6rem; letter-spacing: 0.25em; color: var(--navy); background: linear-gradient(90deg, var(--gold), var(--gold-light)); padding: 0.2rem 0.8rem; }
+@media (max-width: 600px) { .bonus-item { grid-template-columns: 44px 1fr; } .bonus-value { display: none; } }
+.bonus-number { font-family: var(--font-display); font-size: 2rem; font-weight: 700; color: var(--gold); opacity: 0.4; line-height: 1; text-align: center; }
+.bonus-item.super .bonus-number { opacity: 0.7; }
+.bonus-content h3 { font-family: var(--font-body); font-size: 0.9rem; font-weight: 500; letter-spacing: 0.05em; text-transform: uppercase; color: var(--white); margin-bottom: 0.4rem; }
 .bonus-content p { font-size: 0.85rem; color: var(--text-muted); line-height: 1.5; }
-.bonus-value {
-  font-family: var(--font-display);
-  font-size: 1.1rem;
-  color: var(--gold);
-  white-space: nowrap;
-  font-style: italic;
-}
-.bonus-item.super .bonus-value {
-  color: var(--gold-light);
-  font-weight: 600;
-}
+.bonus-value { font-family: var(--font-display); font-size: 1.1rem; color: var(--gold); white-space: nowrap; font-style: italic; }
+.bonus-item.super .bonus-value { color: var(--gold-light); font-weight: 600; }
+.bonus-divider { max-width: 780px; margin: 1rem auto; display: flex; align-items: center; gap: 1.5rem; }
+.bonus-divider::before, .bonus-divider::after { content: ''; flex: 1; height: 1px; background: linear-gradient(90deg, transparent, rgba(201,168,76,0.3), transparent); }
+.bonus-divider-label { font-family: var(--font-body); font-size: 0.65rem; letter-spacing: 0.35em; text-transform: uppercase; color: var(--gold); white-space: nowrap; opacity: 0.8; }
+.bonus-total-bar { max-width: 780px; margin: 2rem auto 0; padding: 1.5rem 2rem; background: rgba(201,168,76,0.08); border: 1px solid rgba(201,168,76,0.3); display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 1rem; }
+.bonus-total-label { font-family: var(--font-body); font-size: 0.75rem; letter-spacing: 0.25em; text-transform: uppercase; color: var(--text-muted); }
+.bonus-total-value { font-family: var(--font-display); font-size: 1.5rem; font-weight: 600; color: var(--gold-light); }
+.super-bonus-intro { max-width: 780px; margin: 0 auto 2rem; padding: 2rem 2.5rem; border: 1px solid rgba(201,168,76,0.25); background: rgba(201,168,76,0.04); text-align: center; }
+.super-bonus-intro p { font-family: var(--font-display); font-size: clamp(1rem, 2vw, 1.2rem); font-style: italic; color: var(--text-body); line-height: 1.8; }
+.super-bonus-intro strong { color: var(--gold-light); font-style: normal; }
 
-/* Separador visual entre bônus originais e super bônus */
-.bonus-divider {
-  max-width: 780px;
-  margin: 1rem auto;
-  display: flex;
-  align-items: center;
-  gap: 1.5rem;
-}
-.bonus-divider::before,
-.bonus-divider::after {
-  content: '';
-  flex: 1;
-  height: 1px;
-  background: linear-gradient(90deg, transparent, rgba(201,168,76,0.3), transparent);
-}
-.bonus-divider-label {
-  font-family: var(--font-body);
-  font-size: 0.65rem;
-  letter-spacing: 0.35em;
-  text-transform: uppercase;
-  color: var(--gold);
-  white-space: nowrap;
-  opacity: 0.8;
-}
-
-.bonus-total-bar {
-  max-width: 780px;
-  margin: 2rem auto 0;
-  padding: 1.5rem 2rem;
-  background: rgba(201,168,76,0.08);
-  border: 1px solid rgba(201,168,76,0.3);
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  flex-wrap: wrap;
-  gap: 1rem;
-}
-.bonus-total-label {
-  font-family: var(--font-body);
-  font-size: 0.75rem;
-  letter-spacing: 0.25em;
-  text-transform: uppercase;
-  color: var(--text-muted);
-}
-.bonus-total-value {
-  font-family: var(--font-display);
-  font-size: 1.5rem;
-  font-weight: 600;
-  color: var(--gold-light);
-}
-
-/* Narrativa super bônus */
-.super-bonus-intro {
-  max-width: 780px;
-  margin: 0 auto 2rem;
-  padding: 2rem 2.5rem;
-  border: 1px solid rgba(201,168,76,0.25);
-  background: rgba(201,168,76,0.04);
-  text-align: center;
-}
-.super-bonus-intro p {
-  font-family: var(--font-display);
-  font-size: clamp(1rem, 2vw, 1.2rem);
-  font-style: italic;
-  color: var(--text-body);
-  line-height: 1.8;
-}
-.super-bonus-intro strong {
-  color: var(--gold-light);
-  font-style: normal;
-}
-
-/* ═══════════════════════════════════════════
-   BLOCO 12 — OFERTA / PREÇO
-═══════════════════════════════════════════ */
-.offer-section {
-  padding: 7rem 2rem;
-  background: var(--navy-mid);
-  text-align: center;
-  position: relative;
-}
-.offer-section::before {
-  content: '';
-  position: absolute;
-  top: 0; left: 0; right: 0;
-  height: 1px;
-  background: linear-gradient(90deg, transparent, var(--gold), transparent);
-}
-.offer-anchor {
-  max-width: 680px;
-  margin: 0 auto 4rem;
-}
+/* OFFER */
+.offer-section { padding: 7rem 2rem; background: var(--navy-mid); text-align: center; position: relative; }
+.offer-section::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 1px; background: linear-gradient(90deg, transparent, var(--gold), transparent); }
+.offer-anchor { max-width: 680px; margin: 0 auto 4rem; }
 .offer-anchor h2 { color: var(--white); margin-bottom: 2rem; }
 .offer-anchor p { text-align: left; margin-bottom: 1rem; }
-.cost-highlight {
-  display: inline-block;
-  font-family: var(--font-display);
-  font-size: clamp(1.4rem, 3vw, 2rem);
-  font-style: italic;
-  color: var(--gold-light);
-  margin: 1.5rem 0;
-}
-.offer-box {
-  max-width: 580px;
-  margin: 0 auto;
-  border: 1px solid rgba(201,168,76,0.4);
-  background: rgba(0,0,0,0.3);
-  padding: 3rem 2.5rem;
-  position: relative;
-}
-.offer-box::before, .offer-box::after {
-  content: '';
-  position: absolute;
-  width: 30px; height: 30px;
-}
-.offer-box::before {
-  top: -1px; left: -1px;
-  border-top: 2px solid var(--gold);
-  border-left: 2px solid var(--gold);
-}
-.offer-box::after {
-  bottom: -1px; right: -1px;
-  border-bottom: 2px solid var(--gold);
-  border-right: 2px solid var(--gold);
-}
-.offer-includes {
-  list-style: none;
-  text-align: left;
-  margin-bottom: 2.5rem;
-  display: flex;
-  flex-direction: column;
-  gap: 0.8rem;
-}
-.offer-includes li {
-  display: flex;
-  gap: 0.8rem;
-  font-size: 0.9rem;
-  color: var(--text-body);
-}
-.offer-includes li::before {
-  content: '✓';
-  color: var(--gold);
-  flex-shrink: 0;
-  font-weight: 600;
-}
-.offer-includes li.super-item {
-  color: var(--gold-pale);
-}
-.offer-includes li.super-item::before {
-  content: '✦';
-  color: var(--gold-light);
-}
-.price-divider {
-  width: 100%;
-  height: 1px;
-  background: rgba(201,168,76,0.2);
-  margin: 2rem 0;
-}
-.price-display {
-  margin-bottom: 2rem;
-}
-.price-label {
-  font-family: var(--font-body);
-  font-size: 0.7rem;
-  letter-spacing: 0.3em;
-  text-transform: uppercase;
-  color: var(--text-muted);
-  display: block;
-  margin-bottom: 1rem;
-}
-.price-installment {
-  display: flex;
-  align-items: baseline;
-  justify-content: center;
-  gap: 0.5rem;
-}
-.price-times {
-  font-family: var(--font-display);
-  font-size: 1.5rem;
-  color: var(--text-muted);
-}
-.price-value {
-  font-family: var(--font-display);
-  font-size: clamp(3rem, 8vw, 5rem);
-  font-weight: 700;
-  color: var(--white);
-  line-height: 1;
-}
-.price-cents {
-  font-family: var(--font-display);
-  font-size: 1.8rem;
-  color: var(--white);
-  font-weight: 400;
-}
-.price-or {
-  font-family: var(--font-body);
-  font-size: 0.75rem;
-  letter-spacing: 0.2em;
-  color: var(--text-muted);
-  margin: 1rem 0 0.5rem;
-}
-.price-cash {
-  font-family: var(--font-display);
-  font-size: 1.3rem;
-  color: var(--gold-light);
-  font-style: italic;
-}
+.cost-highlight { display: inline-block; font-family: var(--font-display); font-size: clamp(1.4rem, 3vw, 2rem); font-style: italic; color: var(--gold-light); margin: 1.5rem 0; }
+.offer-box { max-width: 580px; margin: 0 auto; border: 1px solid rgba(201,168,76,0.4); background: rgba(0,0,0,0.3); padding: 3rem 2.5rem; position: relative; }
+.offer-box::before, .offer-box::after { content: ''; position: absolute; width: 30px; height: 30px; }
+.offer-box::before { top: -1px; left: -1px; border-top: 2px solid var(--gold); border-left: 2px solid var(--gold); }
+.offer-box::after { bottom: -1px; right: -1px; border-bottom: 2px solid var(--gold); border-right: 2px solid var(--gold); }
+.offer-includes { list-style: none; text-align: left; margin-bottom: 2.5rem; display: flex; flex-direction: column; gap: 0.8rem; }
+.offer-includes li { display: flex; gap: 0.8rem; font-size: 0.9rem; color: var(--text-body); }
+.offer-includes li::before { content: '✓'; color: var(--gold); flex-shrink: 0; font-weight: 600; }
+.offer-includes li.super-item { color: var(--gold-pale); }
+.offer-includes li.super-item::before { content: '✦'; color: var(--gold-light); }
+.price-divider { width: 100%; height: 1px; background: rgba(201,168,76,0.2); margin: 2rem 0; }
+.price-display { margin-bottom: 2rem; }
+.price-label { font-family: var(--font-body); font-size: 0.7rem; letter-spacing: 0.3em; text-transform: uppercase; color: var(--text-muted); display: block; margin-bottom: 1rem; }
+.price-installment { display: flex; align-items: baseline; justify-content: center; gap: 0.5rem; }
+.price-times { font-family: var(--font-display); font-size: 1.5rem; color: var(--text-muted); }
+.price-value { font-family: var(--font-display); font-size: clamp(3rem, 8vw, 5rem); font-weight: 700; color: var(--white); line-height: 1; }
+.price-cents { font-family: var(--font-display); font-size: 1.8rem; color: var(--white); font-weight: 400; }
+.price-or { font-family: var(--font-body); font-size: 0.75rem; letter-spacing: 0.2em; color: var(--text-muted); margin: 1rem 0 0.5rem; }
+.price-cash { font-family: var(--font-display); font-size: 1.3rem; color: var(--gold-light); font-style: italic; }
 
-/* ═══════════════════════════════════════════
-   BLOCO 13 — GARANTIA
-═══════════════════════════════════════════ */
-.guarantee-section {
-  padding: 5rem 2rem;
-  background: var(--navy);
-  text-align: center;
-  position: relative;
-}
-.guarantee-inner {
-  max-width: 580px;
-  margin: 0 auto;
-}
-.guarantee-badge {
-  width: 100px;
-  height: 100px;
-  border: 2px solid var(--gold);
-  border-radius: 50%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  margin: 0 auto 2rem;
-  background: rgba(201,168,76,0.07);
-  font-family: var(--font-display);
-  font-size: 2.5rem;
-  color: var(--gold);
-}
+/* GUARANTEE */
+.guarantee-section { padding: 5rem 2rem; background: var(--navy); text-align: center; position: relative; }
+.guarantee-inner { max-width: 580px; margin: 0 auto; }
+.guarantee-badge { width: 100px; height: 100px; border: 2px solid var(--gold); border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 2rem; background: rgba(201,168,76,0.07); font-family: var(--font-display); font-size: 2.5rem; color: var(--gold); }
 .guarantee-inner h2 { color: var(--white); margin-bottom: 1.5rem; }
 .guarantee-inner p { text-align: center; margin-bottom: 1rem; }
 
-/* ═══════════════════════════════════════════
-   BLOCO 14 — FAQ
-═══════════════════════════════════════════ */
-.faq-section {
-  padding: 7rem 2rem;
-  background: var(--navy-mid);
-}
-.faq-section h2 {
-  text-align: center;
-  color: var(--white);
-  margin-bottom: 4rem;
-}
-.faq-list {
-  max-width: 720px;
-  margin: 0 auto;
-  display: flex;
-  flex-direction: column;
-  gap: 0;
-  border: 1px solid rgba(201,168,76,0.1);
-}
+/* FAQ */
+.faq-section { padding: 7rem 2rem; background: var(--navy-mid); }
+.faq-section h2 { text-align: center; color: var(--white); margin-bottom: 4rem; }
+.faq-list { max-width: 720px; margin: 0 auto; display: flex; flex-direction: column; gap: 0; border: 1px solid rgba(201,168,76,0.1); }
 .faq-item { border-bottom: 1px solid rgba(201,168,76,0.1); }
 .faq-item:last-child { border-bottom: none; }
-.faq-question {
-  width: 100%;
-  padding: 1.5rem 2rem;
-  background: none;
-  border: none;
-  cursor: pointer;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  gap: 1rem;
-  text-align: left;
-  font-family: var(--font-body);
-  font-size: 0.95rem;
-  font-weight: 400;
-  color: var(--white);
-  transition: var(--transition);
-}
+.faq-question { width: 100%; padding: 1.5rem 2rem; background: none; border: none; cursor: pointer; display: flex; justify-content: space-between; align-items: center; gap: 1rem; text-align: left; font-family: var(--font-body); font-size: 0.95rem; font-weight: 400; color: var(--white); transition: var(--transition); }
 .faq-question:hover { background: rgba(201,168,76,0.04); }
-.faq-icon {
-  color: var(--gold);
-  font-size: 1.2rem;
-  flex-shrink: 0;
-  transition: transform 0.3s ease;
-}
+.faq-icon { color: var(--gold); font-size: 1.2rem; flex-shrink: 0; transition: transform 0.3s ease; }
 .faq-item.open .faq-icon { transform: rotate(45deg); }
-.faq-answer {
-  padding: 0 2rem;
-  max-height: 0;
-  overflow: hidden;
-  transition: max-height 0.4s ease, padding 0.3s ease;
-}
-.faq-item.open .faq-answer {
-  max-height: 300px;
-  padding: 0 2rem 1.5rem;
-}
+.faq-answer { padding: 0 2rem; max-height: 0; overflow: hidden; transition: max-height 0.4s ease, padding 0.3s ease; }
+.faq-item.open .faq-answer { max-height: 300px; padding: 0 2rem 1.5rem; }
 .faq-answer p { font-size: 0.9rem; color: var(--text-body); line-height: 1.7; }
 
-/* ═══════════════════════════════════════════
-   BLOCO 15 — CTA FINAL
-═══════════════════════════════════════════ */
-.final-cta {
-  padding: 8rem 2rem 7rem;
-  background: var(--navy);
-  text-align: center;
-  position: relative;
-  overflow: hidden;
-}
-.final-cta::before {
-  content: '';
-  position: absolute;
-  top: 0; left: 0; right: 0;
-  height: 1px;
-  background: linear-gradient(90deg, transparent, var(--gold), transparent);
-}
-.final-cta::after {
-  content: 'FS';
-  position: absolute;
-  bottom: -3rem;
-  left: 50%;
-  transform: translateX(-50%);
-  font-family: var(--font-display);
-  font-size: 20rem;
-  font-weight: 700;
-  color: var(--gold);
-  opacity: 0.02;
-  pointer-events: none;
-  white-space: nowrap;
-}
+/* FINAL CTA */
+.final-cta { padding: 8rem 2rem 7rem; background: var(--navy); text-align: center; position: relative; overflow: hidden; }
+.final-cta::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 1px; background: linear-gradient(90deg, transparent, var(--gold), transparent); }
+.final-cta::after { content: 'FS'; position: absolute; bottom: -3rem; left: 50%; transform: translateX(-50%); font-family: var(--font-display); font-size: 20rem; font-weight: 700; color: var(--gold); opacity: 0.02; pointer-events: none; white-space: nowrap; }
 .final-cta-inner { max-width: 640px; margin: 0 auto; position: relative; z-index: 1; }
-.final-cta h2 {
-  font-size: clamp(1.8rem, 4vw, 3rem);
-  color: var(--white);
-  margin-bottom: 2rem;
-}
+.final-cta h2 { font-size: clamp(1.8rem, 4vw, 3rem); color: var(--white); margin-bottom: 2rem; }
 .final-cta h2 em { color: var(--gold-light); font-style: italic; }
 .final-cta p { text-align: center; margin-bottom: 1rem; }
 .final-cta .ornament { font-size: 1rem; margin: 2rem 0; }
 
-/* ═══════════════════════════════════════════
-   FOOTER
-═══════════════════════════════════════════ */
-.site-footer {
-  background: #000;
-  padding: 3rem 2rem;
-  text-align: center;
-  border-top: 1px solid rgba(201,168,76,0.1);
-}
-.footer-logo {
-  font-family: var(--font-display);
-  font-size: 1.3rem;
-  font-weight: 400;
-  letter-spacing: 0.25em;
-  color: var(--gold);
-  text-transform: uppercase;
-  margin-bottom: 1rem;
-}
-.footer-links {
-  display: flex;
-  justify-content: center;
-  gap: 2rem;
-  flex-wrap: wrap;
-  margin: 1.5rem 0;
-}
-.footer-links a {
-  font-size: 0.75rem;
-  letter-spacing: 0.15em;
-  text-transform: uppercase;
-  color: var(--text-muted);
-  text-decoration: none;
-  transition: color 0.3s;
-}
+/* FOOTER */
+.site-footer { background: #000; padding: 3rem 2rem; text-align: center; border-top: 1px solid rgba(201,168,76,0.1); }
+.footer-logo { font-family: var(--font-display); font-size: 1.3rem; font-weight: 400; letter-spacing: 0.25em; color: var(--gold); text-transform: uppercase; margin-bottom: 1rem; }
+.footer-links { display: flex; justify-content: center; gap: 2rem; flex-wrap: wrap; margin: 1.5rem 0; }
+.footer-links a { font-size: 0.75rem; letter-spacing: 0.15em; text-transform: uppercase; color: var(--text-muted); text-decoration: none; transition: color 0.3s; }
 .footer-links a:hover { color: var(--gold); }
-.footer-copy {
-  font-size: 0.75rem;
-  color: var(--text-muted);
-  margin-top: 1rem;
-}
+.footer-copy { font-size: 0.75rem; color: var(--text-muted); margin-top: 1rem; }
 
-/* ─── INLINE CTA BAR ─── */
-.inline-cta {
-  padding: 3rem 2rem;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 1rem;
-  background: rgba(201,168,76,0.04);
-  border-top: 1px solid rgba(201,168,76,0.12);
-  border-bottom: 1px solid rgba(201,168,76,0.12);
-}
-.inline-cta-text {
-  font-family: var(--font-display);
-  font-size: clamp(1rem, 2vw, 1.2rem);
-  font-style: italic;
-  color: var(--text-body);
-  text-align: center;
-  max-width: 500px;
-}
-.inline-cta .btn-cta {
-  font-size: 0.9rem;
-  padding: 1rem 2.5rem;
-}
-.inline-cta .price-hint {
-  font-family: var(--font-body);
-  font-size: 0.72rem;
-  letter-spacing: 0.12em;
-  color: var(--text-muted);
-  text-align: center;
-}
+/* INLINE CTA */
+.inline-cta { padding: 3rem 2rem; display: flex; flex-direction: column; align-items: center; gap: 1rem; background: rgba(201,168,76,0.04); border-top: 1px solid rgba(201,168,76,0.12); border-bottom: 1px solid rgba(201,168,76,0.12); }
+.inline-cta-text { font-family: var(--font-display); font-size: clamp(1rem, 2vw, 1.2rem); font-style: italic; color: var(--text-body); text-align: center; max-width: 500px; }
+.inline-cta .btn-cta { font-size: 0.9rem; padding: 1rem 2.5rem; }
+.inline-cta .price-hint { font-family: var(--font-body); font-size: 0.72rem; letter-spacing: 0.12em; color: var(--text-muted); text-align: center; }
 .inline-cta .price-hint strong { color: var(--gold); }
 
-/* ─── FLOATING CTA ─── */
-.floating-cta {
-  position: fixed;
-  bottom: 1.5rem;
-  left: 50%;
-  transform: translateX(-50%) translateY(100px);
-  z-index: 200;
-  transition: transform 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94), opacity 0.5s ease;
-  opacity: 0;
-  pointer-events: none;
-  white-space: nowrap;
-}
-.floating-cta.visible {
-  transform: translateX(-50%) translateY(0);
-  opacity: 1;
-  pointer-events: all;
-}
-.floating-cta a {
-  display: flex;
-  align-items: center;
-  gap: 1rem;
-  background: linear-gradient(135deg, var(--gold) 0%, var(--gold-light) 50%, var(--gold) 100%);
-  color: var(--navy);
-  font-family: var(--font-body);
-  font-size: 0.85rem;
-  font-weight: 600;
-  letter-spacing: 0.06em;
-  text-transform: uppercase;
-  padding: 1rem 2rem;
-  text-decoration: none;
-  box-shadow: 0 8px 40px rgba(201,168,76,0.45), 0 2px 12px rgba(0,0,0,0.5);
-  transition: var(--transition);
-}
-.floating-cta a:hover {
-  box-shadow: 0 12px 50px rgba(201,168,76,0.6), 0 2px 16px rgba(0,0,0,0.5);
-  transform: translateY(-2px);
-}
-.floating-cta-price {
-  font-size: 0.7rem;
-  opacity: 0.7;
-  font-weight: 400;
-  letter-spacing: 0.04em;
-  text-transform: none;
-  border-left: 1px solid rgba(0,16,33,0.3);
-  padding-left: 1rem;
-}
-@media (max-width: 480px) {
-  .floating-cta { width: calc(100% - 2rem); left: 1rem; transform: translateY(100px); }
-  .floating-cta.visible { transform: translateY(0); }
-  .floating-cta a { justify-content: center; }
-}
+/* FLOATING CTA */
+.floating-cta { position: fixed; bottom: 1.5rem; left: 50%; transform: translateX(-50%) translateY(100px); z-index: 200; transition: transform 0.5s cubic-bezier(0.25,0.46,0.45,0.94), opacity 0.5s ease; opacity: 0; pointer-events: none; white-space: nowrap; }
+.floating-cta.visible { transform: translateX(-50%) translateY(0); opacity: 1; pointer-events: all; }
+.floating-cta a { display: flex; align-items: center; gap: 1rem; background: linear-gradient(135deg, var(--gold) 0%, var(--gold-light) 50%, var(--gold) 100%); color: var(--navy); font-family: var(--font-body); font-size: 0.85rem; font-weight: 600; letter-spacing: 0.06em; text-transform: uppercase; padding: 1rem 2rem; text-decoration: none; box-shadow: 0 8px 40px rgba(201,168,76,0.45), 0 2px 12px rgba(0,0,0,0.5); transition: var(--transition); }
+.floating-cta a:hover { box-shadow: 0 12px 50px rgba(201,168,76,0.6), 0 2px 16px rgba(0,0,0,0.5); transform: translateY(-2px); }
+.floating-cta-price { font-size: 0.7rem; opacity: 0.7; font-weight: 400; letter-spacing: 0.04em; text-transform: none; border-left: 1px solid rgba(0,16,33,0.3); padding-left: 1rem; }
+@media (max-width: 480px) { .floating-cta { width: calc(100% - 2rem); left: 1rem; transform: translateY(100px); } .floating-cta.visible { transform: translateY(0); } .floating-cta a { justify-content: center; } }
 
-/* ─── ANIMATIONS ─── */
-@keyframes fadeUp {
-  from { opacity: 0; transform: translateY(20px); }
-  to   { opacity: 1; transform: translateY(0); }
-}
-.fade-in {
-  opacity: 0;
-  transform: translateY(24px);
-  transition: opacity 0.7s ease, transform 0.7s ease;
-}
-.fade-in.visible {
-  opacity: 1;
-  transform: translateY(0);
-}
-
-/* ─── SCROLL INDICATOR ─── */
-.scroll-hint {
-  position: absolute;
-  bottom: 2rem;
-  left: 50%;
-  transform: translateX(-50%);
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 0.5rem;
-  font-family: var(--font-body);
-  font-size: 0.65rem;
-  letter-spacing: 0.3em;
-  text-transform: uppercase;
-  color: var(--gold);
-  opacity: 0.5;
-  animation: bounceScroll 2s infinite;
-}
-@keyframes bounceScroll {
-  0%, 100% { transform: translateX(-50%) translateY(0); }
-  50% { transform: translateX(-50%) translateY(6px); }
-}
+/* ANIMATIONS */
+@keyframes fadeUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+.fade-in { opacity: 0; transform: translateY(24px); transition: opacity 0.7s ease, transform 0.7s ease; }
+.fade-in.visible { opacity: 1; transform: translateY(0); }
+.scroll-hint { position: absolute; bottom: 2rem; left: 50%; transform: translateX(-50%); display: flex; flex-direction: column; align-items: center; gap: 0.5rem; font-family: var(--font-body); font-size: 0.65rem; letter-spacing: 0.3em; text-transform: uppercase; color: var(--gold); opacity: 0.5; animation: bounceScroll 2s infinite; }
+@keyframes bounceScroll { 0%, 100% { transform: translateX(-50%) translateY(0); } 50% { transform: translateX(-50%) translateY(6px); } }
 </style>
 </head>
 <body>
 
 <!-- BOTÃO FLUTUANTE -->
 <div class="floating-cta" id="floatingCta">
-  <a href="#oferta">
+  <a href="https://go.hotmart.com/I106036177H" target="_blank" rel="noopener">
     Quero começar agora
     <span class="floating-cta-price">R$ 247 · lançamento</span>
   </a>
@@ -1511,25 +316,15 @@ p { font-size: clamp(0.95rem, 1.5vw, 1.05rem); color: var(--text-body); }
 <!-- ═══ BLOCO 01 — HERO ═══ -->
 <section class="hero">
   <div class="hero-eyebrow">Mac Frois apresenta</div>
+  <h1>Você faz fotos que impressionam.<br>Por que ainda cobra um valor que <em>envergonha?</em></h1>
+  <p class="hero-sub">Descubra o método que transforma fotógrafos talentosos em profissionais de alto valor — sem trocar de equipamento, sem mudar de cidade, sem começar do zero.</p>
 
-  <h1>
-    Você faz fotos que impressionam.<br>
-    Por que ainda cobra um valor que <em>envergonha?</em>
-  </h1>
-
-  <p class="hero-sub">
-    Descubra o método que transforma fotógrafos talentosos em profissionais de alto valor —
-    sem trocar de equipamento, sem mudar de cidade, sem começar do zero.
-  </p>
-
-  <!-- VSL -->
+  <!-- VSL — substituir pelo embed real -->
   <div class="vsl-wrapper">
     <div class="vsl-container">
       <div class="vsl-placeholder">
         <div class="vsl-play-btn">
-          <svg width="28" height="28" viewBox="0 0 24 24" fill="none">
-            <polygon points="6,3 20,12 6,21" fill="#C9A84C"/>
-          </svg>
+          <svg width="28" height="28" viewBox="0 0 24 24" fill="none"><polygon points="6,3 20,12 6,21" fill="#C9A84C"/></svg>
         </div>
         <span class="vsl-label">Assista ao vídeo antes de continuar</span>
       </div>
@@ -1537,7 +332,7 @@ p { font-size: clamp(0.95rem, 1.5vw, 1.05rem); color: var(--text-body); }
   </div>
 
   <div class="hero-cta-wrap">
-    <a href="#oferta" class="btn-cta btn-cta-large">
+    <a href="https://go.hotmart.com/I106036177H" target="_blank" rel="noopener" class="btn-cta btn-cta-large">
       Quero cobrar o que meu trabalho vale →
     </a>
     <div class="security-badges">
@@ -1548,9 +343,7 @@ p { font-size: clamp(0.95rem, 1.5vw, 1.05rem); color: var(--text-body); }
   </div>
 
   <div class="scroll-hint">
-    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
-      <path d="M7 10l5 5 5-5"/>
-    </svg>
+    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M7 10l5 5 5-5"/></svg>
     continue lendo
   </div>
 </section>
@@ -1558,46 +351,27 @@ p { font-size: clamp(0.95rem, 1.5vw, 1.05rem); color: var(--text-body); }
 <!-- ═══ BLOCO 02 — TRANSFORMAÇÃO ═══ -->
 <section class="transform-section">
   <div class="transform-inner fade-in">
-    <div class="section-label" style="justify-content:center;">
-      <span style="display:none"></span>imagine
-    </div>
+    <div class="section-label" style="justify-content:center;"><span style="display:none"></span>imagine</div>
     <h2>Como seria a sua vida assim:</h2>
     <div class="divider"></div>
-
     <div class="transform-scene">
-      <p>Você acorda na manhã de uma sessão de ensaio e não sente aquela pressão familiar no peito —
-      aquela sensação de <span class="highlight">"será que o cliente vai questionar o preço?"</span></p>
-
-      <p style="margin-top:1.5rem;">Você enviou a proposta.<br>
-      O valor é o seu melhor valor.<br>
-      <span class="highlight">E você não teve medo de enviar.</span></p>
-
-      <p style="margin-top:1.5rem;">O cliente respondeu:<br>
-      <span class="gold-moment">"Perfeito. Quando podemos agendar?"</span></p>
-
-      <p style="margin-top:1.5rem;">Após o ensaio, você entrega as fotos. Não cinquenta fotos medianas para parecer
-      que deu mais. <span class="highlight">Trinta fotos extraordinárias, selecionadas com critério,</span>
-      que representam o que você é capaz de fazer no seu melhor.</p>
+      <p>Você acorda na manhã de uma sessão de ensaio e não sente aquela pressão familiar no peito — aquela sensação de <span class="highlight">"será que o cliente vai questionar o preço?"</span></p>
+      <p style="margin-top:1.5rem;">Você enviou a proposta.<br>O valor é o seu melhor valor.<br><span class="highlight">E você não teve medo de enviar.</span></p>
+      <p style="margin-top:1.5rem;">O cliente respondeu:<br><span class="gold-moment">"Perfeito. Quando podemos agendar?"</span></p>
+      <p style="margin-top:1.5rem;">Após o ensaio, você entrega as fotos. Não cinquenta fotos medianas para parecer que deu mais. <span class="highlight">Trinta fotos extraordinárias, selecionadas com critério,</span> que representam o que você é capaz de fazer no seu melhor.</p>
     </div>
-
-    <div class="transform-quote">
-      "Eu nunca me vi assim em uma foto.<br>
-      Obrigada por me mostrar quem eu sou."
-    </div>
-
+    <div class="transform-quote">"Eu nunca me vi assim em uma foto.<br>Obrigada por me mostrar quem eu sou."</div>
     <div class="transform-scene">
       <p>Naquele momento você entende que fotografia não é sobre câmera, não é sobre lente, não é sobre preço.</p>
-      <p style="margin-top:1rem; color: var(--white); font-style: italic; font-family: var(--font-display); font-size: 1.2rem; text-align:center;">
-        É sobre transformação.<br>E você está no negócio da transformação.
-      </p>
+      <p style="margin-top:1rem; color:var(--white); font-style:italic; font-family:var(--font-display); font-size:1.2rem; text-align:center;">É sobre transformação.<br>E você está no negócio da transformação.</p>
     </div>
   </div>
 </section>
 
-<!-- CTA 01 — APÓS TRANSFORMAÇÃO -->
+<!-- CTA 01 -->
 <div class="inline-cta">
   <p class="inline-cta-text">Pronto para construir a carreira que o seu talento merece?</p>
-  <a href="#oferta" class="btn-cta">Quero começar agora →</a>
+  <a href="https://go.hotmart.com/I106036177H" target="_blank" rel="noopener" class="btn-cta">Quero começar agora →</a>
   <p class="price-hint">⚡ Preço de lançamento: <strong>R$ 247</strong> · Sobe para R$ 297 em breve</p>
 </div>
 
@@ -1605,8 +379,7 @@ p { font-size: clamp(0.95rem, 1.5vw, 1.05rem); color: var(--text-body); }
 <section class="problem-section">
   <div class="problem-inner fade-in">
     <div class="section-label">o mercado</div>
-    <h2>O mercado de fotografia nunca teve tanto espaço.<br>
-    <em>Então por que tão poucos fotógrafos vivem bem dele?</em></h2>
+    <h2>O mercado de fotografia nunca teve tanto espaço.<br><em>Então por que tão poucos fotógrafos vivem bem dele?</em></h2>
     <div class="divider-left"></div>
     <div class="problem-body">
       <p>Nos últimos anos, a fotografia se tornou uma das carreiras mais procuradas por pessoas que querem unir paixão e renda.</p>
@@ -1621,12 +394,10 @@ p { font-size: clamp(0.95rem, 1.5vw, 1.05rem); color: var(--text-body); }
 <section class="pain-section">
   <div class="pain-inner fade-in">
     <div class="section-label">a verdade</div>
-    <h2>Porque ninguém te ensinou<br>
-    <span>a parte mais importante.</span></h2>
+    <h2>Porque ninguém te ensinou<br><span>a parte mais importante.</span></h2>
     <div class="divider-left"></div>
     <p>Você aprendeu a usar a câmera. Você aprendeu iluminação. Você aprendeu edição. Hoje você entrega fotos que você mesmo se orgulha de mostrar.</p>
     <p style="margin-top:1.2rem;">E ainda assim...</p>
-
     <div class="pain-sequence">
       <div class="pain-steps">
         <p>Quando chega o momento de mandar o orçamento, algo acontece com você.</p>
@@ -1639,13 +410,8 @@ p { font-size: clamp(0.95rem, 1.5vw, 1.05rem); color: var(--text-body); }
         <p>E manda um número que, no fundo, você sabe que não representa o que o seu trabalho vale.</p>
       </div>
     </div>
-
     <p style="margin-top:2rem;">Você já aceitou trabalho abaixo do que deveria para "não perder o cliente". Você já comparou seu preço com fotógrafos piores que você e mesmo assim ficou com medo de cobrar mais. Você já ouviu "está muito caro" e ficou dias ruminando se devia abaixar.</p>
-
-    <div class="pain-revelation">
-      Isso não é falta de talento.<br>
-      <span style="color: var(--white);">Mas eu vou te dizer o que é.</span>
-    </div>
+    <div class="pain-revelation">Isso não é falta de talento.<br><span style="color:var(--white);">Mas eu vou te dizer o que é.</span></div>
   </div>
 </section>
 
@@ -1662,17 +428,14 @@ p { font-size: clamp(0.95rem, 1.5vw, 1.05rem); color: var(--text-body); }
       <li>Ninguém te ensina como posicionar o portfólio para atrair o cliente que enxerga valor antes de perguntar o preço</li>
       <li>Ninguém te ensina a pensar como empresário — não só como fotógrafo</li>
     </ul>
-    <div class="blame-conclusion">
-      O fotógrafo que cobra bem não é mais talentoso que você.<br>
-      Ele simplesmente aprendeu o que a maioria dos cursos nunca ensina.
-    </div>
+    <div class="blame-conclusion">O fotógrafo que cobra bem não é mais talentoso que você.<br>Ele simplesmente aprendeu o que a maioria dos cursos nunca ensina.</div>
   </div>
 </section>
 
-<!-- CTA 02 — APÓS CULPA NÃO É SUA -->
+<!-- CTA 02 -->
 <div class="inline-cta">
   <p class="inline-cta-text">O método que ninguém te ensinou está aqui. Disponível agora.</p>
-  <a href="#oferta" class="btn-cta">Quero o método completo →</a>
+  <a href="https://go.hotmart.com/I106036177H" target="_blank" rel="noopener" class="btn-cta">Quero o método completo →</a>
   <p class="price-hint">⚡ Preço de lançamento: <strong>R$ 247</strong> · Garantia de 7 dias</p>
 </div>
 
@@ -1708,16 +471,13 @@ p { font-size: clamp(0.95rem, 1.5vw, 1.05rem); color: var(--text-body); }
     <p>É um método completo que cobre tudo que um fotógrafo de retratos precisa para construir uma carreira de alto valor: da técnica que cria fotos extraordinárias ao posicionamento que atrai clientes extraordinários.</p>
     <p>Da iluminação que revela o melhor de cada pessoa à conversa de venda que fecha sem pressão. Da edição que cria uma identidade visual única ao portfólio que trabalha por você 24 horas por dia.</p>
   </div>
-  <div class="course-promise fade-in">
-    "Aqui você não aprende só a fotografar melhor.<br>
-    Você aprende a ser o fotógrafo que o mercado de alto valor busca."
-  </div>
+  <div class="course-promise fade-in">"Aqui você não aprende só a fotografar melhor.<br>Você aprende a ser o fotógrafo que o mercado de alto valor busca."</div>
 </section>
 
-<!-- CTA 03 — APÓS APRESENTAÇÃO DO CURSO -->
+<!-- CTA 03 -->
 <div class="inline-cta">
   <p class="inline-cta-text">Técnica + posicionamento + vendas. Tudo em um único método.</p>
-  <a href="#oferta" class="btn-cta">Quero acessar o curso →</a>
+  <a href="https://go.hotmart.com/I106036177H" target="_blank" rel="noopener" class="btn-cta">Quero acessar o curso →</a>
   <p class="price-hint">⚡ <strong>R$ 247</strong> no lançamento · 12x de R$ 20,58 · Acesso imediato</p>
 </div>
 
@@ -1725,9 +485,7 @@ p { font-size: clamp(0.95rem, 1.5vw, 1.05rem); color: var(--text-body); }
 <section class="modules-section">
   <div class="container-wide">
     <div class="section-label" style="justify-content:center; margin-bottom:1rem;">o método</div>
-    <h2 style="text-align:center; margin-bottom:4rem;">
-      Tudo que está <span>incluído:</span>
-    </h2>
+    <h2 style="text-align:center; margin-bottom:4rem;">Tudo que está <span>incluído:</span></h2>
     <div class="modules-grid fade-in">
       <div class="module-card"><div class="module-number">01</div><div class="module-info"><h3>Você é o Primeiro Produto</h3><p>Sua imagem comunica antes de qualquer câmera. Construa a presença que atrai clientes de alto valor.</p></div></div>
       <div class="module-card"><div class="module-number">02</div><div class="module-info"><h3>O Universo dos Retratos</h3><p>Os segmentos do mercado, onde está o dinheiro real e como escolher o nicho certo para você.</p></div></div>
@@ -1743,7 +501,6 @@ p { font-size: clamp(0.95rem, 1.5vw, 1.05rem); color: var(--text-body); }
       <div class="module-card"><div class="module-number">12</div><div class="module-info"><h3>Marketing e Captação</h3><p>Portfólio do zero, Instagram estratégico, Google Meu Negócio, parcerias e prova social.</p></div></div>
       <div class="module-card"><div class="module-number">13</div><div class="module-info"><h3>Ferramentas e Recursos</h3><p>A caixa de ferramentas completa: apps, softwares, sites de portfólio e referências para continuar crescendo.</p></div></div>
     </div>
-    <!-- ATUALIZADO: 9 bônus -->
     <div class="modules-total fade-in">
       <div class="modules-stat"><span class="num">13</span><span class="label">Módulos</span></div>
       <div class="modules-stat"><span class="num">95+</span><span class="label">Aulas</span></div>
@@ -1753,10 +510,10 @@ p { font-size: clamp(0.95rem, 1.5vw, 1.05rem); color: var(--text-body); }
   </div>
 </section>
 
-<!-- CTA 04 — APÓS MÓDULOS -->
+<!-- CTA 04 -->
 <div class="inline-cta">
   <p class="inline-cta-text">13 módulos. 95+ aulas. 9 bônus. Tudo que você precisa para cobrar o que o seu trabalho vale.</p>
-  <a href="#oferta" class="btn-cta">Quero acesso completo →</a>
+  <a href="https://go.hotmart.com/I106036177H" target="_blank" rel="noopener" class="btn-cta">Quero acesso completo →</a>
   <p class="price-hint">⚡ Preço de lançamento: <strong>R$ 247</strong> · Sobe para R$ 297 em breve</p>
 </div>
 
@@ -1800,33 +557,15 @@ p { font-size: clamp(0.95rem, 1.5vw, 1.05rem); color: var(--text-body); }
     <div class="testimonials-grid fade-in">
       <div class="testimonial-card">
         <p class="testimonial-text">"Inserir depoimento real de aluno aqui. Quanto mais específico, com resultado mensurável e transformação real, mais converte."</p>
-        <div class="testimonial-author">
-          <div class="author-avatar">A</div>
-          <div>
-            <span class="author-name">Nome do Aluno</span>
-            <span class="author-location">Cidade, Estado</span>
-          </div>
-        </div>
+        <div class="testimonial-author"><div class="author-avatar">A</div><div><span class="author-name">Nome do Aluno</span><span class="author-location">Cidade, Estado</span></div></div>
       </div>
       <div class="testimonial-card">
         <p class="testimonial-text">"Inserir segundo depoimento real. Ideal: mencionar um módulo específico ou resultado concreto — 'aumentei meu ticket', 'fechei meu primeiro cliente de alto valor'."</p>
-        <div class="testimonial-author">
-          <div class="author-avatar">B</div>
-          <div>
-            <span class="author-name">Nome do Aluno</span>
-            <span class="author-location">Cidade, Estado</span>
-          </div>
-        </div>
+        <div class="testimonial-author"><div class="author-avatar">B</div><div><span class="author-name">Nome do Aluno</span><span class="author-location">Cidade, Estado</span></div></div>
       </div>
       <div class="testimonial-card">
         <p class="testimonial-text">"Inserir terceiro depoimento real. Priorize depoimentos em vídeo — eles convertem ainda mais e podem ser incorporados aqui como thumbnails clicáveis."</p>
-        <div class="testimonial-author">
-          <div class="author-avatar">C</div>
-          <div>
-            <span class="author-name">Nome do Aluno</span>
-            <span class="author-location">Cidade, Estado</span>
-          </div>
-        </div>
+        <div class="testimonial-author"><div class="author-avatar">C</div><div><span class="author-name">Nome do Aluno</span><span class="author-location">Cidade, Estado</span></div></div>
       </div>
     </div>
     <p class="testimonials-note">* Adicionar depoimentos reais dos primeiros alunos do curso</p>
@@ -1840,96 +579,61 @@ p { font-size: clamp(0.95rem, 1.5vw, 1.05rem); color: var(--text-body); }
     <h2>E tem mais. Você também recebe <em>gratuitamente:</em></h2>
     <p class="bonus-subtitle">Nove materiais que valem mais do que o preço do curso sozinhos.</p>
     <div class="bonus-list fade-in">
-
-      <!-- BÔNUS ORIGINAIS 01–05 -->
       <div class="bonus-item">
         <div class="bonus-number">01</div>
-        <div class="bonus-content">
-          <h3>Guia Completo de Poses</h3>
-          <p>Referência de campo com poses por perfil: corporativo, feminino, masculino, casal e família. Para levar no celular durante os ensaios.</p>
-        </div>
+        <div class="bonus-content"><h3>Guia Completo de Poses</h3><p>Referência de campo com poses por perfil: corporativo, feminino, masculino, casal e família. Para levar no celular durante os ensaios.</p></div>
         <div class="bonus-value">R$ 97</div>
       </div>
       <div class="bonus-item">
         <div class="bonus-number">02</div>
-        <div class="bonus-content">
-          <h3>A Sessão Perfeita — Checklist Completo</h3>
-          <p>6 listas específicas por tipo de ensaio + checklist pós-sessão. Nunca mais vai faltar nada em campo.</p>
-        </div>
+        <div class="bonus-content"><h3>A Sessão Perfeita — Checklist Completo</h3><p>6 listas específicas por tipo de ensaio + checklist pós-sessão. Nunca mais vai faltar nada em campo.</p></div>
         <div class="bonus-value">R$ 47</div>
       </div>
       <div class="bonus-item">
         <div class="bonus-number">03</div>
-        <div class="bonus-content">
-          <h3>Contrato Fotográfico Profissional</h3>
-          <p>Contrato completo com todas as cláusulas essenciais, LGPD inclusa. Pronto para personalizar e usar na próxima sessão.</p>
-        </div>
+        <div class="bonus-content"><h3>Contrato Fotográfico Profissional</h3><p>Contrato completo com todas as cláusulas essenciais, LGPD inclusa. Pronto para personalizar e usar na próxima sessão.</p></div>
         <div class="bonus-value">R$ 197</div>
       </div>
       <div class="bonus-item">
         <div class="bonus-number">04</div>
-        <div class="bonus-content">
-          <h3>Aula Especial: Sua Primeira Sessão Paga</h3>
-          <p>Guia completo do zero à entrega — da conversa inicial ao depoimento do cliente. Para que o seu primeiro ensaio pago seja memorável.</p>
-        </div>
+        <div class="bonus-content"><h3>Aula Especial: Sua Primeira Sessão Paga</h3><p>Guia completo do zero à entrega — da conversa inicial ao depoimento do cliente. Para que o seu primeiro ensaio pago seja memorável.</p></div>
         <div class="bonus-value">R$ 197</div>
       </div>
       <div class="bonus-item">
         <div class="bonus-number">05</div>
-        <div class="bonus-content">
-          <h3>Apostila Completa do Curso</h3>
-          <p>Todo o conteúdo dos 13 módulos resumido em um único documento de referência. Para revisão rápida a qualquer momento.</p>
-        </div>
+        <div class="bonus-content"><h3>Apostila Completa do Curso</h3><p>Todo o conteúdo dos 13 módulos resumido em um único documento de referência. Para revisão rápida a qualquer momento.</p></div>
         <div class="bonus-value">R$ 47</div>
       </div>
 
-      <!-- SEPARADOR -->
+      <!-- SEPARADOR SUPER BÔNUS -->
       <div class="bonus-divider">
         <span class="bonus-divider-label">Super Bônus — exclusivos deste lançamento</span>
       </div>
-
-      <!-- NARRATIVA SUPER BÔNUS -->
       <div class="super-bonus-intro">
         <p>Estes quatro materiais foram criados para ir além do curso. São ferramentas de trabalho — <strong>para você usar em campo, no orçamento e no set</strong>. Não existem em nenhum outro curso de fotografia no Brasil neste formato.</p>
       </div>
 
-      <!-- SUPER BÔNUS 06–09 -->
       <div class="bonus-item super">
         <div class="bonus-number">06</div>
-        <div class="bonus-content">
-          <h3>Calculadora de Preço Real</h3>
-          <p>Planilha com três abas integradas — Calculadora de Preço, Comparativo de Pacotes e Simulador Anual. Você insere seus custos reais e recebe o preço justo para cobrar. Sem achismo, sem tabela copiada do vizinho.</p>
-        </div>
+        <div class="bonus-content"><h3>Calculadora de Preço Real</h3><p>Planilha com três abas integradas — Calculadora de Preço, Comparativo de Pacotes e Simulador Anual. Você insere seus custos reais e recebe o preço justo para cobrar. Sem achismo, sem tabela copiada do vizinho.</p></div>
         <div class="bonus-value">R$ 67</div>
       </div>
       <div class="bonus-item super">
         <div class="bonus-number">07</div>
-        <div class="bonus-content">
-          <h3>Guia de Equipamentos por Orçamento</h3>
-          <p>Preços reais de 2026, três faixas de investimento, tabelas comparativas Canon × Nikon × Sony, flash, modificadores e três kits completos prontos para montar. Chega de pesquisar em fórum e sair mais confuso.</p>
-        </div>
+        <div class="bonus-content"><h3>Guia de Equipamentos por Orçamento</h3><p>Preços reais de 2026, três faixas de investimento, tabelas comparativas Canon × Nikon × Sony, flash, modificadores e três kits completos prontos para montar. Chega de pesquisar em fórum e sair mais confuso.</p></div>
         <div class="bonus-value">R$ 97</div>
       </div>
       <div class="bonus-item super">
         <div class="bonus-number">08</div>
-        <div class="bonus-content">
-          <h3>Roteiro de Briefing Profissional</h3>
-          <p>Documento editável com oito seções estruturadas, checklist duplo fotógrafo/cliente e área de assinatura. Use antes de cada sessão para alinhar expectativas, eliminar retrabalho e profissionalizar o atendimento desde o primeiro contato.</p>
-        </div>
+        <div class="bonus-content"><h3>Roteiro de Briefing Profissional</h3><p>Documento editável com oito seções estruturadas, checklist duplo fotógrafo/cliente e área de assinatura. Profissionaliza o atendimento desde o primeiro contato e elimina retrabalho antes de cada sessão.</p></div>
         <div class="bonus-value">R$ 67</div>
       </div>
       <div class="bonus-item super">
         <div class="bonus-number">09</div>
-        <div class="bonus-content">
-          <h3>Guia de Esquemas de Luz para Retratos</h3>
-          <p>Os 9 esquemas de iluminação mais usados pelos melhores retratistas do mundo — do Rembrandt clássico ao setup artístico com gel. Para cada esquema: modificadores, potência em f-stop, fundo recomendado e dica prática. Referência visual para montar, replicar e adaptar em qualquer sessão.</p>
-        </div>
+        <div class="bonus-content"><h3>Guia de Esquemas de Luz para Retratos</h3><p>Os 9 esquemas de iluminação mais usados pelos melhores retratistas do mundo — do Rembrandt clássico ao setup artístico com gel. Modificadores, potência em f-stop, fundo recomendado e dica prática para cada setup. Referência visual para levar no set.</p></div>
         <div class="bonus-value">R$ 147</div>
       </div>
-
     </div>
-
-    <!-- TOTAL ATUALIZADO: R$ 963 -->
     <div class="bonus-total-bar fade-in">
       <span class="bonus-total-label">Valor total dos bônus</span>
       <span class="bonus-total-value">R$ 963 — incluídos gratuitamente</span>
@@ -1937,10 +641,10 @@ p { font-size: clamp(0.95rem, 1.5vw, 1.05rem); color: var(--text-body); }
   </div>
 </section>
 
-<!-- CTA 05 — APÓS BÔNUS -->
+<!-- CTA 05 -->
 <div class="inline-cta">
   <p class="inline-cta-text">Curso completo + R$ 963 em bônus. Tudo por R$ 247 no lançamento.</p>
-  <a href="#oferta" class="btn-cta">Garantir meu acesso agora →</a>
+  <a href="https://go.hotmart.com/I106036177H" target="_blank" rel="noopener" class="btn-cta">Garantir meu acesso agora →</a>
   <p class="price-hint">⚡ Oferta de lançamento · <strong>Economia de R$ 50</strong> em relação ao preço final</p>
 </div>
 
@@ -1965,17 +669,15 @@ p { font-size: clamp(0.95rem, 1.5vw, 1.05rem); color: var(--text-body); }
       <li>Bônus 03 — Contrato Fotográfico Profissional (R$ 197)</li>
       <li>Bônus 04 — Aula Especial: Sua Primeira Sessão (R$ 197)</li>
       <li>Bônus 05 — Apostila Completa do Curso (R$ 47)</li>
-      <li class="super-item">✦ Super Bônus 06 — Calculadora de Preço Real (R$ 67)</li>
-      <li class="super-item">✦ Super Bônus 07 — Guia de Equipamentos por Orçamento (R$ 97)</li>
-      <li class="super-item">✦ Super Bônus 08 — Roteiro de Briefing Profissional (R$ 67)</li>
-      <li class="super-item">✦ Super Bônus 09 — Guia de Esquemas de Luz (R$ 147)</li>
+      <li class="super-item">Super Bônus 06 — Calculadora de Preço Real (R$ 67)</li>
+      <li class="super-item">Super Bônus 07 — Guia de Equipamentos por Orçamento (R$ 97)</li>
+      <li class="super-item">Super Bônus 08 — Roteiro de Briefing Profissional (R$ 67)</li>
+      <li class="super-item">Super Bônus 09 — Guia de Esquemas de Luz (R$ 147)</li>
       <li>Acesso imediato e completo à plataforma</li>
     </ul>
-
     <div class="price-divider"></div>
-
     <div class="price-display">
-      <span class="price-label" style="color: var(--gold); letter-spacing:0.25em;">⚡ Preço de Lançamento</span>
+      <span class="price-label" style="color:var(--gold); letter-spacing:0.25em;">⚡ Preço de Lançamento</span>
       <div style="font-family:var(--font-body); font-size:0.78rem; color:var(--text-muted); margin-bottom:1.2rem; letter-spacing:0.05em;">
         Após o lançamento: <span style="text-decoration:line-through; color:rgba(255,255,255,0.3);">R$ 297,00</span>
       </div>
@@ -1990,13 +692,10 @@ p { font-size: clamp(0.95rem, 1.5vw, 1.05rem); color: var(--text-body); }
         Economia de R$ 50,00 no lançamento
       </div>
     </div>
-
     <div class="price-divider"></div>
-
-    <a href="LINK_HOTMART" class="btn-cta btn-cta-large">
+    <a href="https://go.hotmart.com/I106036177H" target="_blank" rel="noopener" class="btn-cta btn-cta-large">
       Quero começar agora →
     </a>
-
     <div class="security-badges" style="margin-top:1.5rem; justify-content:center;">
       <span>🔒 Compra segura</span>
       <span>⚡ Acesso imediato</span>
@@ -2014,7 +713,7 @@ p { font-size: clamp(0.95rem, 1.5vw, 1.05rem); color: var(--text-body); }
     <div class="divider"></div>
     <p>Se por qualquer motivo você acessar o curso e sentir que ele não é para você, basta enviar um e-mail em até 7 dias após a compra e devolvemos 100% do seu investimento.</p>
     <p>Sem burocracia. Sem questionamentos.</p>
-    <p style="color: var(--gold-pale); font-family: var(--font-display); font-style:italic; margin-top:1.5rem; font-size:1.1rem;">
+    <p style="color:var(--gold-pale); font-family:var(--font-display); font-style:italic; margin-top:1.5rem; font-size:1.1rem;">
       Eu acredito tanto no que está aqui que não preciso segurar o seu dinheiro para convencer você de ficar.<br>O curso convence por si mesmo.
     </p>
   </div>
@@ -2028,58 +727,28 @@ p { font-size: clamp(0.95rem, 1.5vw, 1.05rem); color: var(--text-body); }
     <div class="divider"></div>
     <div class="faq-list fade-in">
       <div class="faq-item">
-        <button class="faq-question" onclick="toggleFaq(this)">
-          Preciso ter equipamento profissional para fazer o curso?
-          <span class="faq-icon">+</span>
-        </button>
-        <div class="faq-answer">
-          <p>Não. O curso foi desenvolvido para ser aplicado com qualquer câmera — inclusive com celular. No Módulo 3 você aprende exatamente o que importa no equipamento e o que é mito de mercado.</p>
-        </div>
+        <button class="faq-question" onclick="toggleFaq(this)">Preciso ter equipamento profissional para fazer o curso?<span class="faq-icon">+</span></button>
+        <div class="faq-answer"><p>Não. O curso foi desenvolvido para ser aplicado com qualquer câmera — inclusive com celular. No Módulo 3 você aprende exatamente o que importa no equipamento e o que é mito de mercado.</p></div>
       </div>
       <div class="faq-item">
-        <button class="faq-question" onclick="toggleFaq(this)">
-          Sou iniciante. Este curso é para mim?
-          <span class="faq-icon">+</span>
-        </button>
-        <div class="faq-answer">
-          <p>Sim. O curso começa do zero e avança progressivamente. Se você está começando, vai aprender do jeito certo desde o início — sem vícios e sem o processo doloroso de desaprender erros.</p>
-        </div>
+        <button class="faq-question" onclick="toggleFaq(this)">Sou iniciante. Este curso é para mim?<span class="faq-icon">+</span></button>
+        <div class="faq-answer"><p>Sim. O curso começa do zero e avança progressivamente. Se você está começando, vai aprender do jeito certo desde o início — sem vícios e sem o processo doloroso de desaprender erros.</p></div>
       </div>
       <div class="faq-item">
-        <button class="faq-question" onclick="toggleFaq(this)">
-          Já fotografo há anos. Vou aprender algo novo?
-          <span class="faq-icon">+</span>
-        </button>
-        <div class="faq-answer">
-          <p>Sim. Os módulos de precificação, vendas, posicionamento e captação de clientes são exatamente o que fotógrafos experientes raramente aprendem em outros cursos. Muitos alunos veteranos relatam que foi nessa parte que a carreira mudou.</p>
-        </div>
+        <button class="faq-question" onclick="toggleFaq(this)">Já fotografo há anos. Vou aprender algo novo?<span class="faq-icon">+</span></button>
+        <div class="faq-answer"><p>Sim. Os módulos de precificação, vendas, posicionamento e captação de clientes são exatamente o que fotógrafos experientes raramente aprendem em outros cursos. Muitos alunos veteranos relatam que foi nessa parte que a carreira mudou.</p></div>
       </div>
       <div class="faq-item">
-        <button class="faq-question" onclick="toggleFaq(this)">
-          Por quanto tempo tenho acesso ao curso?
-          <span class="faq-icon">+</span>
-        </button>
-        <div class="faq-answer">
-          <p>Acesso completo enquanto o produto estiver ativo na plataforma. Você pode assistir no seu ritmo, rever aulas quantas vezes quiser e acessar de qualquer dispositivo.</p>
-        </div>
+        <button class="faq-question" onclick="toggleFaq(this)">Por quanto tempo tenho acesso ao curso?<span class="faq-icon">+</span></button>
+        <div class="faq-answer"><p>Acesso completo enquanto o produto estiver ativo na plataforma. Você pode assistir no seu ritmo, rever aulas quantas vezes quiser e acessar de qualquer dispositivo.</p></div>
       </div>
       <div class="faq-item">
-        <button class="faq-question" onclick="toggleFaq(this)">
-          Como funciona a garantia?
-          <span class="faq-icon">+</span>
-        </button>
-        <div class="faq-answer">
-          <p>Você tem 7 dias após a compra para solicitar o reembolso integral, sem nenhuma justificativa. Basta enviar um e-mail para o suporte e processamos a devolução completa.</p>
-        </div>
+        <button class="faq-question" onclick="toggleFaq(this)">Como funciona a garantia?<span class="faq-icon">+</span></button>
+        <div class="faq-answer"><p>Você tem 7 dias após a compra para solicitar o reembolso integral, sem nenhuma justificativa. Basta enviar um e-mail para o suporte e processamos a devolução completa.</p></div>
       </div>
       <div class="faq-item">
-        <button class="faq-question" onclick="toggleFaq(this)">
-          Quando recebo acesso após a compra?
-          <span class="faq-icon">+</span>
-        </button>
-        <div class="faq-answer">
-          <p>O acesso é imediato. Assim que o pagamento for confirmado, você recebe as credenciais de acesso diretamente no e-mail cadastrado.</p>
-        </div>
+        <button class="faq-question" onclick="toggleFaq(this)">Quando recebo acesso após a compra?<span class="faq-icon">+</span></button>
+        <div class="faq-answer"><p>O acesso é imediato. Assim que o pagamento for confirmado, você recebe as credenciais de acesso diretamente no e-mail cadastrado.</p></div>
       </div>
     </div>
   </div>
@@ -2093,12 +762,11 @@ p { font-size: clamp(0.95rem, 1.5vw, 1.05rem); color: var(--text-body); }
     <div class="divider"></div>
     <p>Você pode continuar fazendo fotos extraordinárias e cobrando um valor que não representa o que você entrega.</p>
     <p style="margin-top:1rem;">Ou você pode decidir hoje que o seu talento merece uma carreira à altura.</p>
-    <p style="margin-top:1rem; font-family: var(--font-display); font-style:italic; color: var(--gold-light); font-size:1.1rem;">
-      Fotógrafos que cobram bem não são mais talentosos que você.<br>
-      Eles simplesmente aprenderam o que está aqui.
+    <p style="margin-top:1rem; font-family:var(--font-display); font-style:italic; color:var(--gold-light); font-size:1.1rem;">
+      Fotógrafos que cobram bem não são mais talentosos que você.<br>Eles simplesmente aprenderam o que está aqui.
     </p>
-    <div class="ornament" style="margin: 2.5rem 0;">✦ ✦ ✦</div>
-    <a href="#oferta" class="btn-cta btn-cta-large">
+    <div class="ornament" style="margin:2.5rem 0;">✦ ✦ ✦</div>
+    <a href="https://go.hotmart.com/I106036177H" target="_blank" rel="noopener" class="btn-cta btn-cta-large">
       Quero cobrar o que meu trabalho vale →
     </a>
     <div class="security-badges" style="margin-top:1.5rem; justify-content:center;">
@@ -2113,8 +781,8 @@ p { font-size: clamp(0.95rem, 1.5vw, 1.05rem); color: var(--text-body); }
 <footer class="site-footer">
   <div class="footer-logo">Fróis Studio · Retratista</div>
   <div class="footer-links">
-    <a href="#">Instagram @froesretratista</a>
-    <a href="#">www.macfrois.com.br</a>
+    <a href="https://instagram.com/froesretratista" target="_blank" rel="noopener">Instagram @froesretratista</a>
+    <a href="https://www.macfrois.com.br" target="_blank" rel="noopener">www.macfrois.com.br</a>
     <a href="#">Política de Privacidade</a>
     <a href="#">Termos de Uso</a>
   </div>
@@ -2131,7 +799,6 @@ window.addEventListener('scroll', () => {
   const scrollY = window.scrollY;
   const heroBottom = heroSection ? heroSection.offsetTop + heroSection.offsetHeight : 600;
   const offerTop = offerSection ? offerSection.offsetTop - window.innerHeight : 999999;
-
   if (scrollY > heroBottom && scrollY < offerTop + window.innerHeight * 0.5) {
     floatingCta.classList.add('visible');
   } else {
@@ -2156,18 +823,7 @@ const observer = new IntersectionObserver((entries) => {
     }
   });
 }, { threshold: 0.12, rootMargin: '0px 0px -40px 0px' });
-
 document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
-
-// ─── SMOOTH SCROLL ───
-document.querySelectorAll('a[href^="#"]').forEach(a => {
-  a.addEventListener('click', e => {
-    e.preventDefault();
-    const target = document.querySelector(a.getAttribute('href'));
-    if (target) target.scrollIntoView({ behavior: 'smooth', block: 'start' });
-  });
-});
 </script>
-
 </body>
 </html>
