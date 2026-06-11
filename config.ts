@@ -43,4 +43,3 @@ export const DRIVE_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbzrgGD1
 // BLOG — Gerenciado pelo GitHub Actions
 // NÃO editar manualmente
 // ============================================
-
