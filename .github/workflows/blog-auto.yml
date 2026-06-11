@@ -18,7 +18,7 @@ jobs:
       - name: Gerar post
         env:
           ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
-        run: node scripts/generate-post.js
+        run: node scripts/generate-post.cjs
       - name: Commit
         run: |
           git config --global user.name "Frois Bot"
