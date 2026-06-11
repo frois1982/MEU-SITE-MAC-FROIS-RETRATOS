@@ -1,7 +1,7 @@
 // config.ts — Blog Mac Frois Retratista
 // Gerenciado automaticamente pelo GitHub Actions (blog-auto.yml)
 // NÃO edite manualmente — posts são inseridos pelo script generate-post.js
-
+export const DRIVE_SCRIPT_URL = "";
 export interface BlogPost {
   id: string;
   title: string;
