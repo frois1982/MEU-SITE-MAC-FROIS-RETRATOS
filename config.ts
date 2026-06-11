@@ -53,3 +53,4 @@ export interface BlogPost {
 }
 
 export const EDITORIAL_DATABASE: BlogPost[] = [];
+export const DRIVE_SCRIPT_URL = "";
