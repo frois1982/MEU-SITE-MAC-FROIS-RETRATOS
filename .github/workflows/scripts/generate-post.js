@@ -1,6 +1,6 @@
 // scripts/generate-post.js
 // Gerador automático de posts SEO — Método Frois / Mac Frois Retratista
-// Versão corrigida: usa apenas módulos nativos do Node.js (sem npm install)
+// Versão 4.0 — compatível com EDITORIAL_DATABASE + imageUrl
 
 'use strict';
 
@@ -13,6 +13,25 @@ if (!ANTHROPIC_API_KEY) {
   console.error('❌ ANTHROPIC_API_KEY não encontrada. Configure o secret no GitHub.');
   process.exit(1);
 }
+
+// ─── IMAGENS UNSPLASH (rotativas, sem API key) ────────────────────────────────
+const IMAGENS = [
+  "https://images.unsplash.com/photo-1516035069371-29a1b244cc32?w=1200&q=80",
+  "https://images.unsplash.com/photo-1554048612-b6a482bc67e5?w=1200&q=80",
+  "https://images.unsplash.com/photo-1452587925148-ce544e77e70d?w=1200&q=80",
+  "https://images.unsplash.com/photo-1471341971476-ae15ff5dd4ea?w=1200&q=80",
+  "https://images.unsplash.com/photo-1500051638674-ff996a0ec29e?w=1200&q=80",
+  "https://images.unsplash.com/photo-1542038784456-1ea8e935640e?w=1200&q=80",
+  "https://images.unsplash.com/photo-1496181133206-80ce9b88a853?w=1200&q=80",
+  "https://images.unsplash.com/photo-1487700160041-babef9c3cb55?w=1200&q=80",
+  "https://images.unsplash.com/photo-1519741497674-611481863552?w=1200&q=80",
+  "https://images.unsplash.com/photo-1522673607200-164d1b6ce486?w=1200&q=80",
+  "https://images.unsplash.com/photo-1470071459604-3b5ec3a7fe05?w=1200&q=80",
+  "https://images.unsplash.com/photo-1493863641943-9b68992a8d07?w=1200&q=80",
+  "https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=1200&q=80",
+  "https://images.unsplash.com/photo-1501854140801-50d01698950b?w=1200&q=80",
+  "https://images.unsplash.com/photo-1536329583941-14287ec6fc4e?w=1200&q=80",
+];
 
 // ─── BANCO DE TÓPICOS SEO ────────────────────────────────────────────────────
 const TOPICOS = [
@@ -83,12 +102,6 @@ const TOPICOS = [
     angulo: "único e diferenciado — apresentar o Método Frois de forma natural e educativa"
   },
   {
-    titulo_base: "Conteúdo de vídeo para empreendedores: como parecer profissional com qualquer câmera",
-    keyword_principal: "como parecer profissional no vídeo",
-    keywords: ["conteúdo profissional para Instagram", "como gravar vídeo profissional", "setup para conteúdo"],
-    angulo: "prático — dicas de luz, ângulo, fundo e postura aplicáveis hoje"
-  },
-  {
     titulo_base: "LinkedIn: como usar sua foto para atrair oportunidades de negócio",
     keyword_principal: "foto profissional para LinkedIn",
     keywords: ["LinkedIn foto corporativa", "imagem LinkedIn profissional", "perfil LinkedIn fotografia"],
@@ -105,6 +118,12 @@ const TOPICOS = [
     keyword_principal: "book fotográfico corporativo",
     keywords: ["book corporativo empresa", "fotos para site institucional", "fotografia para equipe"],
     angulo: "guia completo — o que incluir, como planejar e o que esperar do resultado"
+  },
+  {
+    titulo_base: "Conteúdo de vídeo para empreendedores: como parecer profissional",
+    keyword_principal: "como parecer profissional no vídeo",
+    keywords: ["conteúdo profissional para Instagram", "como gravar vídeo profissional", "setup para conteúdo"],
+    angulo: "prático — dicas de luz, ângulo, fundo e postura aplicáveis hoje"
   },
 ];
 
@@ -134,20 +153,17 @@ function escolherTopico(configContent) {
   return lista[Math.floor(Math.random() * lista.length)];
 }
 
-function gerarSlug(texto) {
-  return texto
-    .toLowerCase()
-    .normalize('NFD')
-    .replace(/[\u0300-\u036f]/g, '')
-    .replace(/[^a-z0-9\s]/g, '')
-    .replace(/\s+/g, '-')
-    .substring(0, 60);
+function escolherImagem(configContent) {
+  const naoUsadas = IMAGENS.filter(img => !configContent.includes(img.substring(0, 50)));
+  return naoUsadas.length > 0
+    ? naoUsadas[Math.floor(Math.random() * naoUsadas.length)]
+    : IMAGENS[Math.floor(Math.random() * IMAGENS.length)];
 }
 
 function montarPrompt(topico) {
-  return `Você é o Mac Frois, fotógrafo retratista há mais de 10 anos com estúdio próprio (Studio Frois) no Estreito, Florianópolis, SC. Você também foi enfermeiro por 20 anos, o que te deu uma capacidade única de ler pessoas. Você criou o Método Frois, baseado nos 12 arquétipos de Carol S. Pearson, para ajudar profissionais a construírem uma identidade visual autêntica.
+  return `Você é o Mac Frois, fotógrafo retratista há mais de 10 anos com estúdio próprio (Studio Frois) em Florianópolis, SC. Você foi enfermeiro por 20 anos, o que te deu uma capacidade única de ler pessoas. Você criou o Método Frois, baseado nos 12 arquétipos de Carol S. Pearson, para ajudar profissionais a construírem uma identidade visual autêntica.
 
-Escreva um post para o blog do site macfrois.com.br sobre:
+Escreva um post editorial para o blog do site macfrois.com.br sobre:
 
 TEMA: ${topico.titulo_base}
 PALAVRA-CHAVE PRINCIPAL: ${topico.keyword_principal}
@@ -155,9 +171,9 @@ PALAVRAS-CHAVE SECUNDÁRIAS: ${topico.keywords.join(', ')}
 ÂNGULO: ${topico.angulo}
 
 REGRAS OBRIGATÓRIAS:
-1. Tom: acessível, inteligente e útil. Especialista que explica de forma clara.
+1. Tom: editorial, inteligente, autêntico. Especialista que fala de pessoa para pessoa.
 2. Use a palavra-chave principal nas primeiras 100 palavras
-3. Estrutura: abertura impactante + 4 seções com subtítulos em CAPS + seção FAQ com 3 perguntas e respostas + encerramento com CTA natural
+3. Estrutura: abertura impactante (2-3 parágrafos) + 4 seções com títulos em CAPS + FAQ com 3 perguntas e respostas + encerramento com CTA natural
 4. Comprimento: 800 a 1000 palavras
 5. Mencione Florianópolis naturalmente quando fizer sentido
 6. Mencione o Método Frois ou Studio Frois em pelo menos um ponto
@@ -168,7 +184,7 @@ REGRAS OBRIGATÓRIAS:
 RETORNE APENAS o texto do post, sem introdução ou comentário.`;
 }
 
-// ─── CHAMADA À API (usando https nativo) ─────────────────────────────────────
+// ─── CHAMADA À API ────────────────────────────────────────────────────────────
 function chamarAPI(prompt) {
   return new Promise((resolve, reject) => {
     const body = JSON.stringify({
@@ -213,7 +229,7 @@ function chamarAPI(prompt) {
 }
 
 // ─── INJETAR NO CONFIG.TS ────────────────────────────────────────────────────
-function injetarNoConfig(conteudo, topico) {
+function injetarNoConfig(conteudo, topico, imageUrl) {
   const configPath = path.join(process.cwd(), 'config.ts');
 
   if (!fs.existsSync(configPath)) {
@@ -222,13 +238,12 @@ function injetarNoConfig(conteudo, topico) {
 
   let config = fs.readFileSync(configPath, 'utf-8');
 
+  if (!config.includes('EDITORIAL_DATABASE')) {
+    throw new Error('config.ts não contém EDITORIAL_DATABASE. Verifique se o arquivo está correto.');
+  }
+
   const id = gerarId();
   const data = dataHoje();
-  const slug = gerarSlug(topico.keyword_principal);
-
-  // Pega a primeira linha não vazia como description
-  const primeiraLinha = conteudo.split('\n').find(l => l.trim().length > 50) || '';
-  const description = primeiraLinha.substring(0, 155).replace(/"/g, "'");
 
   // Escapar o conteúdo para template literal do TypeScript
   const conteudoEscapado = conteudo
@@ -239,17 +254,15 @@ function injetarNoConfig(conteudo, topico) {
   const novoPost = `  {
     id: "${id}",
     date: "${data}",
-    title: "${topico.titulo_base.toUpperCase()}",
-    slug: "${slug}",
-    keywords: "${topico.keywords.join(', ')}",
-    description: "${description}",
+    title: "${topico.titulo_base}",
+    imageUrl: "${imageUrl}",
     content: \`${conteudoEscapado}\`,
   },`;
 
   // Inserir antes do último ]; do arquivo
   const posicao = config.lastIndexOf('];');
   if (posicao === -1) {
-    throw new Error('Não encontrei o fechamento ]; no config.ts');
+    throw new Error('Não encontrei o fechamento ]; no config.ts. Estrutura inválida.');
   }
 
   const configAtualizado =
@@ -261,29 +274,30 @@ function injetarNoConfig(conteudo, topico) {
 
   console.log(`✅ Post "${id}" inserido com sucesso`);
   console.log(`📌 Título: ${topico.titulo_base}`);
-  console.log(`🔑 Keyword: ${topico.keyword_principal}`);
-  console.log(`🌐 Slug: ${slug}`);
+  console.log(`🖼️  Imagem: ${imageUrl}`);
 
-  return { id, slug };
+  return { id };
 }
 
 // ─── MAIN ────────────────────────────────────────────────────────────────────
 async function main() {
   try {
-    console.log('🚀 Iniciando geração de post — Blog Método Frois');
+    console.log('🚀 Iniciando geração de post — Blog Mac Frois');
     console.log(`📅 Data: ${dataHoje()}`);
 
-    const configAtual = fs.readFileSync(
-      path.join(process.cwd(), 'config.ts'), 'utf-8'
-    );
+    const configPath = path.join(process.cwd(), 'config.ts');
+    const configAtual = fs.readFileSync(configPath, 'utf-8');
 
     const topico = escolherTopico(configAtual);
     console.log(`🎯 Tópico: ${topico.titulo_base}`);
 
+    const imageUrl = escolherImagem(configAtual);
+    console.log(`🖼️  Imagem selecionada`);
+
     const conteudo = await chamarAPI(montarPrompt(topico));
     console.log(`📄 Conteúdo gerado: ${conteudo.length} caracteres`);
 
-    injetarNoConfig(conteudo, topico);
+    injetarNoConfig(conteudo, topico, imageUrl);
 
     console.log('\n🎉 Post publicado com sucesso!');
 
