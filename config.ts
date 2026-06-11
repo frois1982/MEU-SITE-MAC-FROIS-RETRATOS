@@ -31,3 +31,4 @@ Novas edições toda semana. Fique à vontade para explorar.
 Estúdio Frois — Florianópolis, SC`,
   },
 ];
+
