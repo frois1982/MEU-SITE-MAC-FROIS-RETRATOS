@@ -13,8 +13,8 @@ export default async function handler(req: any, res: any) {
   const apiKey = process.env.BREVO_API_KEY;
   if (!apiKey) return res.status(500).json({ error: "Configuração incompleta." });
 
-  try {
-    // Cria ou atualiza o contato E adiciona à lista #3
+  try {h
+        // Cria ou atualiza o contato E adiciona à lista #7 (Newsletter Estúdio Frois)
     const resp = await fetch("https://api.brevo.com/v3/contacts", {
       method: "POST",
       headers: {
@@ -24,7 +24,7 @@ export default async function handler(req: any, res: any) {
       body: JSON.stringify({
         email: email.toLowerCase().trim(),
         attributes: { FIRSTNAME: (nome ?? "").trim() },
-        listIds: [3],
+        listIds: [7],
         updateEnabled: true,
       }),
     });
