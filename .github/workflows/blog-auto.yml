@@ -2,11 +2,8 @@ name: Publicar Post Automático — Método Frois
 
 on:
   schedule:
-    # Segunda, Quarta e Sexta às 8h (horário de Brasília = 11h UTC)
-    - cron: '0 11 * * 1'
-    - cron: '0 11 * * 3'
     - cron: '0 11 * * 5'
-  workflow_dispatch: # permite rodar manualmente pela aba Actions
+  workflow_dispatch:
 
 jobs:
   gerar-post:
@@ -14,6 +11,9 @@ jobs:
 
     permissions:
       contents: write
+
+    env:
+      FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true
 
     steps:
       - name: Checkout do repositório
@@ -24,7 +24,7 @@ jobs:
       - name: Configurar Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: '20'
+          node-version: '24'
 
       - name: Gerar post com IA
         env:
