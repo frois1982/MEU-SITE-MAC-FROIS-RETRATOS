@@ -44,13 +44,3 @@ export const DRIVE_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbzrgGD1
 // NÃO editar manualmente
 // ============================================
 
-export interface BlogPost {
-  id: string;
-  title: string;
-  content: string;
-  imageUrl: string;
-  date: string;
-}
-
-export const EDITORIAL_DATABASE: BlogPost[] = [];
-export const DRIVE_SCRIPT_URL = "";
