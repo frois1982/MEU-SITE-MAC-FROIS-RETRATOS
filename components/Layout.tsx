@@ -70,10 +70,10 @@ const Footer: React.FC = () => {
 
     setStatus('sending');
     try {
-      const response = await fetch('https://formspree.io/f/xykzkago', {
+      const response = await fetch('/api/subscribe', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ Newsletter_Subscription: email })
+        body: JSON.stringify({ email, nome: '' })
       });
 
       if (response.ok) {
