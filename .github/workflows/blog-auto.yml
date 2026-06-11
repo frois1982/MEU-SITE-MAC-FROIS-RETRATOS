@@ -1,0 +1,28 @@
+name: Publicar Post Automático — Método Frois
+on:
+  schedule:
+    - cron: '0 11 * * 5'
+  workflow_dispatch:
+jobs:
+  gerar-post:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '24'
+      - name: Gerar post com IA
+        env:
+          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+        run: node scripts/generate-post.js
+      - name: Commit e push
+        run: |
+          git config --global user.name "Frois Bot"
+          git config --global user.email "frois.mac@gmail.com"
+          git add config.ts
+          git diff --staged --quiet || git commit -m "feat(blog): post automático — $(date +'%d/%m/%Y')"
+          git push
