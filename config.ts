@@ -102,6 +102,77 @@ Comece hoje. Use a luz que tem. Organize seu fundo. Grave um vídeo. Assista. Me
 
 Sua audiência não quer perfeição. Quer você, honesto, competente, bem iluminado.`,
   },
+  {
+    id: "POST-KB2BB",
+    date: "12/06/2026",
+    title: "Presença digital: por que sua imagem online vale mais do que parece",
+    imageUrl: "https://images.unsplash.com/photo-1554048612-b6a482bc67e5?w=1200&q=80",
+    content: `Presença digital: por que sua imagem online vale mais do que parece
+
+Você tem menos de sete segundos. Esse é o tempo que uma pessoa leva para formar uma opinião sobre você na internet — muito menos do que o tempo que levaria para apertar sua mão e olhar nos seus olhos. Sua presença digital e imagem profissional já estão sendo avaliadas antes de você sequer abrir a boca. E essa verdade incômoda é exatamente por isso que estou escrevendo para você hoje.
+
+Durante vinte anos como enfermeiro, aprendi a ler pessoas. Via além das palavras — observava postura, expressão, a forma como alguém se apresentava ao mundo. Aquela habilidade não desapareceu quando troquei o uniforme pela câmera. Se amplificou. Porque agora entendo que a mesma leitura instantânea que fazemos de alguém pessoalmente acontece de forma ainda mais rápida e brutal na internet. Somos seres visuais, e sua imagem online profissional é sua primeira impressão, sua cartão de visitas permanente, sua reputação em pixels.
+
+Estamos em 2024. Você pode ter o melhor portfólio do mundo, a mais brilhante experiência, as melhores ideias — mas se sua presença digital disser o oposto, ninguém vai descobrir. Os recrutadores não vão além da segunda foto desfocada no LinkedIn. Os clientes não vão investigar além da sua bio do Instagram. Você será julgado antes de ter a chance de falar.
+
+E é por isso que investi anos desenvolvendo o Método Frois, uma abordagem que conecta quem você realmente é com como você se apresenta visualmente. Porque a fotografia nunca foi sobre parecer bem. É sobre ser honesto.
+
+QUANDO A CÂMERA VÊ O QUE VOCÊ NÃO QUER MOSTRAR
+
+Já parou para pensar no que sua foto de perfil diz sobre você? Não é apenas sobre iluminação ou ângulo. É sobre autenticidade. Aquela foto que você tirou correndo antes de uma reunião, com roupa aleatória e sem pensar? Ela comunica pressa, desatenção, falta de intencionalidade. Aquela imagem que você roubou de uma festa? Comunica informalidade. Aquela que você pediu para photoshopar demais? Comunica insegurança.
+
+Trabalho aqui em Florianópolis com pessoas que vieram até mim desesperadas. Donos de negócios, executivos, profissionais liberais que sentiam que suas redes sociais não refletiam quem eles realmente eram. E sabe o que eu descobria? Que eles nunca tinham parado para pensar em como queriam ser vistos. Apenas usavam a primeira foto que tinha aparência "apresentável". Como se presença digital fosse algo que acontecia com você, e não algo que você constrói.
+
+Sua imagem online profissional é uma escolha. E toda escolha comunica algo.
+
+O CUSTO INVISÍVEL DE UMA MÁ PRESENÇA DIGITAL
+
+Você sabe quanto uma má presença digital custa? Não em dinheiro direto. Em oportunidades. Em credibilidade. Em confiança.
+
+Um estudo mostrou que 75% dos potenciais clientes pesquisam a presença online de um profissional antes de qualquer contato. Três em cada quatro. Se sua foto para redes sociais é amadora, confusa ou desalinhada com quem você é, você começou a conversa já em desvantagem. O cliente já criou uma narrativa sobre você — provavelmente errada.
+
+Pior ainda: a inconsistência mata. Quando sua imagem online profissional no LinkedIn não conversa com seu Instagram, quando suas fotos parecem tiradas em contextos diferentes por pessoas diferentes, você comunica falta de propósito. Falta de clareza sobre quem você é. E em um mundo saturado de opções, as pessoas preferem trabalhar com gente que sabe exatamente o que está fazendo — começando pela forma como se apresenta.
+
+Isso não é superficialidade. É realismo. É economia da atenção. A primeira impressão é tudo o que você tem.
+
+CONSTRUINDO UMA IDENTIDADE VISUAL QUE É REALMENTE SUA
+
+Aqui está o conselho concreto que você pode aplicar hoje: faça uma auditoria visual de si mesmo. Abra seu LinkedIn, Instagram, site — qualquer lugar onde você tenha presença digital. Respire fundo e responda honestamente: a pessoa nessas fotos é quem eu sou? Ou é uma versão genérica, desfocada, sem propósito?
+
+Se a resposta for a segunda, você precisa de uma mudança. E essa mudança não começa na câmera. Começa em você.
+
+No Studio Frois, não faço fotos aleatórias. Fazemos sessões baseadas no Método Frois, que mapeia quem você é através de seus arquétipos — suas formas naturais de estar no mundo. Essa clareza permite que você se apresente com autenticidade, não com artifício. A foto final comunica verdade. E verdade gera confiança.
+
+Como aparecer bem na internet? Parando de tentar parecer bem. Começando a ser bem. Escolhendo roupa que reflete seu propósito, não tendência. Postura que comunica confiança, não tensão. Expressão que mostra quem você é, não o que você acha que as pessoas querem ver.
+
+PRESENÇA DIGITAL NÃO É VAIDADE, É RESPONSABILIDADE
+
+Ouço muito essa crítica: "Ah, mas isso é tão superficial. Deveria importar só o meu trabalho." Bonito discurso. Irrealista.
+
+Você não vive em um vácuo. Vive em um mundo onde a primeira janela para você é a visual. Negar isso é negar realidade. Assumir responsabilidade por sua presença digital é reconhecer que você importa — e que como você se apresenta também.
+
+Pense em qualquer pessoa que você respeita. Alguém que você gostaria de trabalhar com, aprender com, contratar. Agora imagine descobrir que essa pessoa tem um perfil online caótico, fotos ruins, nenhuma coerência visual. Sua admiração não desaparece completamente, mas... diminui um pouco, não é? Porque coerência entre discurso e apresentação importa.
+
+Sua presença digital é um contrato silencioso com o mundo. Diz: "Eu levo a sério quem sou. Eu investi tempo em ser claro sobre isso. Você pode confiar."
+
+PERGUNTAS FREQUENTES
+
+Preciso refazer todas as minhas fotos de uma vez?
+
+Não. Comece com a mais importante: seu perfil principal, seja LinkedIn, Instagram ou site. Uma única foto de qualidade, autêntica, que reflita quem você é, vale mais do que dez fotos genéricas. Depois você constrói de forma consistente.
+
+Quanto tempo leva para melhorar a presença digital?
+
+A mudança visual acontece em uma sessão de fotos. Mas construir uma presença digital coerente — atualizar perfis, escolher as melhores fotos, criar narrativa visual — isso leva semanas. Vale cada minuto.
+
+Qual é o melhor tipo de foto para redes sociais?
+
+A que comunica autenticidade. Pode ser formal, casual, criativa — mas tem que ser você. Não existe "tipo melhor". Existe melhor para você. Por isso mapear seus arquétipos e sua identidade importa.
+
+Sua imagem online vale muito mais do que parece porque você vale muito mais do que as pessoas conseguem ver em sete segundos. O mínimo que você pode fazer é não desistir desses sete segundos antes mesmo de começar.
+
+Invista em presença digital. Em si mesmo. Em como você diz ao mundo quem você é — antes de ele criar a própria história.`,
+  },
 ];
 export const DRIVE_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbzrgGD1f9-c4wP2HVm2ypzPltsM41VtP-jd2-_W6qTQBfoP8W-V3RaHNyOdXWGT9ZDP1Q/exec"; 
 // ============================================
