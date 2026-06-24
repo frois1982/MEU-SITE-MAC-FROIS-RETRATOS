@@ -7,6 +7,14 @@ import { ArrowRight, MessageCircle, Camera, Quote } from 'lucide-react';
 import { PortfolioItem } from '../types';
 
 export const Home: React.FC = () => {
+  useEffect(() => {
+    document.title = 'Mac Frois | Fotógrafo de Retratos Corporativos em Florianópolis';
+    const meta = document.querySelector('meta[name="description"]');
+    if (meta) meta.setAttribute('content', 'Mac Frois é fotógrafo especialista em retratos corporativos e posicionamento de imagem para executivos e empresários em Florianópolis, SC. Conheça o Método Frois.');
+    const canonical = document.querySelector('link[rel="canonical"]');
+    if (canonical) canonical.setAttribute('href', 'https://www.macfrois.com.br/');
+  }, []);
+
   const navigate = useNavigate();
   const [heroImg, setHeroImg] = useState<string>('https://images.unsplash.com/photo-1492691523567-6170f0295dbd?q=80&w=1920&auto=format&fit=crop&grayscale=true');
   const [manifestoImg, setManifestoImg] = useState<string>('https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?q=80&w=800&auto=format&fit=crop&grayscale=true');
