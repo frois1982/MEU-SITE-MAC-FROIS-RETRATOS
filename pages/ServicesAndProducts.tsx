@@ -7,6 +7,14 @@ import { Check, Target, Video, Zap, Smartphone, FileText, ClipboardCheck, Sparkl
 import { Service, Product } from '../types';
 
 export const Services: React.FC = () => {
+  useEffect(() => {
+    document.title = 'Serviços e Projetos | Mac Frois — Retratos e Posicionamento de Imagem';
+    const meta = document.querySelector('meta[name="description"]');
+    if (meta) meta.setAttribute('content', 'Conheça os projetos Van Gogh, Da Vinci e Michelangelo — metodologia exclusiva de retratos corporativos e posicionamento de imagem em Florianópolis, SC. Preços e detalhes.');
+    const canonical = document.querySelector('link[rel="canonical"]');
+    if (canonical) canonical.setAttribute('href', 'https://www.macfrois.com.br/servicos');
+  }, []);
+
   const getWhatsappLink = (projectName: string) => {
     const baseUrl = "https://wa.me/5548996231894";
     const message = encodeURIComponent(`Olá Mac, estive no seu site e gostaria de solicitar uma proposta para o ${projectName}. Como podemos prosseguir?`);
