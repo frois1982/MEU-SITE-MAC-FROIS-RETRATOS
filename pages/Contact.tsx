@@ -1,9 +1,17 @@
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { SectionTitle, Button, Card } from '../components/UI';
 import { Mail, Phone, MapPin, CheckCircle2, Loader2 } from 'lucide-react';
 
 export const Contact: React.FC = () => {
+  useEffect(() => {
+    document.title = 'Contato | Mac Frois — Fotógrafo Corporativo em Florianópolis';
+    const meta = document.querySelector('meta[name="description"]');
+    if (meta) meta.setAttribute('content', 'Entre em contato com Mac Frois para agendar sua sessão de retratos corporativos em Florianópolis, SC. WhatsApp (48) 99623-1894.');
+    const canonical = document.querySelector('link[rel="canonical"]');
+    if (canonical) canonical.setAttribute('href', 'https://www.macfrois.com.br/contato');
+  }, []);
+
   const [status, setStatus] = useState<'idle' | 'sending' | 'success'>('idle');
   const [formData, setFormData] = useState({
     nome: '',
