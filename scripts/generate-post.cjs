@@ -1,7 +1,3 @@
-// scripts/generate-post.js
-// Gerador automático de posts SEO — Método Frois / Mac Frois Retratista
-// Versão 4.0 — compatível com EDITORIAL_DATABASE + imageUrl
-
 'use strict';
 
 const https = require('https');
@@ -10,181 +6,99 @@ const path = require('path');
 
 const ANTHROPIC_API_KEY = process.env.ANTHROPIC_API_KEY;
 if (!ANTHROPIC_API_KEY) {
-  console.error('❌ ANTHROPIC_API_KEY não encontrada. Configure o secret no GitHub.');
+  console.error('ANTHROPIC_API_KEY não definida');
   process.exit(1);
 }
 
-// ─── IMAGENS UNSPLASH (rotativas, sem API key) ────────────────────────────────
 const IMAGENS = [
-  "https://images.unsplash.com/photo-1516035069371-29a1b244cc32?w=1200&q=80",
-  "https://images.unsplash.com/photo-1554048612-b6a482bc67e5?w=1200&q=80",
-  "https://images.unsplash.com/photo-1452587925148-ce544e77e70d?w=1200&q=80",
-  "https://images.unsplash.com/photo-1471341971476-ae15ff5dd4ea?w=1200&q=80",
-  "https://images.unsplash.com/photo-1500051638674-ff996a0ec29e?w=1200&q=80",
-  "https://images.unsplash.com/photo-1542038784456-1ea8e935640e?w=1200&q=80",
-  "https://images.unsplash.com/photo-1496181133206-80ce9b88a853?w=1200&q=80",
-  "https://images.unsplash.com/photo-1487700160041-babef9c3cb55?w=1200&q=80",
-  "https://images.unsplash.com/photo-1519741497674-611481863552?w=1200&q=80",
-  "https://images.unsplash.com/photo-1522673607200-164d1b6ce486?w=1200&q=80",
-  "https://images.unsplash.com/photo-1470071459604-3b5ec3a7fe05?w=1200&q=80",
-  "https://images.unsplash.com/photo-1493863641943-9b68992a8d07?w=1200&q=80",
-  "https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=1200&q=80",
-  "https://images.unsplash.com/photo-1501854140801-50d01698950b?w=1200&q=80",
-  "https://images.unsplash.com/photo-1536329583941-14287ec6fc4e?w=1200&q=80",
+  'https://images.unsplash.com/photo-1531746020798-e6953c6e8e04?w=1200',
+  'https://images.unsplash.com/photo-1552374196-c4e7ffc6e126?w=1200',
+  'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=1200',
+  'https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=1200',
+  'https://images.unsplash.com/photo-1560250097-0b93528c311a?w=1200',
+  'https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?w=1200',
+  'https://images.unsplash.com/photo-1519085360753-af0119f7cbe7?w=1200',
+  'https://images.unsplash.com/photo-1556157382-97eda2f9e2bf?w=1200',
+  'https://images.unsplash.com/photo-1580489944761-15a19d654956?w=1200',
+  'https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=1200',
+  'https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=1200',
+  'https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=1200',
+  'https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=1200',
+  'https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?w=1200',
+  'https://images.unsplash.com/photo-1544005313-94ddf0286df2?w=1200'
 ];
 
-// ─── BANCO DE TÓPICOS SEO ────────────────────────────────────────────────────
 const TOPICOS = [
-  {
-    titulo_base: "O que é fotografia corporativa e por que ela importa para o seu negócio",
-    keyword_principal: "fotografia corporativa Florianópolis",
-    keywords: ["fotografia corporativa", "foto profissional empresa", "imagem corporativa"],
-    angulo: "educativo — explicar o conceito, benefícios práticos e quando investir"
-  },
-  {
-    titulo_base: "Como uma boa foto de perfil pode aumentar suas vendas",
-    keyword_principal: "foto de perfil profissional",
-    keywords: ["foto de perfil LinkedIn", "foto profissional para negócios", "imagem profissional"],
-    angulo: "prático — impacto de foto profissional em conversão e primeiras impressões"
-  },
-  {
-    titulo_base: "Arquétipos de marca: o que são e como definem sua identidade visual",
-    keyword_principal: "arquétipos de marca",
-    keywords: ["arquétipos de marca fotografia", "identidade visual empresa", "branding pessoal"],
-    angulo: "educativo — explicar os 12 arquétipos de forma simples com exemplos do dia a dia"
-  },
-  {
-    titulo_base: "Identidade visual para profissionais liberais: por onde começar",
-    keyword_principal: "identidade visual profissional liberal",
-    keywords: ["branding pessoal", "imagem para advogados médicos consultores", "posicionamento profissional"],
-    angulo: "guia prático para profissionais que nunca pensaram em identidade visual"
-  },
-  {
-    titulo_base: "Iluminação profissional para lives e videoconferências: guia completo",
-    keyword_principal: "iluminação para lives profissionais",
-    keywords: ["iluminação para Zoom", "como melhorar imagem em videochamada", "setup de luz para vídeo"],
-    angulo: "tutorial passo a passo, linguagem acessível, sem jargão técnico"
-  },
-  {
-    titulo_base: "Retrato profissional vs. foto de celular: qual a diferença real?",
-    keyword_principal: "retrato profissional fotógrafo",
-    keywords: ["foto profissional vs selfie", "qualidade foto para LinkedIn", "retratista Florianópolis"],
-    angulo: "comparativo honesto — quando vale contratar fotógrafo e quando o celular resolve"
-  },
-  {
-    titulo_base: "Como se preparar para uma sessão de fotos profissional",
-    keyword_principal: "sessão de fotos profissional",
-    keywords: ["como se preparar para foto profissional", "dicas para sessão fotográfica", "o que vestir na sessão de fotos"],
-    angulo: "guia prático com checklist — roupa, expressão, postura, mentalidade"
-  },
-  {
-    titulo_base: "Posicionamento de marca pessoal para empreendedores",
-    keyword_principal: "posicionamento de marca pessoal",
-    keywords: ["personal branding empreendedor", "como se posicionar no mercado", "marca pessoal para negócios"],
-    angulo: "estratégico — como imagem e posicionamento se conectam para gerar mais clientes"
-  },
-  {
-    titulo_base: "Fotógrafo corporativo em Florianópolis: o que você precisa saber",
-    keyword_principal: "fotógrafo corporativo Florianópolis",
-    keywords: ["fotógrafo profissional Florianópolis", "estúdio fotográfico Florianópolis", "fotografia corporativa SC"],
-    angulo: "informativo local — o que considerar ao contratar, diferenciais, Studio Frois"
-  },
-  {
-    titulo_base: "Presença digital: por que sua imagem online vale mais do que parece",
-    keyword_principal: "presença digital imagem profissional",
-    keywords: ["imagem online profissional", "como aparecer bem na internet", "foto para redes sociais"],
-    angulo: "provocativo e reflexivo — como pessoas são julgadas online antes de falar"
-  },
-  {
-    titulo_base: "Como o seu arquétipo define a forma como você deve ser fotografado",
-    keyword_principal: "arquétipo fotografia profissional",
-    keywords: ["arquétipo de imagem", "fotografia personalizada", "identidade visual fotografia"],
-    angulo: "único e diferenciado — apresentar o Método Frois de forma natural e educativa"
-  },
-  {
-    titulo_base: "LinkedIn: como usar sua foto para atrair oportunidades de negócio",
-    keyword_principal: "foto profissional para LinkedIn",
-    keywords: ["LinkedIn foto corporativa", "imagem LinkedIn profissional", "perfil LinkedIn fotografia"],
-    angulo: "prático e específico — o que a foto do LinkedIn comunica e como otimizá-la"
-  },
-  {
-    titulo_base: "Personal branding para médicos e profissionais da saúde",
-    keyword_principal: "personal branding para médicos",
-    keywords: ["foto profissional médico", "imagem para profissional de saúde", "branding médico Florianópolis"],
-    angulo: "nicho específico — como usar imagem para construir autoridade na área da saúde"
-  },
-  {
-    titulo_base: "Sessão de fotos para empresas: como fazer um book corporativo completo",
-    keyword_principal: "book fotográfico corporativo",
-    keywords: ["book corporativo empresa", "fotos para site institucional", "fotografia para equipe"],
-    angulo: "guia completo — o que incluir, como planejar e o que esperar do resultado"
-  },
-  {
-    titulo_base: "Conteúdo de vídeo para empreendedores: como parecer profissional",
-    keyword_principal: "como parecer profissional no vídeo",
-    keywords: ["conteúdo profissional para Instagram", "como gravar vídeo profissional", "setup para conteúdo"],
-    angulo: "prático — dicas de luz, ângulo, fundo e postura aplicáveis hoje"
-  },
+  { titulo_base: 'Como uma boa foto de perfil pode aumentar suas vendas', keyword_principal: 'foto de perfil profissional', keywords: ['foto perfil linkedin', 'foto profissional florianopolis', 'retrato corporativo'], angulo: 'cases e dados concretos' },
+  { titulo_base: 'Presença digital: porque sua imagem online vale mais do que parece', keyword_principal: 'presença digital imagem', keywords: ['marca pessoal digital', 'imagem profissional online', 'posicionamento digital'], angulo: 'transformação e resultado' },
+  { titulo_base: 'Quanto custa um fotógrafo corporativo em Florianópolis', keyword_principal: 'fotógrafo corporativo Florianópolis', keywords: ['preço ensaio corporativo', 'fotógrafo executivo florianopolis', 'valor sessão foto profissional'], angulo: 'educação e transparência' },
+  { titulo_base: 'Como escolher o fotógrafo certo para sua marca pessoal', keyword_principal: 'fotógrafo marca pessoal', keywords: ['escolher fotógrafo profissional', 'fotógrafo executivos florianopolis', 'retrato marca pessoal'], angulo: 'guia prático' },
+  { titulo_base: 'O que é posicionamento de imagem e por que executivos precisam disso', keyword_principal: 'posicionamento de imagem executivos', keywords: ['imagem pessoal profissional', 'marca pessoal executivo', 'autoridade imagem'], angulo: 'conceito e aplicação' },
+  { titulo_base: 'Headshot para LinkedIn: como uma foto transforma seu perfil', keyword_principal: 'headshot LinkedIn Florianópolis', keywords: ['foto linkedin profissional', 'headshot executivo', 'foto perfil linkedin florianopolis'], angulo: 'resultado prático' },
+  { titulo_base: 'Como preparar seu figurino para um ensaio de marca pessoal', keyword_principal: 'figurino ensaio fotográfico corporativo', keywords: ['roupa para foto profissional', 'figurino retrato corporativo', 'como se vestir para foto profissional'], angulo: 'guia passo a passo' },
+  { titulo_base: 'Arquétipos de marca: como usar sua personalidade para atrair clientes', keyword_principal: 'arquétipos de marca pessoal', keywords: ['arquetipo marca', 'personalidade marca pessoal', 'identidade visual executivo'], angulo: 'metodologia Método Frois' },
+  { titulo_base: 'Por que advogados e médicos precisam de fotos profissionais', keyword_principal: 'foto profissional advogado médico Florianópolis', keywords: ['fotógrafo profissionais liberais', 'retrato advogado florianopolis', 'foto médico profissional'], angulo: 'nicho específico' },
+  { titulo_base: 'Fotografia de autoridade: o que diferencia uma foto comum de uma foto que vende', keyword_principal: 'fotografia de autoridade', keywords: ['foto que vende', 'retrato autoridade', 'imagem que atrai clientes'], angulo: 'técnica e resultado' },
+  { titulo_base: 'Como empresários de Florianópolis estão usando retratos para fechar mais negócios', keyword_principal: 'retratos corporativos empresários Florianópolis', keywords: ['ensaio empresarial florianopolis', 'foto empresario', 'retrato corporativo resultado'], angulo: 'case local' },
+  { titulo_base: 'Antes e depois: como uma sessão de retratos transforma a percepção de um profissional', keyword_principal: 'antes e depois retratos profissionais', keywords: ['transformação imagem profissional', 'sessão foto antes depois', 'resultado ensaio corporativo'], angulo: 'transformação visual' },
+  { titulo_base: 'O erro mais comum que profissionais cometem com sua imagem nas redes sociais', keyword_principal: 'erro imagem profissional redes sociais', keywords: ['erros foto profissional instagram', 'imagem ruim redes sociais', 'como melhorar imagem online'], angulo: 'problema e solução' },
+  { titulo_base: 'Podcast e imagem: como construir autoridade em vídeo e foto ao mesmo tempo', keyword_principal: 'podcast imagem autoridade', keywords: ['produção podcast florianopolis', 'imagem autoridade video', 'marca pessoal podcast'], angulo: 'sinergia de canais' },
+  { titulo_base: 'Método Frois: a abordagem que une arquétipos, direção e fotografia estratégica', keyword_principal: 'Método Frois fotografia estratégica', keywords: ['metodo frois', 'fotografia arquétipos', 'direção comportamental fotografia'], angulo: 'apresentação da metodologia' }
 ];
 
-// ─── HELPERS ─────────────────────────────────────────────────────────────────
+function gerarSlug(titulo) {
+  return titulo
+    .toLowerCase()
+    .normalize('NFD')
+    .replace(/[\u0300-\u036f]/g, '')
+    .replace(/[^a-z0-9\s-]/g, '')
+    .trim()
+    .replace(/\s+/g, '-')
+    .substring(0, 80);
+}
+
 function gerarId() {
-  const chars = 'ABCDEFGHJKLMNPQRSTUVWXYZ23456789';
-  let id = 'POST-';
-  for (let i = 0; i < 5; i++) {
-    id += chars[Math.floor(Math.random() * chars.length)];
-  }
-  return id;
+  return 'POST-' + Math.random().toString(36).substr(2, 5).toUpperCase();
 }
 
 function dataHoje() {
-  const hoje = new Date();
-  const dia = String(hoje.getDate()).padStart(2, '0');
-  const mes = String(hoje.getMonth() + 1).padStart(2, '0');
-  const ano = hoje.getFullYear();
-  return `${dia}/${mes}/${ano}`;
+  return new Date().toLocaleDateString('pt-BR');
 }
 
-function escolherTopico(configContent) {
-  const naoUsados = TOPICOS.filter(t =>
-    !configContent.includes(t.keyword_principal.substring(0, 25))
-  );
-  const lista = naoUsados.length > 0 ? naoUsados : TOPICOS;
-  return lista[Math.floor(Math.random() * lista.length)];
+function escolherTopico(postsExistentes) {
+  const titulosUsados = postsExistentes.map(p => p.title);
+  const disponiveis = TOPICOS.filter(t => !titulosUsados.includes(t.titulo_base));
+  if (disponiveis.length === 0) return TOPICOS[Math.floor(Math.random() * TOPICOS.length)];
+  return disponiveis[Math.floor(Math.random() * disponiveis.length)];
 }
 
-function escolherImagem(configContent) {
-  const naoUsadas = IMAGENS.filter(img => !configContent.includes(img.substring(0, 50)));
-  return naoUsadas.length > 0
-    ? naoUsadas[Math.floor(Math.random() * naoUsadas.length)]
-    : IMAGENS[Math.floor(Math.random() * IMAGENS.length)];
+function escolherImagem(postsExistentes) {
+  const usadas = postsExistentes.map(p => p.imageUrl);
+  const disponiveis = IMAGENS.filter(i => !usadas.includes(i));
+  if (disponiveis.length === 0) return IMAGENS[Math.floor(Math.random() * IMAGENS.length)];
+  return disponiveis[Math.floor(Math.random() * disponiveis.length)];
 }
 
 function montarPrompt(topico) {
-  return `Você é o Mac Frois, fotógrafo retratista há mais de 10 anos com estúdio próprio (Studio Frois) em Florianópolis, SC. Você foi enfermeiro por 20 anos, o que te deu uma capacidade única de ler pessoas. Você criou o Método Frois, baseado nos 12 arquétipos de Carol S. Pearson, para ajudar profissionais a construírem uma identidade visual autêntica.
-
-Escreva um post editorial para o blog do site macfrois.com.br sobre:
+  return `Você é Mac Frois, fotógrafo especialista em retratos corporativos e posicionamento de imagem em Florianópolis, SC. Escreva um artigo de blog profissional em português brasileiro.
 
 TEMA: ${topico.titulo_base}
-PALAVRA-CHAVE PRINCIPAL: ${topico.keyword_principal}
-PALAVRAS-CHAVE SECUNDÁRIAS: ${topico.keywords.join(', ')}
+KEYWORD PRINCIPAL: ${topico.keyword_principal}
+KEYWORDS SECUNDÁRIAS: ${topico.keywords.join(', ')}
 ÂNGULO: ${topico.angulo}
 
 REGRAS OBRIGATÓRIAS:
-1. Tom: editorial, inteligente, autêntico. Especialista que fala de pessoa para pessoa.
-2. Use a palavra-chave principal nas primeiras 100 palavras
-3. Estrutura: abertura impactante (2-3 parágrafos) + 4 seções com títulos em CAPS + FAQ com 3 perguntas e respostas + encerramento com CTA natural
-4. Comprimento: 800 a 1000 palavras
-5. Mencione Florianópolis naturalmente quando fizer sentido
-6. Mencione o Método Frois ou Studio Frois em pelo menos um ponto
-7. Use apenas texto corrido com quebras de linha. Sem markdown, sem # ou **.
-8. Escreva na primeira pessoa
-9. Dê pelo menos um conselho concreto que o leitor pode aplicar hoje
-
-RETORNE APENAS o texto do post, sem introdução ou comentário.`;
+1. Título exato: "${topico.titulo_base}"
+2. Entre 600 e 900 palavras
+3. Tom: profissional, direto, sem exageros
+4. Mencione Florianópolis naturalmente ao longo do texto
+5. Use a keyword principal nos primeiros 100 caracteres
+6. Inclua subtítulos em MAIÚSCULAS seguidos de dois pontos
+7. Sem markdown, sem asteriscos, sem hashtags — texto corrido
+8. Finalize com um parágrafo de CTA mencionando o Método Frois e o WhatsApp (48) 99623-1894
+9. Retorne APENAS o texto do artigo, sem comentários adicionais`;
 }
 
-// ─── CHAMADA À API ────────────────────────────────────────────────────────────
 function chamarAPI(prompt) {
   return new Promise((resolve, reject) => {
     const body = JSON.stringify({
@@ -192,7 +106,6 @@ function chamarAPI(prompt) {
       max_tokens: 2000,
       messages: [{ role: 'user', content: prompt }]
     });
-
     const options = {
       hostname: 'api.anthropic.com',
       path: '/v1/messages',
@@ -204,107 +117,68 @@ function chamarAPI(prompt) {
         'Content-Length': Buffer.byteLength(body)
       }
     };
-
     const req = https.request(options, (res) => {
       let data = '';
-      res.on('data', chunk => { data += chunk; });
+      res.on('data', chunk => data += chunk);
       res.on('end', () => {
-        if (res.statusCode !== 200) {
-          reject(new Error(`API retornou status ${res.statusCode}: ${data}`));
-          return;
-        }
         try {
           const parsed = JSON.parse(data);
-          resolve(parsed.content[0].text.trim());
+          resolve(parsed.content[0].text);
         } catch (e) {
-          reject(new Error(`Erro ao parsear resposta: ${e.message}`));
+          reject(new Error('Erro ao parsear resposta: ' + data));
         }
       });
     });
-
     req.on('error', reject);
     req.write(body);
     req.end();
   });
 }
 
-// ─── INJETAR NO CONFIG.TS ────────────────────────────────────────────────────
-function injetarNoConfig(conteudo, topico, imageUrl) {
-  const configPath = path.join(process.cwd(), 'config.ts');
+function carregarIndex() {
+  const indexPath = path.join(__dirname, '../public/posts/index.json');
+  if (!fs.existsSync(indexPath)) return [];
+  return JSON.parse(fs.readFileSync(indexPath, 'utf-8'));
+}
 
-  if (!fs.existsSync(configPath)) {
-    throw new Error(`config.ts não encontrado em: ${configPath}`);
-  }
+function salvarPost(id, slug, topico, conteudo, imageUrl, data) {
+  const postsDir = path.join(__dirname, '../public/posts');
+  if (!fs.existsSync(postsDir)) fs.mkdirSync(postsDir, { recursive: true });
 
-  let config = fs.readFileSync(configPath, 'utf-8');
+  const post = {
+    id,
+    slug,
+    title: topico.titulo_base,
+    date: data,
+    imageUrl,
+    keyword: topico.keyword_principal,
+    excerpt: conteudo.substring(0, 200).replace(/\n/g, ' ') + '...',
+    content: conteudo
+  };
+  fs.writeFileSync(path.join(postsDir, `${slug}.json`), JSON.stringify(post, null, 2), 'utf-8');
 
-  if (!config.includes('EDITORIAL_DATABASE')) {
-    throw new Error('config.ts não contém EDITORIAL_DATABASE. Verifique se o arquivo está correto.');
-  }
+  const indexPath = path.join(__dirname, '../public/posts/index.json');
+  const index = carregarIndex();
+  index.unshift({ id, slug, title: topico.titulo_base, date: data, imageUrl, keyword: topico.keyword_principal, excerpt: post.excerpt });
+  fs.writeFileSync(indexPath, JSON.stringify(index, null, 2), 'utf-8');
 
+  console.log(`Post salvo: public/posts/${slug}.json`);
+}
+
+async function main() {
+  console.log('Iniciando geração de post...');
+  const index = carregarIndex();
+  const topico = escolherTopico(index);
+  const imageUrl = escolherImagem(index);
   const id = gerarId();
+  const slug = gerarSlug(topico.titulo_base);
   const data = dataHoje();
 
-  // Escapar o conteúdo para template literal do TypeScript
-  const conteudoEscapado = conteudo
-    .replace(/\\/g, '\\\\')
-    .replace(/`/g, '\\`')
-    .replace(/\$/g, '\\$');
-
-  const novoPost = `  {
-    id: "${id}",
-    date: "${data}",
-    title: "${topico.titulo_base}",
-    imageUrl: "${imageUrl}",
-    content: \`${conteudoEscapado}\`,
-  },`;
-
-  // Inserir antes do último ]; do arquivo
-  const posicao = config.lastIndexOf('];');
-  if (posicao === -1) {
-    throw new Error('Não encontrei o fechamento ]; no config.ts. Estrutura inválida.');
-  }
-
-  const configAtualizado =
-    config.substring(0, posicao) +
-    novoPost + '\n' +
-    config.substring(posicao);
-
-  fs.writeFileSync(configPath, configAtualizado, 'utf-8');
-
-  console.log(`✅ Post "${id}" inserido com sucesso`);
-  console.log(`📌 Título: ${topico.titulo_base}`);
-  console.log(`🖼️  Imagem: ${imageUrl}`);
-
-  return { id };
+  console.log(`Tópico: ${topico.titulo_base}`);
+  const prompt = montarPrompt(topico);
+  const conteudo = await chamarAPI(prompt);
+  salvarPost(id, slug, topico, conteudo, imageUrl, data);
+  console.log('Concluído.');
 }
 
-// ─── MAIN ────────────────────────────────────────────────────────────────────
-async function main() {
-  try {
-    console.log('🚀 Iniciando geração de post — Blog Mac Frois');
-    console.log(`📅 Data: ${dataHoje()}`);
-
-    const configPath = path.join(process.cwd(), 'config.ts');
-    const configAtual = fs.readFileSync(configPath, 'utf-8');
-
-    const topico = escolherTopico(configAtual);
-    console.log(`🎯 Tópico: ${topico.titulo_base}`);
-
-    const imageUrl = escolherImagem(configAtual);
-    console.log(`🖼️  Imagem selecionada`);
-
-    const conteudo = await chamarAPI(montarPrompt(topico));
-    console.log(`📄 Conteúdo gerado: ${conteudo.length} caracteres`);
-
-    injetarNoConfig(conteudo, topico, imageUrl);
-
-    console.log('\n🎉 Post publicado com sucesso!');
-
-  } catch (err) {
-    console.error('❌ Erro:', err.message);
-    process.exit(1);
-  }
-}
-
-main();
+main().catch(err => { console.error(err); process.exit(1); });
