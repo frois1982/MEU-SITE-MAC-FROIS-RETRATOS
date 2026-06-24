@@ -2,14 +2,13 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { SectionTitle, Skeleton } from '../components/UI';
 import { PortfolioItem } from '../types';
-import { DRIVE_SCRIPT_URL } from '../config';
 import { X, Maximize2, ChevronLeft, ChevronRight } from 'lucide-react';
 
 export const Portfolio: React.FC = () => {
   useEffect(() => {
-    document.title = 'Portfólio | Mac Frois — Retratos Corporativos Florianópolis';
+    document.title = 'PortfÃ³lio | Mac Frois â Retratos Corporativos FlorianÃ³polis';
     const meta = document.querySelector('meta[name="description"]');
-    if (meta) meta.setAttribute('content', 'Veja o portfólio de Mac Frois — retratos corporativos, posicionamento de imagem e fotografia de marca pessoal para executivos e profissionais liberais em Florianópolis, SC.');
+    if (meta) meta.setAttribute('content', 'Veja o portfÃ³lio de Mac Frois â retratos corporativos, posicionamento de imagem e fotografia de marca pessoal para executivos e profissionais liberais em FlorianÃ³polis, SC.');
     const canonical = document.querySelector('link[rel="canonical"]');
     if (canonical) canonical.setAttribute('href', 'https://www.macfrois.com.br/portfolio');
   }, []);
@@ -22,38 +21,43 @@ export const Portfolio: React.FC = () => {
   const touchStartX = useRef<number | null>(null);
 
   useEffect(() => {
-    if (!DRIVE_SCRIPT_URL) {
-      setLoading(false);
-      return;
-    }
-
-    fetch(DRIVE_SCRIPT_URL)
-      .then(res => res.json())
-      .then(data => {
-        if (Array.isArray(data)) {
-          const mappedItems: PortfolioItem[] = data
+    const CLOUD_NAME = 'dlahvdclb';
+    const fetchCloudinary = async () => {
+      try {
+        const res = await fetch(
+          `https://res.cloudinary.com/${CLOUD_NAME}/image/list/portfolio.json`
+        );
+        const data = await res.json();
+        
+        if (data.resources && Array.isArray(data.resources)) {
+          const mappedItems: PortfolioItem[] = data.resources
             .filter((file: any) => {
-              const name = file.name.toUpperCase();
-              return name.startsWith('CORP_') || name.startsWith('PORT_') || name.startsWith('ART_');
+              const name = (file.public_id || '').toUpperCase();
+              return name.includes('CORP_') ||
+                      name.includes('PORT_') ||
+                      name.includes('ART_');
             })
             .map((file: any) => {
-              const name = file.name.toUpperCase();
+              const name = (file.public_id || '').toUpperCase();
+              const originalName = file.public_id.split('/').pop() || '';
               return {
-                id: file.id,
-                title: file.name.split('_')[1]?.split('.')[0] || 'Sem Título',
-                category: name.startsWith('CORP_') ? 'Corporate' : 
-                          name.startsWith('PORT_') ? 'Portrait' : 'Artistic',
-                imageUrl: file.url
+                id: file.public_id,
+                title: originalName.split('_')[1]?.split('.')[0] || 'Retrato',
+                category: name.includes('CORP_') ? 'Corporate' :
+                           name.includes('PORT_') ? 'Portrait' : 'Artistic',
+                imageUrl: `https://res.cloudinary.com/${CLOUD_NAME}/image/upload/q_auto,f_auto,w_800/${file.public_id}`
               };
             });
           setItems(mappedItems);
         }
+      } catch (err) {
+        console.error('Erro Cloudinary:', err);
+      } finally {
         setLoading(false);
-      })
-      .catch(err => {
-        console.error("Erro Portfolio Drive:", err);
-        setLoading(false);
-      });
+      }
+    };
+
+    fetchCloudinary();
   }, []);
 
   const filteredItems = activeCategory === 'All' 
@@ -108,10 +112,10 @@ export const Portfolio: React.FC = () => {
   }, [selectedIndex]);
 
   const categories = [
-    { id: 'All', label: 'Todos', description: 'Uma visão geral da busca pela verdade visual.' },
+    { id: 'All', label: 'Todos', description: 'Uma visÃ£o geral da busca pela verdade visual.' },
     { id: 'Corporate', label: 'Corporativo', description: 'Retratos que comunicam poder e autoridade.' },
-    { id: 'Portrait', label: 'Retratos', description: 'A celebração da essência humana.' },
-    { id: 'Artistic', label: 'Artístico', description: 'Narrativas criadas com luz e sombra.' }
+    { id: 'Portrait', label: 'Retratos', description: 'A celebraÃ§Ã£o da essÃªncia humana.' },
+    { id: 'Artistic', label: 'ArtÃ­stico', description: 'Narrativas criadas com luz e sombra.' }
   ];
 
   const currentCategory = categories.find(c => c.id === activeCategory);
@@ -120,7 +124,7 @@ export const Portfolio: React.FC = () => {
   return (
     <div className="pt-32 pb-24 bg-black min-h-screen">
       <div className="container mx-auto px-6 text-zinc-200">
-        <SectionTitle title="Portfólio" subtitle="Trabalhos Dinâmicos" />
+        <SectionTitle title="PortfÃ³lio" subtitle="Trabalhos DinÃ¢micos" />
         
         <div className="flex flex-col items-center mb-20">
           <div className="flex flex-wrap justify-center gap-4 mb-6">
@@ -146,8 +150,8 @@ export const Portfolio: React.FC = () => {
           </div>
         ) : items.length === 0 ? (
           <div className="text-center py-20 text-zinc-700 tracking-[0.3em] uppercase text-xs border border-dashed border-zinc-900 rounded-lg">
-            Aguardando sincronização com Google Drive... <br/>
-            <span className="text-[10px] mt-4 block text-zinc-500">Certifique-se de que a pasta está pública e as fotos têm os prefixos corretos.</span>
+            Aguardando sincronizaÃ§Ã£o com Google Drive... <br/>
+            <span className="text-[10px] mt-4 block text-zinc-500">Certifique-se de que a pasta estÃ¡ pÃºblica e as fotos tÃªm os prefixos corretos.</span>
           </div>
         ) : (
           <div className="columns-1 md:columns-2 lg:columns-3 gap-8 space-y-8">
