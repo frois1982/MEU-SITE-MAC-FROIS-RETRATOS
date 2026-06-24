@@ -1,9 +1,17 @@
 
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Button, SectionTitle } from '../components/UI';
 import { Cpu, Zap, Clock, ShieldCheck, Check, Smartphone, Layers, LayoutGrid, Play } from 'lucide-react';
 
 export const LuminaPro: React.FC = () => {
+  useEffect(() => {
+    document.title = 'Lumina Pro | Mac Frois — Minicurso de Iluminação Profissional';
+    const meta = document.querySelector('meta[name="description"]');
+    if (meta) meta.setAttribute('content', 'Lumina Pro — Minicurso de Iluminação Profissional por Mac Frois. Aprenda as técnicas de iluminação usadas em retratos corporativos de alto impacto. R$97.');
+    const canonical = document.querySelector('link[rel="canonical"]');
+    if (canonical) canonical.setAttribute('href', 'https://www.macfrois.com.br/lumina-pro');
+  }, []);
+
   // MAC: Quando tiver o link da Play Store, coloque aqui!
   const googlePlayUrl = "https://play.google.com/store/apps/details?id=com.macfrois.luminapro";
   
