@@ -28,6 +28,17 @@ const BlogPost: React.FC = () => {
   if (loading) return <div style={{ color: '#C9A84C', padding: '4rem', textAlign: 'center' }}>Carregando...</div>;
   if (!post) return null;
 
+  // Atualiza title e meta description dinamicamente por post
+  useEffect(() => {
+    if (post) {
+      document.title = `${post.title} | Mac Frois`;
+      const meta = document.querySelector('meta[name="description"]');
+      if (meta) meta.setAttribute('content', post.excerpt);
+      const canonical = document.querySelector('link[rel="canonical"]');
+      if (canonical) canonical.setAttribute('href', `https://www.macfrois.com.br/blog/${post.slug}`);
+    }
+  }, [post]);
+
   return (
     <article style={{ maxWidth: '780px', margin: '0 auto', padding: '4rem 2rem', color: '#fff' }}>
       <button onClick={() => navigate('/blog')} style={{ background: 'none', border: '1px solid #C9A84C', color: '#C9A84C', padding: '0.5rem 1.2rem', cursor: 'pointer', marginBottom: '2rem', borderRadius: '4px' }}>
