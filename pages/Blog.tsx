@@ -11,6 +11,14 @@ interface PostMeta {
 }
 
 const Blog: React.FC = () => {
+  useEffect(() => {
+    document.title = 'Blog | Mac Frois — Fotografia, Imagem e Marca Pessoal';
+    const meta = document.querySelector('meta[name="description"]');
+    if (meta) meta.setAttribute('content', 'Artigos sobre fotografia corporativa, posicionamento de imagem, marca pessoal e estratégias para profissionais e executivos em Florianópolis, SC.');
+    const canonical = document.querySelector('link[rel="canonical"]');
+    if (canonical) canonical.setAttribute('href', 'https://www.macfrois.com.br/blog');
+  }, []);
+
   const navigate = useNavigate();
   const [posts, setPosts] = useState<PostMeta[]>([]);
   const [loading, setLoading] = useState(true);
