@@ -6,6 +6,14 @@ import { DRIVE_SCRIPT_URL } from '../config';
 import { X, Maximize2, ChevronLeft, ChevronRight } from 'lucide-react';
 
 export const Portfolio: React.FC = () => {
+  useEffect(() => {
+    document.title = 'Portfólio | Mac Frois — Retratos Corporativos Florianópolis';
+    const meta = document.querySelector('meta[name="description"]');
+    if (meta) meta.setAttribute('content', 'Veja o portfólio de Mac Frois — retratos corporativos, posicionamento de imagem e fotografia de marca pessoal para executivos e profissionais liberais em Florianópolis, SC.');
+    const canonical = document.querySelector('link[rel="canonical"]');
+    if (canonical) canonical.setAttribute('href', 'https://www.macfrois.com.br/portfolio');
+  }, []);
+
   const [items, setItems] = useState<PortfolioItem[]>([]);
   const [loading, setLoading] = useState(true);
   const [activeCategory, setActiveCategory] = useState<string>('All');
