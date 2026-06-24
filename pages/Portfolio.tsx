@@ -6,9 +6,9 @@ import { X, Maximize2, ChevronLeft, ChevronRight } from 'lucide-react';
 
 export const Portfolio: React.FC = () => {
   useEffect(() => {
-    document.title = 'PortfÃÂ³lio | Mac Frois Ã¢ÂÂ Retratos Corporativos FlorianÃÂ³polis';
+    document.title = 'PortfÃÂÃÂ³lio | Mac Frois ÃÂ¢ÃÂÃÂ Retratos Corporativos FlorianÃÂÃÂ³polis';
     const meta = document.querySelector('meta[name="description"]');
-    if (meta) meta.setAttribute('content', 'Veja o portfÃÂ³lio de Mac Frois Ã¢ÂÂ retratos corporativos, posicionamento de imagem e fotografia de marca pessoal para executivos e profissionais liberais em FlorianÃÂ³polis, SC.');
+    if (meta) meta.setAttribute('content', 'Veja o portfÃÂÃÂ³lio de Mac Frois ÃÂ¢ÃÂÃÂ retratos corporativos, posicionamento de imagem e fotografia de marca pessoal para executivos e profissionais liberais em FlorianÃÂÃÂ³polis, SC.');
     const canonical = document.querySelector('link[rel="canonical"]');
     if (canonical) canonical.setAttribute('href', 'https://www.macfrois.com.br/portfolio');
   }, []);
@@ -22,6 +22,7 @@ export const Portfolio: React.FC = () => {
 
   useEffect(() => {
     const CLOUD_NAME = 'dlahvdclb';
+
     const fetchCloudinary = async () => {
       try {
         const res = await fetch(
@@ -29,33 +30,39 @@ export const Portfolio: React.FC = () => {
           { cache: 'no-cache' }
         );
 
-        if (!res.ok) {
-          console.error('Cloudinary status:', res.status);
-          setLoading(false);
-          return;
+        if (res.ok) {
+          const data = await res.json();
+          if (data.resources && Array.isArray(data.resources)) {
+            const mappedItems: PortfolioItem[] = data.resources
+              .filter((file: any) => {
+                const name = (file.public_id || '').toUpperCase();
+                return name.includes('CORP_') ||
+                        name.includes('PORT_') ||
+                        name.includes('ART_');
+              })
+              .map((file: any) => {
+                const publicId = file.public_id || '';
+                const name = publicId.toUpperCase();
+                const baseName = publicId.split('/').pop() || '';
+                return {
+                  id: publicId,
+                  title: baseName.split('_')[1]?.split('.')[0] || 'Retrato',
+                  category: name.includes('CORP_') ? 'Corporate' :
+                             name.includes('PORT_') ? 'Portrait' : 'Artistic',
+                  imageUrl: `https://res.cloudinary.com/${CLOUD_NAME}/image/upload/q_auto,f_auto,w_800/${publicId}`
+                };
+              });
+            setItems(mappedItems);
+            setLoading(false);
+            return;
+          }
         }
-        const data = await res.json();
-        
-        if (data.resources && Array.isArray(data.resources)) {
-          const mappedItems: PortfolioItem[] = data.resources
-            .filter((file: any) => {
-              const name = (file.public_id || '').toUpperCase();
-              return name.includes('CORP_') ||
-                      name.includes('PORT_') ||
-                      name.includes('ART_');
-            })
-            .map((file: any) => {
-              const name = (file.public_id || '').toUpperCase();
-              const originalName = file.public_id.split('/').pop() || '';
-              return {
-                id: file.public_id,
-                title: originalName.split('_')[1]?.split('.')[0] || 'Retrato',
-                category: name.includes('CORP_') ? 'Corporate' :
-                           name.includes('PORT_') ? 'Portrait' : 'Artistic',
-                imageUrl: `https://res.cloudinary.com/${CLOUD_NAME}/image/upload/q_auto,f_auto,w_800/${file.public_id}`
-              };
-            });
-          setItems(mappedItems);
+
+        // Fallback: carregar lista estática do public/portfolio-images.json
+        const fallbackRes = await fetch('/portfolio-images.json');
+        if (fallbackRes.ok) {
+          const fallbackData = await fallbackRes.json();
+          setItems(fallbackData);
         }
       } catch (err) {
         console.error('Erro Cloudinary:', err);
@@ -119,10 +126,10 @@ export const Portfolio: React.FC = () => {
   }, [selectedIndex]);
 
   const categories = [
-    { id: 'All', label: 'Todos', description: 'Uma visÃÂ£o geral da busca pela verdade visual.' },
+    { id: 'All', label: 'Todos', description: 'Uma visÃÂÃÂ£o geral da busca pela verdade visual.' },
     { id: 'Corporate', label: 'Corporativo', description: 'Retratos que comunicam poder e autoridade.' },
-    { id: 'Portrait', label: 'Retratos', description: 'A celebraÃÂ§ÃÂ£o da essÃÂªncia humana.' },
-    { id: 'Artistic', label: 'ArtÃÂ­stico', description: 'Narrativas criadas com luz e sombra.' }
+    { id: 'Portrait', label: 'Retratos', description: 'A celebraÃÂÃÂ§ÃÂÃÂ£o da essÃÂÃÂªncia humana.' },
+    { id: 'Artistic', label: 'ArtÃÂÃÂ­stico', description: 'Narrativas criadas com luz e sombra.' }
   ];
 
   const currentCategory = categories.find(c => c.id === activeCategory);
@@ -131,7 +138,7 @@ export const Portfolio: React.FC = () => {
   return (
     <div className="pt-32 pb-24 bg-black min-h-screen">
       <div className="container mx-auto px-6 text-zinc-200">
-        <SectionTitle title="PortfÃÂ³lio" subtitle="Trabalhos DinÃÂ¢micos" />
+        <SectionTitle title="PortfÃÂÃÂ³lio" subtitle="Trabalhos DinÃÂÃÂ¢micos" />
         
         <div className="flex flex-col items-center mb-20">
           <div className="flex flex-wrap justify-center gap-4 mb-6">
@@ -157,8 +164,8 @@ export const Portfolio: React.FC = () => {
           </div>
         ) : items.length === 0 ? (
           <div className="text-center py-20 text-zinc-700 tracking-[0.3em] uppercase text-xs border border-dashed border-zinc-900 rounded-lg">
-            Aguardando sincronizaÃÂ§ÃÂ£o com Google Drive... <br/>
-            <span className="text-[10px] mt-4 block text-zinc-500">Certifique-se de que a pasta estÃÂ¡ pÃÂºblica e as fotos tÃÂªm os prefixos corretos.</span>
+            Aguardando sincronizaÃÂÃÂ§ÃÂÃÂ£o com Google Drive... <br/>
+            <span className="text-[10px] mt-4 block text-zinc-500">Certifique-se de que a pasta estÃÂÃÂ¡ pÃÂÃÂºblica e as fotos tÃÂÃÂªm os prefixos corretos.</span>
           </div>
         ) : (
           <div className="columns-1 md:columns-2 lg:columns-3 gap-8 space-y-8">
