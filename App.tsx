@@ -8,6 +8,7 @@ import { Blog } from './pages/Blog';
 import { Contact } from './pages/Contact';
 import { LuminaPro } from './pages/LuminaPro';
 import { Admin } from './pages/Admin';
+import BlogPost from './pages/BlogPost';
 
 // Scroll to top helper
 const ScrollToTop = () => {
@@ -30,6 +31,7 @@ const App: React.FC = () => {
           <Route path="/produtos" element={<Products />} />
           <Route path="/lumina-pro" element={<LuminaPro />} />
           <Route path="/blog" element={<Blog />} />
+          <Route path="/blog/:slug" element={<BlogPost />} />
           <Route path="/contato" element={<Contact />} />
           <Route path="/admin" element={<Admin />} />
         </Routes>
