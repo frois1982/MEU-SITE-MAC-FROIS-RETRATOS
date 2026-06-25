@@ -21,6 +21,8 @@ jobs:
       - name: Gerar post
         env:
           ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+          LANG: en_US.UTF-8
+          LC_ALL: en_US.UTF-8
         run: node scripts/generate-post.cjs
 
       - name: Gerar sitemap
