@@ -6,12 +6,12 @@ import { X, Maximize2, ChevronLeft, ChevronRight } from 'lucide-react';
 
 export const Portfolio: React.FC = () => {
   useEffect(() => {
-    document.title = 'PortfÃÂÃÂ³lio | Mac Frois ÃÂ¢ÃÂÃÂ Retratos Corporativos FlorianÃÂÃÂ³polis';
+    document.title = 'Portfolio | Mac Frois - Retratos Corporativos Florianopolis';
     const meta = document.querySelector('meta[name="description"]');
-    if (meta) meta.setAttribute('content', 'Veja o portfÃÂÃÂ³lio de Mac Frois ÃÂ¢ÃÂÃÂ retratos corporativos, posicionamento de imagem e fotografia de marca pessoal para executivos e profissionais liberais em FlorianÃÂÃÂ³polis, SC.');
+    if (meta) meta.setAttribute('content', 'Veja o portfolio de Mac Frois - retratos corporativos, posicionamento de imagem e fotografia de marca pessoal para executivos e profissionais liberais em Florianopolis, SC.');
     const canonical = document.querySelector('link[rel="canonical"]');
     if (canonical) canonical.setAttribute('href', 'https://www.macfrois.com.br/portfolio');
-  }, []);
+  }, []);h
 
   const [items, setItems] = useState<PortfolioItem[]>([]);
   const [loading, setLoading] = useState(true);
@@ -126,10 +126,10 @@ export const Portfolio: React.FC = () => {
   }, [selectedIndex]);
 
   const categories = [
-    { id: 'All', label: 'Todos', description: 'Uma visÃÂÃÂ£o geral da busca pela verdade visual.' },
+    { id: 'All', label: 'Todos', description: 'Uma visao geral da busca pela verdade visual.' },
     { id: 'Corporate', label: 'Corporativo', description: 'Retratos que comunicam poder e autoridade.' },
-    { id: 'Portrait', label: 'Retratos', description: 'A celebraÃÂÃÂ§ÃÂÃÂ£o da essÃÂÃÂªncia humana.' },
-    { id: 'Artistic', label: 'ArtÃÂÃÂ­stico', description: 'Narrativas criadas com luz e sombra.' }
+    { id: 'Portrait', label: 'Retratos', description: 'A celebracao da essencia humana.' },
+    { id: 'Artistic', label: 'Artistico', description: 'Narrativas criadas com luz e sombra.' }
   ];
 
   const currentCategory = categories.find(c => c.id === activeCategory);
@@ -138,7 +138,7 @@ export const Portfolio: React.FC = () => {
   return (
     <div className="pt-32 pb-24 bg-black min-h-screen">
       <div className="container mx-auto px-6 text-zinc-200">
-        <SectionTitle title="PortfÃÂÃÂ³lio" subtitle="Trabalhos DinÃÂÃÂ¢micos" />
+        <SectionTitle title="Portfolio" subtitle="Trabalhos Dinamicos" />
         
         <div className="flex flex-col items-center mb-20">
           <div className="flex flex-wrap justify-center gap-4 mb-6">
@@ -164,8 +164,8 @@ export const Portfolio: React.FC = () => {
           </div>
         ) : items.length === 0 ? (
           <div className="text-center py-20 text-zinc-700 tracking-[0.3em] uppercase text-xs border border-dashed border-zinc-900 rounded-lg">
-            Aguardando sincronizaÃÂÃÂ§ÃÂÃÂ£o com Google Drive... <br/>
-            <span className="text-[10px] mt-4 block text-zinc-500">Certifique-se de que a pasta estÃÂÃÂ¡ pÃÂÃÂºblica e as fotos tÃÂÃÂªm os prefixos corretos.</span>
+            Aguardando sincronizacao com Google Drive... <br/>
+            <span className="text-[10px] mt-4 block text-zinc-500">Certifique-se de que a pasta esta publica e as fotos tem os prefixos corretos.</span>
           </div>
         ) : (
           <div className="columns-1 md:columns-2 lg:columns-3 gap-8 space-y-8">
