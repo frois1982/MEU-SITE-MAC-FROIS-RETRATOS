@@ -3,6 +3,8 @@
 const https = require('https');
 const fs = require('fs');
 const path = require('path');
+process.env.PYTHONIOENCODING = 'utf-8';
+Buffer.prototype.toJSON = Buffer.prototype.toJSON;
 
 const ANTHROPIC_API_KEY = process.env.ANTHROPIC_API_KEY;
 if (!ANTHROPIC_API_KEY) {
