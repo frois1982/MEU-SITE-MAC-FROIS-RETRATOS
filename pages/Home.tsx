@@ -16,18 +16,14 @@ export const Home: React.FC = () => {
   const navigate = useNavigate();
 
   const SLIDE_IMAGES = [
-    'https://res.cloudinary.com/dlahvdclb/image/upload/q_auto,f_auto,w_1920/CORP_Empresario.jpg_17_HOME_kxttmo',
-    'https://res.cloudinary.com/dlahvdclb/image/upload/q_auto,f_auto,w_1920/CORP_Empresario.jpg_16_HOME_ua4vd7',
-    'https://res.cloudinary.com/dlahvdclb/image/upload/q_auto,f_auto,w_1920/CORP_Empresario.jpg_15_HOME_m6bzke',
-    'https://res.cloudinary.com/dlahvdclb/image/upload/q_auto,f_auto,w_1920/CORP_Empresario.jpg_14_HOME_f9go9j',
-    'https://res.cloudinary.com/dlahvdclb/image/upload/q_auto,f_auto,w_1920/CORP_Empresario.jpg_01_HOME_lr8raz',
-    'https://res.cloudinary.com/dlahvdclb/image/upload/q_auto,f_auto,w_1920/ART_Conceito.jpg_HOME_mnu0wx',
-    'https://res.cloudinary.com/dlahvdclb/image/upload/q_auto,f_auto,w_1920/ART_Conceito.jpg_3_HOME_awekl7',
-    'https://res.cloudinary.com/dlahvdclb/image/upload/q_auto,f_auto,w_1920/ART_Conceito.jpg_30_fupjfo',
-    'https://res.cloudinary.com/dlahvdclb/image/upload/q_auto,f_auto,w_1920/ART_Conceito.jpg_28_gri96l',
-    'https://res.cloudinary.com/dlahvdclb/image/upload/q_auto,f_auto,w_1920/ART_Conceito.jpg_24_d5pfhv',
     'https://res.cloudinary.com/dlahvdclb/image/upload/q_auto,f_auto,w_1920/ART_Conceito.jpg_13_w535cm',
     'https://res.cloudinary.com/dlahvdclb/image/upload/q_auto,f_auto,w_1920/ART_Conceito.jpg_20_a45w8y',
+    'https://res.cloudinary.com/dlahvdclb/image/upload/q_auto,f_auto,w_1920/CAPA_HOME_Banner_Home_zgijcd',
+    'https://res.cloudinary.com/dlahvdclb/image/upload/q_auto,f_auto,w_1920/CORP_Empresario.jpg_16_HOME_ua4vd7',
+    'https://res.cloudinary.com/dlahvdclb/image/upload/q_auto,f_auto,w_1920/PORT_RetratoMulher.jpg_15_rkn23u',
+    'https://res.cloudinary.com/dlahvdclb/image/upload/q_auto,f_auto,w_1920/ART_Conceito.jpg_12_snwwqv',
+    'https://res.cloudinary.com/dlahvdclb/image/upload/q_auto,f_auto,w_1920/ART_Conceito.jpg_21_xpxs8i',
+    'https://res.cloudinary.com/dlahvdclb/image/upload/q_auto,f_auto,w_1920/ART_Conceito.jpg_25_hku7p9',
   ];
 
   const MANIFESTO_IMG = 'https://res.cloudinary.com/dlahvdclb/image/upload/q_auto,f_auto,w_800/MANIF__Manifesto_Home_efkwms';
@@ -80,12 +76,12 @@ export const Home: React.FC = () => {
     <div className="text-zinc-200">
       <section className="relative h-screen flex items-center justify-center overflow-hidden">
         <div className="absolute inset-0 z-0 transition-opacity duration-1000" style={{ opacity: transitioning ? 0 : 1 }}>
-          <img src={SLIDE_IMAGES[currentSlide]} alt="Mac Frois Retrato" className="w-full h-full object-cover opacity-50" />
+          <img src={SLIDE_IMAGES[currentSlide]} alt="Mac Frois Retrato" className="w-full h-full object-cover opacity-80" />
         </div>
         <div className="absolute inset-0 z-0 opacity-0">
           <img src={SLIDE_IMAGES[nextSlide]} alt="" className="w-full h-full object-cover" />
         </div>
-        <div className="absolute inset-0 z-10 bg-gradient-to-r from-black/80 via-black/40 to-transparent" />
+        <div className="absolute inset-0 z-10 bg-gradient-to-r from-black/60 via-black/20 to-transparent" />
         <div className="relative z-20 w-full max-w-7xl mx-auto px-6 flex flex-col justify-end h-full pb-20">
           <div className="max-w-xl">
             <p className="text-gold-500 text-xs tracking-[0.4em] uppercase mb-4">Florianopolis, Brasil</p>
