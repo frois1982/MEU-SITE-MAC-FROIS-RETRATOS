@@ -11,7 +11,7 @@ export const Portfolio: React.FC = () => {
     if (meta) meta.setAttribute('content', 'Veja o portfolio de Mac Frois - retratos corporativos, posicionamento de imagem e fotografia de marca pessoal para executivos e profissionais liberais em Florianopolis, SC.');
     const canonical = document.querySelector('link[rel="canonical"]');
     if (canonical) canonical.setAttribute('href', 'https://www.macfrois.com.br/portfolio');
-  }, []);h
+  }, []);
 
   const [items, setItems] = useState<PortfolioItem[]>([]);
   const [loading, setLoading] = useState(true);
