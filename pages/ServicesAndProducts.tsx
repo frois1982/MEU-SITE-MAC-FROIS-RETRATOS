@@ -115,7 +115,7 @@ export const Services: React.FC = () => {
           <div className="border-t border-zinc-800 pt-8">
             <p className="text-zinc-600 text-xs tracking-widest uppercase mb-2">A partir de</p>
             <p className="text-white text-4xl font-serif mb-1">R$ 7.990</p>
-            <p className="text-zinc-600 text-xs mb-8">Projeto Da Vinci R$7.990 · Michelangelo R$16.990</p>
+            <p className="text-zinc-600 text-xs mb-8">Projeto Da Vinci e Michelangelo · Solicite uma proposta</p>
             <a
               href={getWhatsappLink('Projetos Estrategicos de Imagem')}
               target="_blank"
