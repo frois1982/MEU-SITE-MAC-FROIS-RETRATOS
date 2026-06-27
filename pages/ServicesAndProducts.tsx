@@ -170,7 +170,7 @@ export const Products: React.FC = () => {
               <img
                 src="https://res.cloudinary.com/dlahvdclb/image/upload/q_auto,f_auto,w_800/CORP_Empresario.jpg_15_HOME_m6bzke"
                 alt="Retratos que Vendem"
-                className="w-full h-full object-cover grayscale group-hover:grayscale-0 group-hover:scale-105 transition-all duration-700 opacity-80 group-hover:opacity-100"
+                className="w-full h-full object-cover object-top grayscale group-hover:grayscale-0 group-hover:scale-105 transition-all duration-700 opacity-80 group-hover:opacity-100"
               />
               <div className="absolute top-3 left-3 bg-gold-600 text-black text-[10px] font-bold px-3 py-1 tracking-widest">
                 DISPONIVEL
@@ -180,7 +180,7 @@ export const Products: React.FC = () => {
               <p className="text-gold-500 text-xs tracking-[0.3em] uppercase mb-2">Curso Completo</p>
               <h3 className="text-2xl font-serif text-white mb-3">Retratos que Vendem</h3>
               <p className="text-zinc-500 text-sm tracking-wider leading-relaxed mb-6 flex-1">
-                O metodo completo para criar retratos corporativos que posicionam, vendem e transformam a percepcao do seu cliente.
+                Curso completo de fotografia de retratos corporativos. Aprenda do zero ou evolua como profissional — tecnicas de iluminacao, camera, lente, posicionamento e como fechar clientes de alto valor com sua fotografia.
               </p>
               <div className="mb-6">
                 <p className="text-zinc-600 text-xs tracking-widest uppercase mb-1">Investimento</p>
@@ -188,7 +188,9 @@ export const Products: React.FC = () => {
                 <p className="text-zinc-600 text-xs">ou R$ 297 no evergreen</p>
               </div>
               <a
-                href="/retratos-que-vendem"
+                href="https://go.hotmart.com/I106036177H"
+                target="_blank"
+                rel="noopener noreferrer"
                 className="block w-full text-center py-3 bg-gold-600 text-black text-xs tracking-[0.3em] uppercase hover:bg-gold-500 transition-all duration-300 font-semibold"
               >
                 Ver o Curso
