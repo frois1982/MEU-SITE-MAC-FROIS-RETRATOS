@@ -26,13 +26,24 @@ export const Home: React.FC = () => {
     'https://res.cloudinary.com/dlahvdclb/image/upload/q_auto,f_auto,w_1920/ART_Conceito.jpg_25_hku7p9',
   ];
 
+  const CAROUSEL_IMAGES = [
+    'https://res.cloudinary.com/dlahvdclb/image/upload/q_auto,f_auto,w_800/CORP_Empresario.jpg_21_bjqwpc',
+    'https://res.cloudinary.com/dlahvdclb/image/upload/q_auto,f_auto,w_800/CORP_Empresario.jpg_8_nxkkrn',
+    'https://res.cloudinary.com/dlahvdclb/image/upload/q_auto,f_auto,w_800/CORP_Empresario.jpg_1_t7953b',
+    'https://res.cloudinary.com/dlahvdclb/image/upload/q_auto,f_auto,w_800/PORT_RetratoMulher.jpg_tdfex5',
+    'https://res.cloudinary.com/dlahvdclb/image/upload/q_auto,f_auto,w_800/PORT_RetratoMulher.jpg_4_k2hva7',
+    'https://res.cloudinary.com/dlahvdclb/image/upload/q_auto,f_auto,w_800/PORT_RetratoMulher.jpg_1_wnepiz',
+    'https://res.cloudinary.com/dlahvdclb/image/upload/q_auto,f_auto,w_800/ART_Conceito.jpg_37_dfmovo',
+    'https://res.cloudinary.com/dlahvdclb/image/upload/q_auto,f_auto,w_800/ART_Conceito.jpg_25_hku7p9',
+    'https://res.cloudinary.com/dlahvdclb/image/upload/q_auto,f_auto,w_800/ART_Conceito.jpg_15_ve3dfk',
+    'https://res.cloudinary.com/dlahvdclb/image/upload/q_auto,f_auto,w_800/ART_Conceito.jpg_9_ijnyji',
+  ];
+
   const MANIFESTO_IMG = 'https://res.cloudinary.com/dlahvdclb/image/upload/q_auto,f_auto,w_800/MANIF__Manifesto_Home_efkwms';
 
   const [currentSlide, setCurrentSlide] = useState(0);
   const [nextSlide, setNextSlide] = useState(1);
   const [transitioning, setTransitioning] = useState(false);
-  const [featuredItems, setFeaturedItems] = useState<PortfolioItem[]>([]);
-  const [loading, setLoading] = useState(true);
 
   const advanceSlide = useCallback(() => {
     setTransitioning(true);
@@ -48,26 +59,17 @@ export const Home: React.FC = () => {
     return () => clearInterval(timer);
   }, [advanceSlide]);
 
+  // Adicionar estilo da animacao
   useEffect(() => {
-    const CLOUD_NAME = 'dlahvdclb';
-    const fetchCloudinary = async () => {
-      try {
-        const res = await fetch(`https://res.cloudinary.com/${CLOUD_NAME}/image/list/portfolio.json`, { cache: 'no-cache' });
-        if (res.ok) {
-          const data = await res.json();
-          if (data.resources && Array.isArray(data.resources)) {
-            const combined = data.resources.filter((f: any) => (f.public_id || '').toUpperCase().includes('_HOME')).slice(0, 4).map((file: any) => ({
-              id: file.public_id,
-              title: (file.public_id || '').split('_')[1]?.split('.')[0] || 'Obra',
-              category: 'Artistic' as 'Artistic',
-              imageUrl: `https://res.cloudinary.com/${CLOUD_NAME}/image/upload/q_auto,f_auto,w_800/${file.public_id}`
-            }));
-            setFeaturedItems(combined);
-          }
-        }
-      } catch (err) { console.error(err); } finally { setLoading(false); }
-    };
-    fetchCloudinary();
+    const style = document.createElement('style');
+    style.innerHTML = `
+      @keyframes carousel-scroll {
+        0% { transform: translateX(0); }
+        100% { transform: translateX(-50%); }
+      }
+    `;
+    document.head.appendChild(style);
+    return () => document.head.removeChild(style);
   }, []);
 
   const whatsappUrl = "https://wa.me/5548996231894";
@@ -147,28 +149,53 @@ export const Home: React.FC = () => {
           </div>
         </div>
       </section>
-      <section className="py-32 bg-zinc-950">
-        <div className="container mx-auto px-6 text-center">
+      {/* Carrossel de Portfolio */}
+      <section className="py-24 bg-zinc-950 overflow-hidden">
+        <div className="container mx-auto px-6 text-center mb-16">
           <SectionTitle title="A Estetica da Verdade" subtitle="Portfolio em Destaque" />
-          {loading ? (
-            <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mt-16">{[1,2,3,4].map(i => <Skeleton key={i} className="aspect-[3/4] w-full" />)}</div>
-          ) : featuredItems.length > 0 ? (
-            <div className="grid grid-cols-2 md:grid-cols-4 gap-6 mt-16">
-              {featuredItems.map((item) => (
-                <div key={item.id} onClick={() => navigate('/portfolio')} className="aspect-[3/4] overflow-hidden grayscale hover:grayscale-0 transition-all duration-1000 group cursor-pointer relative shadow-2xl border border-zinc-900 rounded-sm">
-                  <img src={item.imageUrl} alt={item.title} className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-[2000ms] opacity-60 group-hover:opacity-100" />
-                  <div className="absolute inset-0 bg-black/50 opacity-0 group-hover:opacity-100 transition-all duration-700 flex items-center justify-center p-6">
-                    <div className="text-center p-8 w-full h-full flex flex-col items-center justify-center">
-                      <span className="text-white text-[11px] tracking-[0.5em] uppercase border-b border-gold-600/50 pb-3 block mb-4 font-bold">Ver Obra</span>
-                      <span className="text-gold-500 text-[9px] tracking-[0.4em] uppercase opacity-80 italic font-medium">{item.title}</span>
-                    </div>
-                  </div>
+        </div>
+
+        <div className="relative">
+          {/* Gradientes nas bordas */}
+          <div className="absolute left-0 top-0 bottom-0 w-24 bg-gradient-to-r from-zinc-950 to-transparent z-10 pointer-events-none" />
+          <div className="absolute right-0 top-0 bottom-0 w-24 bg-gradient-to-l from-zinc-950 to-transparent z-10 pointer-events-none" />
+
+          {/* Track do carrossel */}
+          <div
+            className="flex gap-4"
+            style={{
+              animation: 'carousel-scroll 30s linear infinite',
+              width: 'max-content',
+            }}
+          >
+            {/* Duplicado para loop infinito */}
+            {[...CAROUSEL_IMAGES, ...CAROUSEL_IMAGES].map((url, i) => (
+              <div
+                key={i}
+                onClick={() => navigate('/portfolio')}
+                className="relative overflow-hidden cursor-pointer flex-shrink-0 group border border-zinc-800 rounded-sm"
+                style={{ width: '280px', height: '380px' }}
+              >
+                <img
+                  src={url}
+                  alt="Portfolio Mac Frois"
+                  className="w-full h-full object-cover grayscale group-hover:grayscale-0 opacity-70 group-hover:opacity-100 group-hover:scale-105 transition-all duration-700"
+                />
+                <div className="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-all duration-500 flex items-end p-4">
+                  <span className="text-gold-500 text-xs tracking-[0.3em] uppercase">Ver Portfolio</span>
                 </div>
-              ))}
-            </div>
-          ) : (
-            <div className="text-center py-24 text-zinc-800 tracking-[0.6em] uppercase text-xs border border-dashed border-zinc-900 rounded-lg mt-16 font-bold">Sincronize arquivos para destacar fotos aqui.</div>
-          )}
+              </div>
+            ))}
+          </div>
+        </div>
+
+        <div className="text-center mt-12">
+          <button
+            onClick={() => navigate('/portfolio')}
+            className="px-8 py-3 border border-gold-600 text-gold-500 text-xs tracking-[0.3em] uppercase hover:bg-gold-600/10 transition-all duration-300"
+          >
+            Ver Portfolio Completo
+          </button>
         </div>
       </section>
     </div>
