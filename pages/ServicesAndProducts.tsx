@@ -144,26 +144,124 @@ export const Services: React.FC = () => {
 
 export const Products: React.FC = () => {
   useEffect(() => {
-    document.title = 'Produtos Digitais | Mac Frois';
+    document.title = 'Produtos Digitais | Mac Frois — Cursos de Fotografia';
+    const meta = document.querySelector('meta[name="description"]');
+    if (meta) meta.setAttribute('content', 'Cursos digitais de fotografia por Mac Frois. Iluminacao Profissional e Retratos que Vendem disponíveis agora no Hotmart.');
   }, []);
 
   return (
-    <div className="pt-32 pb-24 bg-black min-h-screen">
-      <div className="container mx-auto px-6 text-zinc-200 text-center">
+    <div className="min-h-screen bg-zinc-950">
+
+      <div className="pt-32 pb-16 text-center px-6">
         <p className="text-gold-500 text-xs tracking-[0.4em] uppercase mb-4">Mac Frois Digital</p>
-        <h1 className="text-4xl font-serif text-white mb-6">Em Breve</h1>
-        <div className="w-12 h-px bg-gold-600 mx-auto mb-8" />
-        <p className="text-zinc-500 text-sm tracking-wider">
-          Novos produtos digitais chegando em breve.
+        <h1 className="text-4xl md:text-5xl font-serif text-white mb-4">Cursos e Produtos</h1>
+        <div className="w-12 h-px bg-gold-600 mx-auto mb-6" />
+        <p className="text-zinc-500 text-sm max-w-lg mx-auto tracking-wider leading-relaxed">
+          Conhecimento pratico para fotografos e criadores de conteudo que querem resultados reais.
         </p>
-        <a
-          href="https://wa.me/5548996231894"
-          target="_blank"
-          rel="noopener noreferrer"
-          className="inline-block mt-10 px-8 py-3 border border-gold-600 text-gold-500 text-xs tracking-[0.3em] uppercase hover:bg-gold-600/10 transition-all duration-300"
-        >
-          Falar com Mac Frois
-        </a>
+      </div>
+
+      <div className="max-w-6xl mx-auto px-6 pb-24">
+        <div className="grid md:grid-cols-3 gap-6">
+
+          {/* Retratos que Vendem */}
+          <div className="bg-zinc-900 border border-gold-600/40 hover:border-gold-500 transition-all duration-500 flex flex-col group relative overflow-hidden">
+            <div className="relative overflow-hidden aspect-[4/3]">
+              <img
+                src="https://res.cloudinary.com/dlahvdclb/image/upload/q_auto,f_auto,w_800/CORP_Empresario.jpg_15_HOME_m6bzke"
+                alt="Retratos que Vendem"
+                className="w-full h-full object-cover grayscale group-hover:grayscale-0 group-hover:scale-105 transition-all duration-700 opacity-80 group-hover:opacity-100"
+              />
+              <div className="absolute top-3 left-3 bg-gold-600 text-black text-[10px] font-bold px-3 py-1 tracking-widest">
+                DISPONIVEL
+              </div>
+            </div>
+            <div className="p-8 flex flex-col flex-1">
+              <p className="text-gold-500 text-xs tracking-[0.3em] uppercase mb-2">Curso Completo</p>
+              <h3 className="text-2xl font-serif text-white mb-3">Retratos que Vendem</h3>
+              <p className="text-zinc-500 text-sm tracking-wider leading-relaxed mb-6 flex-1">
+                O metodo completo para criar retratos corporativos que posicionam, vendem e transformam a percepcao do seu cliente.
+              </p>
+              <div className="mb-6">
+                <p className="text-zinc-600 text-xs tracking-widest uppercase mb-1">Investimento</p>
+                <p className="text-white text-2xl font-serif">R$ 247</p>
+                <p className="text-zinc-600 text-xs">ou R$ 297 no evergreen</p>
+              </div>
+              <a
+                href="/retratos-que-vendem"
+                className="block w-full text-center py-3 bg-gold-600 text-black text-xs tracking-[0.3em] uppercase hover:bg-gold-500 transition-all duration-300 font-semibold"
+              >
+                Ver o Curso
+              </a>
+            </div>
+          </div>
+
+          {/* Iluminacao Profissional */}
+          <div className="bg-zinc-900 border border-zinc-800 hover:border-zinc-600 transition-all duration-500 flex flex-col group relative overflow-hidden">
+            <div className="relative overflow-hidden aspect-[4/3]">
+              <img
+                src="https://res.cloudinary.com/dlahvdclb/image/upload/q_auto,f_auto,w_800/ART_Conceito.jpg_7_m4gl6u"
+                alt="Iluminacao Profissional"
+                className="w-full h-full object-cover grayscale group-hover:grayscale-0 group-hover:scale-105 transition-all duration-700 opacity-80 group-hover:opacity-100"
+              />
+              <div className="absolute top-3 left-3 bg-zinc-700 text-zinc-200 text-[10px] font-bold px-3 py-1 tracking-widest">
+                DISPONIVEL
+              </div>
+            </div>
+            <div className="p-8 flex flex-col flex-1">
+              <p className="text-gold-500 text-xs tracking-[0.3em] uppercase mb-2">Mini-curso</p>
+              <h3 className="text-2xl font-serif text-white mb-3">Iluminacao Profissional</h3>
+              <p className="text-zinc-500 text-sm tracking-wider leading-relaxed mb-6 flex-1">
+                Tecnicas de iluminacao profissional para foto e video. Funciona com smartphone ou camera. Para criadores de conteudo e fotografos.
+              </p>
+              <div className="mb-6">
+                <p className="text-zinc-600 text-xs tracking-widest uppercase mb-1">Investimento</p>
+                <p className="text-white text-2xl font-serif">R$ 97</p>
+                <p className="text-zinc-600 text-xs">Acesso imediato na Hotmart</p>
+              </div>
+              <a
+                href="/metodo-frois/minicurso.html"
+                className="block w-full text-center py-3 border border-zinc-600 text-zinc-300 text-xs tracking-[0.3em] uppercase hover:border-gold-600 hover:text-gold-500 transition-all duration-300"
+              >
+                Ver o Curso
+              </a>
+            </div>
+          </div>
+
+          {/* Retratos pelo Celular — Em breve */}
+          <div className="bg-zinc-900/50 border border-zinc-900 flex flex-col relative overflow-hidden opacity-60">
+            <div className="relative overflow-hidden aspect-[4/3] bg-zinc-900 flex items-center justify-center">
+              <img
+                src="https://res.cloudinary.com/dlahvdclb/image/upload/q_auto,f_auto,w_800/PORT_RetratoMulher_bzzoge"
+                alt="Retratos pelo Celular"
+                className="w-full h-full object-cover grayscale opacity-30"
+              />
+              <div className="absolute inset-0 flex items-center justify-center">
+                <p className="text-zinc-500 text-xs tracking-[0.4em] uppercase">Em Construcao</p>
+              </div>
+            </div>
+            <div className="p-8 flex flex-col flex-1">
+              <p className="text-zinc-600 text-xs tracking-[0.3em] uppercase mb-2">Em breve</p>
+              <h3 className="text-2xl font-serif text-zinc-600 mb-3">Retratos pelo Celular</h3>
+              <p className="text-zinc-700 text-sm tracking-wider leading-relaxed mb-6 flex-1">
+                Aprenda a criar retratos profissionais usando apenas o seu smartphone. Em producao.
+              </p>
+              <div className="mb-6">
+                <p className="text-zinc-700 text-xs tracking-widest uppercase mb-1">Investimento</p>
+                <p className="text-zinc-600 text-2xl font-serif">Em breve</p>
+              </div>
+              <a
+                href="https://wa.me/5548996231894?text=Ola%20Mac!%20Quero%20ser%20avisado%20sobre%20o%20lancamento%20do%20curso%20Retratos%20pelo%20Celular!"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="block w-full text-center py-3 border border-zinc-800 text-zinc-600 text-xs tracking-[0.3em] uppercase hover:border-zinc-600 hover:text-zinc-400 transition-all duration-300"
+              >
+                Avisar no Lancamento
+              </a>
+            </div>
+          </div>
+
+        </div>
       </div>
     </div>
   );
