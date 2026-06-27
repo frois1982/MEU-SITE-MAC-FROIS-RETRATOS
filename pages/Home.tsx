@@ -89,7 +89,20 @@ export const Home: React.FC = () => {
             <p className="text-zinc-400 text-sm tracking-widest uppercase mb-10">A ciencia por tras do retrato estrategico.</p>
             <div className="flex flex-wrap gap-3">
               <button onClick={() => navigate('/portfolio')} className="px-6 py-2.5 border border-gold-600 text-gold-500 text-xs tracking-[0.2em] uppercase hover:bg-gold-600/10 transition-all duration-300">Portfolio</button>
-              <a href={whatsappUrl} target="_blank" rel="noopener noreferrer" className="px-6 py-2.5 border border-zinc-600 text-zinc-400 text-xs tracking-[0.2em] uppercase hover:border-gold-600 hover:text-gold-500 transition-all duration-300 flex items-center gap-2"><MessageCircle size={14} />WhatsApp</a>
+              <a
+                href={whatsappUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="px-6 py-2.5 text-xs tracking-[0.2em] uppercase transition-all duration-300 flex items-center gap-2 hover:border-gold-600 hover:text-gold-500"
+                style={{
+                  border: '1px solid #25D366',
+                  backgroundColor: 'rgba(37, 211, 102, 0.15)',
+                  color: '#25D366',
+                }}
+              >
+                <MessageCircle size={14} />
+                WhatsApp
+              </a>
               <button onClick={() => navigate('/servicos')} className="px-6 py-2.5 border border-zinc-600 text-zinc-400 text-xs tracking-[0.2em] uppercase hover:border-gold-600 hover:text-gold-500 transition-all duration-300">Projetos</button>
             </div>
           </div>
