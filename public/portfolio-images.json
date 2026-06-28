@@ -60,6 +60,24 @@
     "imageUrl": "https://res.cloudinary.com/dlahvdclb/image/upload/q_auto,f_auto,w_1200/CORP_Empresario.jpg_16_ylij4j"
   },
   {
+    "id": "EU4A8093_bntcra",
+    "title": "Retrato",
+    "category": "Corporate",
+    "imageUrl": "https://res.cloudinary.com/dlahvdclb/image/upload/q_auto,f_auto,w_1200/12062026-EU4A8093_bntcra"
+  },
+  {
+    "id": "EU4A6541_ztrudm",
+    "title": "Retrato",
+    "category": "Corporate",
+    "imageUrl": "https://res.cloudinary.com/dlahvdclb/image/upload/q_auto,f_auto,w_1200/EU4A6541_ztrudm"
+  },
+  {
+    "id": "EU4A6402_joygri",
+    "title": "Retrato",
+    "category": "Corporate",
+    "imageUrl": "https://res.cloudinary.com/dlahvdclb/image/upload/q_auto,f_auto,w_1200/EU4A6402_joygri"
+  },
+  {
     "id": "CORP_Empresario.jpg_15_HOME_m6bzke",
     "title": "Empresario",
     "category": "Corporate",
@@ -118,6 +136,24 @@
     "title": "Empresario",
     "category": "Corporate",
     "imageUrl": "https://res.cloudinary.com/dlahvdclb/image/upload/q_auto,f_auto,w_1200/CORP_Empresario.jpg_6_axnfrp"
+  },
+  {
+    "id": "EU4A8102_dhulll",
+    "title": "Retrato",
+    "category": "Corporate",
+    "imageUrl": "https://res.cloudinary.com/dlahvdclb/image/upload/q_auto,f_auto,w_1200/12062026-EU4A8102_dhulll"
+  },
+  {
+    "id": "EU4A6409_y0rhhl",
+    "title": "Retrato",
+    "category": "Corporate",
+    "imageUrl": "https://res.cloudinary.com/dlahvdclb/image/upload/q_auto,f_auto,w_1200/EU4A6409_y0rhhl"
+  },
+  {
+    "id": "EU4A6476_bqdogp",
+    "title": "Retrato",
+    "category": "Portrait",
+    "imageUrl": "https://res.cloudinary.com/dlahvdclb/image/upload/q_auto,f_auto,w_1200/EU4A6476_bqdogp"
   },
   {
     "id": "CORP_Empresario.jpg_02_id7psq",
@@ -180,6 +216,30 @@
     "imageUrl": "https://res.cloudinary.com/dlahvdclb/image/upload/q_auto,f_auto,w_1200/PORT_RetratoMulher.jpg_2_mwoeww"
   },
   {
+    "id": "EU4A8850_tud2ed",
+    "title": "Retrato",
+    "category": "Corporate",
+    "imageUrl": "https://res.cloudinary.com/dlahvdclb/image/upload/q_auto,f_auto,w_1200/13062026-EU4A8850_tud2ed"
+  },
+  {
+    "id": "EU4A6397_o5pbwb",
+    "title": "Retrato",
+    "category": "Portrait",
+    "imageUrl": "https://res.cloudinary.com/dlahvdclb/image/upload/q_auto,f_auto,w_1200/EU4A6397_o5pbwb"
+  },
+  {
+    "id": "EU4A6345_jaf2v8",
+    "title": "Retrato",
+    "category": "Portrait",
+    "imageUrl": "https://res.cloudinary.com/dlahvdclb/image/upload/q_auto,f_auto,w_1200/EU4A6345_jaf2v8"
+  },
+  {
+    "id": "EU4A8129_zqsays",
+    "title": "Retrato",
+    "category": "Corporate",
+    "imageUrl": "https://res.cloudinary.com/dlahvdclb/image/upload/q_auto,f_auto,w_1200/12062026-EU4A8129_zqsays"
+  },
+  {
     "id": "PORT_RetratoMulher.jpg_1_wnepiz",
     "title": "RetratoMulher",
     "category": "Portrait",
@@ -238,6 +298,24 @@
     "title": "Conceito",
     "category": "Artistic",
     "imageUrl": "https://res.cloudinary.com/dlahvdclb/image/upload/q_auto,f_auto,w_1200/ART_Conceito.jpg_34_nzb5zk"
+  },
+  {
+    "id": "EU4A8855_qzmycr",
+    "title": "Retrato",
+    "category": "Corporate",
+    "imageUrl": "https://res.cloudinary.com/dlahvdclb/image/upload/q_auto,f_auto,w_1200/13062026-EU4A8855_qzmycr"
+  },
+  {
+    "id": "EU4A6336_rjvdut",
+    "title": "Retrato",
+    "category": "Portrait",
+    "imageUrl": "https://res.cloudinary.com/dlahvdclb/image/upload/q_auto,f_auto,w_1200/EU4A6336_rjvdut"
+  },
+  {
+    "id": "EU4A8124_rci3rk",
+    "title": "Retrato",
+    "category": "Corporate",
+    "imageUrl": "https://res.cloudinary.com/dlahvdclb/image/upload/q_auto,f_auto,w_1200/12062026-EU4A8124_rci3rk"
   },
   {
     "id": "ART_Conceito.jpg_33_dipbu3",
