@@ -188,9 +188,7 @@ export const Products: React.FC = () => {
                 <p className="text-zinc-600 text-xs">ou R$ 297 no evergreen</p>
               </div>
               <a
-                href="https://go.hotmart.com/I106036177H"
-                target="_blank"
-                rel="noopener noreferrer"
+                href="/retratos-que-vendem"
                 className="block w-full text-center py-3 bg-gold-600 text-black text-xs tracking-[0.3em] uppercase hover:bg-gold-500 transition-all duration-300 font-semibold"
               >
                 Ver o Curso
