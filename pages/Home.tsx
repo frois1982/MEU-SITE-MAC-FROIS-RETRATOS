@@ -117,11 +117,11 @@ export const Home: React.FC = () => {
           <img src={ACTIVE_SLIDES[nextSlide]} alt="" className="w-full h-full object-cover" />
         </div>
         <div className="absolute inset-0 z-10 bg-gradient-to-r from-black/60 via-black/20 to-transparent" />
-        <div className="relative z-20 w-full max-w-7xl mx-auto px-6 flex flex-col justify-end h-full pb-20">
+        <div className="relative z-20 w-full max-w-7xl mx-auto px-6 flex flex-col justify-end h-full pb-8 md:pb-20">
           <div className="max-w-xl">
-            <p className="text-gold-500 text-xs tracking-[0.4em] uppercase mb-4">Florianopolis, Brasil</p>
-            <h1 className="text-5xl md:text-7xl font-serif text-white mb-4 leading-tight">Imagem e<br />Autoridade</h1>
-            <p className="text-zinc-400 text-sm tracking-widest uppercase mb-10">A ciencia por tras do retrato estrategico.</p>
+            <p className="text-gold-500 text-xs tracking-[0.4em] uppercase mb-2 md:mb-4">Florianopolis, Brasil</p>
+            <h1 className="text-3xl md:text-7xl font-serif text-white mb-3 md:mb-4 leading-tight">Imagem e<br />Autoridade</h1>
+            <p className="text-zinc-400 text-xs md:text-sm tracking-widest uppercase mb-6 md:mb-10">A ciencia por tras do retrato estrategico.</p>
             <div className="flex flex-wrap gap-3">
               <button onClick={() => navigate('/portfolio')} className="px-6 py-2.5 border border-gold-600 text-gold-500 text-xs tracking-[0.2em] uppercase hover:bg-gold-600/10 transition-all duration-300">Portfolio</button>
               <a
