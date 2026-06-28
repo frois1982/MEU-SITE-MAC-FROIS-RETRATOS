@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Retratos que Vendem — Mac Frois</title>
+<title>Retratos que Vendem · Mac Frois</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,600&family=Jost:wght@300;400;500;600&display=swap" rel="stylesheet">
 <style>
@@ -22,7 +22,7 @@
   --font-body: 'Jost', 'Century Gothic', sans-serif;
   --transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
 }
-*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+*, ::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 html { scroll-behavior: smooth; }
 body { background: var(--navy); color: var(--white); font-family: var(--font-body); font-weight: 300; line-height: 1.7; overflow-x: hidden; }
 h1, h2, h3, h4 { font-family: var(--font-display); font-weight: 600; line-height: 1.2; }
@@ -45,11 +45,9 @@ p { font-size: clamp(0.95rem, 1.5vw, 1.05rem); color: var(--text-body); }
 .btn-cta:hover { transform: translateY(-2px); box-shadow: 0 8px 40px rgba(201,168,76,0.4); }
 .btn-cta-large { font-size: 1.1rem; padding: 1.4rem 4rem; display: block; text-align: center; max-width: 480px; margin: 0 auto; }
 .ornament { text-align: center; color: var(--gold); font-size: 1.4rem; opacity: 0.6; letter-spacing: 0.5em; margin: 1rem 0; }
-
 /* HEADER */
 .site-header { position: fixed; top: 0; left: 0; right: 0; z-index: 100; padding: 1.2rem 2rem; display: flex; justify-content: center; align-items: center; background: rgba(0,16,33,0.9); backdrop-filter: blur(12px); border-bottom: 1px solid rgba(201,168,76,0.15); }
 .logo-header { font-family: var(--font-display); font-size: 1.1rem; font-weight: 400; letter-spacing: 0.2em; color: var(--gold); text-transform: uppercase; }
-
 /* HERO */
 .hero { min-height: 100vh; display: flex; flex-direction: column; justify-content: center; align-items: center; text-align: center; padding: 7rem 2rem 5rem; position: relative; overflow: hidden; }
 .hero::before { content: ''; position: absolute; inset: 0; background: radial-gradient(ellipse 80% 60% at 50% 100%, rgba(201,168,76,0.06) 0%, transparent 70%), radial-gradient(ellipse 60% 40% at 20% 50%, rgba(0,34,68,0.8) 0%, transparent 60%); pointer-events: none; }
@@ -67,7 +65,6 @@ p { font-size: clamp(0.95rem, 1.5vw, 1.05rem); color: var(--text-body); }
 .hero-cta-wrap { opacity: 0; animation: fadeUp 0.8s ease 1s forwards; width: 100%; display: flex; flex-direction: column; align-items: center; gap: 1rem; }
 .security-badges { display: flex; align-items: center; gap: 1.5rem; flex-wrap: wrap; justify-content: center; font-size: 0.75rem; letter-spacing: 0.1em; color: var(--text-muted); font-family: var(--font-body); }
 .security-badges span { display: flex; align-items: center; gap: 0.4rem; }
-
 /* TRANSFORM */
 .transform-section { padding: 7rem 2rem; background: linear-gradient(180deg, var(--navy) 0%, var(--navy-mid) 50%, var(--navy) 100%); position: relative; }
 .transform-section::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 1px; background: linear-gradient(90deg, transparent, var(--gold), transparent); }
@@ -77,7 +74,6 @@ p { font-size: clamp(0.95rem, 1.5vw, 1.05rem); color: var(--text-body); }
 .transform-scene .highlight { color: var(--white); font-style: italic; }
 .transform-scene .gold-moment { color: var(--gold-light); font-style: italic; font-size: 1.1em; }
 .transform-quote { border-left: 2px solid var(--gold); padding: 1.5rem 2rem; margin: 2.5rem 0; background: rgba(201,168,76,0.05); font-family: var(--font-display); font-size: 1.2rem; font-style: italic; color: var(--white); }
-
 /* PROBLEM */
 .problem-section { padding: 6rem 2rem; background: var(--navy-mid); position: relative; }
 .problem-inner { max-width: 740px; margin: 0 auto; }
@@ -85,7 +81,6 @@ p { font-size: clamp(0.95rem, 1.5vw, 1.05rem); color: var(--text-body); }
 .problem-inner h2 em { color: var(--gold-light); font-style: italic; }
 .problem-body p { margin-bottom: 1.2rem; }
 .problem-hook { font-family: var(--font-display); font-size: clamp(1.5rem, 3vw, 2rem); font-style: italic; color: var(--gold-light); text-align: center; margin: 3rem 0 1rem; }
-
 /* PAIN */
 .pain-section { padding: 6rem 2rem; background: var(--navy); position: relative; }
 .pain-section::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 1px; background: linear-gradient(90deg, transparent, rgba(201,168,76,0.3), transparent); }
@@ -98,17 +93,15 @@ p { font-size: clamp(0.95rem, 1.5vw, 1.05rem); color: var(--text-body); }
 .pain-steps p { font-family: var(--font-display); font-size: 1.05rem; font-style: italic; color: var(--text-body); line-height: 1.5; }
 .pain-steps p.heavy { color: var(--white); font-weight: 500; font-style: normal; }
 .pain-revelation { margin-top: 3rem; font-family: var(--font-display); font-size: clamp(1.3rem, 2.5vw, 1.7rem); font-style: italic; color: var(--gold-light); text-align: center; line-height: 1.5; }
-
 /* BLAME */
 .blame-section { padding: 6rem 2rem; background: linear-gradient(135deg, var(--navy-mid), var(--navy)); position: relative; overflow: hidden; }
-.blame-section::after { content: '✦'; position: absolute; right: -2rem; top: 50%; transform: translateY(-50%); font-size: 20rem; color: var(--gold); opacity: 0.02; pointer-events: none; }
+.blame-section::after { content: '❖'; position: absolute; right: -2rem; top: 50%; transform: translateY(-50%); font-size: 20rem; color: var(--gold); opacity: 0.02; pointer-events: none; }
 .blame-inner { max-width: 720px; margin: 0 auto; }
 .blame-title { font-family: var(--font-display); font-size: clamp(1.8rem, 4vw, 3rem); font-weight: 600; color: var(--gold-light); margin-bottom: 3rem; font-style: italic; }
 .blame-list { list-style: none; display: flex; flex-direction: column; gap: 1.2rem; margin: 2rem 0 3rem; }
 .blame-list li { display: flex; gap: 1rem; align-items: flex-start; font-family: var(--font-display); font-size: 1.1rem; color: var(--text-body); line-height: 1.6; }
 .blame-list li::before { content: '✕'; color: var(--gold); opacity: 0.6; font-size: 0.9rem; margin-top: 0.2rem; flex-shrink: 0; }
 .blame-conclusion { font-family: var(--font-display); font-size: clamp(1.2rem, 2.5vw, 1.6rem); font-style: italic; color: var(--white); border-left: 3px solid var(--gold); padding: 1rem 1.5rem; margin-top: 2rem; }
-
 /* AUTHORITY */
 .authority-section { padding: 7rem 2rem; background: var(--navy); position: relative; }
 .authority-section::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 1px; background: linear-gradient(90deg, transparent, var(--gold), transparent); }
@@ -122,7 +115,6 @@ p { font-size: clamp(0.95rem, 1.5vw, 1.05rem); color: var(--text-body); }
 .authority-content p { margin-bottom: 1rem; }
 .authority-name { font-family: var(--font-display); font-size: 2rem; font-style: italic; color: var(--gold-light); margin-top: 2rem; display: block; }
 .authority-title-name { font-family: var(--font-body); font-size: 0.7rem; letter-spacing: 0.3em; text-transform: uppercase; color: var(--text-muted); }
-
 /* COURSE INTRO */
 .course-intro { padding: 7rem 2rem; background: var(--navy-mid); text-align: center; position: relative; }
 .course-intro::before, .course-intro::after { content: ''; position: absolute; left: 0; right: 0; height: 1px; background: linear-gradient(90deg, transparent, rgba(201,168,76,0.4), transparent); }
@@ -133,7 +125,6 @@ p { font-size: clamp(0.95rem, 1.5vw, 1.05rem); color: var(--text-body); }
 .course-intro-body { max-width: 680px; margin: 0 auto; }
 .course-intro-body p { margin-bottom: 1.2rem; text-align: left; }
 .course-promise { font-family: var(--font-display); font-size: clamp(1.2rem, 2.5vw, 1.6rem); font-style: italic; color: var(--gold-light); text-align: center; margin: 2.5rem 0; line-height: 1.5; }
-
 /* MODULES */
 .modules-section { padding: 7rem 2rem; background: var(--navy); }
 .modules-section h2 { text-align: center; color: var(--white); margin-bottom: 4rem; }
@@ -151,7 +142,6 @@ p { font-size: clamp(0.95rem, 1.5vw, 1.05rem); color: var(--text-body); }
 .modules-stat { text-align: center; }
 .modules-stat .num { font-family: var(--font-display); font-size: 2.5rem; font-weight: 700; color: var(--gold); display: block; line-height: 1; }
 .modules-stat .label { font-family: var(--font-body); font-size: 0.7rem; letter-spacing: 0.2em; text-transform: uppercase; color: var(--text-muted); }
-
 /* AUDIENCE */
 .audience-section { padding: 7rem 2rem; background: var(--navy-mid); }
 .audience-section h2 { text-align: center; color: var(--white); margin-bottom: 4rem; }
@@ -168,7 +158,6 @@ p { font-size: clamp(0.95rem, 1.5vw, 1.05rem); color: var(--text-body); }
 .audience-list li .icon { flex-shrink: 0; margin-top: 0.1rem; font-size: 0.8rem; }
 .audience-box.yes .icon { color: var(--gold); }
 .audience-box.no .icon { color: rgba(255,255,255,0.25); }
-
 /* SOCIAL PROOF */
 .social-proof { padding: 7rem 2rem; background: var(--navy); position: relative; }
 .social-proof h2 { text-align: center; color: var(--white); margin-bottom: 4rem; }
@@ -181,7 +170,6 @@ p { font-size: clamp(0.95rem, 1.5vw, 1.05rem); color: var(--text-body); }
 .author-name { font-family: var(--font-body); font-size: 0.85rem; font-weight: 500; color: var(--white); display: block; }
 .author-location { font-size: 0.75rem; color: var(--text-muted); }
 .testimonials-note { text-align: center; margin-top: 2rem; font-size: 0.8rem; color: var(--text-muted); font-style: italic; }
-
 /* BONUS */
 .bonus-section { padding: 7rem 2rem; background: linear-gradient(180deg, var(--navy-mid), var(--navy)); position: relative; }
 .bonus-section::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 1px; background: linear-gradient(90deg, transparent, var(--gold), transparent); }
@@ -209,7 +197,6 @@ p { font-size: clamp(0.95rem, 1.5vw, 1.05rem); color: var(--text-body); }
 .super-bonus-intro { max-width: 780px; margin: 0 auto 2rem; padding: 2rem 2.5rem; border: 1px solid rgba(201,168,76,0.25); background: rgba(201,168,76,0.04); text-align: center; }
 .super-bonus-intro p { font-family: var(--font-display); font-size: clamp(1rem, 2vw, 1.2rem); font-style: italic; color: var(--text-body); line-height: 1.8; }
 .super-bonus-intro strong { color: var(--gold-light); font-style: normal; }
-
 /* OFFER */
 .offer-section { padding: 7rem 2rem; background: var(--navy-mid); text-align: center; position: relative; }
 .offer-section::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 1px; background: linear-gradient(90deg, transparent, var(--gold), transparent); }
@@ -225,7 +212,7 @@ p { font-size: clamp(0.95rem, 1.5vw, 1.05rem); color: var(--text-body); }
 .offer-includes li { display: flex; gap: 0.8rem; font-size: 0.9rem; color: var(--text-body); }
 .offer-includes li::before { content: '✓'; color: var(--gold); flex-shrink: 0; font-weight: 600; }
 .offer-includes li.super-item { color: var(--gold-pale); }
-.offer-includes li.super-item::before { content: '✦'; color: var(--gold-light); }
+.offer-includes li.super-item::before { content: '❖'; color: var(--gold-light); }
 .price-divider { width: 100%; height: 1px; background: rgba(201,168,76,0.2); margin: 2rem 0; }
 .price-display { margin-bottom: 2rem; }
 .price-label { font-family: var(--font-body); font-size: 0.7rem; letter-spacing: 0.3em; text-transform: uppercase; color: var(--text-muted); display: block; margin-bottom: 1rem; }
@@ -235,14 +222,12 @@ p { font-size: clamp(0.95rem, 1.5vw, 1.05rem); color: var(--text-body); }
 .price-cents { font-family: var(--font-display); font-size: 1.8rem; color: var(--white); font-weight: 400; }
 .price-or { font-family: var(--font-body); font-size: 0.75rem; letter-spacing: 0.2em; color: var(--text-muted); margin: 1rem 0 0.5rem; }
 .price-cash { font-family: var(--font-display); font-size: 1.3rem; color: var(--gold-light); font-style: italic; }
-
 /* GUARANTEE */
 .guarantee-section { padding: 5rem 2rem; background: var(--navy); text-align: center; position: relative; }
 .guarantee-inner { max-width: 580px; margin: 0 auto; }
 .guarantee-badge { width: 100px; height: 100px; border: 2px solid var(--gold); border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 2rem; background: rgba(201,168,76,0.07); font-family: var(--font-display); font-size: 2.5rem; color: var(--gold); }
 .guarantee-inner h2 { color: var(--white); margin-bottom: 1.5rem; }
 .guarantee-inner p { text-align: center; margin-bottom: 1rem; }
-
 /* FAQ */
 .faq-section { padding: 7rem 2rem; background: var(--navy-mid); }
 .faq-section h2 { text-align: center; color: var(--white); margin-bottom: 4rem; }
@@ -256,7 +241,6 @@ p { font-size: clamp(0.95rem, 1.5vw, 1.05rem); color: var(--text-body); }
 .faq-answer { padding: 0 2rem; max-height: 0; overflow: hidden; transition: max-height 0.4s ease, padding 0.3s ease; }
 .faq-item.open .faq-answer { max-height: 300px; padding: 0 2rem 1.5rem; }
 .faq-answer p { font-size: 0.9rem; color: var(--text-body); line-height: 1.7; }
-
 /* FINAL CTA */
 .final-cta { padding: 8rem 2rem 7rem; background: var(--navy); text-align: center; position: relative; overflow: hidden; }
 .final-cta::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 1px; background: linear-gradient(90deg, transparent, var(--gold), transparent); }
@@ -266,7 +250,6 @@ p { font-size: clamp(0.95rem, 1.5vw, 1.05rem); color: var(--text-body); }
 .final-cta h2 em { color: var(--gold-light); font-style: italic; }
 .final-cta p { text-align: center; margin-bottom: 1rem; }
 .final-cta .ornament { font-size: 1rem; margin: 2rem 0; }
-
 /* FOOTER */
 .site-footer { background: #000; padding: 3rem 2rem; text-align: center; border-top: 1px solid rgba(201,168,76,0.1); }
 .footer-logo { font-family: var(--font-display); font-size: 1.3rem; font-weight: 400; letter-spacing: 0.25em; color: var(--gold); text-transform: uppercase; margin-bottom: 1rem; }
@@ -274,14 +257,12 @@ p { font-size: clamp(0.95rem, 1.5vw, 1.05rem); color: var(--text-body); }
 .footer-links a { font-size: 0.75rem; letter-spacing: 0.15em; text-transform: uppercase; color: var(--text-muted); text-decoration: none; transition: color 0.3s; }
 .footer-links a:hover { color: var(--gold); }
 .footer-copy { font-size: 0.75rem; color: var(--text-muted); margin-top: 1rem; }
-
 /* INLINE CTA */
 .inline-cta { padding: 3rem 2rem; display: flex; flex-direction: column; align-items: center; gap: 1rem; background: rgba(201,168,76,0.04); border-top: 1px solid rgba(201,168,76,0.12); border-bottom: 1px solid rgba(201,168,76,0.12); }
 .inline-cta-text { font-family: var(--font-display); font-size: clamp(1rem, 2vw, 1.2rem); font-style: italic; color: var(--text-body); text-align: center; max-width: 500px; }
 .inline-cta .btn-cta { font-size: 0.9rem; padding: 1rem 2.5rem; }
 .inline-cta .price-hint { font-family: var(--font-body); font-size: 0.72rem; letter-spacing: 0.12em; color: var(--text-muted); text-align: center; }
 .inline-cta .price-hint strong { color: var(--gold); }
-
 /* FLOATING CTA */
 .floating-cta { position: fixed; bottom: 1.5rem; left: 50%; transform: translateX(-50%) translateY(100px); z-index: 200; transition: transform 0.5s cubic-bezier(0.25,0.46,0.45,0.94), opacity 0.5s ease; opacity: 0; pointer-events: none; white-space: nowrap; }
 .floating-cta.visible { transform: translateX(-50%) translateY(0); opacity: 1; pointer-events: all; }
@@ -289,7 +270,6 @@ p { font-size: clamp(0.95rem, 1.5vw, 1.05rem); color: var(--text-body); }
 .floating-cta a:hover { box-shadow: 0 12px 50px rgba(201,168,76,0.6), 0 2px 16px rgba(0,0,0,0.5); transform: translateY(-2px); }
 .floating-cta-price { font-size: 0.7rem; opacity: 0.7; font-weight: 400; letter-spacing: 0.04em; text-transform: none; border-left: 1px solid rgba(0,16,33,0.3); padding-left: 1rem; }
 @media (max-width: 480px) { .floating-cta { width: calc(100% - 2rem); left: 1rem; transform: translateY(100px); } .floating-cta.visible { transform: translateY(0); } .floating-cta a { justify-content: center; } }
-
 /* ANIMATIONS */
 @keyframes fadeUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
 .fade-in { opacity: 0; transform: translateY(24px); transition: opacity 0.7s ease, transform 0.7s ease; }
@@ -299,7 +279,6 @@ p { font-size: clamp(0.95rem, 1.5vw, 1.05rem); color: var(--text-body); }
 </style>
 </head>
 <body>
-
 <!-- BOTÃO FLUTUANTE -->
 <div class="floating-cta" id="floatingCta">
   <a href="https://go.hotmart.com/I106036177H" target="_blank" rel="noopener">
@@ -307,18 +286,15 @@ p { font-size: clamp(0.95rem, 1.5vw, 1.05rem); color: var(--text-body); }
     <span class="floating-cta-price">R$ 247 · lançamento</span>
   </a>
 </div>
-
 <!-- HEADER -->
 <header class="site-header">
   <div class="logo-header">Fróis Studio · Retratista</div>
 </header>
-
 <!-- ═══ BLOCO 01 — HERO ═══ -->
 <section class="hero">
   <div class="hero-eyebrow">Mac Frois apresenta</div>
   <h1>Você faz fotos que impressionam.<br>Por que ainda cobra um valor que <em>envergonha?</em></h1>
-  <p class="hero-sub">Descubra o método que transforma fotógrafos talentosos em profissionais de alto valor — sem trocar de equipamento, sem mudar de cidade, sem começar do zero.</p>
-
+  <p class="hero-sub">Descubra o método que transforma fotógrafos talentosos em profissionais de alto valor: sem trocar de equipamento, sem mudar de cidade, sem começar do zero.</p>
   <!-- VSL — substituir pelo embed real -->
   <div class="vsl-wrapper">
     <div class="vsl-container">
@@ -330,7 +306,6 @@ p { font-size: clamp(0.95rem, 1.5vw, 1.05rem); color: var(--text-body); }
       </div>
     </div>
   </div>
-
   <div class="hero-cta-wrap">
     <a href="https://go.hotmart.com/I106036177H" target="_blank" rel="noopener" class="btn-cta btn-cta-large">
       Quero cobrar o que meu trabalho vale →
@@ -341,13 +316,11 @@ p { font-size: clamp(0.95rem, 1.5vw, 1.05rem); color: var(--text-body); }
       <span>↩ Garantia 7 dias</span>
     </div>
   </div>
-
   <div class="scroll-hint">
     <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M7 10l5 5 5-5"/></svg>
     continue lendo
   </div>
 </section>
-
 <!-- ═══ BLOCO 02 — TRANSFORMAÇÃO ═══ -->
 <section class="transform-section">
   <div class="transform-inner fade-in">
@@ -355,7 +328,7 @@ p { font-size: clamp(0.95rem, 1.5vw, 1.05rem); color: var(--text-body); }
     <h2>Como seria a sua vida assim:</h2>
     <div class="divider"></div>
     <div class="transform-scene">
-      <p>Você acorda na manhã de uma sessão de ensaio e não sente aquela pressão familiar no peito — aquela sensação de <span class="highlight">"será que o cliente vai questionar o preço?"</span></p>
+      <p>Você acorda na manhã de uma sessão de ensaio e não sente aquela pressão familiar no peito aquela sensação de <span class="highlight">"será que o cliente vai questionar o preço?"</span></p>
       <p style="margin-top:1.5rem;">Você enviou a proposta.<br>O valor é o seu melhor valor.<br><span class="highlight">E você não teve medo de enviar.</span></p>
       <p style="margin-top:1.5rem;">O cliente respondeu:<br><span class="gold-moment">"Perfeito. Quando podemos agendar?"</span></p>
       <p style="margin-top:1.5rem;">Após o ensaio, você entrega as fotos. Não cinquenta fotos medianas para parecer que deu mais. <span class="highlight">Trinta fotos extraordinárias, selecionadas com critério,</span> que representam o que você é capaz de fazer no seu melhor.</p>
@@ -367,14 +340,12 @@ p { font-size: clamp(0.95rem, 1.5vw, 1.05rem); color: var(--text-body); }
     </div>
   </div>
 </section>
-
 <!-- CTA 01 -->
 <div class="inline-cta">
   <p class="inline-cta-text">Pronto para construir a carreira que o seu talento merece?</p>
   <a href="https://go.hotmart.com/I106036177H" target="_blank" rel="noopener" class="btn-cta">Quero começar agora →</a>
   <p class="price-hint">⚡ Preço de lançamento: <strong>R$ 247</strong> · Sobe para R$ 297 em breve</p>
 </div>
-
 <!-- ═══ BLOCO 03 — PROBLEMA REAL ═══ -->
 <section class="problem-section">
   <div class="problem-inner fade-in">
@@ -389,7 +360,6 @@ p { font-size: clamp(0.95rem, 1.5vw, 1.05rem); color: var(--text-body); }
     <div class="problem-hook">Por quê?</div>
   </div>
 </section>
-
 <!-- ═══ BLOCO 04 — DOR PROFUNDA ═══ -->
 <section class="pain-section">
   <div class="pain-inner fade-in">
@@ -414,7 +384,6 @@ p { font-size: clamp(0.95rem, 1.5vw, 1.05rem); color: var(--text-body); }
     <div class="pain-revelation">Isso não é falta de talento.<br><span style="color:var(--white);">Mas eu vou te dizer o que é.</span></div>
   </div>
 </section>
-
 <!-- ═══ BLOCO 05 — CULPA NÃO É SUA ═══ -->
 <section class="blame-section">
   <div class="blame-inner fade-in">
@@ -426,32 +395,30 @@ p { font-size: clamp(0.95rem, 1.5vw, 1.05rem); color: var(--text-body); }
       <li>Ninguém te ensina como precificar com base no valor que você entrega</li>
       <li>Ninguém te ensina como conduzir uma conversa de venda sem parecer que está implorando</li>
       <li>Ninguém te ensina como posicionar o portfólio para atrair o cliente que enxerga valor antes de perguntar o preço</li>
-      <li>Ninguém te ensina a pensar como empresário — não só como fotógrafo</li>
+      <li>Ninguém te ensina a pensar como empresário, não só como fotógrafo</li>
     </ul>
     <div class="blame-conclusion">O fotógrafo que cobra bem não é mais talentoso que você.<br>Ele simplesmente aprendeu o que a maioria dos cursos nunca ensina.</div>
   </div>
 </section>
-
 <!-- CTA 02 -->
 <div class="inline-cta">
   <p class="inline-cta-text">O método que ninguém te ensinou está aqui. Disponível agora.</p>
   <a href="https://go.hotmart.com/I106036177H" target="_blank" rel="noopener" class="btn-cta">Quero o método completo →</a>
   <p class="price-hint">⚡ Preço de lançamento: <strong>R$ 247</strong> · Garantia de 7 dias</p>
 </div>
-
 <!-- ═══ BLOCO 06 — AUTORIDADE ═══ -->
 <section class="authority-section">
   <div class="authority-inner">
     <div class="authority-photo">
       <div class="authority-photo-corner"></div>
       <div class="authority-photo-corner2"></div>
-      <img src="https://res.cloudinary.com/dlahvdclb/image/upload/v1782319222/MANIF__Manifesto_Home_efkwms.jpg" alt="Mac Froís — Fotógrafo de Retratos" />
+      <img src="https://res.cloudinary.com/dlahvdclb/image/upload/v1782319222/MANIF__Manifesto_Home_efkwms.jpg" alt="Mac Frois Fotógrafo de Retratos" />
     </div>
     <div class="authority-content fade-in">
       <div class="section-label">quem fala isso</div>
       <h2>Mac Frois</h2>
-      <p>Fotógrafo de retratos e comunicador. Trabalho exclusivamente com retratos — corporativo, artístico, pessoal, editorial.</p>
-      <p>Ao longo da minha carreira, aprendi que a parte mais difícil da fotografia não é técnica. É convencer as pessoas — inclusive a si mesmo — de que o seu trabalho tem um valor extraordinário.</p>
+      <p>Fotógrafo de retratos e comunicador. Trabalho exclusivamente com retratos: corporativo, artístico, pessoal, editorial.</p>
+      <p>Ao longo da minha carreira, aprendi que a parte mais difícil da fotografia não é técnica. É convencer as pessoas, inclusive a si mesmo, de que o seu trabalho tem um valor extraordinário.</p>
       <p>Já fotografei profissionais que nunca tinham gostado de uma foto de si mesmos. Já acompanhei clientes que usaram as fotos para abrir novas portas na carreira. Já vi a relação de alguém com a própria imagem mudar completamente depois de uma sessão.</p>
       <p>Esse conhecimento está aqui. Construído com cuidado, para que você não precise repetir os erros que eu já cometi por você.</p>
       <span class="authority-name">Mac Frois</span>
@@ -459,7 +426,6 @@ p { font-size: clamp(0.95rem, 1.5vw, 1.05rem); color: var(--text-body); }
     </div>
   </div>
 </section>
-
 <!-- ═══ BLOCO 07 — CURSO ═══ -->
 <section class="course-intro">
   <div class="course-logo-area fade-in">
@@ -474,14 +440,12 @@ p { font-size: clamp(0.95rem, 1.5vw, 1.05rem); color: var(--text-body); }
   </div>
   <div class="course-promise fade-in">"Aqui você não aprende só a fotografar melhor.<br>Você aprende a ser o fotógrafo que o mercado de alto valor busca."</div>
 </section>
-
 <!-- CTA 03 -->
 <div class="inline-cta">
   <p class="inline-cta-text">Técnica + posicionamento + vendas. Tudo em um único método.</p>
   <a href="https://go.hotmart.com/I106036177H" target="_blank" rel="noopener" class="btn-cta">Quero acessar o curso →</a>
   <p class="price-hint">⚡ <strong>R$ 247</strong> no lançamento · 12x de R$ 20,58 · Acesso imediato</p>
 </div>
-
 <!-- ═══ BLOCO 08 — MÓDULOS ═══ -->
 <section class="modules-section">
   <div class="container-wide">
@@ -491,7 +455,7 @@ p { font-size: clamp(0.95rem, 1.5vw, 1.05rem); color: var(--text-body); }
       <div class="module-card"><div class="module-number">01</div><div class="module-info"><h3>Você é o Primeiro Produto</h3><p>Sua imagem comunica antes de qualquer câmera. Construa a presença que atrai clientes de alto valor.</p></div></div>
       <div class="module-card"><div class="module-number">02</div><div class="module-info"><h3>O Universo dos Retratos</h3><p>Os segmentos do mercado, onde está o dinheiro real e como escolher o nicho certo para você.</p></div></div>
       <div class="module-card"><div class="module-number">03</div><div class="module-info"><h3>Equipamentos e Materiais</h3><p>A verdade sobre equipamento: o que importa, o que é mito e como fazer fotos extraordinárias com o que você tem.</p></div></div>
-      <div class="module-card"><div class="module-number">04</div><div class="module-info"><h3>Técnica Fotográfica</h3><p>Exposição, foco, bokeh, modos de operação — tudo aplicado especificamente ao retrato humano.</p></div></div>
+      <div class="module-card"><div class="module-number">04</div><div class="module-info"><h3>Técnica Fotográfica</h3><p>Exposição, foco, bokeh, modos de operação, tudo aplicado especificamente ao retrato humano.</p></div></div>
       <div class="module-card"><div class="module-number">05</div><div class="module-info"><h3>Iluminação para Retratos</h3><p>Luz natural e artificial. Como criar o clima exato que cada cliente e cada sessão pedem.</p></div></div>
       <div class="module-card"><div class="module-number">06</div><div class="module-info"><h3>Direção de Modelos e Poses</h3><p>A habilidade que poucos ensinam. Como conduzir qualquer pessoa para revelar o melhor dela.</p></div></div>
       <div class="module-card"><div class="module-number">07</div><div class="module-info"><h3>Composição e Estética</h3><p>Enquadramento, linhas, espaço negativo e identidade visual. Fotos que comunicam antes de serem vistas de perto.</p></div></div>
@@ -510,14 +474,12 @@ p { font-size: clamp(0.95rem, 1.5vw, 1.05rem); color: var(--text-body); }
     </div>
   </div>
 </section>
-
 <!-- CTA 04 -->
 <div class="inline-cta">
   <p class="inline-cta-text">13 módulos. 95+ aulas. 9 bônus. Tudo que você precisa para cobrar o que o seu trabalho vale.</p>
   <a href="https://go.hotmart.com/I106036177H" target="_blank" rel="noopener" class="btn-cta">Quero acesso completo →</a>
   <p class="price-hint">⚡ Preço de lançamento: <strong>R$ 247</strong> · Sobe para R$ 297 em breve</p>
 </div>
-
 <!-- ═══ BLOCO 09 — PARA QUEM É ═══ -->
 <section class="audience-section">
   <div class="container">
@@ -526,14 +488,14 @@ p { font-size: clamp(0.95rem, 1.5vw, 1.05rem); color: var(--text-body); }
     <div class="divider"></div>
     <div class="audience-grid fade-in">
       <div class="audience-box yes">
-        <span class="audience-box-title">✦ Para quem é</span>
+        <span class="audience-box-title">❖ Para quem é</span>
         <ul class="audience-list">
           <li><span class="icon">✓</span>Fotógrafos que já trabalham mas querem cobrar mais</li>
           <li><span class="icon">✓</span>Quem ama fotografia e quer transformar em carreira real</li>
           <li><span class="icon">✓</span>Quem tem técnica mas não tem clareza sobre posicionamento</li>
           <li><span class="icon">✓</span>Quem quer parar de competir por preço</li>
           <li><span class="icon">✓</span>Iniciantes que querem aprender do jeito certo</li>
-          <li><span class="icon">✓</span>Veteranos que querem se especializar e subir de nível</li>
+          <li><span class="icon">✓</span>Vetaanos que querem se especializar e subir de nível</li>
         </ul>
       </div>
       <div class="audience-box no">
@@ -548,7 +510,6 @@ p { font-size: clamp(0.95rem, 1.5vw, 1.05rem); color: var(--text-body); }
     </div>
   </div>
 </section>
-
 <!-- ═══ BLOCO 10 — PROVA SOCIAL ═══ -->
 <section class="social-proof">
   <div class="container-wide">
@@ -557,7 +518,7 @@ p { font-size: clamp(0.95rem, 1.5vw, 1.05rem); color: var(--text-body); }
     <div class="divider"></div>
     <div class="testimonials-grid fade-in">
       <div class="testimonial-card">
-        <p class="testimonial-text">"Eu cheguei no curso sem saber absolutamente nada de fotografia. Do zero mesmo. O Mac me ensinou tudo com uma clareza que eu nunca tinha visto. Saí aplicando, fiz meus primeiros ensaios e em pouco tempo já estava gerando renda — meu primeiro trabalho me rendeu mais de R$ 2.300. Não esperava que fosse tão rápido."</p>
+        <p class="testimonial-text">"Eu cheguei no curso sem saber absolutamente nada de fotografia. Do zero mesmo. O Mac me ensinou tudo com uma clareza que eu nunca tinha visto. Saí aplicando, fiz meus primeiros ensaios e em pouco tempo já estava gerando renda: meu primeiro trabalho me rendeu mais de R$ 2.300. Não esperava que fosse tão rápido."</p>
         <div class="testimonial-author"><div class="author-avatar">S</div><div><span class="author-name">Sofia Seemann</span><span class="author-location">Palhoça, SC</span></div></div>
       </div>
       <div class="testimonial-card">
@@ -565,14 +526,13 @@ p { font-size: clamp(0.95rem, 1.5vw, 1.05rem); color: var(--text-body); }
         <div class="testimonial-author"><div class="author-avatar">K</div><div><span class="author-name">Kelvyn Barcelos</span><span class="author-location">Biguaçu, SC</span></div></div>
       </div>
       <div class="testimonial-card">
-        <p class="testimonial-text">"Entrei como aluna e fui aprendendo de verdade — não só a técnica, mas como pensar a fotografia com intenção. O aprendizado foi tão sólido que hoje trabalho ao lado do Mac no Estúdio Frois. O curso não me deu só uma habilidade, me deu uma profissão e um propósito."</p>
+        <p class="testimonial-text">"Entrei como aluna e fui aprendendo de verdade não só a técnica, mas como pensar a fotografia com intenção. O aprendizado foi tão sólido que hoje trabalho ao lado do Mac no Estúdio Frois. O curso não me deu só uma habilidade, me deu uma profissão e um propósito."</p>
         <div class="testimonial-author"><div class="author-avatar">J</div><div><span class="author-name">Jamyle Borges</span><span class="author-location">Florianópolis, SC</span></div></div>
       </div>
     </div>
-    <p class="testimonials-note">Resultados reais de alunos reais. Cada história é única — os seus dependem da sua dedicação e contexto.</p>
+    <p class="testimonials-note">Resultados reais de alunos reais. Cada história é única os seus dependem da sua dedicação e contexto.</p>
   </div>
 </section>
-
 <!-- ═══ BLOCO 11 — BÔNUS ═══ -->
 <section class="bonus-section">
   <div class="container">
@@ -587,7 +547,7 @@ p { font-size: clamp(0.95rem, 1.5vw, 1.05rem); color: var(--text-body); }
       </div>
       <div class="bonus-item">
         <div class="bonus-number">02</div>
-        <div class="bonus-content"><h3>A Sessão Perfeita — Checklist Completo</h3><p>6 listas específicas por tipo de ensaio + checklist pós-sessão. Nunca mais vai faltar nada em campo.</p></div>
+        <div class="bonus-content"><h3>A Sessão Perfeita Checklist Completo</h3><p>6 listas específicas por tipo de ensaio + checklist pós-sessão. Nunca mais vai faltar nada em campo.</p></div>
         <div class="bonus-value">R$ 47</div>
       </div>
       <div class="bonus-item">
@@ -597,7 +557,7 @@ p { font-size: clamp(0.95rem, 1.5vw, 1.05rem); color: var(--text-body); }
       </div>
       <div class="bonus-item">
         <div class="bonus-number">04</div>
-        <div class="bonus-content"><h3>Aula Especial: Sua Primeira Sessão Paga</h3><p>Guia completo do zero à entrega — da conversa inicial ao depoimento do cliente. Para que o seu primeiro ensaio pago seja memorável.</p></div>
+        <div class="bonus-content"><h3>Aula Especial: Sua Primeira Sessão Paga</h3><p>Guia completo do zero à entrega da conversa inicial ao depoimento do cliente. Para que o seu primeiro ensaio pago seja memoravél.</p></div>
         <div class="bonus-value">R$ 197</div>
       </div>
       <div class="bonus-item">
@@ -605,18 +565,16 @@ p { font-size: clamp(0.95rem, 1.5vw, 1.05rem); color: var(--text-body); }
         <div class="bonus-content"><h3>Apostila Completa do Curso</h3><p>Todo o conteúdo dos 13 módulos resumido em um único documento de referência. Para revisão rápida a qualquer momento.</p></div>
         <div class="bonus-value">R$ 47</div>
       </div>
-
       <!-- SEPARADOR SUPER BÔNUS -->
       <div class="bonus-divider">
-        <span class="bonus-divider-label">Super Bônus — exclusivos deste lançamento</span>
+        <span class="bonus-divider-label">Super Bônus exclusivos deste lançamento</span>
       </div>
       <div class="super-bonus-intro">
-        <p>Estes quatro materiais foram criados para ir além do curso. São ferramentas de trabalho — <strong>para você usar em campo, no orçamento e no set</strong>. Não existem em nenhum outro curso de fotografia no Brasil neste formato.</p>
+        <p>Estes quatro materiais foram criados para ir além do curso. São ferramentas de trabalho <strong>para você usar em campo, no orçamento e no set</strong>. Não existem em nenhum outro curso de fotografia no Brasil neste formato.</p>
       </div>
-
       <div class="bonus-item super">
         <div class="bonus-number">06</div>
-        <div class="bonus-content"><h3>Calculadora de Preço Real</h3><p>Planilha com três abas integradas — Calculadora de Preço, Comparativo de Pacotes e Simulador Anual. Você insere seus custos reais e recebe o preço justo para cobrar. Sem achismo, sem tabela copiada do vizinho.</p></div>
+        <div class="bonus-content"><h3>Calculadora de Preço Real</h3><p>Planilha com três abas integradas Calculadora de Preço, Comparativo de Pacotes e Simulador Anual. Você insere seus custos reais e recebe o preço justo para cobrar. Sem achismo, sem tabela copiada do vizinho.</p></div>
         <div class="bonus-value">R$ 67</div>
       </div>
       <div class="bonus-item super">
@@ -631,24 +589,22 @@ p { font-size: clamp(0.95rem, 1.5vw, 1.05rem); color: var(--text-body); }
       </div>
       <div class="bonus-item super">
         <div class="bonus-number">09</div>
-        <div class="bonus-content"><h3>Guia de Esquemas de Luz para Retratos</h3><p>Os 9 esquemas de iluminação mais usados pelos melhores retratistas do mundo — do Rembrandt clássico ao setup artístico com gel. Modificadores, potência em f-stop, fundo recomendado e dica prática para cada setup. Referência visual para levar no set.</p></div>
+        <div class="bonus-content"><h3>Guia de Esquemas de Luz para Retratos</h3><p>Os 9 esquemas de iluminação mais usados pelos melhores retratistas do mundo do Rembrandt clássico ao setup artístico com gel. Modificadores, potência em f-stop, fundo recomendado e dica prática para cada setup. Referência visual para levar no set.</p></div>
         <div class="bonus-value">R$ 147</div>
       </div>
     </div>
     <div class="bonus-total-bar fade-in">
       <span class="bonus-total-label">Valor total dos bônus</span>
-      <span class="bonus-total-value">R$ 963 — incluídos gratuitamente</span>
+      <span class="bonus-total-value">R$ 963 incluídos gratuitamente</span>
     </div>
   </div>
 </section>
-
 <!-- CTA 05 -->
 <div class="inline-cta">
   <p class="inline-cta-text">Curso completo + R$ 963 em bônus. Tudo por R$ 247 no lançamento.</p>
   <a href="https://go.hotmart.com/I106036177H" target="_blank" rel="noopener" class="btn-cta">Garantir meu acesso agora →</a>
   <p class="price-hint">⚡ Oferta de lançamento · <strong>Economia de R$ 50</strong> em relação ao preço final</p>
 </div>
-
 <!-- ═══ BLOCO 12 — OFERTA ═══ -->
 <section class="offer-section" id="oferta">
   <div class="offer-anchor fade-in">
@@ -659,21 +615,20 @@ p { font-size: clamp(0.95rem, 1.5vw, 1.05rem); color: var(--text-body); }
     <p>Em um ano: <span class="cost-highlight">R$ 24.000.</span></p>
     <p>O investimento neste curso não é um gasto. É a decisão de parar de deixar dinheiro na mesa.</p>
   </div>
-
   <div class="offer-box fade-in">
     <div class="section-label" style="justify-content:center; margin-bottom:1.5rem;">você recebe hoje</div>
     <ul class="offer-includes">
-      <li>Retratos que Vendem — 13 módulos completos</li>
+      <li>Retratos que Vendem 13 módulos completos</li>
       <li>95+ aulas com método e direção</li>
-      <li>Bônus 01 — Guia Completo de Poses (R$ 97)</li>
-      <li>Bônus 02 — A Sessão Perfeita: Checklist (R$ 47)</li>
-      <li>Bônus 03 — Contrato Fotográfico Profissional (R$ 197)</li>
-      <li>Bônus 04 — Aula Especial: Sua Primeira Sessão (R$ 197)</li>
-      <li>Bônus 05 — Apostila Completa do Curso (R$ 47)</li>
-      <li class="super-item">Super Bônus 06 — Calculadora de Preço Real (R$ 67)</li>
-      <li class="super-item">Super Bônus 07 — Guia de Equipamentos por Orçamento (R$ 97)</li>
-      <li class="super-item">Super Bônus 08 — Roteiro de Briefing Profissional (R$ 67)</li>
-      <li class="super-item">Super Bônus 09 — Guia de Esquemas de Luz (R$ 147)</li>
+      <li>Bônus 01 Guia Completo de Poses (R$ 97)</li>
+      <li>Bônus 02 A Sessão Perfeita: Checklist (R$ 47)</li>
+      <li>Bônus 03 Contrato Fotográfico Profissional (R$ 197)</li>
+      <li>Bônus 04 Aula Especial: Sua Primeira Sessão (R$ 197)</li>
+      <li>Bônus 05 Apostila Completa do Curso (R$ 47)</li>
+      <li class="super-item">Super Bônus 06 Calculadora de Preço Real (R$ 67)</li>
+      <li class="super-item">Super Bônus 07 Guia de Equipamentos por Orçamento (R$ 97)</li>
+      <li class="super-item">Super Bônus 08 Roteiro de Briefing Profissional (R$ 67)</li>
+      <li class="super-item">Super Bônus 09 Guia de Esquemas de Luz (R$ 147)</li>
       <li>Acesso imediato e completo à plataforma</li>
     </ul>
     <div class="price-divider"></div>
@@ -704,13 +659,12 @@ p { font-size: clamp(0.95rem, 1.5vw, 1.05rem); color: var(--text-body); }
     </div>
   </div>
 </section>
-
 <!-- ═══ BLOCO 13 — GARANTIA ═══ -->
 <section class="guarantee-section">
   <div class="guarantee-inner fade-in">
     <div class="section-label" style="justify-content:center; margin-bottom:1.5rem;">proteção total</div>
     <div class="guarantee-badge">↩</div>
-    <h2>Garantia de 7 dias — sem perguntas.</h2>
+    <h2>Garantia de 7 dias sem perguntas.</h2>
     <div class="divider"></div>
     <p>Se por qualquer motivo você acessar o curso e sentir que ele não é para você, basta enviar um e-mail em até 7 dias após a compra e devolvemos 100% do seu investimento.</p>
     <p>Sem burocracia. Sem questionamentos.</p>
@@ -719,7 +673,6 @@ p { font-size: clamp(0.95rem, 1.5vw, 1.05rem); color: var(--text-body); }
     </p>
   </div>
 </section>
-
 <!-- ═══ BLOCO 14 — FAQ ═══ -->
 <section class="faq-section">
   <div class="container">
@@ -729,15 +682,15 @@ p { font-size: clamp(0.95rem, 1.5vw, 1.05rem); color: var(--text-body); }
     <div class="faq-list fade-in">
       <div class="faq-item">
         <button class="faq-question" onclick="toggleFaq(this)">Preciso ter equipamento profissional para fazer o curso?<span class="faq-icon">+</span></button>
-        <div class="faq-answer"><p>Não. O curso foi desenvolvido para ser aplicado com qualquer câmera — inclusive com celular. No Módulo 3 você aprende exatamente o que importa no equipamento e o que é mito de mercado.</p></div>
+        <div class="faq-answer"><p>Não. O curso foi desenvolvido para ser aplicado com qualquer câmera inclusive com celular. No Módulo 3 você aprende exatamente o que importa no equipamento e o que é mito de mercado.</p></div>
       </div>
       <div class="faq-item">
         <button class="faq-question" onclick="toggleFaq(this)">Sou iniciante. Este curso é para mim?<span class="faq-icon">+</span></button>
-        <div class="faq-answer"><p>Sim. O curso começa do zero e avança progressivamente. Se você está começando, vai aprender do jeito certo desde o início — sem vícios e sem o processo doloroso de desaprender erros.</p></div>
+        <div class="faq-answer"><p>Sim. O curso começa do zero e avança progressivamente. Se você está começando, vai aprender do jeito certo desde o início sem vícios e sem o processo doloroso de desaprender erros.</p></div>
       </div>
       <div class="faq-item">
         <button class="faq-question" onclick="toggleFaq(this)">Já fotografo há anos. Vou aprender algo novo?<span class="faq-icon">+</span></button>
-        <div class="faq-answer"><p>Sim. Os módulos de precificação, vendas, posicionamento e captação de clientes são exatamente o que fotógrafos experientes raramente aprendem em outros cursos. Muitos alunos veteranos relatam que foi nessa parte que a carreira mudou.</p></div>
+        <div class="faq-answer"><p>Sim. Os módulos de precificação, vendas, posicionamento e captação de clientes são exatamente o que fotógrafos experientes raramente aprendem em outros cursos. Muitos alunos vetaanos relatam que foi nessa parte que a carreira mudou.</p></div>
       </div>
       <div class="faq-item">
         <button class="faq-question" onclick="toggleFaq(this)">Por quanto tempo tenho acesso ao curso?<span class="faq-icon">+</span></button>
@@ -754,7 +707,6 @@ p { font-size: clamp(0.95rem, 1.5vw, 1.05rem); color: var(--text-body); }
     </div>
   </div>
 </section>
-
 <!-- ═══ BLOCO 15 — CTA FINAL ═══ -->
 <section class="final-cta">
   <div class="final-cta-inner fade-in">
@@ -766,7 +718,7 @@ p { font-size: clamp(0.95rem, 1.5vw, 1.05rem); color: var(--text-body); }
     <p style="margin-top:1rem; font-family:var(--font-display); font-style:italic; color:var(--gold-light); font-size:1.1rem;">
       Fotógrafos que cobram bem não são mais talentosos que você.<br>Eles simplesmente aprenderam o que está aqui.
     </p>
-    <div class="ornament" style="margin:2.5rem 0;">✦ ✦ ✦</div>
+    <div class="ornament" style="margin:2.5rem 0;">❖ ❖ ❖</div>
     <a href="https://go.hotmart.com/I106036177H" target="_blank" rel="noopener" class="btn-cta btn-cta-large">
       Quero cobrar o que meu trabalho vale →
     </a>
@@ -777,7 +729,6 @@ p { font-size: clamp(0.95rem, 1.5vw, 1.05rem); color: var(--text-body); }
     </div>
   </div>
 </section>
-
 <!-- FOOTER -->
 <footer class="site-footer">
   <div class="footer-logo">Fróis Studio · Retratista</div>
@@ -787,15 +738,13 @@ p { font-size: clamp(0.95rem, 1.5vw, 1.05rem); color: var(--text-body); }
     <a href="#">Política de Privacidade</a>
     <a href="#">Termos de Uso</a>
   </div>
-  <p class="footer-copy">© 2026 Retratos que Vendem — Mac Frois · Estúdio Frois · Florianópolis, SC</p>
+  <p class="footer-copy">© 2026 Retratos que Vendem · Mac Frois · Estúdio Frois · Florianópolis, SC</p>
 </footer>
-
 <script>
 // ─── FLOATING CTA ───
 const floatingCta = document.getElementById('floatingCta');
 const heroSection = document.querySelector('.hero');
 const offerSection = document.getElementById('oferta');
-
 window.addEventListener('scroll', () => {
   const scrollY = window.scrollY;
   const heroBottom = heroSection ? heroSection.offsetTop + heroSection.offsetHeight : 600;
@@ -806,7 +755,6 @@ window.addEventListener('scroll', () => {
     floatingCta.classList.remove('visible');
   }
 }, { passive: true });
-
 // ─── FAQ ACCORDION ───
 function toggleFaq(btn) {
   const item = btn.closest('.faq-item');
@@ -814,7 +762,6 @@ function toggleFaq(btn) {
   document.querySelectorAll('.faq-item.open').forEach(el => el.classList.remove('open'));
   if (!isOpen) item.classList.add('open');
 }
-
 // ─── SCROLL ANIMATIONS ───
 const observer = new IntersectionObserver((entries) => {
   entries.forEach(entry => {
