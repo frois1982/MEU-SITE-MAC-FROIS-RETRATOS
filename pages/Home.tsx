@@ -24,6 +24,12 @@ export const Home: React.FC = () => {
     'https://res.cloudinary.com/dlahvdclb/image/upload/q_auto,f_auto,w_1920/ART_Conceito.jpg_12_snwwqv',
     'https://res.cloudinary.com/dlahvdclb/image/upload/q_auto,f_auto,w_1920/ART_Conceito.jpg_21_xpxs8i',
     'https://res.cloudinary.com/dlahvdclb/image/upload/q_auto,f_auto,w_1920/ART_Conceito.jpg_25_hku7p9',
+    'https://res.cloudinary.com/dlahvdclb/image/upload/q_auto,f_auto,w_1920/1000057471.jpg_ugdmdm',
+    'https://res.cloudinary.com/dlahvdclb/image/upload/q_auto,f_auto,w_1920/1000057481.jpg_dzdvh4',
+    'https://res.cloudinary.com/dlahvdclb/image/upload/q_auto,f_auto,w_1920/1000057478.jpg_nyxnad',
+    'https://res.cloudinary.com/dlahvdclb/image/upload/q_auto,f_auto,w_1920/1000057474.jpg_s86ppk',
+    'https://res.cloudinary.com/dlahvdclb/image/upload/q_auto,f_auto,w_1920/1000057477.jpg_s5cpsb',
+    'https://res.cloudinary.com/dlahvdclb/image/upload/q_auto,f_auto,w_1920/1000057473.jpg_nqggbr',
   ];
 
   const SLIDE_IMAGES_MOBILE = [
@@ -37,6 +43,9 @@ export const Home: React.FC = () => {
     'https://res.cloudinary.com/dlahvdclb/image/upload/q_auto,f_auto,w_800/ART_Conceito.jpg_2_ysyoz3',
     'https://res.cloudinary.com/dlahvdclb/image/upload/q_auto,f_auto,w_800/CORP_Empresario.jpg_01_HOME_lr8raz',
     'https://res.cloudinary.com/dlahvdclb/image/upload/q_auto,f_auto,w_800/ART_Conceito.jpg_6_b1spfl',
+    'https://res.cloudinary.com/dlahvdclb/image/upload/q_auto,f_auto,w_800/1000057479.jpg_df22ie',
+    'https://res.cloudinary.com/dlahvdclb/image/upload/q_auto,f_auto,w_800/1000057476.jpg_ylmuf6',
+    'https://res.cloudinary.com/dlahvdclb/image/upload/q_auto,f_auto,w_800/1000057480.jpg_sdlegi',
   ];
 
   const CAROUSEL_IMAGES = [
