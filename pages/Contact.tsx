@@ -185,11 +185,12 @@ export const Contact: React.FC = () => {
                   onChange={handleChange}
                   className="w-full bg-black border border-zinc-800 p-4 text-white focus:border-gold-600 outline-none transition-colors rounded-sm appearance-none text-sm font-light"
                 >
-                  <option>Projeto Van Gogh</option>
-                  <option>Projeto Da Vinci</option>
-                  <option>Projeto Apolo 360º</option>
-                  <option>Mentoria / Digital</option>
-                  <option>Outros</option>
+                  <option value="">Selecione um projeto</option>
+                  <option value="Fotografia Corporativa — Pacote Presenca">Fotografia Corporativa — Pacote Presenca (R$ 890)</option>
+                  <option value="Fotografia Corporativa — Pacote Autoridade">Fotografia Corporativa — Pacote Autoridade (R$ 1.690)</option>
+                  <option value="Fotografia Corporativa — Pacote Lideranca">Fotografia Corporativa — Pacote Lideranca (R$ 2.890)</option>
+                  <option value="Projeto Da Vinci — Posicionamento Estrategico">Projeto Da Vinci — Posicionamento Estrategico (R$ 7.990)</option>
+                  <option value="Projeto Michelangelo — Imersao Completa">Projeto Michelangelo — Imersao Completa</option>
                 </select>
               </div>
 
