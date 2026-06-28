@@ -95,7 +95,7 @@ export const Contact: React.FC = () => {
                 </div>
                 <div>
                   <h4 className="text-white font-medium mb-1 text-sm tracking-widest">LOCALIZAÇÃO</h4>
-                  <p className="text-zinc-500 text-sm font-light">Rua Fúlvio Aducci, 757, Sala 201<br/>Estreito, Florianópolis - SC</p>
+                  <p className="text-zinc-500 text-sm font-light">Rua Fúlvio Aducci<br/>Estreito, Florianópolis - SC</p>
                 </div>
               </div>
 
