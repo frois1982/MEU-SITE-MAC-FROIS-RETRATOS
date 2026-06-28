@@ -1,29 +1,20 @@
 [
-  {
-    "id": "POST-UN9XD",
-    "slug": "como-escolher-o-fotografo-certo-para-sua-marca-pessoal",
-    "title": "Como escolher o fotógrafo certo para sua marca pessoal",
-    "date": "26/06/2026",
-    "imageUrl": "https://images.unsplash.com/photo-1544005313-94ddf0286df2?w=1200",
-    "keyword": "fotógrafo marca pessoal",
-    "excerpt": "Como escolher o fotógrafo certo para sua marca pessoal  A escolha de um fotógrafo marca pessoal é uma das decisões mais importantes para quem deseja construir uma imagem profissional sólida no mercado..."
-  },
-  {
-    "id": "POST-KP31R",
-    "slug": "o-erro-mais-comum-que-profissionais-cometem-com-sua-imagem-nas-redes-sociais",
-    "title": "O erro mais comum que profissionais cometem com sua imagem nas redes sociais",
-    "date": "24/06/2026",
-    "imageUrl": "https://images.unsplash.com/photo-1531746020798-e6953c6e8e04?w=1200",
-    "keyword": "erro imagem profissional redes sociais",
-    "excerpt": "Voce ja parou para pensar no impacto que sua imagem gera nas redes sociais? Descubra o erro mais comum que profissionais cometem e como corrigi-lo."
-  },
-  {
-    "id": "POST-290DO",
-    "slug": "como-escolher-o-fotografo-certo-para-sua-marca-pessoal",
-    "title": "Como escolher o fotografo certo para sua marca pessoal",
-    "date": "24/06/2026",
-    "imageUrl": "https://images.unsplash.com/photo-1560250097-0b93528c311a?w=1200",
-    "keyword": "fotografo marca pessoal",
-    "excerpt": "Sua imagem profissional e frequentemente o primeiro contato que potenciais clientes tem com voce. Saiba como escolher o fotografo certo para sua marca pessoal."
-  }
+    {
+          "id": "POST-UN9XD",
+          "slug": "como-escolher-o-fotografo-certo-para-sua-marca-pessoal",
+          "title": "Como escolher o fotógrafo certo para sua marca pessoal",
+          "date": "26/06/2026",
+          "imageUrl": "https://images.unsplash.com/photo-1544005313-94ddf0286df2?w=1200",
+          "keyword": "fotógrafo marca pessoal",
+          "excerpt": "Como escolher o fotógrafo certo para sua marca pessoal A escolha de um fotógrafo marca pessoal é uma das decisões mais importantes para quem deseja construir uma imagem profissional sólida no mercado..."
+    },
+    {
+          "id": "POST-KP31R",
+          "slug": "o-erro-mais-comum-que-profissionais-cometem-com-sua-imagem-nas-redes-sociais",
+          "title": "O erro mais comum que profissionais cometem com sua imagem nas redes sociais",
+          "date": "24/06/2026",
+          "imageUrl": "https://images.unsplash.com/photo-1531746020798-e6953c6e8e04?w=1200",
+          "keyword": "erro imagem profissional redes sociais",
+          "excerpt": "Voce ja parou para pensar no impacto que sua imagem gera nas redes sociais? Descubra o erro mais comum que profissionais cometem e como corrigi-lo."
+    }
 ]
