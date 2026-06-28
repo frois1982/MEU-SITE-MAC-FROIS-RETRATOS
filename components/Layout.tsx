@@ -113,7 +113,7 @@ const Footer: React.FC = () => {
             <ul className="space-y-4 text-zinc-400 font-light text-sm">
               <li className="flex items-start">
                 <MapPin size={18} className="mr-3 mt-1 text-gold-600" />
-                <span>RUA FÚLVIO ADUCCI, 757, SALA 201<br />ESTREITO, FLORIANÓPOLIS - SC</span>
+                <span>RUA FÚLVIO ADUCCI<br />ESTREITO, FLORIANÓPOLIS - SC</span>
               </li>
               <li className="flex items-center">
                 <Phone size={18} className="mr-3 text-gold-600" />
