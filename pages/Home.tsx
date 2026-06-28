@@ -26,6 +26,19 @@ export const Home: React.FC = () => {
     'https://res.cloudinary.com/dlahvdclb/image/upload/q_auto,f_auto,w_1920/ART_Conceito.jpg_25_hku7p9',
   ];
 
+  const SLIDE_IMAGES_MOBILE = [
+    'https://res.cloudinary.com/dlahvdclb/image/upload/q_auto,f_auto,w_800/ART_Conceito.jpg_1_xv5ytm',
+    'https://res.cloudinary.com/dlahvdclb/image/upload/q_auto,f_auto,w_800/PORT_RetratoMulher_bzzoge',
+    'https://res.cloudinary.com/dlahvdclb/image/upload/q_auto,f_auto,w_800/CORP_Empresario.jpg_15_HOME_m6bzke',
+    'https://res.cloudinary.com/dlahvdclb/image/upload/q_auto,f_auto,w_800/ART_Conceito.jpg_HOME_mnu0wx',
+    'https://res.cloudinary.com/dlahvdclb/image/upload/q_auto,f_auto,w_800/ART_Conceito.jpg_33_dipbu3',
+    'https://res.cloudinary.com/dlahvdclb/image/upload/q_auto,f_auto,w_800/ART_Conceito.jpg_28_gri96l',
+    'https://res.cloudinary.com/dlahvdclb/image/upload/q_auto,f_auto,w_800/ART_Conceito.jpg_16_tcikmg',
+    'https://res.cloudinary.com/dlahvdclb/image/upload/q_auto,f_auto,w_800/ART_Conceito.jpg_2_ysyoz3',
+    'https://res.cloudinary.com/dlahvdclb/image/upload/q_auto,f_auto,w_800/CORP_Empresario.jpg_01_HOME_lr8raz',
+    'https://res.cloudinary.com/dlahvdclb/image/upload/q_auto,f_auto,w_800/ART_Conceito.jpg_6_b1spfl',
+  ];
+
   const CAROUSEL_IMAGES = [
     'https://res.cloudinary.com/dlahvdclb/image/upload/q_auto,f_auto,w_800/CORP_Empresario.jpg_21_bjqwpc',
     'https://res.cloudinary.com/dlahvdclb/image/upload/q_auto,f_auto,w_800/CORP_Empresario.jpg_8_nxkkrn',
@@ -41,18 +54,29 @@ export const Home: React.FC = () => {
 
   const MANIFESTO_IMG = 'https://res.cloudinary.com/dlahvdclb/image/upload/q_auto,f_auto,w_800/MANIF__Manifesto_Home_efkwms';
 
-  const [currentSlide, setCurrentSlide] = useState(0);
+  const [isMobile, setIsMobile] = useState(false);
+
+  useEffect(() => {
+    const checkMobile = () => setIsMobile(window.innerWidth < 768);
+    checkMobile();
+    window.addEventListener('resize', checkMobile);
+    return () => window.removeEventListener('resize', checkMobile);
+  }, []);
+
+  const ACTIVE_SLIDES = isMobile ? SLIDE_IMAGES_MOBILE : SLIDE_IMAGES;
+
+    const [currentSlide, setCurrentSlide] = useState(0);
   const [nextSlide, setNextSlide] = useState(1);
   const [transitioning, setTransitioning] = useState(false);
 
   const advanceSlide = useCallback(() => {
     setTransitioning(true);
     setTimeout(() => {
-      setCurrentSlide(prev => (prev + 1) % SLIDE_IMAGES.length);
-      setNextSlide(prev => (prev + 1) % SLIDE_IMAGES.length);
+      setCurrentSlide(prev => (prev + 1) % ACTIVE_SLIDES.length);
+      setNextSlide(prev => (prev + 1) % ACTIVE_SLIDES.length);
       setTransitioning(false);
     }, 1000);
-  }, [SLIDE_IMAGES.length]);
+  }, [ACTIVE_SLIDES.length]);
 
   useEffect(() => {
     const timer = setInterval(advanceSlide, 5000);
@@ -78,10 +102,10 @@ export const Home: React.FC = () => {
     <div className="text-zinc-200">
       <section className="relative h-screen flex items-center justify-center overflow-hidden">
         <div className="absolute inset-0 z-0 transition-opacity duration-1000" style={{ opacity: transitioning ? 0 : 1 }}>
-          <img src={SLIDE_IMAGES[currentSlide]} alt="Mac Frois Retrato" className="w-full h-full object-cover opacity-80" />
+          <img src={ACTIVE_SLIDES[currentSlide]} alt="Mac Frois Retrato" className={`w-full h-full object-cover opacity-80 ${isMobile ? 'object-top' : 'object-center'}`} />
         </div>
         <div className="absolute inset-0 z-0 opacity-0">
-          <img src={SLIDE_IMAGES[nextSlide]} alt="" className="w-full h-full object-cover" />
+          <img src={ACTIVE_SLIDES[nextSlide]} alt="" className="w-full h-full object-cover" />
         </div>
         <div className="absolute inset-0 z-10 bg-gradient-to-r from-black/60 via-black/20 to-transparent" />
         <div className="relative z-20 w-full max-w-7xl mx-auto px-6 flex flex-col justify-end h-full pb-20">
@@ -109,7 +133,7 @@ export const Home: React.FC = () => {
             </div>
           </div>
           <div className="absolute bottom-8 right-8 flex gap-2">
-            {SLIDE_IMAGES.map((_, i) => (
+            {ACTIVE_SLIDES.map((_, i) => (
               <button key={i} onClick={() => setCurrentSlide(i)} className={`w-1.5 h-1.5 rounded-full transition-all duration-300 ${i === currentSlide ? 'bg-gold-500 w-4' : 'bg-zinc-600'}`} />
             ))}
           </div>
