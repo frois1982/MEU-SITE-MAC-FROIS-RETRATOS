@@ -1,5 +1,7 @@
 {
-      "rewrites": [
-              { "source": "/(.*)", "destination": "/index.html" }
-      ]
+        "rewrites": [
+                  { "source": "/metodo-frois/(.*)", "destination": "/metodo-frois/$1" },
+                  { "source": "/retratos-que-vendem", "destination": "/retratos-que-vendem.html" },
+                  { "source": "/(.*)", "destination": "/index.html" }
+        ]
 }
