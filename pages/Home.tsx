@@ -16,6 +16,7 @@ export const Home: React.FC = () => {
   const navigate = useNavigate();
 
   const SLIDE_IMAGES = [
+    'https://res.cloudinary.com/dlahvdclb/image/upload/q_auto,f_auto,w_1920/1000057473.jpg_nqggbr',
     'https://res.cloudinary.com/dlahvdclb/image/upload/q_auto,f_auto,w_1920/1000057474.jpg_s86ppk',
     'https://res.cloudinary.com/dlahvdclb/image/upload/q_auto,f_auto,w_1920/ART_Conceito.jpg_13_w535cm',
     'https://res.cloudinary.com/dlahvdclb/image/upload/q_auto,f_auto,w_1920/ART_Conceito.jpg_20_a45w8y',
@@ -29,7 +30,6 @@ export const Home: React.FC = () => {
     'https://res.cloudinary.com/dlahvdclb/image/upload/q_auto,f_auto,w_1920/1000057481.jpg_dzdvh4',
     'https://res.cloudinary.com/dlahvdclb/image/upload/q_auto,f_auto,w_1920/1000057478.jpg_nyxnad',
     'https://res.cloudinary.com/dlahvdclb/image/upload/q_auto,f_auto,w_1920/1000057477.jpg_s5cpsb',
-    'https://res.cloudinary.com/dlahvdclb/image/upload/q_auto,f_auto,w_1920/1000057473.jpg_nqggbr',
   ];
 
   const SLIDE_IMAGES_MOBILE = [
@@ -88,7 +88,7 @@ export const Home: React.FC = () => {
   }, [ACTIVE_SLIDES.length]);
 
   useEffect(() => {
-    const timer = setInterval(advanceSlide, 5000);
+    const timer = setInterval(advanceSlide, 3500);
     return () => clearInterval(timer);
   }, [advanceSlide]);
 
