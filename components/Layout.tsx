@@ -13,7 +13,7 @@ const Navbar: React.FC = () => {
   useEffect(() => {
     const handleScroll = () => setScrolled(window.scrollY > 50);
     window.addEventListener('scroll', handleScroll);
-    return () => window.removeEventListener('scroll', handleScroll);
+    return () => window.removeEventListener('scroll', handleScroll);h
   }, []);
 
   useEffect(() => { setIsOpen(false); }, [location]);
@@ -100,7 +100,7 @@ const Footer: React.FC = () => {
               <a href="https://www.instagram.com/froisretratista/" target="_blank" rel="noreferrer" className="w-10 h-10 rounded-full border border-zinc-800 flex items-center justify-center text-zinc-400 hover:text-gold-500 hover:border-gold-500 transition-all">
                 <Instagram size={18} />
               </a>
-              <a href="https://www.youtube.com/@mac.froiss" target="_blank" rel="noreferrer" className="w-10 h-10 rounded-full border border-zinc-800 flex items-center justify-center text-zinc-400 hover:text-gold-500 hover:border-gold-500 transition-all">
+              <a href="https://youtube.com/@macfroiss" target="_blank" rel="noreferrer" className="w-10 h-10 rounded-full border border-zinc-800 flex items-center justify-center text-zinc-400 hover:text-gold-500 hover:border-gold-500 transition-all">
                 <Youtube size={18} />
               </a>
               <a href="mailto:frois.mac@gmail.com" className="w-10 h-10 rounded-full border border-zinc-800 flex items-center justify-center text-zinc-400 hover:text-gold-500 hover:border-gold-500 transition-all">
