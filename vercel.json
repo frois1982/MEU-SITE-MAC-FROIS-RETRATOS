@@ -1,7 +1,21 @@
 {
-        "rewrites": [
-                  { "source": "/metodo-frois/(.*)", "destination": "/metodo-frois/$1" },
-                  { "source": "/retratos-que-vendem", "destination": "/retratos-que-vendem.html" },
-                  { "source": "/(.*)", "destination": "/index.html" }
-        ]
+          "redirects": [
+                      {
+                                    "source": "/(.*)",
+                                    "has": [{ "type": "host", "value": "macfrois.com.br" }],
+                                    "destination": "https://www.macfrois.com.br/$1",
+                                    "permanent": true
+                      },
+                      {
+                                    "source": "/(.*)",
+                                    "has": [{ "type": "header", "key": "x-forwarded-proto", "value": "http" }],
+                                    "destination": "https://www.macfrois.com.br/$1",
+                                    "permanent": true
+                      }
+          ],
+          "rewrites": [
+                      { "source": "/metodo-frois/(.*)", "destination": "/metodo-frois/$1" },
+                      { "source": "/retratos-que-vendem", "destination": "/retratos-que-vendem.html" },
+                      { "source": "/(.*)", "destination": "/index.html" }
+          ]
 }
