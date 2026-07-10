@@ -1,29 +1,38 @@
 [
-    {
-          "id": "POST-YEOTP",
-          "slug": "arquetipos-de-marca-como-usar-sua-personalidade-para-atrair-clientes",
-          "title": "Arquétipos de marca: como usar sua personalidade para atrair clientes",
-          "date": "03/07/2026",
-          "imageUrl": "https://res.cloudinary.com/dlahvdclb/image/upload/q_auto,f_auto,w_1200,h_630,c_fill,g_face/ART_Conceito.jpg_7_m4gl6u",
-          "keyword": "arquétipos de marca pessoal",
-          "excerpt": "Arquétipos de marca: como usar sua personalidade para atrair clientes Você já parou para pensar que sua marca pessoal funciona como um personagem? Assim como um ator assume um papel no cinema, profis..."
-    },
-    {
-          "id": "POST-UN9XD",
-          "slug": "como-escolher-o-fotografo-certo-para-sua-marca-pessoal",
-          "title": "Como escolher o fotógrafo certo para sua marca pessoal",
-          "date": "26/06/2026",
-          "imageUrl": "https://res.cloudinary.com/dlahvdclb/image/upload/q_auto,f_auto,w_1200,h_630,c_fill,g_face/CORP_Empresario.jpg_21_bjqwpc",
-          "keyword": "fotógrafo marca pessoal",
-          "excerpt": "Como escolher o fotógrafo certo para sua marca pessoal A escolha de um fotógrafo marca pessoal é uma das decisões mais importantes para quem deseja construir uma imagem profissional sólida no mercado..."
-    },
-    {
-          "id": "POST-KP31R",
-          "slug": "o-erro-mais-comum-que-profissionais-cometem-com-sua-imagem-nas-redes-sociais",
-          "title": "O erro mais comum que profissionais cometem com sua imagem nas redes sociais",
-          "date": "24/06/2026",
-          "imageUrl": "https://res.cloudinary.com/dlahvdclb/image/upload/q_auto,f_auto,w_1200,h_630,c_fill,g_face/PORT_RetratoMulher.jpg_15_rkn23u",
-          "keyword": "erro imagem profissional redes sociais",
-          "excerpt": "Voce ja parou para pensar no impacto que sua imagem gera nas redes sociais? Descubra o erro mais comum que profissionais cometem e como corrigi-lo."
-    }
+  {
+    "id": "POST-84HG5",
+    "slug": "metodo-frois-a-abordagem-que-une-arquetipos-direcao-e-fotografia-estrategica",
+    "title": "Método Frois: a abordagem que une arquétipos, direção e fotografia estratégica",
+    "date": "10/07/2026",
+    "imageUrl": "https://res.cloudinary.com/dlahvdclb/image/upload/q_auto,f_auto,w_1200,h_630,c_fill,g_face/13062026-EU4A8850_tud2ed",
+    "keyword": "Método Frois fotografia estratégica",
+    "excerpt": "Método Frois: a abordagem que une arquétipos, direção e fotografia estratégica  A fotografia corporativa transcendeu há muito tempo a simples captura de imagens técnicas. Quando um executivo, empreend..."
+  },
+  {
+    "id": "POST-YEOTP",
+    "slug": "arquetipos-de-marca-como-usar-sua-personalidade-para-atrair-clientes",
+    "title": "Arquétipos de marca: como usar sua personalidade para atrair clientes",
+    "date": "03/07/2026",
+    "imageUrl": "https://res.cloudinary.com/dlahvdclb/image/upload/q_auto,f_auto,w_1200,h_630,c_fill,g_face/ART_Conceito.jpg_7_m4gl6u",
+    "keyword": "arquétipos de marca pessoal",
+    "excerpt": "Arquétipos de marca: como usar sua personalidade para atrair clientes Você já parou para pensar que sua marca pessoal funciona como um personagem? Assim como um ator assume um papel no cinema, profis..."
+  },
+  {
+    "id": "POST-UN9XD",
+    "slug": "como-escolher-o-fotografo-certo-para-sua-marca-pessoal",
+    "title": "Como escolher o fotógrafo certo para sua marca pessoal",
+    "date": "26/06/2026",
+    "imageUrl": "https://res.cloudinary.com/dlahvdclb/image/upload/q_auto,f_auto,w_1200,h_630,c_fill,g_face/CORP_Empresario.jpg_21_bjqwpc",
+    "keyword": "fotógrafo marca pessoal",
+    "excerpt": "Como escolher o fotógrafo certo para sua marca pessoal A escolha de um fotógrafo marca pessoal é uma das decisões mais importantes para quem deseja construir uma imagem profissional sólida no mercado..."
+  },
+  {
+    "id": "POST-KP31R",
+    "slug": "o-erro-mais-comum-que-profissionais-cometem-com-sua-imagem-nas-redes-sociais",
+    "title": "O erro mais comum que profissionais cometem com sua imagem nas redes sociais",
+    "date": "24/06/2026",
+    "imageUrl": "https://res.cloudinary.com/dlahvdclb/image/upload/q_auto,f_auto,w_1200,h_630,c_fill,g_face/PORT_RetratoMulher.jpg_15_rkn23u",
+    "keyword": "erro imagem profissional redes sociais",
+    "excerpt": "Voce ja parou para pensar no impacto que sua imagem gera nas redes sociais? Descubra o erro mais comum que profissionais cometem e como corrigi-lo."
+  }
 ]
