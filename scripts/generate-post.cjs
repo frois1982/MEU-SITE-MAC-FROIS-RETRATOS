@@ -49,14 +49,19 @@ const TOPICOS = [
 ];
 
 function gerarSlug(titulo) {
-  return titulo
-    .toLowerCase()
-    .normalize('NFD')
-    .replace(/[\u0300-\u036f]/g, '')
-    .replace(/[^a-z0-9\s-]/g, '')
-    .trim()
-    .replace(/\s+/g, '-')
-    .substring(0, 80);
+    const slug = titulo
+      .toLowerCase()
+      .normalize('NFD')
+              .replace(/[\u0300-\u036f]/g, '')
+      .replace(/[^a-z0-9\s-]/g, '')
+      .trim()
+      .replace(/\s+/g, '-');
+
+    if (slug.length <= 100) return slug;
+
+    const cortado = slug.substring(0, 100);
+    const ultimoHifen = cortado.lastIndexOf('-');
+    return ultimoHifen > 60 ? cortado.substring(0, ultimoHifen) : cortado;
 }
 
 function gerarId() {
