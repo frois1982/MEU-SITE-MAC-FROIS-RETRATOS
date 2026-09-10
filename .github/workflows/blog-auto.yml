@@ -35,3 +35,7 @@ jobs:
           git add public/posts/ public/sitemap.xml
           git diff --staged --quiet || git commit -m "post auto: novo artigo + sitemap atualizado"
           git push
+
+      - name: Ping Google
+        run: |
+          curl -s "https://www.google.com/ping?sitemap=https://www.macfrois.com.br/sitemap.xml" || true
