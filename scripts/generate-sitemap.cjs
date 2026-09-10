@@ -23,31 +23,37 @@ function carregarPosts() {
 }
 
 function gerarSitemap() {
-  const posts = carregarPosts();
+    const posts = carregarPosts();
 
-  const urlsEstaticas = paginasEstaticas.map(p => `
-  <url>
-    <loc>${BASE_URL}${p.url}</loc>
-    <lastmod>${hoje}</lastmod>
-    <priority>${p.priority}</priority>
-  </url>`).join('');
+    const urlsEstaticas = paginasEstaticas.map(p => `
+    <url>
+      <loc>${BASE_URL}${p.url}</loc>
+        <lastmod>${hoje}</lastmod>
+          <priority>${p.priority}</priority>
+          </url>`).join('');
 
-  const urlsPosts = posts.map(p => `
-  <url>
-    <loc>${BASE_URL}/blog/${p.slug}</loc>
-    <lastmod>${hoje}</lastmod>
-    <priority>0.7</priority>
-  </url>`).join('');
+    const urlsPosts = posts.map(p => {
+          const lastmod = p.date
+            ? p.date.split('/').reverse().join('-')
+                  : hoje;
+          return `
+          <url>
+            <loc>${BASE_URL}/blog/${p.slug}</loc>
+              <lastmod>${lastmod}</lastmod>
+                <changefreq>monthly</changefreq>
+                  <priority>0.7</priority>
+                  </url>`;
+    }).join('');
 
-  const sitemap = `<?xml version="1.0" encoding="UTF-8"?>
-<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-${urlsEstaticas}
-${urlsPosts}
-</urlset>`;
+    const sitemap = `<?xml version="1.0" encoding="UTF-8"?>
+    <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+    ${urlsEstaticas}
+    ${urlsPosts}
+    </urlset>`;
 
-  const outputPath = path.join(__dirname, '../public/sitemap.xml');
-  fs.writeFileSync(outputPath, sitemap.trim(), 'utf-8');
-  console.log(`Sitemap gerado com ${paginasEstaticas.length + posts.length} URLs em public/sitemap.xml`);
+    const outputPath = path.join(__dirname, '../public/sitemap.xml');
+    fs.writeFileSync(outputPath, sitemap.trim(), 'utf-8');
+    console.log(`Sitemap gerado com ${paginasEstaticas.length + posts.length} URLs em public/sitemap.xml`);
 }
 
 gerarSitemap();
