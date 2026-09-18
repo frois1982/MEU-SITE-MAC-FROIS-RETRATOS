@@ -146,6 +146,8 @@ export const Products: React.FC = () => {
     document.title = 'Produtos Digitais | Mac Frois — Cursos de Fotografia';
     const meta = document.querySelector('meta[name="description"]');
     if (meta) meta.setAttribute('content', 'Cursos digitais de fotografia por Mac Frois. Iluminacao Profissional e Retratos que Vendem disponíveis agora no Hotmart.');
+  const canonical = document.querySelector('link[rel="canonical"]');
+  if (canonical) canonical.setAttribute('href', 'https://www.macfrois.com.br/produtos');
   }, []);
 
   return (
