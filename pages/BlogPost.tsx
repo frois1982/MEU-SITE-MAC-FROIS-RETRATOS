@@ -23,7 +23,10 @@ const BlogPost: React.FC = () => {
     if (!slug) {
       navigate('/blog');
       return;
-    }
+    }  
+      const canonical = document.querySelector('link[rel="canonical"]');
+      if  (canonical) canonical.setAttribute('href', `https://www.macfrois.com.br/blog/${slug}`);
+    
 
     fetch(`/posts/${slug}.json`)
       .then(r => {
@@ -36,8 +39,6 @@ const BlogPost: React.FC = () => {
         document.title = `${data.title} | Mac Frois`;
         const meta = document.querySelector('meta[name="description"]');
         if (meta) meta.setAttribute('content', data.excerpt || data.title);
-        const canonical = document.querySelector('link[rel="canonical"]');
-        if (canonical) canonical.setAttribute('href', `https://www.macfrois.com.br/blog/${data.slug}`);
       })
       .catch(() => {
         setError(true);
