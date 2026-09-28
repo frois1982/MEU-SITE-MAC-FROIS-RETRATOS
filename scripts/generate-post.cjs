@@ -27,7 +27,8 @@ const IMAGENS = [
     'https://res.cloudinary.com/dlahvdclb/image/upload/q_auto,f_auto,w_1200,h_630,c_fill,g_face/EU4A6476_bqdogp',
     'https://res.cloudinary.com/dlahvdclb/image/upload/q_auto,f_auto,w_1200,h_630,c_fill,g_face/13062026-EU4A8850_tud2ed',
     'https://res.cloudinary.com/dlahvdclb/image/upload/q_auto,f_auto,w_1200,h_630,c_fill,g_face/EU4A6345_jaf2v8',
-    'https://res.cloudinary.com/dlahvdclb/image/upload/q_auto,f_auto,w_1200,h_630,c_fill,g_face/1000057474.jpg_s86ppk',
+    'https://res.cloudinary.com/dlahvdclb/image/upload/q_auto,f_auto,w_1200,h_630,c_fill,g_face/1000380124.jpg_dmperd.jpg',
+    // 'CORP_Empresario.jpg' etc acima — removido: '1000057474.jpg_s86ppk' (retornava 404 no Cloudinary, causou post sem imagem em 25/09/2026)
   ];
 
 const TOPICOS = [
@@ -148,9 +149,23 @@ function carregarIndex() {
   return JSON.parse(fs.readFileSync(indexPath, 'utf-8'));
 }
 
-function salvarPost(id, slug, topico, conteudo, imageUrl, data) {
+function slugUnico(slugBase, postsDir) {
+  let slug = slugBase;
+  let sufixo = 2;
+  while (fs.existsSync(path.join(postsDir, `${slug}.json`))) {
+    slug = `${slugBase}-${sufixo}`;
+    sufixo++;
+  }
+  return slug;
+}
+
+function salvarPost(id, slugBase, topico, conteudo, imageUrl, data) {
   const postsDir = path.join(__dirname, '../public/posts');
   if (!fs.existsSync(postsDir)) fs.mkdirSync(postsDir, { recursive: true });
+
+  // Se já existe um post com esse slug (tópico repetido após esgotar a lista),
+  // gera um slug único em vez de sobrescrever o post antigo.
+  const slug = slugUnico(slugBase, postsDir);
 
   const post = {
     id,
