@@ -29,9 +29,28 @@ const IMAGENS = [
     'https://res.cloudinary.com/dlahvdclb/image/upload/q_auto,f_auto,w_1200,h_630,c_fill,g_face/EU4A6345_jaf2v8',
     'https://res.cloudinary.com/dlahvdclb/image/upload/q_auto,f_auto,w_1200,h_630,c_fill,g_face/1000380124.jpg_dmperd.jpg',
     // 'CORP_Empresario.jpg' etc acima — removido: '1000057474.jpg_s86ppk' (retornava 404 no Cloudinary, causou post sem imagem em 25/09/2026)
+
+    // ===== TEMPORADA 2 (out/2026 em diante) =====
+    // Imagens em blog/temporada-2/, Public ID = nome do arquivo (sem sufixo aleatório),
+    // pareadas 1:1 pelo índice com TOPICOS_TEMPORADA_2 abaixo.
+    'https://res.cloudinary.com/dlahvdclb/image/upload/q_auto,f_auto,w_1200,h_630,c_fill,g_face/blog/temporada-2/01-foto-perfil-ia-ou-fotografo-profissional',
+    'https://res.cloudinary.com/dlahvdclb/image/upload/q_auto,f_auto,w_1200,h_630,c_fill,g_face/blog/temporada-2/02-estudio-fotografico-florianopolis-como-escolher',
+    'https://res.cloudinary.com/dlahvdclb/image/upload/q_auto,f_auto,w_1200,h_630,c_fill,g_face/blog/temporada-2/03-ensaio-fotografico-profissional-o-que-esperar',
+    'https://res.cloudinary.com/dlahvdclb/image/upload/q_auto,f_auto,w_1200,h_630,c_fill,g_face/blog/temporada-2/04-quando-trocar-foto-de-perfil-profissional',
+    'https://res.cloudinary.com/dlahvdclb/image/upload/q_auto,f_auto,w_1200,h_630,c_fill,g_face/blog/temporada-2/05-personal-branding-o-que-e',
+    'https://res.cloudinary.com/dlahvdclb/image/upload/q_auto,f_auto,w_1200,h_630,c_fill,g_face/blog/temporada-2/06-fotografo-para-corretores-de-imoveis',
+    'https://res.cloudinary.com/dlahvdclb/image/upload/q_auto,f_auto,w_1200,h_630,c_fill,g_face/blog/temporada-2/07-coaches-e-mentores-fotografia-autoridade',
+    'https://res.cloudinary.com/dlahvdclb/image/upload/q_auto,f_auto,w_1200,h_630,c_fill,g_face/blog/temporada-2/08-prazo-fotos-profissionais-de-qualidade',
+    'https://res.cloudinary.com/dlahvdclb/image/upload/q_auto,f_auto,w_1200,h_630,c_fill,g_face/blog/temporada-2/09-perguntas-frequentes-retrato-corporativo',
+    'https://res.cloudinary.com/dlahvdclb/image/upload/q_auto,f_auto,w_1200,h_630,c_fill,g_face/blog/temporada-2/10-fotografia-corporativa-x-fotografia-comum',
+    'https://res.cloudinary.com/dlahvdclb/image/upload/q_auto,f_auto,w_1200,h_630,c_fill,g_face/blog/temporada-2/11-como-se-preparar-para-ensaio-de-retratos',
+    'https://res.cloudinary.com/dlahvdclb/image/upload/q_auto,f_auto,w_1200,h_630,c_fill,g_face/blog/temporada-2/12-iluminacao-e-imagem-profissional',
+    'https://res.cloudinary.com/dlahvdclb/image/upload/q_auto,f_auto,w_1200,h_630,c_fill,g_face/blog/temporada-2/13-depoimentos-reais-metodo-frois',
+    'https://res.cloudinary.com/dlahvdclb/image/upload/q_auto,f_auto,w_1200,h_630,c_fill,g_face/blog/temporada-2/14-vale-a-pena-investir-em-fotografia-profissional',
+    'https://res.cloudinary.com/dlahvdclb/image/upload/q_auto,f_auto,w_1200,h_630,c_fill,g_face/blog/temporada-2/15-como-usar-fotos-profissionais-nas-redes',
   ];
 
-const TOPICOS = [
+const TOPICOS_TEMPORADA_1 = [
   { titulo_base: 'Como uma boa foto de perfil pode aumentar suas vendas', keyword_principal: 'foto de perfil profissional', keywords: ['foto perfil linkedin', 'foto profissional florianopolis', 'retrato corporativo'], angulo: 'cases e dados concretos' },
   { titulo_base: 'Presença digital: porque sua imagem online vale mais do que parece', keyword_principal: 'presença digital imagem', keywords: ['marca pessoal digital', 'imagem profissional online', 'posicionamento digital'], angulo: 'transformação e resultado' },
   { titulo_base: 'Quanto custa um fotógrafo corporativo em Florianópolis', keyword_principal: 'fotógrafo corporativo Florianópolis', keywords: ['preço ensaio corporativo', 'fotógrafo executivo florianopolis', 'valor sessão foto profissional'], angulo: 'educação e transparência' },
@@ -48,6 +67,29 @@ const TOPICOS = [
   { titulo_base: 'Podcast e imagem: como construir autoridade em vídeo e foto ao mesmo tempo', keyword_principal: 'podcast imagem autoridade', keywords: ['produção podcast florianopolis', 'imagem autoridade video', 'marca pessoal podcast'], angulo: 'sinergia de canais' },
   { titulo_base: 'Método Frois: a abordagem que une arquétipos, direção e fotografia estratégica', keyword_principal: 'Método Frois fotografia estratégica', keywords: ['metodo frois', 'fotografia arquétipos', 'direção comportamental fotografia'], angulo: 'apresentação da metodologia' }
 ];
+
+// ===== TEMPORADA 2 (out/2026 em diante) =====
+// Tópicos pesquisados a partir de dados reais do Search Console + pesquisa de concorrência,
+// pareados 1:1 pelo índice com as últimas 15 posições de IMAGENS acima.
+const TOPICOS_TEMPORADA_2 = [
+  { titulo_base: 'Foto de perfil feita por IA ou por fotógrafo profissional: qual realmente funciona', keyword_principal: 'foto de perfil profissional ou IA', keywords: ['foto de perfil gerada por IA', 'ia vs fotografo profissional', 'foto de perfil linkedin IA'], angulo: 'comparação e critérios de decisão' },
+  { titulo_base: 'Como escolher um estúdio fotográfico em Florianópolis', keyword_principal: 'estúdio fotográfico Florianópolis', keywords: ['melhor estúdio fotográfico florianopolis', 'estudio de fotografia estreito', 'fotografo profissional florianopolis'], angulo: 'guia de decisão local' },
+  { titulo_base: 'O que esperar de um ensaio fotográfico profissional', keyword_principal: 'ensaio fotográfico profissional', keywords: ['como funciona um ensaio fotografico', 'primeira sessão de fotos profissional', 'o que levar no ensaio fotografico'], angulo: 'guia passo a passo' },
+  { titulo_base: 'Quando é hora de trocar sua foto de perfil profissional', keyword_principal: 'trocar foto de perfil profissional', keywords: ['foto de perfil desatualizada', 'quando atualizar foto linkedin', 'foto de perfil antiga'], angulo: 'sinais de alerta e ação' },
+  { titulo_base: 'O que é personal branding e por que ele começa pela sua imagem', keyword_principal: 'o que é personal branding', keywords: ['personal branding imagem pessoal', 'marca pessoal o que é', 'personal branding fotografia'], angulo: 'conceito e aplicação prática' },
+  { titulo_base: 'Por que corretores de imóveis precisam de fotos profissionais', keyword_principal: 'fotógrafo para corretor de imóveis', keywords: ['foto profissional corretor de imoveis', 'imagem corretor de imoveis', 'fotografo imobiliario florianopolis'], angulo: 'nicho específico e ROI' },
+  { titulo_base: 'Fotografia de autoridade para coaches e mentores', keyword_principal: 'fotógrafo para coaches e mentores', keywords: ['foto profissional coach', 'imagem de autoridade mentor', 'fotografo para infoprodutor'], angulo: 'nicho específico' },
+  { titulo_base: 'Quanto tempo leva para ter fotos profissionais de qualidade', keyword_principal: 'prazo entrega fotos profissionais', keywords: ['prazo ensaio fotografico', 'quanto tempo demora tratamento de fotos', 'entrega de fotos profissionais'], angulo: 'educação e transparência' },
+  { titulo_base: 'Perguntas frequentes sobre retrato corporativo', keyword_principal: 'dúvidas retrato corporativo', keywords: ['faq retrato corporativo', 'perguntas sobre ensaio corporativo', 'duvidas fotografia profissional'], angulo: 'formato FAQ' },
+  { titulo_base: 'Fotografia corporativa x fotografia comum: qual a diferença', keyword_principal: 'fotografia corporativa x fotografia comum', keywords: ['diferença foto profissional e foto amadora', 'o que é fotografia corporativa', 'fotografia comercial x pessoal'], angulo: 'comparação técnica' },
+  { titulo_base: 'Como se preparar para um ensaio de retratos', keyword_principal: 'como se preparar para ensaio de retratos', keywords: ['preparação ensaio fotografico', 'dicas antes do ensaio de fotos', 'como chegar bem no ensaio'], angulo: 'guia prático' },
+  { titulo_base: 'Como a iluminação influencia sua imagem profissional', keyword_principal: 'iluminação fotografia profissional', keywords: ['importancia da iluminação em fotos', 'luz natural x estudio', 'iluminação retrato corporativo'], angulo: 'técnica e resultado' },
+  { titulo_base: 'Depoimentos reais de quem passou pelo Método Frois', keyword_principal: 'depoimentos Método Frois', keywords: ['resultado metodo frois', 'cliente metodo frois', 'avaliação estudio frois'], angulo: 'prova social' },
+  { titulo_base: 'Vale a pena investir em fotografia profissional', keyword_principal: 'vale a pena fotografia profissional', keywords: ['investimento em fotografia profissional', 'retorno ensaio fotografico', 'vale a pena foto corporativa'], angulo: 'educação e ROI' },
+  { titulo_base: 'Como usar fotos profissionais nas redes sociais', keyword_principal: 'fotos profissionais redes sociais', keywords: ['como usar foto profissional instagram', 'imagem redes sociais profissional', 'fotos para linkedin e instagram'], angulo: 'guia prático' },
+];
+
+const TOPICOS = [...TOPICOS_TEMPORADA_1, ...TOPICOS_TEMPORADA_2];
 
 function gerarSlug(titulo) {
     const slug = titulo
@@ -73,18 +115,15 @@ function dataHoje() {
   return new Date().toLocaleDateString('pt-BR');
 }
 
-function escolherTopico(postsExistentes) {
+// Seleção calculada, não aleatória: TOPICOS[i] sempre é publicado com IMAGENS[i].
+// Percorre a lista em ordem e usa o primeiro tópico cujo título ainda não foi publicado.
+// Se todos os tópicos já foram usados (fila esgotada), recomeça o ciclo em ordem
+// (postsExistentes.length % TOPICOS.length) em vez de sortear.
+function escolherProximoPar(postsExistentes) {
   const titulosUsados = postsExistentes.map(p => p.title);
-  const disponiveis = TOPICOS.filter(t => !titulosUsados.includes(t.titulo_base));
-  if (disponiveis.length === 0) return TOPICOS[Math.floor(Math.random() * TOPICOS.length)];
-  return disponiveis[Math.floor(Math.random() * disponiveis.length)];
-}
-
-function escolherImagem(postsExistentes) {
-  const usadas = postsExistentes.map(p => p.imageUrl);
-  const disponiveis = IMAGENS.filter(i => !usadas.includes(i));
-  if (disponiveis.length === 0) return IMAGENS[Math.floor(Math.random() * IMAGENS.length)];
-  return disponiveis[Math.floor(Math.random() * disponiveis.length)];
+  let index = TOPICOS.findIndex(t => !titulosUsados.includes(t.titulo_base));
+  if (index === -1) index = postsExistentes.length % TOPICOS.length;
+  return { topico: TOPICOS[index], imageUrl: IMAGENS[index] };
 }
 
 function montarPrompt(topico) {
@@ -190,8 +229,7 @@ function salvarPost(id, slugBase, topico, conteudo, imageUrl, data) {
 async function main() {
   console.log('Iniciando geração de post...');
   const index = carregarIndex();
-  const topico = escolherTopico(index);
-  const imageUrl = escolherImagem(index);
+  const { topico, imageUrl } = escolherProximoPar(index);
   const id = gerarId();
   const slug = gerarSlug(topico.titulo_base);
   const data = dataHoje();
