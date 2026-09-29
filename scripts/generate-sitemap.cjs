@@ -19,7 +19,9 @@ const paginasEstaticas = [
 function carregarPosts() {
   const indexPath = path.join(__dirname, '../public/posts/index.json');
   if (!fs.existsSync(indexPath)) return [];
-  return JSON.parse(fs.readFileSync(indexPath, 'utf-8'));
+  const todos = JSON.parse(fs.readFileSync(indexPath, 'utf-8'));
+  const vistos = new Set();
+  return todos.filter(p => !vistos.has(p.slug) && vistos.add(p.slug));
 }
 
 function gerarSitemap() {
