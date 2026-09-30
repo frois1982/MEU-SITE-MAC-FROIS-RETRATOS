@@ -5,12 +5,12 @@ import page from '../data/fotografo-corporativo.json';
 
 const CLOUD = 'https://res.cloudinary.com/dlahvdclb/image/upload/q_auto,f_auto,w_900/';
 const GALLERY = [
-  { id: 'CORP_Empresario.jpg_15_HOME_m6bzke', alt: 'Retrato corporativo em Florianópolis com direção de pose, por Mac Frois' },
-  { id: 'ART_Conceito.jpg_3_HOME_awekl7', alt: 'Retrato de posicionamento de imagem com luz autoral' },
+  { id: 'CORP_Empresario.jpg_15_HOME_m6bzke', alt: 'Retrato de empresário de terno azul, fotografia corporativa em Florianópolis' },
+  { id: 'ART_Conceito.jpg_3_HOME_awekl7', alt: 'Retrato de empresária de camisa branca, posicionamento de imagem profissional' },
   { id: '1000380124.jpg_dmperd', alt: 'Retrato de autoridade para profissional liberal, Mac Frois' },
-  { id: '12-iluminacao-e-imagem-profissional', alt: 'Iluminação e imagem profissional em sessão de retrato corporativo' },
+  { id: '12-iluminacao-e-imagem-profissional', alt: 'Retrato de executiva sorrindo com iluminação profissional de estúdio' },
   { id: 'CORP_Executivo_01', alt: 'Retrato executivo de terno cinza, fotografia corporativa em Florianópolis' },
-  { id: 'ART_Conceito.jpg_HOME_mnu0wx', alt: 'Retrato conceitual de marca pessoal, Estúdio Frois' },
+  { id: 'ART_Conceito.jpg_HOME_mnu0wx', alt: 'Retrato autoral de executivo com luz dramática, Estúdio Frois' },
 ];
 
 const PUBLICO = [
