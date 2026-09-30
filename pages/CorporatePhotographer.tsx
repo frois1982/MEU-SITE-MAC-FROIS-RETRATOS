@@ -174,6 +174,21 @@ export const CorporatePhotographer: React.FC = () => {
         </div>
       </section>
 
+      {/* Leia também */}
+      <section className="max-w-3xl mx-auto px-6 pb-20">
+        <p className="text-gold-500 text-xs tracking-[0.4em] uppercase mb-3 text-center">Leia também</p>
+        <div className="grid md:grid-cols-2 gap-4">
+          <Link to="/blog/foto-profissional-para-advogados-em-florianopolis-o-que-a-oab-permite"
+                className="bg-zinc-900 border border-zinc-800 p-6 text-sm text-zinc-300 hover:border-gold-600 hover:text-gold-500 transition-colors">
+            Foto profissional para advogados: o que a OAB permite →
+          </Link>
+          <Link to="/blog/foto-profissional-para-medicos-em-florianopolis-o-que-o-cfm-permite"
+                className="bg-zinc-900 border border-zinc-800 p-6 text-sm text-zinc-300 hover:border-gold-600 hover:text-gold-500 transition-colors">
+            Foto profissional para médicos: o que o CFM permite →
+          </Link>
+        </div>
+      </section>
+
       {/* FAQ */}
       <section className="max-w-3xl mx-auto px-6 pb-20">
         <p className="text-gold-500 text-xs tracking-[0.4em] uppercase mb-3 text-center">Dúvidas frequentes</p>
