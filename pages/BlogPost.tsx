@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { useParams, useNavigate } from 'react-router-dom';
+import { useParams, useNavigate, Link } from 'react-router-dom';
 
 interface Post {
   id: string;
@@ -101,6 +101,11 @@ const BlogPost: React.FC = () => {
             <a href="https://wa.me/5548996231894" style={{ color: '#C9A84C' }}>
               (48) 99623-1894
             </a>
+          </p>
+          <p style={{ marginTop: '1rem', fontSize: '0.85rem' }}>
+            <Link to="/fotografo-corporativo-florianopolis" style={{ color: '#C9A84C' }}>
+              Conheça a sessão de fotografia corporativa em Florianópolis →
+            </Link>
           </p>
         </div>
       </article>

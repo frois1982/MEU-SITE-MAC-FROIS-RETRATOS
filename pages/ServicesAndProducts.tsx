@@ -1,5 +1,6 @@
 import React, { useEffect } from 'react';
 import { Check } from 'lucide-react';
+import { Link } from 'react-router-dom';
 
 export const Services: React.FC = () => {
   useEffect(() => {
@@ -26,6 +27,11 @@ export const Services: React.FC = () => {
         <div className="w-12 h-px bg-gold-600 mx-auto mb-6" />
         <p className="text-zinc-500 text-sm max-w-lg mx-auto tracking-wider leading-relaxed">
           Fotografia corporativa para profissionais que querem ser reconhecidos como referencia.
+        </p>
+        <p className="mt-4 text-xs tracking-widest">
+          <Link to="/fotografo-corporativo-florianopolis" className="text-gold-500 hover:underline">
+            Fotografo corporativo em Florianopolis: como funciona a sessao →
+          </Link>
         </p>
       </div>
 
