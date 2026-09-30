@@ -10,7 +10,7 @@ const GALLERY = [
   { id: '1000380124.jpg_dmperd', alt: 'Retrato de autoridade para profissional liberal, Mac Frois' },
   { id: '12-iluminacao-e-imagem-profissional', alt: 'Retrato de executiva sorrindo com iluminação profissional de estúdio' },
   { id: 'CORP_Executivo_01', alt: 'Retrato executivo de terno cinza, fotografia corporativa em Florianópolis' },
-  { id: 'ART_Conceito.jpg_HOME_mnu0wx', alt: 'Retrato autoral de executivo com luz dramática, Estúdio Frois' },
+  { id: 'ART_Conceito.jpg_HOME_mnu0wx', alt: 'Retrato autoral de executivo com luz dramática, Mac Frois' },
 ];
 
 const PUBLICO = [
@@ -43,7 +43,7 @@ export const CorporatePhotographer: React.FC = () => {
     <div className="min-h-screen bg-zinc-950 text-white">
       {/* Hero */}
       <header className="pt-32 pb-16 px-6 text-center max-w-3xl mx-auto">
-        <p className="text-gold-500 text-xs tracking-[0.4em] uppercase mb-4">Estúdio Frois · Estreito, Florianópolis — SC</p>
+        <p className="text-gold-500 text-xs tracking-[0.4em] uppercase mb-4">Mac Frois · Estreito, Florianópolis — SC</p>
         <h1 className="text-4xl md:text-5xl font-serif mb-6 leading-tight">{page.h1}</h1>
         <div className="w-12 h-px bg-gold-600 mx-auto mb-6" />
         <p className="text-zinc-400 text-sm md:text-base leading-relaxed tracking-wide mb-10">{page.intro}</p>
@@ -171,7 +171,7 @@ export const CorporatePhotographer: React.FC = () => {
       {/* CTA final */}
       <section className="px-6 pb-24 text-center">
         <h2 className="text-2xl md:text-3xl font-serif mb-4">Vamos construir a sua imagem de autoridade?</h2>
-        <p className="text-zinc-500 text-sm mb-8">Estúdio Frois · Estreito, Florianópolis — SC · Atendimento presencial</p>
+        <p className="text-zinc-500 text-sm mb-8">Mac Frois · Estreito, Florianópolis — SC · Atendimento presencial</p>
         <a href={WHATSAPP} target="_blank" rel="noopener noreferrer"
            className="inline-block px-10 py-4 bg-gold-600 text-black text-xs tracking-[0.3em] uppercase font-semibold hover:bg-gold-500 transition-all">
           Chamar no WhatsApp
