@@ -13,7 +13,7 @@ const Navbar: React.FC = () => {
   useEffect(() => {
     const handleScroll = () => setScrolled(window.scrollY > 50);
     window.addEventListener('scroll', handleScroll);
-    return () => window.removeEventListener('scroll', handleScroll);h
+    return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
   useEffect(() => { setIsOpen(false); }, [location]);
