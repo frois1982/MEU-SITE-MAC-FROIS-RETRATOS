@@ -28,10 +28,10 @@ const PASSOS = [
 ];
 
 const DEPOIMENTOS = [
-  { nome: 'Maria Graziella de Oliveira', texto: 'Eu sou arquiteta e tenho o olhar apurado para a arte. Quando conheci o trabalho do Mac, no mesmo instante já me impressionei com seus retratos, no aspecto da luz e da emoção transmitida em cada registro. Foi então que fizemos o nosso ensaio, e ficou lindo e profundamente emocional para mim.' },
-  { nome: 'Kadu Molina', texto: 'Sensacional! O Mac tem um trabalho diferenciado! O resultado foi além das minhas expectativas. Baita profissional, sabe conduzir com tranquilidade o ensaio, tornando o trabalho e o resultado muito positivo. Recomendo!' },
-  { nome: 'Marseau Franco', texto: 'O Mac é um profissional diferenciado. Desde as primeiras conversas até a finalização do trabalho, fica nítido o quanto ele se dedica ao processo e ao cliente. Recomendo fortemente!' },
-  { nome: 'Vanessa Goulart', texto: 'Profissional incrível, com um olhar diferenciado, sensível e certeiro.' },
+  { nome: 'Maria Graziella de Oliveira', link: 'https://maps.app.goo.gl/jthfi8d9xDnmPBxD6', texto: 'Eu sou arquiteta e tenho o olhar apurado para a arte. Quando conheci o trabalho do Mac, no mesmo instante já me impressionei com seus retratos, no aspecto da luz e da emoção transmitida em cada registro. Foi então que fizemos o nosso ensaio, e ficou lindo e profundamente emocional para mim.' },
+  { nome: 'Kadu Molina', link: 'https://maps.app.goo.gl/7e5X3amFFK62t5sH8', texto: 'Sensacional! O Mac tem um trabalho diferenciado! O resultado foi além das minhas expectativas. Baita profissional, sabe conduzir com tranquilidade o ensaio, tornando o trabalho e o resultado muito positivo. Recomendo!' },
+  { nome: 'Marseau Franco', link: 'https://maps.app.goo.gl/x7Pubp5BUN1BGY5t9', texto: 'O Mac é um profissional diferenciado. Desde as primeiras conversas até a finalização do trabalho, fica nítido o quanto ele se dedica ao processo e ao cliente. Recomendo fortemente!' },
+  { nome: 'Vanessa Goulart', link: 'https://maps.app.goo.gl/pVn5cCj8wqriMmAb6', texto: 'Profissional incrível, com um olhar diferenciado, sensível e certeiro.' },
 ];
 const WHATSAPP = 'https://wa.me/5548996231894?text=' +
   encodeURIComponent('Olá Mac, vi a página de fotógrafo corporativo em Florianópolis e gostaria de saber mais sobre a sessão.');
@@ -126,15 +126,23 @@ export const CorporatePhotographer: React.FC = () => {
             <figure key={d.nome} className="bg-zinc-900 border border-zinc-800 p-8 flex flex-col">
               <div className="text-gold-500 tracking-widest mb-4" aria-label="5 de 5 estrelas">★★★★★</div>
               <blockquote className="text-zinc-300 text-sm leading-relaxed flex-1">“{d.texto}”</blockquote>
-              <figcaption className="mt-6 pt-4 border-t border-zinc-800 text-xs tracking-[0.2em] uppercase">
-                <span className="text-white">{d.nome}</span>
-                <span className="block text-zinc-500 mt-1 normal-case tracking-normal">Avaliação no Google</span>
+              <figcaption className="mt-6 pt-4 border-t border-zinc-800 flex items-center gap-4">
+                <span aria-hidden="true" className="w-10 h-10 rounded-full border border-gold-600/60 text-gold-500 flex items-center justify-center font-serif text-sm shrink-0">
+                  {d.nome.split(' ').filter((_, i, a) => i === 0 || i === a.length - 1).map((w) => w[0]).join('')}
+                </span>
+                <span className="text-xs">
+                  <span className="block text-white tracking-[0.2em] uppercase">{d.nome}</span>
+                  <a href={d.link} target="_blank" rel="noopener noreferrer"
+                     className="block text-zinc-500 mt-1 hover:text-gold-500 transition-colors">
+                    Ver esta avaliação no Google ↗
+                  </a>
+                </span>
               </figcaption>
             </figure>
           ))}
         </div>
         <p className="text-center mt-8">
-          <a href="https://g.page/r/CRUJqKRkYwEEEBM/review" target="_blank" rel="noopener noreferrer"
+          <a href="https://g.page/r/CRUJqKRkYwEEEBM" target="_blank" rel="noopener noreferrer"
              className="text-zinc-400 text-xs tracking-[0.3em] uppercase hover:text-gold-500 transition-colors">
             Ver avaliações no Google →
           </a>
