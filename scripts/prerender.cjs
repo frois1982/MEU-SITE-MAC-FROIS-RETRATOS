@@ -89,7 +89,7 @@ for (const m of manifesto) {
     datePublished: isoData(p.date), dateModified: isoData(p.date),
     mainEntityOfPage: url,
     author: { '@type': 'Person', name: 'Mac Frois', url: BASE },
-    publisher: { '@type': 'Organization', name: 'Estúdio Frois' },
+    publisher: { '@type': 'Organization', name: 'Mac Frois' },
   };
   const corpo = `<article><h1>${esc(p.title)}</h1><p>${esc(p.date)}</p><div style="white-space:pre-wrap">${esc(p.content)}</div></article>`;
   gravar(`/blog/${p.slug}`, aplicar(base, { title: `${p.title} | Mac Frois`, desc, url, image: p.imageUrl, type: 'article', jsonld, corpo }));

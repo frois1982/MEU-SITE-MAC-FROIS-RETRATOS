@@ -22,7 +22,7 @@ export const Services: React.FC = () => {
 
       {/* Header */}
       <div className="pt-32 pb-16 text-center px-6">
-        <p className="text-gold-500 text-xs tracking-[0.4em] uppercase mb-4">Estudio Frois · Florianopolis, SC</p>
+        <p className="text-gold-500 text-xs tracking-[0.4em] uppercase mb-4">Mac Frois · Florianópolis, SC</p>
         <h1 className="text-4xl md:text-5xl font-serif text-white mb-4">Autoridade em Imagem</h1>
         <div className="w-12 h-px bg-gold-600 mx-auto mb-6" />
         <p className="text-zinc-500 text-sm max-w-lg mx-auto tracking-wider leading-relaxed">
