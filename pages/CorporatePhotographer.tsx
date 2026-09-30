@@ -27,6 +27,12 @@ const PASSOS = [
   ['Entrega tratada', 'Fotos em alta resolução e em versão para web, em galeria digital.'],
 ];
 
+const DEPOIMENTOS = [
+  { nome: 'Maria Graziella de Oliveira', texto: 'Eu sou arquiteta e tenho o olhar apurado para a arte. Quando conheci o trabalho do Mac, no mesmo instante já me impressionei com seus retratos, no aspecto da luz e da emoção transmitida em cada registro. Foi então que fizemos o nosso ensaio, e ficou lindo e profundamente emocional para mim.' },
+  { nome: 'Kadu Molina', texto: 'Sensacional! O Mac tem um trabalho diferenciado! O resultado foi além das minhas expectativas. Baita profissional, sabe conduzir com tranquilidade o ensaio, tornando o trabalho e o resultado muito positivo. Recomendo!' },
+  { nome: 'Marseau Franco', texto: 'O Mac é um profissional diferenciado. Desde as primeiras conversas até a finalização do trabalho, fica nítido o quanto ele se dedica ao processo e ao cliente. Recomendo fortemente!' },
+  { nome: 'Vanessa Goulart', texto: 'Profissional incrível, com um olhar diferenciado, sensível e certeiro.' },
+];
 const WHATSAPP = 'https://wa.me/5548996231894?text=' +
   encodeURIComponent('Olá Mac, vi a página de fotógrafo corporativo em Florianópolis e gostaria de saber mais sobre a sessão.');
 
@@ -109,6 +115,30 @@ export const CorporatePhotographer: React.FC = () => {
             </li>
           ))}
         </ol>
+      </section>
+
+      {/* Depoimentos (avaliações reais do Google) */}
+      <section className="max-w-5xl mx-auto px-6 pb-20">
+        <p className="text-gold-500 text-xs tracking-[0.4em] uppercase mb-3 text-center">Clientes satisfeitos</p>
+        <h2 className="text-2xl md:text-3xl font-serif text-center mb-10">O que dizem quem já fotografou comigo</h2>
+        <div className="grid md:grid-cols-2 gap-4">
+          {DEPOIMENTOS.map((d) => (
+            <figure key={d.nome} className="bg-zinc-900 border border-zinc-800 p-8 flex flex-col">
+              <div className="text-gold-500 tracking-widest mb-4" aria-label="5 de 5 estrelas">★★★★★</div>
+              <blockquote className="text-zinc-300 text-sm leading-relaxed flex-1">“{d.texto}”</blockquote>
+              <figcaption className="mt-6 pt-4 border-t border-zinc-800 text-xs tracking-[0.2em] uppercase">
+                <span className="text-white">{d.nome}</span>
+                <span className="block text-zinc-500 mt-1 normal-case tracking-normal">Avaliação no Google</span>
+              </figcaption>
+            </figure>
+          ))}
+        </div>
+        <p className="text-center mt-8">
+          <a href="https://g.page/r/CRUJqKRkYwEEEBM/review" target="_blank" rel="noopener noreferrer"
+             className="text-zinc-400 text-xs tracking-[0.3em] uppercase hover:text-gold-500 transition-colors">
+            Ver avaliações no Google →
+          </a>
+        </p>
       </section>
 
       {/* Investimento */}
