@@ -92,7 +92,7 @@ export const CorporatePhotographer: React.FC = () => {
           fotografar, eu entendo quem você é e o que a sua imagem precisa dizer. Foram quase 20 anos como
           enfermeiro em atendimentos de emergência antes de me dedicar à fotografia, há mais de 10 anos. Ali
           aprendi a ler pessoas antes de ouvir palavras, e é isso que levo para cada retrato corporativo em
-          Florianópolis: uma imagem profissional que se parece com você, natural, e não posada.
+          Florianópolis: uma imagem profissional que se parece com você, natural, sem pose forçada, e não uma mera cópia.
         </p>
       </section>
 
