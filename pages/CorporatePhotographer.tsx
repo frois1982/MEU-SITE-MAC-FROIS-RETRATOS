@@ -89,9 +89,10 @@ export const CorporatePhotographer: React.FC = () => {
         <h2 className="text-2xl md:text-3xl font-serif mb-6">Não é só uma foto bonita. É posicionamento.</h2>
         <p className="text-zinc-400 text-sm md:text-base leading-relaxed">
           O Método Frois une arquétipos de marca, direção comportamental e fotografia estratégica. Antes de
-          fotografar, entendo quem você é e o que a sua imagem precisa dizer. Depois de quase 20 anos no
-          atendimento de emergências antes de me dedicar à fotografia, aprendi a ler pessoas e a conduzir a
-          sessão para que o retrato saia natural, e não posado.
+          fotografar, eu entendo quem você é e o que a sua imagem precisa dizer. Foram quase 20 anos como
+          enfermeiro em atendimentos de emergência antes de me dedicar à fotografia, há mais de 10 anos. Ali
+          aprendi a ler pessoas antes de ouvir palavras, e é isso que levo para cada retrato corporativo em
+          Florianópolis: uma imagem profissional que se parece com você, natural, e não posada.
         </p>
       </section>
 
