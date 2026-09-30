@@ -5,12 +5,12 @@ import page from '../data/fotografo-corporativo.json';
 
 const CLOUD = 'https://res.cloudinary.com/dlahvdclb/image/upload/q_auto,f_auto,w_900/';
 const GALLERY = [
-  { id: 'CORP_Empresario.jpg_21_bjqwpc', alt: 'Retrato corporativo de empresário em Florianópolis' },
-  { id: 'CORP_Empresario.jpg_20_g89v0m', alt: 'Retrato de executivo fotografado por Mac Frois' },
-  { id: 'CORP_Empresario.jpg_19_mshcvs', alt: 'Foto profissional para LinkedIn e site institucional' },
-  { id: 'CORP_Empresario.jpg_17_pfqp8n', alt: 'Retrato de autoridade para profissional liberal' },
-  { id: 'CORP_Empresario.jpg_16_HOME_ua4vd7', alt: 'Fotografia corporativa com direção de pose' },
-  { id: 'CORP_Empresario.jpg_17_HOME_kxttmo', alt: 'Retrato executivo em estúdio, Florianópolis' },
+  { id: 'CORP_Empresario.jpg_17_HOME_kxttmo', alt: 'Retrato executivo de empresário à mesa, fotografia corporativa em Florianópolis' },
+  { id: 'CORP_Empresario.jpg_15_dz42tf', alt: 'Retrato de executiva com direção de pose em estúdio' },
+  { id: '1000380124.jpg_dmperd', alt: 'Retrato de autoridade para profissional liberal, Mac Frois' },
+  { id: 'CORP_Empresario.jpg_17_pfqp8n', alt: 'Retrato profissional feminino para LinkedIn e site institucional' },
+  { id: 'CORP_Empresario.jpg_02_id7psq', alt: 'Retrato corporativo de advogado com terno azul em Florianópolis' },
+  { id: 'ART_Conceito.jpg_20_a45w8y', alt: 'Retrato de posicionamento de imagem com luz autoral' },
 ];
 
 const PUBLICO = [
