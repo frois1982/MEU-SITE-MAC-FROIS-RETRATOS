@@ -17,7 +17,7 @@ export const Contact: React.FC = () => {
     nome: '',
     telefone: '',
     email: '',
-    projeto: 'Projeto Van Gogh',
+    projeto: '',
     mensagem: ''
   });
 
