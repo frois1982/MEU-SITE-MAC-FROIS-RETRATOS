@@ -133,6 +133,25 @@ export const Services: React.FC = () => {
         </div>
       </div>
 
+      {/* Como funcionam os projetos */}
+      <section className="max-w-4xl mx-auto px-6 pb-16">
+        <h2 className="text-white text-2xl md:text-3xl font-serif mb-8 text-center">Como funcionam os Projetos Da Vinci e Michelangelo</h2>
+        <div className="space-y-8 text-zinc-400 text-sm leading-relaxed">
+          <div>
+            <h3 className="text-gold-500 text-xs tracking-[0.3em] uppercase mb-2">Projeto Da Vinci</h3>
+            <p>Projeto de posicionamento de imagem com cinco encontros: análise e dossiê inicial, criação de movimento, definição de arquétipo, alinhamento da sessão e sessão fotográfica de 3 horas. Entrega de 60 fotos tratadas em alta resolução e em formato para web, mais o dossiê final com o resumo do processo e as direções de uso.</p>
+          </div>
+          <div>
+            <h3 className="text-gold-500 text-xs tracking-[0.3em] uppercase mb-2">Projeto Michelangelo</h3>
+            <p>Imersão completa com oito encontros: os cinco do Da Vinci, sessão fotográfica de 6 horas e três calls de acompanhamento depois da entrega (resultados, consultoria de criação de conteúdo e alinhamento final). Entrega de mais de 50 fotos tratadas.</p>
+          </div>
+          <div>
+            <h3 className="text-gold-500 text-xs tracking-[0.3em] uppercase mb-2">Quanto custa?</h3>
+            <p>O investimento nos Projetos Da Vinci e Michelangelo é definido em proposta personalizada, depois de uma conversa sobre seus objetivos. Para receber a proposta, fale com Mac Frois pelo WhatsApp (48) 99623-1894. A sessão de fotografia corporativa tem pacotes a partir de R$ 890.</p>
+          </div>
+        </div>
+      </section>
+
       {/* Rodape */}
       <div className="text-center pb-16 px-6">
         <p className="text-zinc-700 text-xs tracking-widest uppercase">
