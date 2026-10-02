@@ -9,12 +9,12 @@ const WHATSAPP = (assunto: string) =>
 const brl = (n: number) => 'R$ ' + n.toLocaleString('pt-BR');
 
 const GALERIA = [
-  { src: '/familia/garoto-no-barco.jpg', alt: 'Menino sorrindo olhando para o horizonte, em ensaio ao ar livre em Florianópolis' },
-  { src: '/familia/irmaos-na-colina.jpg', alt: 'Dois irmãos sentados juntos em uma colina verde em Florianópolis' },
-  { src: '/familia/mae-e-filhos-na-praia.jpg', alt: 'Mãe abraçando os filhos na praia em um dia de sol' },
-  { src: '/familia/irmaos-campo-de-trigo.jpg', alt: 'Irmãos brincando em um campo de trigo dourado' },
-  { src: '/familia/avo-e-bebe.jpg', alt: 'Avó e neto bebê sorrindo em um jardim' },
-  { src: '/familia/por-do-sol-na-praia.jpg', alt: 'Criança sentada na areia olhando o pôr do sol na praia' },
+  { src: '/familia/familia-praia-ombros.jpg', alt: 'Família caminhando na praia em Florianópolis, com o filho nos ombros do pai' },
+  { src: '/familia/familia-estudio-retrato.jpg', alt: 'Retrato de família em estúdio: pai, mãe e filho sorrindo em fundo verde' },
+  { src: '/familia/pai-e-filho-na-praia.jpg', alt: 'Pai levantando o filho no ar na praia, com o céu azul ao fundo' },
+  { src: '/familia/avo-e-neto.jpg', alt: 'Avô sorrindo com o neto bebê no colo, em ensaio ao ar livre' },
+  { src: '/familia/mae-e-filho-na-praia.jpg', alt: 'Mãe e filho de óculos escuros sentados na areia, com o pai ao fundo' },
+  { src: '/familia/familia-estudio-abraco.jpg', alt: 'Casal e filho abraçados em um sofá de couro, em ensaio de estúdio' },
 ];
 
 const PASSOS = [

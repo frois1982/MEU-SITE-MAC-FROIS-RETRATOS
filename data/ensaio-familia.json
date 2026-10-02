@@ -44,7 +44,7 @@
         "Você escolhe o local: 2 em estúdio, 1 em estúdio e 1 externa, ou 2 externas",
         "50 fotos digitais tratadas, em alta resolução",
         "Álbum premium 25×25 cm",
-        "Quadro 80×120 cm + quadro 60×90 cm, que juntos preenchem uma parede de sala de 3×4 m",
+        "Quadros para a sua parede, à sua escolha: 1 quadro horizontal de 100×140 cm ou 2 quadros verticais de 70×100 cm (outros tamanhos sob consulta, conforme o ambiente)",
         "Vídeo e making off em 4K",
         "Consultoria e alinhamento de imagem"
       ]
@@ -85,6 +85,7 @@
   },
   "extras": [
     "Instalação do quadro na sua casa: R$ 80 por quadro (opcional).",
+    "Quadros em tamanhos maiores que os previstos nos pacotes são orçados à parte, conforme a parede, com acréscimo no valor dos quadros.",
     "Deslocamento incluso até 100 km da Grande Florianópolis. Para distâncias maiores, consulte.",
     "No Legado, a segunda sessão externa tem acréscimo de R$ 550 (as duas sessões em estúdio, ou uma em estúdio e outra externa, têm o mesmo valor).",
     "Pagamento por Pix, cartão de crédito em até 12x ou transferência bancária, com contrato e nota fiscal."
@@ -92,11 +93,11 @@
   "faq": [
     {
       "q": "Quanto custa um ensaio de família em Florianópolis?",
-      "a": "Os pacotes de ensaio de família do Mac Frois são três: Momento, a R$ 990, com sessão de até 1 hora e 15 fotos digitais; Memória, a R$ 2.490, com sessão de até 2 horas, 30 fotos digitais, álbum com 30 fotos impressas e um quadro 60×90 cm; e Legado, a R$ 4.900, com duas sessões, álbum premium, dois quadros e vídeo em 4K."
+      "a": "Os pacotes de ensaio de família do Mac Frois são três: Momento, a R$ 990, com sessão de até 1 hora e 15 fotos digitais; Memória, a R$ 2.490, com sessão de até 2 horas, 30 fotos digitais, álbum com 30 fotos impressas e um quadro 60×90 cm; e Legado, a R$ 4.900, com duas sessões, álbum premium, quadros para a parede e vídeo em 4K."
     },
     {
       "q": "Qual a diferença entre os pacotes Momento, Memória e Legado?",
-      "a": "O Momento entrega as fotos digitais de uma sessão curta. O Memória, o mais escolhido, soma a parte impressa: álbum fotográfico e um quadro para a parede. O Legado conta a história em duas sessões e entrega álbum premium, quadros de 80×120 cm e 60×90 cm e vídeo com making off em 4K."
+      "a": "O Momento entrega as fotos digitais de uma sessão curta. O Memória, o mais escolhido, soma a parte impressa: álbum fotográfico e um quadro para a parede. O Legado conta a história em duas sessões e entrega álbum premium, quadros para a parede (um horizontal de 100×140 cm ou dois verticais de 70×100 cm) e vídeo com making off em 4K."
     },
     {
       "q": "O ensaio de família pode ser no estúdio ou ao ar livre?",
@@ -108,7 +109,7 @@
     },
     {
       "q": "Os quadros já vêm prontos para pendurar?",
-      "a": "Sim. Os quadros são entregues em caixa, com vidro e impressão de qualidade fotográfica. Se preferir, a instalação na sua casa custa R$ 80 por quadro."
+      "a": "Sim. Os quadros são entregues em caixa, com vidro e impressão de qualidade fotográfica. Se preferir, a instalação na sua casa custa R$ 80 por quadro. Se a sua parede pedir um tamanho maior que o previsto no pacote, o quadro é orçado à parte, conforme a medida."
     },
     {
       "q": "Como escolher o figurino da família?",
