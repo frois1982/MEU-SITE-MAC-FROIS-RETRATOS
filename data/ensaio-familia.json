@@ -22,7 +22,7 @@
     {
       "id": "memoria",
       "nome": "Memória",
-      "preco": null,
+      "preco": 2490,
       "frase": "Para ter a família nas paredes e nas mãos.",
       "destaque": true,
       "itens": [
@@ -33,7 +33,7 @@
         "1 quadro 60×90 cm (vertical ou horizontal), em caixa com vidro",
         "Consultoria e alinhamento de imagem"
       ],
-      "precoRotulo": "Sob consulta"
+      "precoRotulo": "A partir de R$ 2.490"
     },
     {
       "id": "legado",
@@ -98,7 +98,7 @@
   "faq": [
     {
       "q": "Quanto custa um ensaio de família em Florianópolis?",
-      "a": "Os ensaios de família do Mac Frois começam em R$ 990, no pacote Momento: sessão de até 1 hora, 15 fotos digitais tratadas e orientação de figurino. O Memória (sessão de até 2 horas, 30 fotos digitais, álbum com 30 fotos impressas e um quadro 60×90 cm) e o Legado (duas sessões, álbum premium, quadros para a parede e vídeo em 4K) são montados sob consulta, de acordo com a necessidade de cada família, com local, quantidade de fotos e produtos conversados antes. Chame no WhatsApp para receber a proposta."
+      "a": "Os ensaios de família do Mac Frois começam em R$ 990, no pacote Momento: sessão de até 1 hora, 15 fotos digitais tratadas e orientação de figurino. O Memória, a partir de R$ 2.490, inclui sessão de até 2 horas, 30 fotos digitais, álbum com 30 fotos impressas e um quadro 60×90 cm. O Legado (duas sessões, álbum premium, quadros para a parede e vídeo em 4K) é montado sob consulta, de acordo com a necessidade de cada família, com local, quantidade de fotos e produtos conversados antes. Chame no WhatsApp para receber a proposta."
     },
     {
       "q": "Qual a diferença entre os pacotes Momento, Memória e Legado?",
