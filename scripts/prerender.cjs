@@ -75,16 +75,16 @@ for (const p of PAGINAS) {
     const ofertas = [
       ...FAM.packages.map((k) => ({ nome: `Ensaio de família ${k.nome}`, preco: k.preco })),
       ...FAM.alemDoTempo.contratos.map((k) => ({ nome: k.nome, preco: k.preco })),
-    ];
+    ];  // preço só quando divulgado; os demais são sob consulta
     extra.jsonld = { '@context': 'https://schema.org', '@graph': [
       { '@type': 'FAQPage', mainEntity: FAM.faq.map((f) => ({ '@type': 'Question', name: f.q, acceptedAnswer: { '@type': 'Answer', text: f.a } })) },
       { '@type': 'Service', name: 'Ensaio fotográfico de família em Florianópolis', serviceType: 'Fotografia de família',
         provider: { '@id': BASE + '/#negocio' }, areaServed: { '@type': 'City', name: 'Florianópolis' },
         hasOfferCatalog: { '@type': 'OfferCatalog', name: 'Pacotes de ensaio de família',
-          itemListElement: ofertas.map((o) => ({ '@type': 'Offer', priceCurrency: 'BRL', price: String(o.preco), itemOffered: { '@type': 'Service', name: o.nome } })) } },
+          itemListElement: ofertas.map((o) => ({ '@type': 'Offer', ...(o.preco ? { priceCurrency: 'BRL', price: String(o.preco) } : {}), itemOffered: { '@type': 'Service', name: o.nome } })) } },
     ] };
     extra.corpo = `<main><h1>${esc(FAM.h1)}</h1><p>${esc(FAM.intro)}</p>` +
-      FAM.packages.map((k) => `<h2>${esc(k.nome)}: R$ ${k.preco.toLocaleString('pt-BR')}</h2><ul>${k.itens.map((i) => `<li>${esc(i)}</li>`).join('')}</ul>`).join('') +
+      FAM.packages.map((k) => `<h2>${esc(k.nome)}: ${esc(k.precoRotulo)}</h2><ul>${k.itens.map((i) => `<li>${esc(i)}</li>`).join('')}</ul>`).join('') +
       FAM.faq.map((f) => `<h2>${esc(f.q)}</h2><p>${esc(f.a)}</p>`).join('') + '</main>';
   }
   gravar(p.rota, aplicar(base, { title: p.title, desc: p.desc, url: BASE + p.rota, ...extra }));

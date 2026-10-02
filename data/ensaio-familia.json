@@ -16,12 +16,13 @@
         "15 fotos digitais tratadas, em alta resolução",
         "Galeria digital para baixar e compartilhar",
         "Orientações de figurino antes da sessão"
-      ]
+      ],
+      "precoRotulo": "A partir de R$ 990"
     },
     {
       "id": "memoria",
       "nome": "Memória",
-      "preco": 2490,
+      "preco": null,
       "frase": "Para ter a família nas paredes e nas mãos.",
       "destaque": true,
       "itens": [
@@ -31,12 +32,13 @@
         "30 fotos impressas em 10×15 cm, em álbum fotográfico",
         "1 quadro 60×90 cm (vertical ou horizontal), em caixa com vidro",
         "Consultoria e alinhamento de imagem"
-      ]
+      ],
+      "precoRotulo": "Sob consulta"
     },
     {
       "id": "legado",
       "nome": "Legado",
-      "preco": 4900,
+      "preco": null,
       "frase": "A história da família, contada em dois capítulos.",
       "destaque": false,
       "itens": [
@@ -47,7 +49,8 @@
         "Quadros para a sua parede, à sua escolha: 1 quadro horizontal de 100×140 cm ou 2 quadros verticais de 70×100 cm (outros tamanhos sob consulta, conforme o ambiente)",
         "Vídeo e making off em 4K",
         "Consultoria e alinhamento de imagem"
-      ]
+      ],
+      "precoRotulo": "Sob consulta"
     }
   ],
   "alemDoTempo": {
@@ -57,25 +60,27 @@
       {
         "id": "1-ano",
         "nome": "Legado + Além do Tempo, 1 ano",
-        "preco": 7490,
+        "preco": null,
         "itens": [
           "Tudo do Legado",
           "1 sessão de continuidade no ano seguinte, com o mesmo número de fotos do Legado",
           "1 produto à sua escolha para essa sessão: quadro 60×90 cm ou álbum",
           "Preço travado por 1 ano"
-        ]
+        ],
+        "precoRotulo": "Sob consulta"
       },
       {
         "id": "2-anos",
         "nome": "Legado + Além do Tempo, 2 anos",
-        "preco": 9990,
+        "preco": null,
         "itens": [
           "Tudo do Legado",
           "2 sessões de continuidade, uma por ano, cada uma com o mesmo número de fotos do Legado",
           "1 produto à sua escolha em cada sessão de continuidade: quadro 60×90 cm ou álbum",
           "Álbum Linha do Tempo reunindo os 3 capítulos da história",
           "Preço travado por 2 anos"
-        ]
+        ],
+        "precoRotulo": "Sob consulta"
       }
     ],
     "notas": [
@@ -86,14 +91,14 @@
   "extras": [
     "Instalação do quadro na sua casa: R$ 80 por quadro (opcional).",
     "Quadros em tamanhos maiores que os previstos nos pacotes são orçados à parte, conforme a parede, com acréscimo no valor dos quadros.",
+    "No Legado, o local de cada sessão (estúdio ou externa) é escolhido por você; sessões externas adicionais podem ter acréscimo, combinado na proposta.",
     "Deslocamento incluso até 100 km da Grande Florianópolis. Para distâncias maiores, consulte.",
-    "No Legado, a segunda sessão externa tem acréscimo de R$ 550 (as duas sessões em estúdio, ou uma em estúdio e outra externa, têm o mesmo valor).",
     "Sinal de 30% para reservar a data; o restante no cartão de crédito, em até 6x (Momento e Memória) ou em até 12x (Legado e Além do Tempo), com a cobrança feita antes da sessão. Não há pagamento no dia. Todo projeto é formalizado com contrato e nota fiscal."
   ],
   "faq": [
     {
       "q": "Quanto custa um ensaio de família em Florianópolis?",
-      "a": "Os pacotes de ensaio de família do Mac Frois são três: Momento, a R$ 990, com sessão de até 1 hora e 15 fotos digitais; Memória, a R$ 2.490, com sessão de até 2 horas, 30 fotos digitais, álbum com 30 fotos impressas e um quadro 60×90 cm; e Legado, a R$ 4.900, com duas sessões, álbum premium, quadros para a parede e vídeo em 4K."
+      "a": "Os ensaios de família do Mac Frois começam em R$ 990, no pacote Momento: sessão de até 1 hora, 15 fotos digitais tratadas e orientação de figurino. O Memória (sessão de até 2 horas, 30 fotos digitais, álbum com 30 fotos impressas e um quadro 60×90 cm) e o Legado (duas sessões, álbum premium, quadros para a parede e vídeo em 4K) são montados sob consulta, de acordo com a necessidade de cada família, com local, quantidade de fotos e produtos conversados antes. Chame no WhatsApp para receber a proposta."
     },
     {
       "q": "Qual a diferença entre os pacotes Momento, Memória e Legado?",
@@ -105,7 +110,7 @@
     },
     {
       "q": "O que é o Além do Tempo?",
-      "a": "É a extensão do pacote Legado por 1 ou 2 anos. Em cada ano há uma nova sessão de continuidade, com o mesmo número de fotos do Legado e um produto à sua escolha, quadro 60×90 cm ou álbum. O preço fica travado desde o contrato. No contrato de 2 anos há ainda um álbum Linha do Tempo, que reúne os três capítulos da história da família."
+      "a": "É a extensão do pacote Legado por 1 ou 2 anos. Em cada ano há uma nova sessão de continuidade, com o mesmo número de fotos do Legado e um produto à sua escolha, quadro 60×90 cm ou álbum. O valor é combinado em conversa, e fica travado desde o contrato. No contrato de 2 anos há ainda um álbum Linha do Tempo, que reúne os três capítulos da história da família."
     },
     {
       "q": "Os quadros já vêm prontos para pendurar?",

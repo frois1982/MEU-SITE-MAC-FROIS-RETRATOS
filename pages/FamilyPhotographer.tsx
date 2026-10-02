@@ -6,7 +6,6 @@ import page from '../data/ensaio-familia.json';
 const WHATSAPP = (assunto: string) =>
   'https://wa.me/5548996231894?text=' + encodeURIComponent(`Olá Mac, vi a página de ensaio de família e gostaria de saber mais sobre ${assunto}.`);
 
-const brl = (n: number) => 'R$ ' + n.toLocaleString('pt-BR');
 
 const GALERIA = [
   { src: '/familia/familia-praia-ombros.jpg', alt: 'Família caminhando na praia em Florianópolis, com o filho nos ombros do pai' },
@@ -98,7 +97,7 @@ export const FamilyPhotographer: React.FC = () => {
               )}
               <h3 className="font-serif text-2xl mb-1">{p.nome}</h3>
               <p className="text-[#6B5648] text-sm italic mb-5">{p.frase}</p>
-              <p className={`${C.terra} text-4xl font-serif mb-6`}>{brl(p.preco)}</p>
+              <p className={`${C.terra} text-3xl font-serif mb-6`}>{p.precoRotulo}</p>
               <ul className="space-y-3 mb-8 flex-1">
                 {p.itens.map((i) => (
                   <li key={i} className="flex items-start text-sm text-[#4a382e]">
@@ -129,7 +128,7 @@ export const FamilyPhotographer: React.FC = () => {
             {at.contratos.map((c) => (
               <article key={c.id} className="border border-[#7a5a49] p-8 flex flex-col">
                 <h3 className="font-serif text-xl mb-2">{c.nome}</h3>
-                <p className="text-[#E0A58F] text-4xl font-serif mb-6">{brl(c.preco)}</p>
+                <p className="text-[#E0A58F] text-3xl font-serif mb-6">{c.precoRotulo}</p>
                 <ul className="space-y-3 mb-8 flex-1">
                   {c.itens.map((i) => (
                     <li key={i} className="flex items-start text-sm text-[#E8DAC8]">
