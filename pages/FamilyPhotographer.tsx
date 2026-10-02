@@ -9,7 +9,7 @@ const WHATSAPP = (assunto: string) =>
 const brl = (n: number) => 'R$ ' + n.toLocaleString('pt-BR');
 
 const GALERIA = [
-  { src: '/familia/mae-e-bebe-entre-folhas.jpg', alt: 'Mãe sorrindo para o filho pequeno no colo, entre folhagens, em ensaio de família' },
+  { src: '/familia/garoto-no-barco.jpg', alt: 'Menino sorrindo olhando para o horizonte, em ensaio ao ar livre em Florianópolis' },
   { src: '/familia/irmaos-na-colina.jpg', alt: 'Dois irmãos sentados juntos em uma colina verde em Florianópolis' },
   { src: '/familia/mae-e-filhos-na-praia.jpg', alt: 'Mãe abraçando os filhos na praia em um dia de sol' },
   { src: '/familia/irmaos-campo-de-trigo.jpg', alt: 'Irmãos brincando em um campo de trigo dourado' },
