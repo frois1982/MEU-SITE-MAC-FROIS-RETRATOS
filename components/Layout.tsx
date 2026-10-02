@@ -18,11 +18,14 @@ const Navbar: React.FC = () => {
 
   useEffect(() => { setIsOpen(false); }, [location]);
 
-  const navLinks = [
+  type NavItem = { name: string; path: string; children?: { name: string; path: string }[] };
+  const navLinks: NavItem[] = [
     { name: 'Início', path: '/' },
     { name: 'Portfólio', path: '/portfolio' },
-    { name: 'Fotógrafo Corporativo', path: '/fotografo-corporativo-florianopolis' },
-    { name: 'Família', path: '/ensaio-de-familia-florianopolis' },
+    { name: 'Retratos', path: '', children: [
+      { name: 'Corporativo', path: '/fotografo-corporativo-florianopolis' },
+      { name: 'Família', path: '/ensaio-de-familia-florianopolis' },
+    ] },
     { name: 'Serviços', path: '/servicos' },
     { name: 'Produtos', path: '/produtos' },
     { name: 'Blog', path: '/blog' },
@@ -36,7 +39,22 @@ const Navbar: React.FC = () => {
           MAC <span className="text-gold-500 group-hover:text-gold-400 transition-colors">FROIS</span>
         </Link>
         <div className="hidden md:flex items-center space-x-8">
-          {navLinks.map((link) => (
+          {navLinks.map((link) => link.children ? (
+            <div key={link.name} className="relative group">
+              <button type="button" className={`text-[11px] uppercase tracking-[0.25em] hover:text-gold-500 transition-colors inline-flex items-center gap-1 ${link.children.some(c => c.path === location.pathname) ? 'text-gold-500 font-bold' : 'text-zinc-400'}`}>
+                {link.name} <span aria-hidden className="text-[8px]">▾</span>
+              </button>
+              <div className="absolute left-1/2 -translate-x-1/2 top-full pt-4 hidden group-hover:block group-focus-within:block">
+                <div className="bg-zinc-950 border border-zinc-800 py-3 min-w-[220px] shadow-xl">
+                  {link.children.map((c) => (
+                    <Link key={c.path} to={c.path} className={`block px-6 py-3 text-[11px] uppercase tracking-[0.25em] hover:text-gold-500 hover:bg-zinc-900 transition-colors ${location.pathname === c.path ? 'text-gold-500 font-bold' : 'text-zinc-400'}`}>
+                      {c.name}
+                    </Link>
+                  ))}
+                </div>
+              </div>
+            </div>
+          ) : (
             <Link key={link.path} to={link.path} className={`text-[11px] uppercase tracking-[0.25em] hover:text-gold-500 transition-colors ${location.pathname === link.path ? 'text-gold-500 font-bold' : 'text-zinc-400'}`}>
               {link.name}
             </Link>
@@ -50,7 +68,16 @@ const Navbar: React.FC = () => {
       {isOpen && (
         <div className="md:hidden absolute top-full left-0 w-full bg-zinc-950 border-t border-zinc-900 animate-fade-in">
           <div className="flex flex-col py-8 px-6 space-y-6">
-            {navLinks.map((link) => (
+            {navLinks.map((link) => link.children ? (
+              <div key={link.name} className="flex flex-col items-center space-y-4">
+                <span className="text-xs uppercase tracking-[0.3em] text-zinc-500">{link.name}</span>
+                {link.children.map((c) => (
+                  <Link key={c.path} to={c.path} className="text-lg font-serif text-center text-zinc-300 hover:text-gold-500 uppercase tracking-widest">
+                    {c.name}
+                  </Link>
+                ))}
+              </div>
+            ) : (
               <Link key={link.path} to={link.path} className="text-lg font-serif text-center text-zinc-300 hover:text-gold-500 uppercase tracking-widest">
                 {link.name}
               </Link>
