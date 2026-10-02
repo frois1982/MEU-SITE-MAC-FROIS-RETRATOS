@@ -10,6 +10,7 @@ import { LuminaPro } from './pages/LuminaPro';
 import { Admin } from './pages/Admin';
 import BlogPost from './pages/BlogPost';
 import { CorporatePhotographer } from './pages/CorporatePhotographer';
+import { FamilyPhotographer } from './pages/FamilyPhotographer';
 
 // Scroll to top helper
 const ScrollToTop = () => {
@@ -34,6 +35,7 @@ const App: React.FC = () => {
           <Route path="/blog" element={<Blog />} />
           <Route path="/blog/:slug" element={<BlogPost />} />
           <Route path="/fotografo-corporativo-florianopolis" element={<CorporatePhotographer />} />
+          <Route path="/ensaio-de-familia-florianopolis" element={<FamilyPhotographer />} />
           <Route path="/contato" element={<Contact />} />
           <Route path="/admin" element={<Admin />} />
         </Routes>

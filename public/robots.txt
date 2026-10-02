@@ -2,4 +2,33 @@ User-agent: *
 Allow: /
 Disallow: /admin
 
+# Rastreadores de IA: liberados de propósito para o site poder ser citado em respostas de assistentes
+User-agent: GPTBot
+Allow: /
+Disallow: /admin
+
+User-agent: OAI-SearchBot
+Allow: /
+Disallow: /admin
+
+User-agent: ChatGPT-User
+Allow: /
+Disallow: /admin
+
+User-agent: ClaudeBot
+Allow: /
+Disallow: /admin
+
+User-agent: Claude-SearchBot
+Allow: /
+Disallow: /admin
+
+User-agent: PerplexityBot
+Allow: /
+Disallow: /admin
+
+User-agent: Google-Extended
+Allow: /
+Disallow: /admin
+
 Sitemap: https://www.macfrois.com.br/sitemap.xml

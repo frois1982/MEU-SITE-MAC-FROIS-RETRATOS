@@ -9,6 +9,7 @@ const paginasEstaticas = [
   { url: '/portfolio', priority: '0.9' },
   { url: '/servicos', priority: '0.9' },
   { url: '/fotografo-corporativo-florianopolis', priority: '0.9' },
+  { url: '/ensaio-de-familia-florianopolis', priority: '0.9' },
   { url: '/blog', priority: '0.8' },
   { url: '/contato', priority: '0.7' },
   { url: '/lumina-pro', priority: '0.7' },
