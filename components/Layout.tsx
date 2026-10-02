@@ -22,6 +22,7 @@ const Navbar: React.FC = () => {
     { name: 'Início', path: '/' },
     { name: 'Portfólio', path: '/portfolio' },
     { name: 'Fotógrafo Corporativo', path: '/fotografo-corporativo-florianopolis' },
+    { name: 'Família', path: '/ensaio-de-familia-florianopolis' },
     { name: 'Serviços', path: '/servicos' },
     { name: 'Produtos', path: '/produtos' },
     { name: 'Blog', path: '/blog' },
@@ -118,6 +119,9 @@ const Footer: React.FC = () => {
               </li>
               <li>
                 <Link to="/fotografo-corporativo-florianopolis" className="hover:text-gold-500 transition-colors underline underline-offset-4 decoration-zinc-700">FOTÓGRAFO CORPORATIVO EM FLORIANÓPOLIS</Link>
+              </li>
+              <li>
+                <Link to="/ensaio-de-familia-florianopolis" className="hover:text-gold-500 transition-colors underline underline-offset-4 decoration-zinc-700">ENSAIO DE FAMÍLIA EM FLORIANÓPOLIS</Link>
               </li>
               <li className="flex items-center">
                 <Phone size={18} className="mr-3 text-gold-600" />
