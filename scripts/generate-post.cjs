@@ -340,8 +340,13 @@ const contaPalavras = (t) => (t.replace(/[#>*\-\[\]()]/g, ' ').match(/\S+/g) || 
 const textoLimpo = (t) => t.replace(/\[([^\]]+)\]\([^)]*\)/g, '$1');
 const norm = (s) => s.replace(/\s+/g, ' ');
 
+const canon = (u) => { try { return decodeURI(u); } catch (e) { return u; } };
+
 // Remove (mantendo o texto) qualquer link que não esteja nas listas permitidas.
+// Links absolutos para o próprio site viram caminhos relativos; endereços externos são
+// comparados na forma decodificada (acentos codificados ou não) e gravados na forma da lista.
 function sanitizarLinks(texto, ctx, avisos) {
+  texto = texto.replace(/\]\(https?:\/\/(?:www\.)?macfrois\.com\.br(\/[^)\s]*)?\)/g, (m, p) => `](${p || '/'})`);
   return texto.replace(/\[([^\]]+)\]\(([^)\s]+)\)/g, (todo, rotulo, url) => {
     if (url.startsWith('#')) {
       if (ctx.ancoras.has(url.slice(1))) return todo;
@@ -349,10 +354,12 @@ function sanitizarLinks(texto, ctx, avisos) {
     }
     if (url.startsWith('/')) {
       const p = url.split('#')[0].replace(/\/$/, '') || '/';
-      if (ctx.internos.has(p)) return todo;
+      if (ctx.internos.has(p)) return `[${rotulo}](${url.includes('#') ? url.replace(/\/#/, '#') : p})`;
       avisos.push(`link interno fora da lista removido: ${url}`); return rotulo;
     }
-    if (LINKS_DIRETOS.includes(url) || ctx.externos.has(url)) return todo;
+    if (LINKS_DIRETOS.includes(url)) return todo;
+    const oficial = ctx.externosCanon.get(canon(url));
+    if (oficial) return `[${rotulo}](${oficial})`;
     avisos.push(`link externo fora da lista removido: ${url}`); return rotulo;
   });
 }
@@ -391,7 +398,7 @@ function validarConteudo(partes, topico, ctx) {
   // Varredura de afirmações que o modelo não pode inventar.
   const tudo = norm(textoLimpo(partes.resumo + '\n' + corpo + '\n' + faq.map(f => f.q + ' ' + f.a).join('\n')));
   const fatos = norm(ctx.fatos);
-  for (const m of tudo.matchAll(/R\$\s?[\d.]+(?:,\d+)?/g)) {
+  for (const m of tudo.matchAll(/R\$\s?(?:\d{1,3}(?:\.\d{3})+|\d+)(?:,\d+)?/g)) {
     if (!fatos.includes(m[0].replace(/\s/g, '')) && !fatos.includes(m[0])) erros.push(`preço "${m[0]}" não consta nos FATOS`);
   }
   for (const m of tudo.matchAll(/\d+(?:[.,]\d+)?\s?%/g)) erros.push(`porcentagem "${m[0]}" não é permitida (sem fonte)`);
@@ -501,7 +508,7 @@ async function main() {
   const fatos = carregarFatos();
   const internos = montarPermitidos(index);
   const fontes = carregarFontesExternas();
-  const ctx = { richtext, fatos, internos, externos: new Set(fontes.map(f => f.url)) };
+  const ctx = { richtext, fatos, internos, externosCanon: new Map(fontes.map(f => [canon(f.url), f.url])) };
 
   let resultado = null;
   let erros = [];
