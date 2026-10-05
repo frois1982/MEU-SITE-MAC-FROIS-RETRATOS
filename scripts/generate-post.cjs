@@ -523,7 +523,8 @@ async function main() {
     if (v.erros.length) {
       erros = v.erros;
       console.log(`Tentativa ${tentativa} reprovada:`); v.erros.forEach(e => console.log(' -', e));
-      anotar('warning', `Tentativa ${tentativa} reprovada`, v.erros.join('\n'));
+      const brutos = [...partes.corpo.matchAll(/\]\(([^)\s]*)\)/g)].map(m => m[1]);
+      anotar('warning', `Tentativa ${tentativa} reprovada`, v.erros.join('\n') + '\n--- links na resposta do modelo (' + brutos.length + ') ---\n' + brutos.slice(0, 15).join('\n') + '\n--- avisos ---\n' + v.avisos.join('\n') + '\n--- trecho do corpo ---\n' + partes.corpo.slice(0, 500));
       if (MOCK_ARTICLE) break;
       continue;
     }
