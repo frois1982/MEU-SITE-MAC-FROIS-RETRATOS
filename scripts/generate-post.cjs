@@ -314,6 +314,12 @@ async function urlOk(url, exigirImagem) {
   return exigirImagem ? /^image\//.test(r.tipo) : true;
 }
 
+// Anotações do GitHub Actions: aparecem no resumo da execução, mesmo sem abrir o log.
+function anotar(nivel, titulo, msg) {
+  const limpa = String(msg).replace(/%/g, '%25').replace(/\r/g, '').replace(/\n/g, '%0A').slice(0, 1800);
+  console.log(`::${nivel} title=${titulo}::${limpa}`);
+}
+
 // ---------- Parsing e validação ----------
 
 function extrairPartes(texto) {
@@ -504,12 +510,13 @@ async function main() {
       ? fs.readFileSync(MOCK_ARTICLE, 'utf-8')
       : await chamarAPI(montarPrompt(topico, fatos, internos, fontes, erros));
     let partes;
-    try { partes = extrairPartes(texto); } catch (e) { erros = [e.message]; console.log(`Tentativa ${tentativa} reprovada:`, erros); if (MOCK_ARTICLE) break; continue; }
+    try { partes = extrairPartes(texto); } catch (e) { erros = [e.message]; console.log(`Tentativa ${tentativa} reprovada:`, erros); anotar('warning', `Tentativa ${tentativa} reprovada (formato)`, e.message + '\n--- início da resposta ---\n' + texto.slice(0, 600)); if (MOCK_ARTICLE) break; continue; }
     const v = validarConteudo(partes, topico, ctx);
     v.avisos.forEach(a => console.log('Aviso:', a));
     if (v.erros.length) {
       erros = v.erros;
       console.log(`Tentativa ${tentativa} reprovada:`); v.erros.forEach(e => console.log(' -', e));
+      anotar('warning', `Tentativa ${tentativa} reprovada`, v.erros.join('\n'));
       if (MOCK_ARTICLE) break;
       continue;
     }
@@ -535,4 +542,4 @@ async function main() {
   console.log('Concluído.');
 }
 
-main().catch(err => { console.error(err); process.exit(1); });
+main().catch(err => { console.error(err); anotar('error', 'Geração de post falhou', err && err.message ? err.message : err); process.exit(1); });
