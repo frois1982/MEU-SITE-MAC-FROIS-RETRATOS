@@ -6,8 +6,15 @@ const path = require('path');
 process.env.PYTHONIOENCODING = 'utf-8';
 Buffer.prototype.toJSON = Buffer.prototype.toJSON;
 
+const { pathToFileURL } = require('url');
+const ROOT = path.join(__dirname, '..');
+const POSTS_DIR = process.env.POSTS_DIR || path.join(ROOT, 'public/posts');
+const MODELO = process.env.BLOG_MODEL || 'claude-haiku-4-5-20251001';
+const MOCK_ARTICLE = process.env.MOCK_ARTICLE || ''; // testes: lê o artigo de um arquivo em vez de chamar a API
+const SKIP_NET = process.env.SKIP_NET === '1';       // testes: não faz requisições de rede
+
 const ANTHROPIC_API_KEY = process.env.ANTHROPIC_API_KEY;
-if (!ANTHROPIC_API_KEY) {
+if (!ANTHROPIC_API_KEY && !MOCK_ARTICLE) {
   console.error('ANTHROPIC_API_KEY não definida');
   process.exit(1);
 }
@@ -84,7 +91,7 @@ const TOPICOS_TEMPORADA_2 = [
   { titulo_base: 'Fotografia corporativa x fotografia comum: qual a diferença', keyword_principal: 'fotografia corporativa x fotografia comum', keywords: ['diferença foto profissional e foto amadora', 'o que é fotografia corporativa', 'fotografia comercial x pessoal'], angulo: 'comparação técnica' },
   { titulo_base: 'Como se preparar para um ensaio de retratos', keyword_principal: 'como se preparar para ensaio de retratos', keywords: ['preparação ensaio fotografico', 'dicas antes do ensaio de fotos', 'como chegar bem no ensaio'], angulo: 'guia prático' },
   { titulo_base: 'Como a iluminação influencia sua imagem profissional', keyword_principal: 'iluminação fotografia profissional', keywords: ['importancia da iluminação em fotos', 'luz natural x estudio', 'iluminação retrato corporativo'], angulo: 'técnica e resultado' },
-  { titulo_base: 'Depoimentos reais de quem passou pelo Método Frois', keyword_principal: 'depoimentos Método Frois', keywords: ['resultado metodo frois', 'cliente metodo frois', 'avaliação estudio frois'], angulo: 'prova social' },
+  { bloqueado: 'exige depoimentos reais de clientes (o gerador não pode inventar); fornecer os textos antes de liberar', titulo_base: 'Depoimentos reais de quem passou pelo Método Frois', keyword_principal: 'depoimentos Método Frois', keywords: ['resultado metodo frois', 'cliente metodo frois', 'avaliação estudio frois'], angulo: 'prova social' },
   { titulo_base: 'Vale a pena investir em fotografia profissional', keyword_principal: 'vale a pena fotografia profissional', keywords: ['investimento em fotografia profissional', 'retorno ensaio fotografico', 'vale a pena foto corporativa'], angulo: 'educação e ROI' },
   { titulo_base: 'Como usar fotos profissionais nas redes sociais', keyword_principal: 'fotos profissionais redes sociais', keywords: ['como usar foto profissional instagram', 'imagem redes sociais profissional', 'fotos para linkedin e instagram'], angulo: 'guia prático' },
 ];
@@ -92,19 +99,19 @@ const TOPICOS_TEMPORADA_2 = [
 const TOPICOS = [...TOPICOS_TEMPORADA_1, ...TOPICOS_TEMPORADA_2];
 
 function gerarSlug(titulo) {
-    const slug = titulo
-      .toLowerCase()
-      .normalize('NFD')
-              .replace(/[\u0300-\u036f]/g, '')
-      .replace(/[^a-z0-9\s-]/g, '')
-      .trim()
-      .replace(/\s+/g, '-');
+  const slug = titulo
+    .toLowerCase()
+    .normalize('NFD')
+    .replace(/[\u0300-\u036f]/g, '')
+    .replace(/[^a-z0-9\s-]/g, '')
+    .trim()
+    .replace(/\s+/g, '-');
 
-    if (slug.length <= 100) return slug;
+  if (slug.length <= 100) return slug;
 
-    const cortado = slug.substring(0, 100);
-    const ultimoHifen = cortado.lastIndexOf('-');
-    return ultimoHifen > 60 ? cortado.substring(0, ultimoHifen) : cortado;
+  const cortado = slug.substring(0, 100);
+  const ultimoHifen = cortado.lastIndexOf('-');
+  return ultimoHifen > 60 ? cortado.substring(0, ultimoHifen) : cortado;
 }
 
 function gerarId() {
@@ -112,45 +119,136 @@ function gerarId() {
 }
 
 function dataHoje() {
-  return new Date().toLocaleDateString('pt-BR');
+  return new Date().toLocaleDateString('pt-BR', { timeZone: 'America/Sao_Paulo' });
+}
+
+function semAcento(s) {
+  return s.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '');
 }
 
 // Seleção calculada, não aleatória: TOPICOS[i] sempre é publicado com IMAGENS[i].
-// Percorre a lista em ordem e usa o primeiro tópico cujo título ainda não foi publicado.
-// Se todos os tópicos já foram usados (fila esgotada), recomeça o ciclo em ordem
-// (postsExistentes.length % TOPICOS.length) em vez de sortear.
+// Percorre a lista em ordem e usa o primeiro tópico ainda não publicado e não bloqueado.
+// Tópicos com a marca "bloqueado" são pulados (ex.: dependem de material real que o gerador não pode inventar).
+// Fila esgotada: recomeça em ordem entre os tópicos liberados.
 function escolherProximoPar(postsExistentes) {
-  const titulosUsados = postsExistentes.map(p => p.title);
-  let index = TOPICOS.findIndex(t => !titulosUsados.includes(t.titulo_base));
-  if (index === -1) index = postsExistentes.length % TOPICOS.length;
+  const titulosUsados = new Set(postsExistentes.map(p => p.title));
+  TOPICOS.forEach(t => {
+    if (t.bloqueado && !titulosUsados.has(t.titulo_base)) {
+      console.log(`Tópico pulado (bloqueado): ${t.titulo_base} — ${t.bloqueado}`);
+    }
+  });
+  let index = TOPICOS.findIndex(t => !t.bloqueado && !titulosUsados.has(t.titulo_base));
+  if (index === -1) {
+    const livres = TOPICOS.map((t, i) => i).filter(i => !TOPICOS[i].bloqueado);
+    index = livres[postsExistentes.length % livres.length];
+  }
   return { topico: TOPICOS[index], imageUrl: IMAGENS[index] };
 }
 
-function montarPrompt(topico) {
-  return `Você é Mac Frois, fotógrafo especialista em retratos corporativos e posicionamento de imagem em Florianópolis, SC. Escreva um artigo de blog profissional em português brasileiro.
+// ---------- Fontes de verdade (fatos do negócio, links permitidos) ----------
+
+function carregarFatos() {
+  let fatos = '';
+  try {
+    const llms = fs.readFileSync(path.join(ROOT, 'public/llms.txt'), 'utf-8');
+    const m = llms.match(/## Dados do negócio\n([\s\S]*?)(\n## |$)/);
+    if (m) fatos += m[1].trim() + '\n';
+  } catch (e) { /* segue sem llms */ }
+  try {
+    const corp = JSON.parse(fs.readFileSync(path.join(ROOT, 'data/fotografo-corporativo.json'), 'utf-8'));
+    (corp.faq || []).forEach(f => { fatos += `- ${f.q} ${f.a}\n`; });
+  } catch (e) { /* segue */ }
+  return fatos.trim();
+}
+
+function carregarFontesExternas() {
+  try {
+    return JSON.parse(fs.readFileSync(path.join(ROOT, 'data/fontes-externas.json'), 'utf-8')).fontes;
+  } catch (e) { return []; }
+}
+
+const PAGINAS_INTERNAS = [
+  ['/fotografo-corporativo-florianopolis', 'serviço de retrato corporativo e fotografia de autoridade'],
+  ['/ensaio-de-familia-florianopolis', 'ensaio de família (pacotes Momento, Memória, Legado)'],
+  ['/portfolio', 'portfólio de fotos'],
+  ['/servicos', 'projetos e pacotes'],
+  ['/contato', 'contato'],
+  ['/blog', 'lista de artigos']
+];
+const LINKS_DIRETOS = [
+  'https://wa.me/5548996231894',
+  'https://instagram.com/froisretratista',
+  'https://youtube.com/@macfroiss'
+];
+
+function montarPermitidos(index) {
+  const internos = new Map(PAGINAS_INTERNAS);
+  index.forEach(p => internos.set('/blog/' + p.slug, 'artigo: ' + p.title));
+  return internos;
+}
+
+// ---------- Prompt ----------
+
+function montarPrompt(topico, fatos, internos, fontes, erros) {
+  const listaInternos = [...internos.entries()].map(([h, d]) => `- ${h} → ${d}`).join('\n');
+  const listaExternos = fontes.map(f => `- ${f.url} → ${f.titulo}: ${f.tema}`).join('\n');
+  const correcao = erros && erros.length
+    ? `\nATENÇÃO — a tentativa anterior foi REPROVADA pelos motivos abaixo. Corrija TODOS:\n${erros.map(e => '- ' + e).join('\n')}\n`
+    : '';
+  return `Você é Mac Frois, fotógrafo especialista em retratos corporativos e posicionamento de imagem em Florianópolis, SC. Escreva um artigo de blog em português brasileiro, em primeira pessoa, tom profissional e direto.
 
 TEMA: ${topico.titulo_base}
 KEYWORD PRINCIPAL: ${topico.keyword_principal}
 KEYWORDS SECUNDÁRIAS: ${topico.keywords.join(', ')}
 ÂNGULO: ${topico.angulo}
+${correcao}
+FATOS SOBRE O NEGÓCIO (única fonte para dados do estúdio, preços, prazos, formas de pagamento):
+${fatos}
 
-REGRAS OBRIGATÓRIAS:
-1. Título exato: "${topico.titulo_base}"
-2. Entre 600 e 900 palavras
-3. Tom: profissional, direto, sem exageros
-4. Mencione Florianópolis naturalmente ao longo do texto
-5. Use a keyword principal nos primeiros 100 caracteres
-6. Inclua subtítulos em MAIÚSCULAS seguidos de dois pontos
-7. Sem markdown, sem asteriscos, sem hashtags — texto corrido
-8. Finalize com um parágrafo de CTA mencionando o Método Frois e o WhatsApp (48) 99623-1894
-9. Retorne APENAS o texto do artigo, sem comentários adicionais`;
+REGRA MAIS IMPORTANTE — NÃO INVENTE NADA:
+- Não invente números, porcentagens, estatísticas, estudos, pesquisas, datas, leis, resoluções ou prazos.
+- Não invente clientes, casos, depoimentos ou histórias ("uma cliente me contou…" é proibido).
+- Preços e prazos do estúdio só podem ser os que constam em FATOS acima, copiados exatamente.
+- Se não tiver certeza de um fato, não o escreva. Prefira princípios, orientações práticas e a experiência de fotografar, que não dependem de dado externo.
+
+FORMATO (markup simples, sem HTML):
+- "## Título" para seções, "### Título" para subseções (títulos curtos, em caso de frase, sem dois pontos no fim).
+- Links no formato [texto](endereço). Só use endereços das listas abaixo, copiados exatamente. Nenhum outro endereço é permitido.
+- Listas com "- ". Negrito com **texto**. Citação com "> ".
+- Não use imagens, tabelas, HTML nem hashtags. A foto de abertura é inserida automaticamente.
+
+LINKS INTERNOS PERMITIDOS (use de 3 a 6, no meio de frases naturais, com texto âncora descritivo; inclua ao menos um da página de serviço e, se fizer sentido, outros artigos do blog):
+${listaInternos}
+Também permitidos: https://wa.me/5548996231894 (WhatsApp), https://instagram.com/froisretratista, https://youtube.com/@macfroiss
+
+FONTES EXTERNAS PERMITIDAS (use de 2 a 4, apenas as que tiverem relação real com a frase; não force):
+${listaExternos}
+
+ESTRUTURA OBRIGATÓRIA DA RESPOSTA, exatamente com estes marcadores, nesta ordem:
+RESUMO: <uma frase de 110 a 160 caracteres, que contenha a keyword principal e diga do que trata o artigo>
+===CORPO===
+<parágrafo de abertura, com a keyword principal nos primeiros 100 caracteres>
+
+> **Resposta rápida:** <2 a 3 frases que respondem direto ao tema do título>
+
+## <de 4 a 6 seções, cada uma com um ou mais parágrafos; use listas e ### quando ajudar o leitor>
+...
+## <última seção: convite para conversar, citando o Método Frois, com link para o WhatsApp>
+===FAQ===
+P: <pergunta que um leitor faria no Google sobre o tema>
+R: <resposta direta de 25 a 70 palavras>
+(de 4 a 6 pares P/R, cada P e cada R em uma única linha)
+
+REQUISITOS: corpo entre 900 e 1400 palavras; mencione Florianópolis naturalmente; termine o corpo com a seção de convite (WhatsApp (48) 99623-1894). Responda APENAS no formato acima, sem comentários.`;
 }
+
+// ---------- API ----------
 
 function chamarAPI(prompt) {
   return new Promise((resolve, reject) => {
     const body = JSON.stringify({
-      model: 'claude-haiku-4-5-20251001',
-      max_tokens: 2000,
+      model: MODELO,
+      max_tokens: 8000,
       messages: [{ role: 'user', content: prompt }]
     });
     const options = {
@@ -170,20 +268,173 @@ function chamarAPI(prompt) {
       res.on('end', () => {
         try {
           const parsed = JSON.parse(data);
-          resolve(parsed.content[0].text);
+          if (parsed.error) return reject(new Error('API: ' + JSON.stringify(parsed.error)));
+          resolve(parsed.content.filter(c => c.type === 'text').map(c => c.text).join(''));
         } catch (e) {
-          reject(new Error('Erro ao parsear resposta: ' + data));
+          reject(new Error('Erro ao parsear resposta: ' + data.slice(0, 500)));
         }
       });
     });
+    req.setTimeout(180000, () => req.destroy(new Error('timeout na API')));
     req.on('error', reject);
     req.write(body);
     req.end();
   });
 }
 
+// ---------- Rede (checagem de URLs) ----------
+
+function statusHttp(url, metodo = 'HEAD', saltos = 0) {
+  return new Promise((resolve) => {
+    let u;
+    try { u = new URL(url); } catch (e) { return resolve(0); }
+    const req = https.request({
+      hostname: u.hostname, path: u.pathname + u.search, method: metodo,
+      headers: { 'User-Agent': 'Mozilla/5.0 (compatible; FroisBlogBot/1.0; +https://www.macfrois.com.br)' }
+    }, (res) => {
+      res.resume();
+      const loc = res.headers.location;
+      if (res.statusCode >= 300 && res.statusCode < 400 && loc && saltos < 4) {
+        return resolve(statusHttp(new URL(loc, url).toString(), metodo, saltos + 1));
+      }
+      if ((res.statusCode === 405 || res.statusCode === 403) && metodo === 'HEAD') {
+        return resolve(statusHttp(url, 'GET', saltos));
+      }
+      resolve({ status: res.statusCode, tipo: res.headers['content-type'] || '' });
+    });
+    req.setTimeout(15000, () => { req.destroy(); resolve(0); });
+    req.on('error', () => resolve(0));
+    req.end();
+  });
+}
+
+async function urlOk(url, exigirImagem) {
+  const r = await statusHttp(url);
+  if (!r || r.status !== 200) return false;
+  return exigirImagem ? /^image\//.test(r.tipo) : true;
+}
+
+// ---------- Parsing e validação ----------
+
+function extrairPartes(texto) {
+  const m = texto.match(/RESUMO:\s*([^\n]+)\n+===CORPO===\n([\s\S]*?)\n===FAQ===\n([\s\S]*)$/);
+  if (!m) throw new Error('Formato inesperado: marcadores RESUMO / ===CORPO=== / ===FAQ=== não encontrados');
+  const faq = [];
+  const linhas = m[3].split('\n').map(l => l.trim()).filter(Boolean);
+  for (let i = 0; i < linhas.length; i++) {
+    if (/^P:\s*/.test(linhas[i]) && /^R:\s*/.test(linhas[i + 1] || '')) {
+      faq.push({ q: linhas[i].replace(/^P:\s*/, ''), a: linhas[i + 1].replace(/^R:\s*/, '') });
+      i++;
+    }
+  }
+  return { resumo: m[1].trim(), corpo: m[2].trim(), faq };
+}
+
+const contaPalavras = (t) => (t.replace(/[#>*\-\[\]()]/g, ' ').match(/\S+/g) || []).length;
+const textoLimpo = (t) => t.replace(/\[([^\]]+)\]\([^)]*\)/g, '$1');
+const norm = (s) => s.replace(/\s+/g, ' ');
+
+// Remove (mantendo o texto) qualquer link que não esteja nas listas permitidas.
+function sanitizarLinks(texto, ctx, avisos) {
+  return texto.replace(/\[([^\]]+)\]\(([^)\s]+)\)/g, (todo, rotulo, url) => {
+    if (url.startsWith('#')) {
+      if (ctx.ancoras.has(url.slice(1))) return todo;
+      avisos.push(`âncora inexistente removida: ${url}`); return rotulo;
+    }
+    if (url.startsWith('/')) {
+      const p = url.split('#')[0].replace(/\/$/, '') || '/';
+      if (ctx.internos.has(p)) return todo;
+      avisos.push(`link interno fora da lista removido: ${url}`); return rotulo;
+    }
+    if (LINKS_DIRETOS.includes(url) || ctx.externos.has(url)) return todo;
+    avisos.push(`link externo fora da lista removido: ${url}`); return rotulo;
+  });
+}
+
+function validarConteudo(partes, topico, ctx) {
+  const erros = [];
+  const avisos = [];
+  let corpo = partes.corpo.split('\n').filter(l => !/^!\[/.test(l.trim())).join('\n');
+
+  const { parseBlocks } = ctx.richtext;
+  const ancoras = new Set(parseBlocks(corpo).filter(b => b.type === 'h2' || b.type === 'h3').map(b => b.id));
+  ctx.ancoras = ancoras;
+  corpo = sanitizarLinks(corpo, ctx, avisos);
+  const faq = partes.faq.map(f => ({ q: f.q, a: sanitizarLinks(f.a, ctx, avisos) }));
+
+  const h2 = parseBlocks(corpo).filter(b => b.type === 'h2').length;
+  if (h2 < 4) erros.push(`poucas seções "##" (${h2}); são necessárias de 4 a 6`);
+  const palavras = contaPalavras(corpo);
+  if (palavras < 800 || palavras > 1700) erros.push(`corpo com ${palavras} palavras; precisa ficar entre 900 e 1400`);
+  if (faq.length < 4) erros.push(`FAQ com ${faq.length} pares; são necessários de 4 a 6, no formato P:/R: (uma linha cada)`);
+  faq.forEach((f, i) => {
+    const n = contaPalavras(f.a);
+    if (n < 15 || n > 120) erros.push(`resposta ${i + 1} do FAQ com ${n} palavras; deve ter de 25 a 70`);
+  });
+  if (partes.resumo.length < 70 || partes.resumo.length > 175) erros.push(`RESUMO com ${partes.resumo.length} caracteres; deve ter de 110 a 160`);
+  if (semAcento(partes.resumo).startsWith(semAcento(topico.titulo_base))) erros.push('RESUMO não pode começar repetindo o título do artigo; reescreva com outras palavras');
+  const resumoNorm = semAcento(partes.resumo);
+  const faltam = semAcento(topico.keyword_principal).split(/\s+/).filter(w => w.length > 3 && !resumoNorm.includes(w));
+  if (faltam.length) erros.push(`RESUMO sem as palavras da keyword principal (${faltam.join(', ')})`);
+
+  const internosUsados = [...corpo.matchAll(/\]\((\/[^)\s]*)\)/g)].length;
+  const externosUsados = [...corpo.matchAll(/\]\((https:\/\/pt\.wikipedia[^)\s]*)\)/g)].length;
+  if (internosUsados < 2) erros.push(`apenas ${internosUsados} link(s) interno(s) válidos; use de 3 a 6, somente da lista permitida`);
+  if (externosUsados < 1) erros.push('nenhum link externo válido; use de 2 a 4 da lista de fontes permitidas, só quando fizer sentido');
+
+  // Varredura de afirmações que o modelo não pode inventar.
+  const tudo = norm(textoLimpo(partes.resumo + '\n' + corpo + '\n' + faq.map(f => f.q + ' ' + f.a).join('\n')));
+  const fatos = norm(ctx.fatos);
+  for (const m of tudo.matchAll(/R\$\s?[\d.]+(?:,\d+)?/g)) {
+    if (!fatos.includes(m[0].replace(/\s/g, '')) && !fatos.includes(m[0])) erros.push(`preço "${m[0]}" não consta nos FATOS`);
+  }
+  for (const m of tudo.matchAll(/\d+(?:[.,]\d+)?\s?%/g)) erros.push(`porcentagem "${m[0]}" não é permitida (sem fonte)`);
+  for (const m of tudo.matchAll(/\b(Lei|Resolução|Provimento|Decreto|Portaria|Artigo|Art\.)\s*(n[º°.]?\s*)?\d[\d./-]*/gi)) erros.push(`referência legal "${m[0]}" não é permitida (sem fonte)`);
+  if (/(segundo|de acordo com|conforme)\s+(um|uma|o|a)?\s*(estudo|pesquisa|levantamento|relatório)/i.test(tudo) || /\b(estudos|pesquisas)\s+(mostram|apontam|indicam|revelam)/i.test(tudo)) {
+    erros.push('citação de estudo/pesquisa sem fonte');
+  }
+  const anoAtual = new Date().getFullYear();
+  for (const m of tudo.matchAll(/\b(19|20)\d{2}\b/g)) {
+    if (![anoAtual, anoAtual + 1].includes(Number(m[0]))) erros.push(`ano "${m[0]}" não é permitido (sem fonte)`);
+  }
+  if (/(minha cliente|meu cliente|uma cliente|um cliente|certa vez|já atendi|recentemente atendi|me contou que)/i.test(tudo)) {
+    erros.push('história/caso de cliente inventado');
+  }
+  return { erros, avisos, corpo, faq };
+}
+
+// ---------- Montagem do conteúdo ----------
+
+// Fotos de apoio curadas por tópico (opcional): topico.imagens_apoio = [{ url, alt, legenda }].
+// A foto da capa já aparece como banner no topo da página, então NÃO é repetida no corpo.
+function montarConteudo(resumo, corpo, topico, richtext) {
+  const { parseBlocks } = richtext;
+  const blocos = corpo.split(/\n{2,}/);
+
+  const apoio = topico.imagens_apoio || [];
+  apoio.forEach((img, k) => {
+    const idxH2 = [];
+    blocos.forEach((b, i) => { if (/^## /.test(b.trim())) idxH2.push(i); });
+    const alvo = idxH2[1 + 2 * k];
+    if (alvo === undefined) return;
+    // depois do primeiro bloco de texto da seção
+    const pos = blocos.findIndex((b, i) => i > alvo && b.trim() && !/^(#|>|-|!)/.test(b.trim()));
+    const fig = `![${img.alt}](${img.url} "${img.legenda || 'Foto: Mac Frois / Estúdio Frois.'}")`;
+    blocos.splice(pos >= 0 ? pos + 1 : alvo + 1, 0, fig);
+  });
+
+  // Sumário automático antes da primeira seção "##".
+  const h2s = parseBlocks(corpo).filter(b => b.type === 'h2');
+  const iSecao = blocos.findIndex(b => /^## /.test(b.trim()));
+  if (h2s.length >= 4 && iSecao >= 0) {
+    const toc = '**Neste guia:**\n\n' + h2s.map(b => `- [${b.text}](#${b.id})`).join('\n');
+    blocos.splice(iSecao, 0, toc);
+  }
+  return resumo + '\n\n' + blocos.join('\n\n');
+}
+
 function carregarIndex() {
-  const indexPath = path.join(__dirname, '../public/posts/index.json');
+  const indexPath = path.join(POSTS_DIR, 'index.json');
   if (!fs.existsSync(indexPath)) return [];
   return JSON.parse(fs.readFileSync(indexPath, 'utf-8'));
 }
@@ -198,13 +449,10 @@ function slugUnico(slugBase, postsDir) {
   return slug;
 }
 
-function salvarPost(id, slugBase, topico, conteudo, imageUrl, data) {
-  const postsDir = path.join(__dirname, '../public/posts');
-  if (!fs.existsSync(postsDir)) fs.mkdirSync(postsDir, { recursive: true });
-
-  // Se já existe um post com esse slug (tópico repetido após esgotar a lista),
-  // gera um slug único em vez de sobrescrever o post antigo.
-  const slug = slugUnico(slugBase, postsDir);
+function salvarPost(id, slugBase, topico, resumo, conteudo, faq, imageUrl, data) {
+  if (!fs.existsSync(POSTS_DIR)) fs.mkdirSync(POSTS_DIR, { recursive: true });
+  // Nunca sobrescreve um post existente.
+  const slug = slugUnico(slugBase, POSTS_DIR);
 
   const post = {
     id,
@@ -213,31 +461,77 @@ function salvarPost(id, slugBase, topico, conteudo, imageUrl, data) {
     date: data,
     imageUrl,
     keyword: topico.keyword_principal,
-    excerpt: conteudo.substring(0, 200).replace(/\n/g, ' ') + '...',
-    content: conteudo
+    excerpt: resumo,
+    content: conteudo,
+    faq,
+    cta: topico.cta || {
+      href: '/fotografo-corporativo-florianopolis',
+      label: 'Conheça a sessão de fotografia corporativa em Florianópolis →'
+    }
   };
-  fs.writeFileSync(path.join(postsDir, `${slug}.json`), JSON.stringify(post, null, 2), 'utf-8');
+  fs.writeFileSync(path.join(POSTS_DIR, `${slug}.json`), JSON.stringify(post, null, 2), 'utf-8');
 
-  const indexPath = path.join(__dirname, '../public/posts/index.json');
   const index = carregarIndex();
-  index.unshift({ id, slug, title: topico.titulo_base, date: data, imageUrl, keyword: topico.keyword_principal, excerpt: post.excerpt });
-  fs.writeFileSync(indexPath, JSON.stringify(index, null, 2), 'utf-8');
+  index.unshift({ id, slug, title: topico.titulo_base, date: data, imageUrl, keyword: topico.keyword_principal, excerpt: resumo });
+  fs.writeFileSync(path.join(POSTS_DIR, 'index.json'), JSON.stringify(index, null, 2), 'utf-8');
 
-  console.log(`Post salvo: public/posts/${slug}.json`);
+  console.log(`Post salvo: ${path.join(POSTS_DIR, slug + '.json')}`);
 }
 
 async function main() {
-  console.log('Iniciando geração de post...');
+  console.log('Iniciando geração de post (formato rico)...');
+  const richtext = await import(pathToFileURL(path.join(ROOT, 'lib/richtext.js')).href);
   const index = carregarIndex();
   const { topico, imageUrl } = escolherProximoPar(index);
-  const id = gerarId();
-  const slug = gerarSlug(topico.titulo_base);
-  const data = dataHoje();
-
   console.log(`Tópico: ${topico.titulo_base}`);
-  const prompt = montarPrompt(topico);
-  const conteudo = await chamarAPI(prompt);
-  salvarPost(id, slug, topico, conteudo, imageUrl, data);
+
+  // A foto precisa existir antes de qualquer coisa: sem imagem, não publica.
+  if (!SKIP_NET) {
+    const okCapa = await urlOk(imageUrl, true);
+    const apoioOk = await Promise.all((topico.imagens_apoio || []).map(i => urlOk(i.url, true)));
+    if (!okCapa || apoioOk.includes(false)) throw new Error(`Imagem (capa ou apoio) não respondeu 200 como imagem: ${imageUrl}. Post NÃO publicado.`);
+  }
+
+  const fatos = carregarFatos();
+  const internos = montarPermitidos(index);
+  const fontes = carregarFontesExternas();
+  const ctx = { richtext, fatos, internos, externos: new Set(fontes.map(f => f.url)) };
+
+  let resultado = null;
+  let erros = [];
+  for (let tentativa = 1; tentativa <= 3 && !resultado; tentativa++) {
+    const texto = MOCK_ARTICLE
+      ? fs.readFileSync(MOCK_ARTICLE, 'utf-8')
+      : await chamarAPI(montarPrompt(topico, fatos, internos, fontes, erros));
+    let partes;
+    try { partes = extrairPartes(texto); } catch (e) { erros = [e.message]; console.log(`Tentativa ${tentativa} reprovada:`, erros); if (MOCK_ARTICLE) break; continue; }
+    const v = validarConteudo(partes, topico, ctx);
+    v.avisos.forEach(a => console.log('Aviso:', a));
+    if (v.erros.length) {
+      erros = v.erros;
+      console.log(`Tentativa ${tentativa} reprovada:`); v.erros.forEach(e => console.log(' -', e));
+      if (MOCK_ARTICLE) break;
+      continue;
+    }
+    resultado = { resumo: partes.resumo, corpo: v.corpo, faq: v.faq };
+  }
+  if (!resultado) throw new Error('Artigo reprovado na validação após as tentativas. Post NÃO publicado.');
+
+  // Testa cada link externo usado; remove o que não responder.
+  if (!SKIP_NET) {
+    const usados = [...new Set([...resultado.corpo.matchAll(/\]\((https:\/\/pt\.wikipedia[^)\s]*)\)/g)].map(m => m[1]))];
+    for (const u of usados) {
+      if (!(await urlOk(u, false))) {
+        console.log('Aviso: link externo fora do ar, removido:', u);
+        const re = new RegExp('\\[([^\\]]+)\\]\\(' + u.replace(/[.*+?^${}()|[\]\\]/g, '\\$&') + '\\)', 'g');
+        resultado.corpo = resultado.corpo.replace(re, '$1');
+      }
+    }
+  }
+
+  const conteudo = montarConteudo(resultado.resumo, resultado.corpo, topico, richtext);
+  if (!richtext.isRich(conteudo)) throw new Error('Conteúdo final não é reconhecido como formato rico');
+  salvarPost(gerarId(), gerarSlug(topico.titulo_base), topico, resultado.resumo, conteudo, resultado.faq, imageUrl, dataHoje());
   console.log('Concluído.');
 }
 
