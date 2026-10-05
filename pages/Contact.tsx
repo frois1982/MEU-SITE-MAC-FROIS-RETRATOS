@@ -12,6 +12,19 @@ export const Contact: React.FC = () => {
     if (canonical) canonical.setAttribute('href', 'https://www.macfrois.com.br/contato');
   }, []);
 
+  // Mapa: clique abre a rota no Google Maps; segurando Ctrl o mapa fica interativo
+  const [mapExplore, setMapExplore] = useState(false);
+  useEffect(() => {
+    const down = (e: KeyboardEvent) => { if (e.key === 'Control') setMapExplore(true); };
+    const up = (e: KeyboardEvent) => { if (e.key === 'Control') setMapExplore(false); };
+    window.addEventListener('keydown', down);
+    window.addEventListener('keyup', up);
+    return () => {
+      window.removeEventListener('keydown', down);
+      window.removeEventListener('keyup', up);
+    };
+  }, []);
+
   const [status, setStatus] = useState<'idle' | 'sending' | 'success'>('idle');
   const [formData, setFormData] = useState({
     nome: '',
@@ -120,16 +133,38 @@ export const Contact: React.FC = () => {
               </div>
             </div>
 
-            <div className="w-full h-64 bg-zinc-900 rounded-sm overflow-hidden relative grayscale opacity-40 hover:opacity-100 transition-all duration-700">
-               <iframe 
-                 src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3535.845941913406!2d-48.58332465!3d-27.5960013!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x9527386000c010c9%3A0xa648834d8d1e3450!2sRua%20F%C3%BAlvio%20Aducci%2C%20757%20-%20Estreito%2C%20Florian%C3%B3polis%20-%20SC%2C%2088075-001!5e0!3m2!1spt-BR!2sbr!4v1698712345678!5m2!1spt-BR!2sbr" 
-                 width="100%" 
-                 height="100%" 
-                 style={{border:0}} 
-                 allowFullScreen={true} 
-                 loading="lazy"
-                 title="Localização Estúdio"
-               ></iframe>
+            <div
+              className="group w-full h-64 bg-zinc-900 rounded-sm overflow-hidden relative"
+              onMouseLeave={() => setMapExplore(false)}
+            >
+               <div className="w-full h-full grayscale opacity-40 group-hover:opacity-100 transition-all duration-700">
+                 <iframe
+                   src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3535.845941913406!2d-48.58332465!3d-27.5960013!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x9527386000c010c9%3A0xa648834d8d1e3450!2sRua%20F%C3%BAlvio%20Aducci%2C%20757%20-%20Estreito%2C%20Florian%C3%B3polis%20-%20SC%2C%2088075-001!5e0!3m2!1spt-BR!2sbr!4v1698712345678!5m2!1spt-BR!2sbr"
+                   width="100%"
+                   height="100%"
+                   style={{border:0}}
+                   allowFullScreen={true}
+                   loading="lazy"
+                   title="Localização Estúdio"
+                 ></iframe>
+               </div>
+
+               {/* Clique no mapa = rota até o estúdio. Segurando Ctrl, o mapa fica interativo. */}
+               <a
+                 href="https://www.google.com/maps/dir/?api=1&destination=Rua+F%C3%BAlvio+Aducci,+757,+Estreito,+Florian%C3%B3polis,+SC"
+                 target="_blank"
+                 rel="noopener noreferrer"
+                 aria-label="Como chegar ao Estúdio Mac Frois no Google Maps"
+                 className={`absolute inset-0 z-10 flex items-end justify-between p-3 ${mapExplore ? 'pointer-events-none' : 'cursor-pointer'}`}
+               >
+                 <span className="inline-flex items-center gap-2 bg-black/80 border border-zinc-700 text-white text-[10px] uppercase tracking-[0.2em] font-bold px-3 py-2 rounded-sm group-hover:border-gold-600 group-hover:text-gold-500 transition-colors">
+                   <MapPin size={14} className="text-gold-500" />
+                   Como chegar
+                 </span>
+                 <span className="hidden md:inline-block bg-black/70 text-zinc-400 text-[10px] tracking-wider px-2 py-1 rounded-sm opacity-0 group-hover:opacity-100 transition-opacity">
+                   Segure Ctrl para explorar o mapa
+                 </span>
+               </a>
             </div>
           </div>
 
