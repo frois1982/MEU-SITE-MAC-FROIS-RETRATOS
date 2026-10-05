@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useParams, useNavigate, Link } from 'react-router-dom';
+import { isRich, parseBlocks, parseInline } from '../lib/richtext.js';
 
 interface Post {
   id: string;
@@ -10,7 +11,54 @@ interface Post {
   keyword?: string;
   excerpt?: string;
   content: string;
+  faq?: { q: string; a: string }[];
+  cta?: { href: string; label: string };
 }
+
+const GOLD = '#C9A84C';
+
+// Links: internos (/...) usam o roteador; âncoras (#...) e externos viram <a> comum.
+const Inline: React.FC<{ text: string }> = ({ text }) => (
+  <>
+    {parseInline(text).map((k, i) => {
+      if (k.t === 'text') return <React.Fragment key={i}>{k.v}</React.Fragment>;
+      if (k.t === 'b') return <strong key={i} style={{ color: '#ddd' }}>{k.v}</strong>;
+      const style = { color: GOLD, textDecoration: 'underline', textUnderlineOffset: '3px' };
+      if (k.href.startsWith('/')) return <Link key={i} to={k.href} style={style}>{k.label}</Link>;
+      if (k.href.startsWith('#')) return <a key={i} href={k.href} style={style}>{k.label}</a>;
+      return <a key={i} href={k.href} target="_blank" rel="noopener" style={style}>{k.label}</a>;
+    })}
+  </>
+);
+
+const RichContent: React.FC<{ content: string; faq?: { q: string; a: string }[] }> = ({ content, faq }) => (
+  <div style={{ lineHeight: 1.9, fontSize: '1rem', color: '#aaa' }}>
+    {parseBlocks(content).map((b, i) => {
+      if (b.type === 'h2') return <h2 key={i} id={b.id} style={{ fontFamily: 'Cinzel, serif', color: '#fff', fontSize: '1.3rem', textTransform: 'uppercase', letterSpacing: '0.04em', lineHeight: 1.4, margin: '3rem 0 1rem', paddingBottom: '0.6rem', borderBottom: '1px solid #2a2a2a', scrollMarginTop: '6rem' }}>{b.text}</h2>;
+      if (b.type === 'h3') return <h3 key={i} id={b.id} style={{ color: GOLD, fontSize: '1rem', letterSpacing: '0.06em', margin: '2rem 0 0.6rem', scrollMarginTop: '6rem' }}>{b.text}</h3>;
+      if (b.type === 'p') return <p key={i} style={{ margin: '0 0 1.2rem' }}><Inline text={b.text} /></p>;
+      if (b.type === 'quote') return <blockquote key={i} style={{ margin: '1.8rem 0', padding: '1.2rem 1.5rem', borderLeft: `3px solid ${GOLD}`, background: '#101012', color: '#ccc' }}><Inline text={b.text} /></blockquote>;
+      if (b.type === 'ul') return <ul key={i} style={{ margin: '0 0 1.4rem', paddingLeft: '1.4rem' }}>{b.items.map((it, j) => <li key={j} style={{ marginBottom: '0.45rem' }}><Inline text={it} /></li>)}</ul>;
+      return (
+        <figure key={i} style={{ margin: '2.2rem auto', maxWidth: '440px', textAlign: 'center' }}>
+          <img src={b.src} alt={b.alt} loading="lazy" style={{ width: '100%', height: 'auto', display: 'block' }} />
+          {b.caption && <figcaption style={{ marginTop: '0.6rem', fontSize: '0.8rem', color: '#777', lineHeight: 1.5 }}>{b.caption}</figcaption>}
+        </figure>
+      );
+    })}
+    {faq && faq.length > 0 && (
+      <section>
+        <h2 id="perguntas-frequentes" style={{ fontFamily: 'Cinzel, serif', color: '#fff', fontSize: '1.3rem', textTransform: 'uppercase', letterSpacing: '0.04em', margin: '3rem 0 1rem', paddingBottom: '0.6rem', borderBottom: '1px solid #2a2a2a', scrollMarginTop: '6rem' }}>Perguntas frequentes</h2>
+        {faq.map((f, i) => (
+          <div key={i} style={{ marginBottom: '1.6rem' }}>
+            <h3 style={{ color: GOLD, fontSize: '1rem', margin: '0 0 0.4rem' }}>{f.q}</h3>
+            <p style={{ margin: 0 }}><Inline text={f.a} /></p>
+          </div>
+        ))}
+      </section>
+    )}
+  </div>
+);
 
 const BlogPost: React.FC = () => {
   const { slug } = useParams<{ slug: string }>();
@@ -88,9 +136,13 @@ const BlogPost: React.FC = () => {
           {post.title}
         </h1>
 
-        <div style={{ lineHeight: 1.9, fontSize: '1rem', color: '#aaa', whiteSpace: 'pre-wrap' }}>
-          {post.content}
-        </div>
+        {isRich(post.content) ? (
+          <RichContent content={post.content} faq={post.faq} />
+        ) : (
+          <div style={{ lineHeight: 1.9, fontSize: '1rem', color: '#aaa', whiteSpace: 'pre-wrap' }}>
+            {post.content}
+          </div>
+        )}
 
         <div style={{ marginTop: '4rem', padding: '2rem', border: '1px solid #C9A84C' }}>
           <p style={{ color: '#C9A84C', fontWeight: 600, marginBottom: '0.5rem', letterSpacing: '1px', fontSize: '0.9rem' }}>
@@ -103,8 +155,8 @@ const BlogPost: React.FC = () => {
             </a>
           </p>
           <p style={{ marginTop: '1rem', fontSize: '0.85rem' }}>
-            <Link to="/fotografo-corporativo-florianopolis" style={{ color: '#C9A84C' }}>
-              Conheça a sessão de fotografia corporativa em Florianópolis →
+            <Link to={post.cta?.href || '/fotografo-corporativo-florianopolis'} style={{ color: '#C9A84C' }}>
+              {post.cta?.label || 'Conheça a sessão de fotografia corporativa em Florianópolis →'}
             </Link>
           </p>
         </div>

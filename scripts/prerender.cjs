@@ -51,11 +51,11 @@ function gravar(rota, html) {
   fs.writeFileSync(path.join(dir, 'index.html'), html, 'utf-8');
 }
 
-function descricaoPost(p) {
-  let txt = (p.content || p.excerpt || '').replace(/\s+/g, ' ').trim();
+function descricaoPost(p, limpar) {
+  let txt = limpar(p.content || p.excerpt || '').replace(/\s+/g, ' ').trim();
   if (txt.toLowerCase().startsWith(p.title.toLowerCase())) txt = txt.slice(p.title.length).trim();
   if (txt.length <= 158) return txt;
-  return txt.slice(0, 155).replace(/\s+\S*$/, '') + '...';
+  return txt.slice(0, 155).replace(/\s+\S*$/, '').replace(/[.,;:\s]+$/, '') + '...';
 }
 
 function isoData(br) { return br.split('/').reverse().join('-'); }
@@ -91,26 +91,42 @@ for (const p of PAGINAS) {
   n++;
 }
 
-const manifesto = JSON.parse(fs.readFileSync(path.join(POSTS, 'index.json'), 'utf-8'));
-const vistos = new Set();
-for (const m of manifesto) {
-  if (vistos.has(m.slug)) continue;
-  vistos.add(m.slug);
-  const arq = path.join(POSTS, `${m.slug}.json`);
-  if (!fs.existsSync(arq)) { console.warn(`AVISO: ${m.slug}.json não existe`); continue; }
-  const p = JSON.parse(fs.readFileSync(arq, 'utf-8'));
-  const url = `${BASE}/blog/${p.slug}`;
-  const desc = descricaoPost(p);
-  const jsonld = {
-    '@context': 'https://schema.org', '@type': 'BlogPosting',
-    headline: p.title, description: desc, image: p.imageUrl,
-    datePublished: isoData(p.date), dateModified: isoData(p.date),
-    mainEntityOfPage: url,
-    author: { '@type': 'Person', name: 'Mac Frois', url: BASE },
-    publisher: { '@type': 'Organization', name: 'Mac Frois' },
-  };
-  const corpo = `<article><h1>${esc(p.title)}</h1><p>${esc(p.date)}</p><div style="white-space:pre-wrap">${esc(p.content)}</div></article>`;
-  gravar(`/blog/${p.slug}`, aplicar(base, { title: `${p.title} | Mac Frois`, desc, url, image: p.imageUrl, type: 'article', jsonld, corpo }));
-  n++;
-}
-console.log(`Prerender: ${n} páginas geradas em dist/`);
+(async () => {
+  // lib/richtext.js é ESM (compartilhado com o React); aqui entra por import dinâmico.
+  const { isRich, parseBlocks, blocksToHtml, inlineToHtml, plainText } = await import('../lib/richtext.js');
+  const manifesto = JSON.parse(fs.readFileSync(path.join(POSTS, 'index.json'), 'utf-8'));
+  const vistos = new Set();
+  for (const m of manifesto) {
+    if (vistos.has(m.slug)) continue;
+    vistos.add(m.slug);
+    const arq = path.join(POSTS, `${m.slug}.json`);
+    if (!fs.existsSync(arq)) { console.warn(`AVISO: ${m.slug}.json não existe`); continue; }
+    const p = JSON.parse(fs.readFileSync(arq, 'utf-8'));
+    const url = `${BASE}/blog/${p.slug}`;
+    const rico = isRich(p.content);
+    // posts antigos (texto puro) seguem exatamente como antes; só o modo rico remove a marcação
+    const desc = descricaoPost(p, rico ? plainText : (t) => t);
+    const blogPosting = {
+      '@context': 'https://schema.org', '@type': 'BlogPosting',
+      headline: p.title, description: desc, image: p.imageUrl,
+      datePublished: isoData(p.date), dateModified: isoData(p.date),
+      mainEntityOfPage: url,
+      author: { '@type': 'Person', name: 'Mac Frois', url: BASE },
+      publisher: { '@type': 'Organization', name: 'Mac Frois' },
+    };
+    const faqHtml = (p.faq && p.faq.length)
+      ? `<section><h2 id="perguntas-frequentes">Perguntas frequentes</h2>${p.faq.map((f) => `<h3>${esc(f.q)}</h3><p>${inlineToHtml(f.a)}</p>`).join('')}</section>`
+      : '';
+    const faqLd = (p.faq && p.faq.length)
+      ? { '@context': 'https://schema.org', '@type': 'FAQPage',
+          mainEntity: p.faq.map((f) => ({ '@type': 'Question', name: f.q, acceptedAnswer: { '@type': 'Answer', text: plainText(f.a) } })) }
+      : null;
+    const jsonld = faqLd ? [blogPosting, faqLd] : blogPosting;
+    const corpo = rico
+      ? `<article><h1>${esc(p.title)}</h1><p>${esc(p.date)}</p>${blocksToHtml(parseBlocks(p.content))}${faqHtml}</article>`
+      : `<article><h1>${esc(p.title)}</h1><p>${esc(p.date)}</p><div style="white-space:pre-wrap">${esc(p.content)}</div></article>`;
+    gravar(`/blog/${p.slug}`, aplicar(base, { title: `${p.title} | Mac Frois`, desc, url, image: p.imageUrl, type: 'article', jsonld, corpo }));
+    n++;
+  }
+  console.log(`Prerender: ${n} páginas geradas em dist/`);
+})();
