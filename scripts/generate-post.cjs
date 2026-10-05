@@ -364,6 +364,40 @@ function sanitizarLinks(texto, ctx, avisos) {
   });
 }
 
+
+// Garante links externos relevantes: se o modelo usou menos de 2, linka a primeira ocorrência de termos
+// específicos (ex.: "LinkedIn", "arquétipo", "hora dourada") para páginas da lista permitida.
+// Só age em parágrafos comuns, fora de links, títulos, citações e negrito.
+function autoLinkExterno(corpo, fontes, minimo, maximo) {
+  const jaUsados = new Set([...corpo.matchAll(/\]\((https:\/\/pt\.wikipedia[^)\s]*)\)/g)].map(m => canon(m[1])));
+  let total = jaUsados.size;
+  if (total >= minimo) return corpo;
+  let linhas = corpo.split('\n');
+  for (const f of fontes) {
+    if (total >= maximo) break;
+    if (!f.termos || !f.termos.length || jaUsados.has(canon(f.url))) continue;
+    let feito = false;
+    for (const termo of f.termos) {
+      if (feito) break;
+      const re = new RegExp('(^|[^\\p{L}*])(' + termo.replace(/[.*+?^${}()|[\]\\]/g, '\\$&') + ')(?![\\p{L}*])', 'iu');
+      linhas = linhas.map(l => {
+        if (feito || /^\s*(#|>|!\[)/.test(l)) return l;
+        const partes = l.split(/(\[[^\]]*\]\([^)]*\))/);
+        for (let i = 0; i < partes.length && !feito; i += 2) {
+          const m = partes[i].match(re);
+          if (m) {
+            partes[i] = partes[i].replace(re, `$1[$2](${f.url})`);
+            feito = true;
+          }
+        }
+        return partes.join('');
+      });
+    }
+    if (feito) { total++; jaUsados.add(canon(f.url)); }
+  }
+  return linhas.join('\n');
+}
+
 function validarConteudo(partes, topico, ctx) {
   const erros = [];
   const avisos = [];
@@ -373,6 +407,7 @@ function validarConteudo(partes, topico, ctx) {
   const ancoras = new Set(parseBlocks(corpo).filter(b => b.type === 'h2' || b.type === 'h3').map(b => b.id));
   ctx.ancoras = ancoras;
   corpo = sanitizarLinks(corpo, ctx, avisos);
+  corpo = autoLinkExterno(corpo, ctx.fontes, 2, 3);
   const faq = partes.faq.map(f => ({ q: f.q, a: sanitizarLinks(f.a, ctx, avisos) }));
 
   const h2 = parseBlocks(corpo).filter(b => b.type === 'h2').length;
@@ -508,7 +543,7 @@ async function main() {
   const fatos = carregarFatos();
   const internos = montarPermitidos(index);
   const fontes = carregarFontesExternas();
-  const ctx = { richtext, fatos, internos, externosCanon: new Map(fontes.map(f => [canon(f.url), f.url])) };
+  const ctx = { richtext, fatos, fontes, internos, externosCanon: new Map(fontes.map(f => [canon(f.url), f.url])) };
 
   let resultado = null;
   let erros = [];

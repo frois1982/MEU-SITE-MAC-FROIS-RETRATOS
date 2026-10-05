@@ -1,26 +1,175 @@
 {
   "_aviso": "Lista fechada de fontes externas que o gerador de posts pode linkar. Só entram endereços verificados. O gerador ainda testa cada URL antes de publicar e remove o link se não responder.",
   "fontes": [
-    { "url": "https://pt.wikipedia.org/wiki/Fotografia", "titulo": "Fotografia (Wikipédia)", "tema": "o que é fotografia, história e conceitos básicos" },
-    { "url": "https://pt.wikipedia.org/wiki/Fot%C3%B3grafo", "titulo": "Fotógrafo (Wikipédia)", "tema": "profissão de fotógrafo" },
-    { "url": "https://pt.wikipedia.org/wiki/Retrato", "titulo": "Retrato (Wikipédia)", "tema": "retrato como gênero artístico e fotográfico" },
-    { "url": "https://pt.wikipedia.org/wiki/Arqu%C3%A9tipo", "titulo": "Arquétipo (Wikipédia)", "tema": "conceito de arquétipo" },
-    { "url": "https://pt.wikipedia.org/wiki/Carl_Gustav_Jung", "titulo": "Carl Gustav Jung (Wikipédia)", "tema": "origem da teoria dos arquétipos" },
-    { "url": "https://pt.wikipedia.org/wiki/LinkedIn", "titulo": "LinkedIn (Wikipédia)", "tema": "rede social profissional LinkedIn" },
-    { "url": "https://pt.wikipedia.org/wiki/Instagram", "titulo": "Instagram (Wikipédia)", "tema": "rede social Instagram" },
-    { "url": "https://pt.wikipedia.org/wiki/M%C3%ADdias_sociais", "titulo": "Mídias sociais (Wikipédia)", "tema": "redes e mídias sociais em geral" },
-    { "url": "https://pt.wikipedia.org/wiki/Branding", "titulo": "Branding (Wikipédia)", "tema": "gestão de marca" },
-    { "url": "https://pt.wikipedia.org/wiki/Marketing_de_conte%C3%BAdo", "titulo": "Marketing de conteúdo (Wikipédia)", "tema": "marketing de conteúdo" },
-    { "url": "https://pt.wikipedia.org/wiki/Florian%C3%B3polis", "titulo": "Florianópolis (Wikipédia)", "tema": "a cidade de Florianópolis" },
-    { "url": "https://pt.wikipedia.org/wiki/Hora_dourada", "titulo": "Hora dourada (Wikipédia)", "tema": "luz do nascer e do pôr do sol em fotografia" },
-    { "url": "https://pt.wikipedia.org/wiki/Profundidade_de_campo", "titulo": "Profundidade de campo (Wikipédia)", "tema": "desfoque e foco em fotografia" },
-    { "url": "https://pt.wikipedia.org/wiki/Est%C3%BAdio_fotogr%C3%A1fico", "titulo": "Estúdio fotográfico (Wikipédia)", "tema": "estúdio fotográfico" },
-    { "url": "https://pt.wikipedia.org/wiki/Edi%C3%A7%C3%A3o_de_imagens", "titulo": "Edição de imagens (Wikipédia)", "tema": "tratamento e edição de imagens" },
-    { "url": "https://pt.wikipedia.org/wiki/Podcast", "titulo": "Podcast (Wikipédia)", "tema": "podcast" },
-    { "url": "https://pt.wikipedia.org/wiki/Coaching", "titulo": "Coaching (Wikipédia)", "tema": "coaching" },
-    { "url": "https://pt.wikipedia.org/wiki/Mentoria", "titulo": "Mentoria (Wikipédia)", "tema": "mentoria" },
-    { "url": "https://pt.wikipedia.org/wiki/Direito_autoral", "titulo": "Direito autoral (Wikipédia)", "tema": "direitos autorais sobre fotos" },
-    { "url": "https://pt.wikipedia.org/wiki/Lei_Geral_de_Prote%C3%A7%C3%A3o_de_Dados_Pessoais", "titulo": "LGPD (Wikipédia)", "tema": "proteção de dados e uso de imagem" },
-    { "url": "https://pt.wikipedia.org/wiki/Intelig%C3%AAncia_artificial_generativa", "titulo": "Inteligência artificial generativa (Wikipédia)", "tema": "imagens geradas por IA" }
+    {
+      "url": "https://pt.wikipedia.org/wiki/Fotografia",
+      "titulo": "Fotografia (Wikipédia)",
+      "tema": "o que é fotografia, história e conceitos básicos",
+      "termos": []
+    },
+    {
+      "url": "https://pt.wikipedia.org/wiki/Fot%C3%B3grafo",
+      "titulo": "Fotógrafo (Wikipédia)",
+      "tema": "profissão de fotógrafo",
+      "termos": []
+    },
+    {
+      "url": "https://pt.wikipedia.org/wiki/Retrato",
+      "titulo": "Retrato (Wikipédia)",
+      "tema": "retrato como gênero artístico e fotográfico",
+      "termos": [
+        "retrato corporativo",
+        "retratos corporativos"
+      ]
+    },
+    {
+      "url": "https://pt.wikipedia.org/wiki/Arqu%C3%A9tipo",
+      "titulo": "Arquétipo (Wikipédia)",
+      "tema": "conceito de arquétipo",
+      "termos": [
+        "arquétipos",
+        "arquétipo"
+      ]
+    },
+    {
+      "url": "https://pt.wikipedia.org/wiki/Carl_Gustav_Jung",
+      "titulo": "Carl Gustav Jung (Wikipédia)",
+      "tema": "origem da teoria dos arquétipos",
+      "termos": [
+        "Jung"
+      ]
+    },
+    {
+      "url": "https://pt.wikipedia.org/wiki/LinkedIn",
+      "titulo": "LinkedIn (Wikipédia)",
+      "tema": "rede social profissional LinkedIn",
+      "termos": [
+        "LinkedIn"
+      ]
+    },
+    {
+      "url": "https://pt.wikipedia.org/wiki/Instagram",
+      "titulo": "Instagram (Wikipédia)",
+      "tema": "rede social Instagram",
+      "termos": [
+        "Instagram"
+      ]
+    },
+    {
+      "url": "https://pt.wikipedia.org/wiki/M%C3%ADdias_sociais",
+      "titulo": "Mídias sociais (Wikipédia)",
+      "tema": "redes e mídias sociais em geral",
+      "termos": [
+        "redes sociais",
+        "mídias sociais"
+      ]
+    },
+    {
+      "url": "https://pt.wikipedia.org/wiki/Branding",
+      "titulo": "Branding (Wikipédia)",
+      "tema": "gestão de marca",
+      "termos": [
+        "personal branding",
+        "branding"
+      ]
+    },
+    {
+      "url": "https://pt.wikipedia.org/wiki/Marketing_de_conte%C3%BAdo",
+      "titulo": "Marketing de conteúdo (Wikipédia)",
+      "tema": "marketing de conteúdo",
+      "termos": [
+        "marketing de conteúdo"
+      ]
+    },
+    {
+      "url": "https://pt.wikipedia.org/wiki/Florian%C3%B3polis",
+      "titulo": "Florianópolis (Wikipédia)",
+      "tema": "a cidade de Florianópolis",
+      "termos": []
+    },
+    {
+      "url": "https://pt.wikipedia.org/wiki/Hora_dourada",
+      "titulo": "Hora dourada (Wikipédia)",
+      "tema": "luz do nascer e do pôr do sol em fotografia",
+      "termos": [
+        "hora dourada"
+      ]
+    },
+    {
+      "url": "https://pt.wikipedia.org/wiki/Profundidade_de_campo",
+      "titulo": "Profundidade de campo (Wikipédia)",
+      "tema": "desfoque e foco em fotografia",
+      "termos": [
+        "profundidade de campo"
+      ]
+    },
+    {
+      "url": "https://pt.wikipedia.org/wiki/Est%C3%BAdio_fotogr%C3%A1fico",
+      "titulo": "Estúdio fotográfico (Wikipédia)",
+      "tema": "estúdio fotográfico",
+      "termos": [
+        "estúdio fotográfico",
+        "estúdio de fotografia"
+      ]
+    },
+    {
+      "url": "https://pt.wikipedia.org/wiki/Edi%C3%A7%C3%A3o_de_imagens",
+      "titulo": "Edição de imagens (Wikipédia)",
+      "tema": "tratamento e edição de imagens",
+      "termos": [
+        "edição de imagens",
+        "tratamento de imagens"
+      ]
+    },
+    {
+      "url": "https://pt.wikipedia.org/wiki/Podcast",
+      "titulo": "Podcast (Wikipédia)",
+      "tema": "podcast",
+      "termos": [
+        "podcast"
+      ]
+    },
+    {
+      "url": "https://pt.wikipedia.org/wiki/Coaching",
+      "titulo": "Coaching (Wikipédia)",
+      "tema": "coaching",
+      "termos": [
+        "coaching"
+      ]
+    },
+    {
+      "url": "https://pt.wikipedia.org/wiki/Mentoria",
+      "titulo": "Mentoria (Wikipédia)",
+      "tema": "mentoria",
+      "termos": [
+        "mentoria"
+      ]
+    },
+    {
+      "url": "https://pt.wikipedia.org/wiki/Direito_autoral",
+      "titulo": "Direito autoral (Wikipédia)",
+      "tema": "direitos autorais sobre fotos",
+      "termos": [
+        "direito autoral",
+        "direitos autorais"
+      ]
+    },
+    {
+      "url": "https://pt.wikipedia.org/wiki/Lei_Geral_de_Prote%C3%A7%C3%A3o_de_Dados_Pessoais",
+      "titulo": "LGPD (Wikipédia)",
+      "tema": "proteção de dados e uso de imagem",
+      "termos": [
+        "LGPD"
+      ]
+    },
+    {
+      "url": "https://pt.wikipedia.org/wiki/Intelig%C3%AAncia_artificial_generativa",
+      "titulo": "Inteligência artificial generativa (Wikipédia)",
+      "tema": "imagens geradas por IA",
+      "termos": [
+        "inteligência artificial",
+        "IA generativa"
+      ]
+    }
   ]
 }
