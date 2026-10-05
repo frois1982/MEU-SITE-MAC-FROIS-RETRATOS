@@ -42,7 +42,7 @@ const RichContent: React.FC<{ content: string; faq?: { q: string; a: string }[] 
       return (
         <figure key={i} style={{ margin: '2.2rem auto', maxWidth: '440px', textAlign: 'center' }}>
           <img src={b.src} alt={b.alt} loading="lazy" style={{ width: '100%', height: 'auto', display: 'block' }} />
-          {b.caption && <figcaption style={{ marginTop: '0.6rem', fontSize: '0.8rem', color: '#777', lineHeight: 1.5 }}>{b.caption}</figcaption>}
+          {b.caption && <figcaption style={{ marginTop: '0.6rem', fontSize: '0.8rem', color: '#777', lineHeight: 1.5 }}><Inline text={b.caption} /></figcaption>}
         </figure>
       );
     })}
