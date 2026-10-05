@@ -105,7 +105,11 @@ for (const p of PAGINAS) {
     const url = `${BASE}/blog/${p.slug}`;
     const rico = isRich(p.content);
     // posts antigos (texto puro) seguem exatamente como antes; só o modo rico remove a marcação
-    const desc = descricaoPost(p, rico ? plainText : (t) => t);
+    // Posts no formato rico: a primeira linha do conteúdo é o resumo escrito para ser a meta description.
+    const resumoRico = rico ? plainText((p.content || '').split(/\n{2,}/)[0]).replace(/\s+/g, ' ').trim() : '';
+    const desc = rico && resumoRico.length >= 70 && resumoRico.length <= 170
+      ? resumoRico
+      : descricaoPost(p, rico ? plainText : (t) => t);
     const blogPosting = {
       '@context': 'https://schema.org', '@type': 'BlogPosting',
       headline: p.title, description: desc, image: p.imageUrl,
