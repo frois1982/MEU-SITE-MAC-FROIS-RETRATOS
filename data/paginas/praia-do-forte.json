@@ -11,15 +11,15 @@
  "galeria": [
   {
    "src": "/familia/familia-praia-ombros.jpg",
-   "alt": "Família caminhando na praia em Florianópolis, com o filho nos ombros do pai"
+   "alt": "Família caminhando na Praia do Forte, em Florianópolis, com o filho nos ombros do pai"
   },
   {
    "src": "/familia/pai-e-filho-na-praia.jpg",
-   "alt": "Pai levantando o filho no ar na praia, com o céu azul ao fundo"
+   "alt": "Pai levantando o filho no ar na Praia do Forte, com o céu azul ao fundo"
   },
   {
    "src": "/familia/mae-e-filho-na-praia.jpg",
-   "alt": "Mãe e filho de óculos escuros sentados na areia, com o pai ao fundo"
+   "alt": "Mãe e filho de óculos escuros sentados na areia da Praia do Forte, com o pai ao fundo"
   }
  ],
  "secoes": [
@@ -34,6 +34,15 @@
    "h2": "Melhor horário e roupas",
    "paragrafos": [
     "A luz mais suave está ao fim da tarde, cerca de 1 hora e meia antes do pôr do sol, e logo cedo pela manhã. Tons claros e terrosos, tecidos leves e uma paleta que combine entre todos funcionam bem na areia e no verde da fortaleza."
+   ]
+  },
+  {
+   "h2": "O que levar",
+   "lista": [
+    "Água, lanche leve e protetor solar.",
+    "Roupa extra e toalha pequena para as crianças.",
+    "Calçado confortável para a trilha curta até a areia.",
+    "Pouca bagagem: o estacionamento é limitado e a trilha é a pé."
    ]
   }
  ],
@@ -129,5 +138,6 @@
   "tipo": "Fotografia de família",
   "catalogo": "Pacotes de ensaio de família em Praia do Forte",
   "prefixo": "Ensaio de família"
- }
+ },
+ "galeriaLegenda": "Ensaio de família na Praia do Forte, Florianópolis. Fotos publicadas com autorização dos clientes."
 }

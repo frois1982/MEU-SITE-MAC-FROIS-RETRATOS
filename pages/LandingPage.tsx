@@ -10,7 +10,7 @@ export type Secao = { h2: string; paragrafos?: string[]; lista?: string[] };
 export type Praia = { id: string; nome: string; h: string; p: string[]; link?: string };
 export type PaginaData = {
   rota: string; tema: 'warm' | 'mono' | 'dark'; title: string; description: string; kicker: string; h1: string; intro: string;
-  whatsapp: string; pagina: string; galeria: { src: string; alt: string }[]; secoes: Secao[]; praias?: Praia[];
+  whatsapp: string; pagina: string; galeriaLegenda?: string; galeria: { src: string; alt: string }[]; secoes: Secao[]; praias?: Praia[];
   pacotesTitulo: string; pacotesSub: string; pacotes: Pacote[]; extras: string[];
   links: { to: string; label: string }[]; faq: { q: string; a: string }[];
 };
@@ -79,6 +79,7 @@ export const LandingPage: React.FC<{ page: PaginaData }> = ({ page }) => {
               <img key={g.src} src={g.src} alt={g.alt} loading="lazy" className={`w-full aspect-[4/5] object-cover ${c.img}`} />
             ))}
           </div>
+          {page.galeriaLegenda && <p className={`${c.muted} text-xs text-center mt-3`}>{page.galeriaLegenda}</p>}
         </section>
       )}
 

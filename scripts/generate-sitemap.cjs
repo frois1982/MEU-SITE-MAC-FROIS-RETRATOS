@@ -15,6 +15,7 @@ const paginasEstaticas = [
   { url: '/ensaio-de-familia-praia-do-forte-florianopolis', priority: '0.8' },
   { url: '/ensaio-de-familia-guarda-do-embau-palhoca', priority: '0.8' },
   { url: '/ensaio-de-familia-campeche-florianopolis', priority: '0.8' },
+  { url: '/ensaio-de-familia-praia-do-maco-palhoca', priority: '0.8' },
   { url: '/fotografo-para-advogados-florianopolis', priority: '0.8' },
   { url: '/fotografo-para-medicos-florianopolis', priority: '0.8' },
   { url: '/blog', priority: '0.8' },

@@ -1,0 +1,145 @@
+{
+ "rota": "/ensaio-de-familia-praia-do-maco-palhoca",
+ "tema": "warm",
+ "title": "Ensaio de família na Praia do Maço, Palhoça | Mac Frois",
+ "description": "Ensaio fotográfico de família na Praia do Maço, em Palhoça (SC): praia reservada, com trilha a partir da Pinheira. Como é a trilha e o que levar. Pacotes a partir de R$ 990.",
+ "kicker": "Estúdio Frois · Florianópolis e Grande Florianópolis — SC",
+ "h1": "Ensaio de família na Praia do Maço, Palhoça",
+ "intro": "A Praia do Maço, em Palhoça, é uma praia reservada, de pouca infraestrutura, que só se alcança por trilha. Para famílias que gostam de natureza e aceitam caminhar um pouco, é um dos cenários mais bonitos da região, com pouca gente ao fundo das fotos.",
+ "whatsapp": "o ensaio de família na Praia do Maço",
+ "pagina": "ensaio de família na Praia do Maço",
+ "galeria": [],
+ "secoes": [
+  {
+   "h2": "Como é a Praia do Maço",
+   "paragrafos": [
+    "A praia fica em Palhoça, entre a Pinheira e a Guarda do Embaú, em um vale cercado de morros verdes. É rústica e reservada: há um pequeno bar com lanches e bebidas, mas não há aluguel de guarda-sol nem de cadeiras. O mar permite banho, e o encontro da água com as pedras do canto da praia dá fotos com muita textura."
+   ]
+  },
+  {
+   "h2": "Como é a trilha",
+   "paragrafos": [
+    "A partir da Pinheira são cerca de 40 minutos de caminhada leve, com subidas suaves. Não é preciso guia, e é comum famílias com crianças fazerem o percurso. Também há um caminho mais longo a partir da Guarda do Embaú.",
+    "Depois de chuva a trilha fica enlameada. Nesses casos a sessão é remarcada sem custo, e vale escolher um dia de sol."
+   ]
+  },
+  {
+   "h2": "O que levar",
+   "lista": [
+    "Tênis ou calçado fechado para a trilha; chinelo para a areia.",
+    "Água para todos, lanche leve e protetor solar.",
+    "Repelente: em trilha de mata ele ajuda, principalmente ao fim da tarde.",
+    "Roupa extra para as crianças e toalha pequena.",
+    "Sacola para o lixo, já que não há estrutura de coleta na areia.",
+    "Pouca bagagem: tudo vai nas costas durante a caminhada. As roupas do ensaio devem ir leves e em mochila."
+   ]
+  },
+  {
+   "h2": "Para quem funciona melhor",
+   "paragrafos": [
+    "Para famílias com crianças que caminham sozinhas ou já vão ao colo de forma confortável, e para quem prefere um cenário reservado a uma praia movimentada. Com bebês pequenos ou familiares com dificuldade de caminhar, prefiro a Praia do Forte ou outra com acesso curto."
+   ]
+  }
+ ],
+ "pacotesTitulo": "Quanto custa um ensaio de família na Praia do Maço?",
+ "pacotesSub": "Os mesmos pacotes do ensaio de família; a sessão externa na praia está incluída.",
+ "pacotes": [
+  {
+   "nome": "Momento",
+   "frase": "Um instante que vale guardar.",
+   "preco": 990,
+   "rotulo": "A partir de R$ 990",
+   "destaque": false,
+   "itens": [
+    "Sessão de até 1 hora, em locação externa",
+    "1 figurino",
+    "15 fotos digitais tratadas, em alta resolução",
+    "Orientação de figurino antes da sessão"
+   ]
+  },
+  {
+   "nome": "Memória",
+   "frase": "Para ter a família nas paredes e nas mãos.",
+   "preco": 2490,
+   "rotulo": "A partir de R$ 2.490",
+   "destaque": true,
+   "itens": [
+    "Sessão de até 2 horas, em locação externa",
+    "Até 3 figurinos",
+    "30 fotos digitais tratadas, em alta resolução",
+    "30 fotos impressas 10×15 cm, em álbum",
+    "1 quadro 60×90 cm, em caixa com vidro",
+    "Consultoria e alinhamento de imagem"
+   ]
+  },
+  {
+   "nome": "Legado",
+   "frase": "A história da família, contada em dois capítulos.",
+   "preco": null,
+   "rotulo": "Sob consulta",
+   "destaque": false,
+   "itens": [
+    "2 sessões, com escolha do local de cada uma",
+    "50 fotos digitais tratadas",
+    "Álbum premium 25×25 cm",
+    "Quadros para a parede",
+    "Vídeo e making off em 4K"
+   ]
+  }
+ ],
+ "extras": [
+  "Sessões externas em praias mais distantes ou segunda sessão externa no Legado podem ter acréscimo, combinado na proposta.",
+  "Chuva em sessão externa: remarcação sem custo.",
+  "Sinal de 30% para reservar a data; o restante no cartão de crédito, em até 6x (Momento e Memória) ou 12x (Legado), cobrado antes da sessão. Não há pagamento no dia. Todo projeto é formalizado com contrato e nota fiscal."
+ ],
+ "links": [
+  {
+   "to": "/ensaio-de-familia-na-praia-florianopolis",
+   "label": "Todas as praias para ensaio de família"
+  },
+  {
+   "to": "/ensaio-de-familia-florianopolis",
+   "label": "Ensaio de família: pacotes e detalhes"
+  },
+  {
+   "to": "/ensaio-de-casal-florianopolis",
+   "label": "Ensaio de casal"
+  }
+ ],
+ "faq": [
+  {
+   "q": "Quanto tempo dura a trilha até a Praia do Maço?",
+   "a": "Cerca de 40 minutos de caminhada leve a partir da Pinheira, com subidas suaves. Também há um caminho mais longo a partir da Guarda do Embaú."
+  },
+  {
+   "q": "Preciso de guia para chegar?",
+   "a": "Não. A trilha é comum entre famílias, mas vale ir em dia de sol, já que depois de chuva ela fica enlameada."
+  },
+  {
+   "q": "Tem estrutura na Praia do Maço?",
+   "a": "Pouca. Há um pequeno bar com lanches e bebidas, sem aluguel de guarda-sol ou cadeiras. Leve água e o que for necessário."
+  },
+  {
+   "q": "Crianças pequenas conseguem fazer a trilha?",
+   "a": "Crianças que caminham bem costumam conseguir. Para bebês e familiares com dificuldade de caminhar, a Praia do Forte tem acesso mais curto."
+  },
+  {
+   "q": "Preciso levar repelente?",
+   "a": "É recomendável em trilha de mata, principalmente ao fim da tarde."
+  },
+  {
+   "q": "Quanto custa o ensaio de família na Praia do Maço?",
+   "a": "Os pacotes começam em R$ 990 (Momento: até 1 hora, 15 fotos digitais). O Memória, a partir de R$ 2.490, tem até 2 horas, 30 fotos digitais, álbum com 30 fotos impressas 10×15 e um quadro 60×90 cm. O Legado é sob consulta. Sinal de 30% para reservar e saldo no cartão antes da sessão."
+  },
+  {
+   "q": "E se chover?",
+   "a": "A sessão é remarcada sem custo."
+  }
+ ],
+ "servico": {
+  "nome": "Ensaio fotográfico de família na Praia do Maço, Palhoça",
+  "tipo": "Fotografia de família",
+  "catalogo": "Pacotes de ensaio de família na Praia do Maço",
+  "prefixo": "Ensaio de família"
+ }
+}

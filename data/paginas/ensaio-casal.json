@@ -65,8 +65,8 @@
   {
    "nome": "Legado",
    "frase": "O ensaio completo, para ver e para guardar.",
-   "preco": 3690,
-   "rotulo": "A partir de R$ 3.690",
+   "preco": null,
+   "rotulo": "Sob consulta",
    "destaque": false,
    "itens": [
     "Sessão de até 2h30, no estúdio ou na natureza",
@@ -99,7 +99,7 @@
  "faq": [
   {
    "q": "Quanto custa um ensaio de casal em Florianópolis?",
-   "a": "Os ensaios de casal do Mac Frois começam em R$ 990 (Momento: até 1 hora, 1 figurino, 15 fotos digitais). O Memória, a partir de R$ 1.890, tem até 1h30, até 2 figurinos, 25 fotos digitais e um quadro 80×120 cm com vidro. O Legado, a partir de R$ 3.690, tem até 2h30, até 3 figurinos, 40 fotos digitais, 25 fotos impressas 10×15 em álbum e um quadro 80×120 cm. Quadros maiores são orçados à parte."
+   "a": "Os ensaios de casal do Mac Frois começam em R$ 990 (Momento: até 1 hora, 1 figurino, 15 fotos digitais). O Memória, a partir de R$ 1.890, tem até 1h30, até 2 figurinos, 25 fotos digitais e um quadro 80×120 cm com vidro. O Legado (até 2h30, até 3 figurinos, 40 fotos digitais, 25 fotos impressas 10×15 em álbum e um quadro 80×120 cm) é montado sob consulta. Quadros maiores são orçados à parte."
   },
   {
    "q": "O ensaio de casal pode ser em estúdio ou na natureza?",

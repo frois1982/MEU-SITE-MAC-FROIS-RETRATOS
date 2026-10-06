@@ -105,6 +105,7 @@ for (const arq of fs.readdirSync(DIR_LP).filter((f) => f.endsWith('.json'))) {
           itemOffered: { '@type': 'Service', name: `${sv.prefixo} ${k.nome}` } })) } },
   ] };
   const corpo = `<main><h1>${esc(D.h1)}</h1><p>${esc(D.intro)}</p>` +
+    (D.galeria || []).map((g) => `<img src="${esc(g.src)}" alt="${esc(g.alt)}">`).join('') +
     D.secoes.map((x) => `<h2>${esc(x.h2)}</h2>${(x.paragrafos || []).map((t) => `<p>${esc(t)}</p>`).join('')}${x.lista ? `<ul>${x.lista.map((i) => `<li>${esc(i)}</li>`).join('')}</ul>` : ''}`).join('') +
     (D.praias ? D.praias.map((x) => `<h2>${esc(x.h)}</h2>${x.p.map((t) => `<p>${esc(t)}</p>`).join('')}${x.link ? `<p><a href="${x.link}">${esc(x.nome)}</a></p>` : ''}`).join('') : '') +
     `<h2>${esc(D.pacotesTitulo)}</h2>` +

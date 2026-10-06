@@ -8,20 +8,7 @@
  "intro": "A Guarda do Embaú, em Palhoça, junta duas paisagens: o mar aberto, de ondas fortes, e o rio da Madre, de águas calmas, que desemboca ali. Dá para fazer fotos amplas na praia e fotos tranquilas, com as crianças, na margem do rio.",
  "whatsapp": "o ensaio de família na Guarda do Embaú, Palhoça",
  "pagina": "ensaio de família na Guarda do Embaú, Palhoça",
- "galeria": [
-  {
-   "src": "/familia/familia-praia-ombros.jpg",
-   "alt": "Família caminhando na praia em Florianópolis, com o filho nos ombros do pai"
-  },
-  {
-   "src": "/familia/pai-e-filho-na-praia.jpg",
-   "alt": "Pai levantando o filho no ar na praia, com o céu azul ao fundo"
-  },
-  {
-   "src": "/familia/mae-e-filho-na-praia.jpg",
-   "alt": "Mãe e filho de óculos escuros sentados na areia, com o pai ao fundo"
-  }
- ],
+ "galeria": [],
  "secoes": [
   {
    "h2": "Como é a Guarda do Embaú para o ensaio",
@@ -34,6 +21,18 @@
    "h2": "Para quem funciona melhor",
    "paragrafos": [
     "Para famílias que querem uma paisagem de mar aberto com a facilidade do rio calmo para as crianças, e para quem aceita uma viagem mais longa para um cenário diferente da ilha. O mar tem ondas fortes, então a sessão é de caminhada e brincadeira na areia, e não de banho."
+   ]
+  },
+  {
+   "h2": "Estrutura, trilha e o que levar",
+   "paragrafos": [
+    "A vila tem quiosques, aluguel de cadeiras e de pranchas de stand up paddle, restaurantes e pousadas. A partir da Guarda do Embaú também existe um caminho mais longo por trilha até a Praia do Maço, que tem uma página própria."
+   ],
+   "lista": [
+    "Água, lanche leve, protetor solar e repelente (rio e vegetação por perto).",
+    "Roupa extra para as crianças e toalha pequena.",
+    "Calçado fechado, caso a família queira estender o passeio pela trilha.",
+    "Sacola para o lixo."
    ]
   }
  ],

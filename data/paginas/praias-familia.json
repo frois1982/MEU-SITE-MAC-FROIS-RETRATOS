@@ -11,15 +11,15 @@
  "galeria": [
   {
    "src": "/familia/familia-praia-ombros.jpg",
-   "alt": "Família caminhando na praia em Florianópolis, com o filho nos ombros do pai"
+   "alt": "Família caminhando na Praia do Forte, em Florianópolis, com o filho nos ombros do pai"
   },
   {
    "src": "/familia/pai-e-filho-na-praia.jpg",
-   "alt": "Pai levantando o filho no ar na praia, com o céu azul ao fundo"
+   "alt": "Pai levantando o filho no ar na Praia do Forte, com o céu azul ao fundo"
   },
   {
    "src": "/familia/mae-e-filho-na-praia.jpg",
-   "alt": "Mãe e filho de óculos escuros sentados na areia, com o pai ao fundo"
+   "alt": "Mãe e filho de óculos escuros sentados na areia da Praia do Forte, com o pai ao fundo"
   }
  ],
  "secoes": [
@@ -28,6 +28,17 @@
    "paragrafos": [
     "Três perguntas resolvem a maior parte da decisão: quantos anos têm as crianças, quem na família tem dificuldade para caminhar e que luz vocês querem. Com bebês, o mar calmo e o acesso curto pesam mais. Com crianças maiores e adolescentes, trilha e mar aberto viram vantagem.",
     "Nascer do sol e fim de tarde são os melhores horários, porque a luz fica suave e as praias estão mais vazias. Em geral a sessão começa cerca de 1 hora e meia antes do pôr do sol ou ao amanhecer."
+   ]
+  },
+  {
+   "h2": "O que levar para o ensaio na praia",
+   "lista": [
+    "Água para todos e um lanche leve, principalmente com crianças.",
+    "Protetor solar e, em praias com mata ou rio por perto, repelente.",
+    "Roupa extra para as crianças e uma toalha pequena.",
+    "Calçado fechado ou tênis para a trilha (Praia do Maço) e chinelo para a areia.",
+    "Uma sacola para levar o lixo de volta: em praias sem estrutura não há lixeira.",
+    "Em praias com trilha ou pouca estrutura, evite levar muita bagagem: leve só o essencial e deixe o resto no carro."
    ]
   }
  ],
@@ -48,7 +59,8 @@
    "h": "Guarda do Embaú: mar aberto e rio calmo no mesmo lugar",
    "p": [
     "A Guarda do Embaú, em Palhoça, fica a cerca de 60 km de Florianópolis, uns 50 minutos de carro. O ponto forte é o encontro do mar aberto, de ondas fortes, com o rio da Madre, de águas calmas, que desemboca ali. Isso dá duas paisagens na mesma sessão: o mar para as fotos mais amplas e a margem do rio para as crianças.",
-    "É uma praia muito procurada no verão e nos feriados. Para o ensaio, o melhor é um dia de semana ou o início da manhã."
+    "É uma praia muito procurada no verão e nos feriados. Para o ensaio, o melhor é um dia de semana ou o início da manhã.",
+    "Na vila há quiosques, aluguel de cadeiras e de pranchas de stand up paddle, restaurantes e pousadas, o que facilita para quem vai com crianças."
    ],
    "link": "/ensaio-de-familia-guarda-do-embau-palhoca"
   },
@@ -59,7 +71,8 @@
    "p": [
     "A Praia do Maço, em Palhoça, entre a Pinheira e a Guarda do Embaú, é uma praia rústica e reservada, com pouca infraestrutura. O acesso é por trilha: a partir da Pinheira são cerca de 40 minutos de caminhada leve, feita normalmente por famílias.",
     "Por ser de trilha, o ensaio pede roupas leves e crianças que consigam caminhar, e rende uma areia com muito pouca gente ao fundo. Em dias de chuva a trilha fica enlameada, e nesse caso a sessão é remarcada sem custo."
-   ]
+   ],
+   "link": "/ensaio-de-familia-praia-do-maco-palhoca"
   },
   {
    "id": "campeche",
@@ -209,5 +222,6 @@
   "tipo": "Fotografia de família",
   "catalogo": "Pacotes de ensaio de família na praia",
   "prefixo": "Ensaio de família"
- }
+ },
+ "galeriaLegenda": "Ensaio de família na Praia do Forte, Florianópolis. Fotos publicadas com autorização dos clientes."
 }
