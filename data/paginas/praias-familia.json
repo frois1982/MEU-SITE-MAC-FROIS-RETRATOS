@@ -1,0 +1,213 @@
+{
+ "rota": "/ensaio-de-familia-na-praia-florianopolis",
+ "tema": "warm",
+ "title": "Ensaio de família na praia em Florianópolis | Mac Frois",
+ "description": "Ensaio fotográfico de família na praia em Florianópolis: Praia do Forte, Campeche, Jurerê, Guarda do Embaú, Praia do Maço e mais. Pacotes a partir de R$ 990.",
+ "kicker": "Estúdio Frois · Florianópolis e Palhoça — SC",
+ "h1": "Ensaio de família na praia em Florianópolis",
+ "intro": "Fotografo famílias nas praias de Florianópolis e de Palhoça: Praia do Forte, Campeche, Jurerê, Guarda do Embaú, Praia do Maço e outras. A escolha da praia depende da idade das crianças, da luz que vocês querem e de quanto estão dispostos a caminhar. Abaixo estão as praias, com o que cada uma oferece.",
+ "whatsapp": "o ensaio de família na praia",
+ "pagina": "ensaio de família na praia",
+ "galeria": [
+  {
+   "src": "/familia/familia-praia-ombros.jpg",
+   "alt": "Família caminhando na praia em Florianópolis, com o filho nos ombros do pai"
+  },
+  {
+   "src": "/familia/pai-e-filho-na-praia.jpg",
+   "alt": "Pai levantando o filho no ar na praia, com o céu azul ao fundo"
+  },
+  {
+   "src": "/familia/mae-e-filho-na-praia.jpg",
+   "alt": "Mãe e filho de óculos escuros sentados na areia, com o pai ao fundo"
+  }
+ ],
+ "secoes": [
+  {
+   "h2": "Como escolher a praia do ensaio",
+   "paragrafos": [
+    "Três perguntas resolvem a maior parte da decisão: quantos anos têm as crianças, quem na família tem dificuldade para caminhar e que luz vocês querem. Com bebês, o mar calmo e o acesso curto pesam mais. Com crianças maiores e adolescentes, trilha e mar aberto viram vantagem.",
+    "Nascer do sol e fim de tarde são os melhores horários, porque a luz fica suave e as praias estão mais vazias. Em geral a sessão começa cerca de 1 hora e meia antes do pôr do sol ou ao amanhecer."
+   ]
+  }
+ ],
+ "praias": [
+  {
+   "id": "praia-do-forte",
+   "nome": "Praia do Forte",
+   "h": "Praia do Forte: mar calmo para crianças pequenas",
+   "p": [
+    "A Praia do Forte, no norte da ilha, tem mar de ondas fracas e águas rasas, o que a torna a opção mais tranquila para bebês e crianças pequenas. Fica perto da Fortaleza de São José da Ponta Grossa, cenário que entra bem no enquadramento.",
+    "Do centro de Florianópolis são cerca de 26 km, uns 30 minutos de carro; do aeroporto, cerca de 38 km. O acesso à areia é por uma trilha curta, de 2 a 3 minutos, e o estacionamento é limitado, então vale chegar cedo."
+   ],
+   "link": "/ensaio-de-familia-praia-do-forte-florianopolis"
+  },
+  {
+   "id": "guarda-do-embau",
+   "nome": "Guarda do Embaú (Palhoça)",
+   "h": "Guarda do Embaú: mar aberto e rio calmo no mesmo lugar",
+   "p": [
+    "A Guarda do Embaú, em Palhoça, fica a cerca de 60 km de Florianópolis, uns 50 minutos de carro. O ponto forte é o encontro do mar aberto, de ondas fortes, com o rio da Madre, de águas calmas, que desemboca ali. Isso dá duas paisagens na mesma sessão: o mar para as fotos mais amplas e a margem do rio para as crianças.",
+    "É uma praia muito procurada no verão e nos feriados. Para o ensaio, o melhor é um dia de semana ou o início da manhã."
+   ],
+   "link": "/ensaio-de-familia-guarda-do-embau-palhoca"
+  },
+  {
+   "id": "praia-do-maco",
+   "nome": "Praia do Maço (Palhoça)",
+   "h": "Praia do Maço: praia isolada, com trilha",
+   "p": [
+    "A Praia do Maço, em Palhoça, entre a Pinheira e a Guarda do Embaú, é uma praia rústica e reservada, com pouca infraestrutura. O acesso é por trilha: a partir da Pinheira são cerca de 40 minutos de caminhada leve, feita normalmente por famílias.",
+    "Por ser de trilha, o ensaio pede roupas leves e crianças que consigam caminhar, e rende uma areia com muito pouca gente ao fundo. Em dias de chuva a trilha fica enlameada, e nesse caso a sessão é remarcada sem custo."
+   ]
+  },
+  {
+   "id": "campeche",
+   "nome": "Campeche",
+   "h": "Campeche: luz do nascer do sol",
+   "p": [
+    "O Campeche, no sul da ilha, tem faixa de areia ampla e recebe o nascer do sol, que dá a luz mais suave do dia para o ensaio. O mar tem ondas, então a sessão tende a ser mais de caminhada e brincadeira na areia do que de banho.",
+    "Quem vai com bebês ou crianças pequenas deve combinar o horário com antecedência, já que o sol nascendo exige sessão logo cedo."
+   ],
+   "link": "/ensaio-de-familia-campeche-florianopolis"
+  },
+  {
+   "id": "jurere",
+   "nome": "Jurerê",
+   "h": "Jurerê: faixa de areia larga e estrutura",
+   "p": [
+    "Jurerê, no norte da ilha, fica a cerca de 23 km do centro de Florianópolis. A praia tem cerca de 3,5 km de extensão, mar morno e calmo no verão e, passarelas de madeira dos estacionamentos até a areia. Tem quiosques credenciados e estacionamento gratuito em vários pontos.",
+    "Para o ensaio, funciona bem para famílias que querem mar tranquilo e facilidade de acesso. Como é uma região muito movimentada no verão, prefira manhãs de semana ou a baixa temporada."
+   ]
+  },
+  {
+   "id": "mocambique",
+   "nome": "Praia do Moçambique",
+   "h": "Moçambique: a maior praia da ilha, para o nascer do sol",
+   "p": [
+    "A Praia do Moçambique tem cerca de 12,5 km de extensão e fica dentro do Parque Estadual do Rio Vermelho. Por ser área de parque, é preciso conferir com o órgão ambiental (IMA) as regras para sessões fotográficas antes de marcar. O mar tem ondas fortes e o ensaio costuma ser ao nascer do sol."
+   ]
+  },
+  {
+   "id": "barra-da-lagoa",
+   "nome": "Barra da Lagoa",
+   "h": "Barra da Lagoa: trecho de ondas e trecho calmo",
+   "p": [
+    "Na Barra da Lagoa, no leste da ilha, a mesma praia tem um trecho de ondas e outro mais calmo, o que permite escolher conforme a idade das crianças. A luz do nascer do sol também funciona bem aqui."
+   ]
+  },
+  {
+   "id": "santo-antonio-de-lisboa",
+   "nome": "Santo Antônio de Lisboa",
+   "h": "Santo Antônio de Lisboa: pôr do sol e casario açoriano",
+   "p": [
+    "Santo Antônio de Lisboa fica na orla da Baía Norte e combina pôr do sol com o casario açoriano, o que dá um cenário histórico e aconchegante. É uma boa escolha para quem prefere um ensaio menos \"de praia\" e mais de bairro."
+   ]
+  }
+ ],
+ "pacotesTitulo": "Quanto custa um ensaio de família na praia?",
+ "pacotesSub": "Os mesmos pacotes do ensaio de família; a sessão externa na praia está incluída.",
+ "pacotes": [
+  {
+   "nome": "Momento",
+   "frase": "Um instante que vale guardar.",
+   "preco": 990,
+   "rotulo": "A partir de R$ 990",
+   "destaque": false,
+   "itens": [
+    "Sessão de até 1 hora, em locação externa",
+    "1 figurino",
+    "15 fotos digitais tratadas, em alta resolução",
+    "Orientação de figurino antes da sessão"
+   ]
+  },
+  {
+   "nome": "Memória",
+   "frase": "Para ter a família nas paredes e nas mãos.",
+   "preco": 2490,
+   "rotulo": "A partir de R$ 2.490",
+   "destaque": true,
+   "itens": [
+    "Sessão de até 2 horas, em locação externa",
+    "Até 3 figurinos",
+    "30 fotos digitais tratadas, em alta resolução",
+    "30 fotos impressas 10×15 cm, em álbum",
+    "1 quadro 60×90 cm, em caixa com vidro",
+    "Consultoria e alinhamento de imagem"
+   ]
+  },
+  {
+   "nome": "Legado",
+   "frase": "A história da família, contada em dois capítulos.",
+   "preco": null,
+   "rotulo": "Sob consulta",
+   "destaque": false,
+   "itens": [
+    "2 sessões, com escolha do local de cada uma",
+    "50 fotos digitais tratadas",
+    "Álbum premium 25×25 cm",
+    "Quadros para a parede",
+    "Vídeo e making off em 4K"
+   ]
+  }
+ ],
+ "extras": [
+  "Sessões externas em praias mais distantes ou segunda sessão externa no Legado podem ter acréscimo, combinado na proposta.",
+  "Chuva em sessão externa: remarcação sem custo.",
+  "Sinal de 30% para reservar a data; o restante no cartão de crédito, em até 6x (Momento e Memória) ou 12x (Legado), cobrado antes da sessão. Não há pagamento no dia. Todo projeto é formalizado com contrato e nota fiscal."
+ ],
+ "links": [
+  {
+   "to": "/ensaio-de-familia-florianopolis",
+   "label": "Ensaio de família: pacotes e detalhes"
+  },
+  {
+   "to": "/ensaio-de-casal-florianopolis",
+   "label": "Ensaio de casal"
+  },
+  {
+   "to": "/blog/melhores-praias-de-florianopolis-para-ensaio-de-familia",
+   "label": "Guia: 5 melhores praias para ensaio de família"
+  }
+ ],
+ "faq": [
+  {
+   "q": "Qual a melhor praia de Florianópolis para um ensaio de família?",
+   "a": "Depende da família. Para bebês e crianças pequenas, a Praia do Forte, de mar calmo e acesso curto. Para a luz do nascer do sol, Campeche, Moçambique ou Barra da Lagoa. Para praia com rio calmo e mar aberto no mesmo lugar, a Guarda do Embaú, em Palhoça. Para uma praia reservada, a do Maço, com trilha."
+  },
+  {
+   "q": "Qual o melhor horário para o ensaio na praia?",
+   "a": "Ao nascer do sol ou cerca de 1 hora e meia antes do pôr do sol, quando a luz é suave e a praia está mais vazia. Em temporada, as primeiras horas da manhã são as mais tranquilas."
+  },
+  {
+   "q": "Quanto custa um ensaio de família na praia em Florianópolis?",
+   "a": "Os pacotes começam em R$ 990 (Momento: até 1 hora, 15 fotos digitais). O Memória, a partir de R$ 2.490, tem até 2 horas, 30 fotos digitais, álbum com 30 fotos impressas e um quadro 60×90 cm. O Legado é sob consulta. A praia não muda o preço do pacote, salvo deslocamentos mais longos."
+  },
+  {
+   "q": "Fotografa na Praia do Maço e na Guarda do Embaú, em Palhoça?",
+   "a": "Sim. Atendo a Grande Florianópolis, incluindo Palhoça. A Praia do Maço tem acesso por trilha (cerca de 40 minutos a partir da Pinheira), e a Guarda do Embaú fica a cerca de 60 km de Florianópolis."
+  },
+  {
+   "q": "E se chover no dia do ensaio?",
+   "a": "A sessão é remarcada sem custo. Também há remarcação sem custo com aviso de 48 horas."
+  },
+  {
+   "q": "Existe restrição para fotografar em praias dentro de parques?",
+   "a": "Em áreas de parque, como a Praia do Moçambique, dentro do Parque Estadual do Rio Vermelho, vale conferir as regras com o IMA antes de marcar a sessão."
+  },
+  {
+   "q": "O que vestir no ensaio de família na praia?",
+   "a": "Tons claros e terrosos, tecidos leves e uma paleta que combine entre os membros da família, sem estampas muito chamativas. Depois de reservar a data, envio a orientação de figurino."
+  },
+  {
+   "q": "Vocês fotografam casal na praia também?",
+   "a": "Sim. Veja a página de ensaio de casal, com pacotes a partir de R$ 990."
+  }
+ ],
+ "servico": {
+  "nome": "Ensaio fotográfico de família na praia em Florianópolis",
+  "tipo": "Fotografia de família",
+  "catalogo": "Pacotes de ensaio de família na praia",
+  "prefixo": "Ensaio de família"
+ }
+}

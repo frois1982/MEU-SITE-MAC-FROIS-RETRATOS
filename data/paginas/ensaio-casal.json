@@ -1,0 +1,143 @@
+{
+ "rota": "/ensaio-de-casal-florianopolis",
+ "tema": "mono",
+ "title": "Ensaio de casal em Florianópolis | Mac Frois — a partir de R$ 990",
+ "description": "Ensaio fotográfico de casal em Florianópolis, em estúdio ou na natureza: pacotes Momento, Memória e Legado a partir de R$ 990, com quadro para a cabeceira. Mac Frois, retratista.",
+ "kicker": "Estúdio Frois · Estreito, Florianópolis — SC",
+ "h1": "Ensaio de casal em Florianópolis",
+ "intro": "Um ensaio para o casal que quer se ver como é: sem pose engessada, com direção leve e fotos em preto e branco ou cor, no estúdio no Estreito ou na natureza da Grande Florianópolis. Você escolhe o pacote, o local e leva para casa as fotos digitais e, nos pacotes maiores, um quadro para a parede do quarto.",
+ "whatsapp": "o ensaio de casal",
+ "pagina": "ensaio de casal",
+ "galeria": [],
+ "secoes": [
+  {
+   "h2": "Para quem é o ensaio de casal",
+   "paragrafos": [
+    "É para casais que namoram, noivos, casais que vão comemorar aniversário de casamento ou bodas, ou que simplesmente querem um registro bem feito de quem são hoje. Não é cobertura de casamento: é um ensaio dedicado ao casal, sem convidados, sem cronograma e sem pressa.",
+    "Quem não gosta de ser fotografado costuma ser a maioria. Por isso a sessão é conduzida com conversa e movimento, em vez de poses decoradas. A minha formação de quase 20 anos em atendimento de emergência me ajudou a perceber quando alguém está tenso e a desfazer isso antes de a câmera entrar."
+   ]
+  },
+  {
+   "h2": "Estúdio ou natureza",
+   "paragrafos": [
+    "No estúdio, no Estreito, a luz é controlada e o ensaio rende independentemente do clima. Na natureza, a sessão acontece em praia, trilha, dunas ou parque, onde a luz natural faz parte da foto. Em sessão externa com chuva, a data é remarcada sem custo."
+   ]
+  },
+  {
+   "h2": "Como é o dia da sessão",
+   "lista": [
+    "Conversa antes: entendo como vocês são como casal e o que querem levar para casa.",
+    "Orientação de figurino: cores e tecidos combinados com antecedência, para a foto não competir com a roupa.",
+    "Sessão com direção leve: movimento, toque e conversa, no ritmo de vocês.",
+    "Galeria digital em até 15 dias corridos; quadros e álbuns em cerca de 30 a 45 dias após a aprovação das fotos."
+   ]
+  }
+ ],
+ "pacotesTitulo": "Quanto custa um ensaio de casal em Florianópolis?",
+ "pacotesSub": "Três formas de registrar o casal. O Memória é o mais escolhido.",
+ "pacotes": [
+  {
+   "nome": "Momento",
+   "frase": "Um instante a dois.",
+   "preco": 990,
+   "rotulo": "A partir de R$ 990",
+   "destaque": false,
+   "itens": [
+    "Sessão de até 1 hora, no estúdio ou na natureza",
+    "1 figurino",
+    "15 fotos digitais tratadas, em alta resolução",
+    "Orientação de figurino antes da sessão"
+   ]
+  },
+  {
+   "nome": "Memória",
+   "frase": "Para ter o casal na parede do quarto.",
+   "preco": 1890,
+   "rotulo": "A partir de R$ 1.890",
+   "destaque": true,
+   "itens": [
+    "Sessão de até 1h30, no estúdio ou na natureza",
+    "Até 2 figurinos",
+    "25 fotos digitais tratadas, em alta resolução",
+    "1 quadro 80×120 cm com vidro, para a cabeceira"
+   ]
+  },
+  {
+   "nome": "Legado",
+   "frase": "O ensaio completo, para ver e para guardar.",
+   "preco": 3690,
+   "rotulo": "A partir de R$ 3.690",
+   "destaque": false,
+   "itens": [
+    "Sessão de até 2h30, no estúdio ou na natureza",
+    "Até 3 figurinos",
+    "40 fotos digitais tratadas, em alta resolução",
+    "25 fotos impressas em 10×15 cm, em álbum",
+    "1 quadro 80×120 cm"
+   ]
+  }
+ ],
+ "extras": [
+  "Quadros em tamanhos maiores que os previstos nos pacotes são orçados à parte, conforme a parede.",
+  "Atendimento na Grande Florianópolis; consulte o deslocamento para locais mais distantes.",
+  "Sinal de 30% para reservar a data; o restante no cartão de crédito, em até 6x (Momento e Memória) ou 12x (Legado), cobrado antes da sessão. Não há pagamento no dia. Todo projeto é formalizado com contrato e nota fiscal."
+ ],
+ "links": [
+  {
+   "to": "/ensaio-de-familia-florianopolis",
+   "label": "Ensaio de família"
+  },
+  {
+   "to": "/ensaio-de-familia-na-praia-florianopolis",
+   "label": "Ensaio na praia"
+  },
+  {
+   "to": "/portfolio",
+   "label": "Portfólio"
+  }
+ ],
+ "faq": [
+  {
+   "q": "Quanto custa um ensaio de casal em Florianópolis?",
+   "a": "Os ensaios de casal do Mac Frois começam em R$ 990 (Momento: até 1 hora, 1 figurino, 15 fotos digitais). O Memória, a partir de R$ 1.890, tem até 1h30, até 2 figurinos, 25 fotos digitais e um quadro 80×120 cm com vidro. O Legado, a partir de R$ 3.690, tem até 2h30, até 3 figurinos, 40 fotos digitais, 25 fotos impressas 10×15 em álbum e um quadro 80×120 cm. Quadros maiores são orçados à parte."
+  },
+  {
+   "q": "O ensaio de casal pode ser em estúdio ou na natureza?",
+   "a": "Pode ser nos dois. O estúdio fica no Estreito, em Florianópolis. Na natureza, a sessão acontece em praia, trilha ou parque da Grande Florianópolis, no local que fizer sentido para vocês. Em sessão externa com chuva, a data é remarcada sem custo."
+  },
+  {
+   "q": "Quanto tempo dura a sessão?",
+   "a": "De até 1 hora no pacote Momento a até 2h30 no Legado. Em todos os casos o tempo conta a partir do início da sessão, com tolerância de atraso de 20 minutos."
+  },
+  {
+   "q": "Não somos fotogênicos nem sabemos posar. Funciona?",
+   "a": "Funciona. A sessão é dirigida: eu indico movimento, conversa e toque, e não pose. A maioria dos casais chega com receio e relaxa nos primeiros minutos."
+  },
+  {
+   "q": "Qual roupa devemos usar?",
+   "a": "Depois de reservar a data, envio a orientação de figurino. Em geral, tecidos lisos, cores que combinem entre si sem ser iguais e roupas em que vocês se sintam à vontade."
+  },
+  {
+   "q": "Em quanto tempo recebemos as fotos?",
+   "a": "A galeria digital sai em até 15 dias corridos após a sessão. Quadros e álbuns levam cerca de 30 a 45 dias após a aprovação das fotos."
+  },
+  {
+   "q": "Como reservar a data e como é o pagamento?",
+   "a": "Chame no WhatsApp (48) 99623-1894. A data é reservada com sinal de 30% e o restante é pago no cartão de crédito, em até 6x (Momento e Memória) ou 12x (Legado), antes da sessão. Não há pagamento no dia. Há contrato e nota fiscal."
+  },
+  {
+   "q": "Dá para remarcar?",
+   "a": "Sim. A remarcação é sem custo com aviso de 48 horas. Em sessão externa, chuva também remarca sem custo."
+  },
+  {
+   "q": "Vocês fazem ensaio de casal para casamento ou pré-wedding?",
+   "a": "O ensaio é dedicado ao casal e pode servir como registro de noivado ou de aniversário de casamento. Não faço a cobertura do casamento em si."
+  }
+ ],
+ "servico": {
+  "nome": "Ensaio fotográfico de casal em Florianópolis",
+  "tipo": "Fotografia de casal",
+  "catalogo": "Pacotes de ensaio de casal",
+  "prefixo": "Ensaio de casal"
+ }
+}

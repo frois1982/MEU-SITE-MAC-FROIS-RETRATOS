@@ -1,0 +1,129 @@
+{
+ "rota": "/ensaio-de-familia-campeche-florianopolis",
+ "tema": "warm",
+ "title": "Ensaio de família na Praia do Campeche, Florianópolis | Mac Frois",
+ "description": "Ensaio fotográfico de família na Praia do Campeche, em Florianópolis: nascer do sol e faixa de areia ampla. Pacotes a partir de R$ 990. Mac Frois.",
+ "kicker": "Estúdio Frois · Florianópolis e Grande Florianópolis — SC",
+ "h1": "Ensaio de família na Praia do Campeche, Florianópolis",
+ "intro": "O Campeche, no sul da ilha, tem uma faixa de areia ampla e recebe o nascer do sol, que dá a luz mais suave do dia. Para o ensaio, é uma praia de caminhada, corrida e brincadeira na areia.",
+ "whatsapp": "o ensaio de família na Praia do Campeche",
+ "pagina": "ensaio de família na Praia do Campeche",
+ "galeria": [
+  {
+   "src": "/familia/familia-praia-ombros.jpg",
+   "alt": "Família caminhando na praia em Florianópolis, com o filho nos ombros do pai"
+  },
+  {
+   "src": "/familia/pai-e-filho-na-praia.jpg",
+   "alt": "Pai levantando o filho no ar na praia, com o céu azul ao fundo"
+  },
+  {
+   "src": "/familia/mae-e-filho-na-praia.jpg",
+   "alt": "Mãe e filho de óculos escuros sentados na areia, com o pai ao fundo"
+  }
+ ],
+ "secoes": [
+  {
+   "h2": "Como é o Campeche para o ensaio",
+   "paragrafos": [
+    "O Campeche é voltado para o oceano e recebe o sol logo cedo. O mar tem ondas, então a sessão é mais de movimento na areia do que de banho, e funciona bem com crianças que já correm e brincam sozinhas.",
+    "Quem vai com bebês deve combinar o horário com antecedência, já que o nascer do sol pede uma sessão logo cedo."
+   ]
+  },
+  {
+   "h2": "Melhor horário",
+   "paragrafos": [
+    "O nascer do sol. A luz é suave, a praia está mais vazia e as cores ficam mais quentes nas fotos."
+   ]
+  }
+ ],
+ "pacotesTitulo": "Quanto custa um ensaio de família na Praia do Campeche?",
+ "pacotesSub": "Os mesmos pacotes do ensaio de família; a sessão externa na praia está incluída.",
+ "pacotes": [
+  {
+   "nome": "Momento",
+   "frase": "Um instante que vale guardar.",
+   "preco": 990,
+   "rotulo": "A partir de R$ 990",
+   "destaque": false,
+   "itens": [
+    "Sessão de até 1 hora, em locação externa",
+    "1 figurino",
+    "15 fotos digitais tratadas, em alta resolução",
+    "Orientação de figurino antes da sessão"
+   ]
+  },
+  {
+   "nome": "Memória",
+   "frase": "Para ter a família nas paredes e nas mãos.",
+   "preco": 2490,
+   "rotulo": "A partir de R$ 2.490",
+   "destaque": true,
+   "itens": [
+    "Sessão de até 2 horas, em locação externa",
+    "Até 3 figurinos",
+    "30 fotos digitais tratadas, em alta resolução",
+    "30 fotos impressas 10×15 cm, em álbum",
+    "1 quadro 60×90 cm, em caixa com vidro",
+    "Consultoria e alinhamento de imagem"
+   ]
+  },
+  {
+   "nome": "Legado",
+   "frase": "A história da família, contada em dois capítulos.",
+   "preco": null,
+   "rotulo": "Sob consulta",
+   "destaque": false,
+   "itens": [
+    "2 sessões, com escolha do local de cada uma",
+    "50 fotos digitais tratadas",
+    "Álbum premium 25×25 cm",
+    "Quadros para a parede",
+    "Vídeo e making off em 4K"
+   ]
+  }
+ ],
+ "extras": [
+  "Sessões externas em praias mais distantes ou segunda sessão externa no Legado podem ter acréscimo, combinado na proposta.",
+  "Chuva em sessão externa: remarcação sem custo.",
+  "Sinal de 30% para reservar a data; o restante no cartão de crédito, em até 6x (Momento e Memória) ou 12x (Legado), cobrado antes da sessão. Não há pagamento no dia. Todo projeto é formalizado com contrato e nota fiscal."
+ ],
+ "links": [
+  {
+   "to": "/ensaio-de-familia-na-praia-florianopolis",
+   "label": "Todas as praias para ensaio de família"
+  },
+  {
+   "to": "/ensaio-de-familia-florianopolis",
+   "label": "Ensaio de família: pacotes e detalhes"
+  },
+  {
+   "to": "/ensaio-de-casal-florianopolis",
+   "label": "Ensaio de casal"
+  }
+ ],
+ "faq": [
+  {
+   "q": "Qual o melhor horário para fotografar no Campeche?",
+   "a": "Ao nascer do sol, quando a luz é suave e a praia está mais vazia."
+  },
+  {
+   "q": "O Campeche é boa praia para bebês?",
+   "a": "O mar tem ondas. Para bebês e crianças muito pequenas, a Praia do Forte, de mar mais calmo, costuma ser mais indicada."
+  },
+  {
+   "q": "Quanto custa um ensaio de família na Praia do Campeche?",
+   "a": "Os pacotes começam em R$ 990 (Momento: até 1 hora, 15 fotos digitais tratadas). O Memória, a partir de R$ 2.490, tem até 2 horas, 30 fotos digitais, álbum com 30 fotos impressas 10×15 e um quadro 60×90 cm. O Legado é sob consulta. Sinal de 30% para reservar e saldo no cartão antes da sessão."
+  },
+  {
+   "q": "E se chover?",
+   "a": "A sessão é remarcada sem custo."
+  }
+ ],
+ "servico": {
+  "nome": "Ensaio fotográfico de família em Praia do Campeche",
+  "tipo": "Fotografia de família",
+  "catalogo": "Pacotes de ensaio de família em Praia do Campeche",
+  "prefixo": "Ensaio de família"
+ }
+}

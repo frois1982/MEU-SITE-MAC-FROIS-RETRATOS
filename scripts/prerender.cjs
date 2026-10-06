@@ -91,6 +91,31 @@ for (const p of PAGINAS) {
   n++;
 }
 
+// Páginas de destino genéricas (data/paginas/*.json): casal, praias, advogados, médicos.
+const DIR_LP = path.join(__dirname, '../data/paginas');
+for (const arq of fs.readdirSync(DIR_LP).filter((f) => f.endsWith('.json'))) {
+  const D = JSON.parse(fs.readFileSync(path.join(DIR_LP, arq), 'utf-8'));
+  const sv = D.servico;
+  const jsonld = { '@context': 'https://schema.org', '@graph': [
+    { '@type': 'FAQPage', mainEntity: D.faq.map((f) => ({ '@type': 'Question', name: f.q, acceptedAnswer: { '@type': 'Answer', text: f.a } })) },
+    { '@type': 'Service', name: sv.nome, serviceType: sv.tipo, provider: { '@id': BASE + '/#negocio' },
+      areaServed: { '@type': 'City', name: 'Florianópolis' },
+      hasOfferCatalog: { '@type': 'OfferCatalog', name: sv.catalogo,
+        itemListElement: D.pacotes.map((k) => ({ '@type': 'Offer', ...(k.preco ? { priceCurrency: 'BRL', price: String(k.preco) } : {}),
+          itemOffered: { '@type': 'Service', name: `${sv.prefixo} ${k.nome}` } })) } },
+  ] };
+  const corpo = `<main><h1>${esc(D.h1)}</h1><p>${esc(D.intro)}</p>` +
+    D.secoes.map((x) => `<h2>${esc(x.h2)}</h2>${(x.paragrafos || []).map((t) => `<p>${esc(t)}</p>`).join('')}${x.lista ? `<ul>${x.lista.map((i) => `<li>${esc(i)}</li>`).join('')}</ul>` : ''}`).join('') +
+    (D.praias ? D.praias.map((x) => `<h2>${esc(x.h)}</h2>${x.p.map((t) => `<p>${esc(t)}</p>`).join('')}${x.link ? `<p><a href="${x.link}">${esc(x.nome)}</a></p>` : ''}`).join('') : '') +
+    `<h2>${esc(D.pacotesTitulo)}</h2>` +
+    D.pacotes.map((k) => `<h3>${esc(k.nome)}: ${esc(k.rotulo)}</h3><ul>${k.itens.map((i) => `<li>${esc(i)}</li>`).join('')}</ul>`).join('') +
+    D.extras.map((e) => `<p>${esc(e)}</p>`).join('') +
+    D.faq.map((f) => `<h2>${esc(f.q)}</h2><p>${esc(f.a)}</p>`).join('') +
+    `<p>${D.links.map((l) => `<a href="${l.to}">${esc(l.label)}</a>`).join(' · ')}</p></main>`;
+  gravar(D.rota, aplicar(base, { title: D.title, desc: D.description, url: BASE + D.rota, jsonld, corpo }));
+  n++;
+}
+
 (async () => {
   // lib/richtext.js é ESM (compartilhado com o React); aqui entra por import dinâmico.
   const { isRich, parseBlocks, blocksToHtml, inlineToHtml, plainText } = await import('../lib/richtext.js');
