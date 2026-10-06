@@ -5,7 +5,7 @@
  "description": "Ensaio fotográfico de família na Praia do Campeche, em Florianópolis: nascer do sol e faixa de areia ampla. Pacotes a partir de R$ 990. Mac Frois.",
  "kicker": "Estúdio Frois · Florianópolis e Grande Florianópolis — SC",
  "h1": "Ensaio de família na Praia do Campeche, Florianópolis",
- "intro": "O Campeche, no sul da ilha, tem uma faixa de areia ampla e recebe o nascer do sol, que dá a luz mais suave do dia. Para o ensaio, é uma praia de caminhada, corrida e brincadeira na areia.",
+ "intro": "O Campeche, no sul da ilha, é uma praia oceânica de cerca de 3 km, voltada para o leste, com a Ilha do Campeche bem em frente. Recebe o nascer do sol, que dá a luz mais suave do dia, e é a praia que mais combina com um ensaio de caminhada, corrida e brincadeira na areia.",
  "whatsapp": "o ensaio de família na Praia do Campeche",
  "pagina": "ensaio de família na Praia do Campeche",
  "galeria": [],
@@ -13,14 +13,35 @@
   {
    "h2": "Como é o Campeche para o ensaio",
    "paragrafos": [
-    "O Campeche é voltado para o oceano e recebe o sol logo cedo. O mar tem ondas, então a sessão é mais de movimento na areia do que de banho, e funciona bem com crianças que já correm e brincam sozinhas.",
-    "Quem vai com bebês deve combinar o horário com antecedência, já que o nascer do sol pede uma sessão logo cedo."
+    "A praia tem cerca de 3 km de extensão e a Ilha do Campeche a aproximadamente 1,6 km a leste, o que dá um horizonte com ilha em quase todas as fotos. As dunas são protegidas por lei desde 1985 e, no inverno, a praia recebe baleias-franca.",
+    "O mar tem ondas fortes e água fria. Por isso o ensaio no Campeche é de caminhada pela areia, com a ilha ao fundo, e não de banho: mantenho as crianças longe da arrebentação."
+   ]
+  },
+  {
+   "h2": "Como chegar",
+   "paragrafos": [
+    "É a praia mais próxima do aeroporto: cerca de 8 km e 11 minutos de carro. Do centro de Florianópolis são cerca de 15 km e uns 20 minutos."
    ]
   },
   {
    "h2": "Melhor horário",
    "paragrafos": [
-    "O nascer do sol. A luz é suave, a praia está mais vazia e as cores ficam mais quentes nas fotos."
+    "O nascer do sol. Chegue 20 a 30 minutos antes. A luz é avermelhada e suave, com sombras leves, e a praia está mais vazia. Com crianças pequenas, combine café da manhã e soneca com antecedência."
+   ]
+  },
+  {
+   "h2": "Cuidados no Campeche",
+   "lista": [
+    "As dunas são protegidas: não pise nelas.",
+    "Leve o lixo de volta.",
+    "Mantenha as crianças longe da arrebentação.",
+    "Traga casaco leve para o início da manhã."
+   ]
+  },
+  {
+   "h2": "Para quem funciona melhor",
+   "paragrafos": [
+    "Para famílias com crianças que já correm e brincam sozinhas, e para quem quer a luz do nascer do sol com a ilha ao fundo. Para bebês e crianças muito pequenas, a Praia do Forte, de mar calmo, costuma ser mais indicada."
    ]
   },
   {
@@ -100,11 +121,23 @@
  "faq": [
   {
    "q": "Qual o melhor horário para fotografar no Campeche?",
-   "a": "Ao nascer do sol, quando a luz é suave e a praia está mais vazia."
+   "a": "Ao nascer do sol. Chegue 20 a 30 minutos antes: a luz é suave e avermelhada e a praia está mais vazia."
   },
   {
    "q": "O Campeche é boa praia para bebês?",
-   "a": "O mar tem ondas. Para bebês e crianças muito pequenas, a Praia do Forte, de mar mais calmo, costuma ser mais indicada."
+   "a": "O mar tem ondas fortes e água fria. Para bebês e crianças muito pequenas, a Praia do Forte, de mar calmo, costuma ser mais indicada."
+  },
+  {
+   "q": "Quanto tempo leva para chegar ao Campeche?",
+   "a": "Do aeroporto, cerca de 8 km e 11 minutos; do centro de Florianópolis, cerca de 15 km e 20 minutos."
+  },
+  {
+   "q": "Dá para fotografar com a Ilha do Campeche ao fundo?",
+   "a": "Sim. A ilha fica a cerca de 1,6 km a leste da praia, em frente ao nascer do sol, e entra bem nas fotos de caminhada pela areia."
+  },
+  {
+   "q": "Posso pisar nas dunas?",
+   "a": "Não. As dunas do Campeche são protegidas por lei desde 1985."
   },
   {
    "q": "Quanto custa um ensaio de família na Praia do Campeche?",
