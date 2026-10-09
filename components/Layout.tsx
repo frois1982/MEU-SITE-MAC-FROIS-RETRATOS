@@ -37,8 +37,9 @@ const Navbar: React.FC = () => {
   return (
     <nav className={`fixed w-full z-50 transition-all duration-300 ${scrolled ? 'bg-zinc-950/95 backdrop-blur-sm py-4 border-b border-zinc-900' : 'bg-transparent py-6'}`}>
       <div className="container mx-auto px-6 flex justify-between items-center">
-        <Link to="/" className="text-2xl font-serif tracking-tighter text-white uppercase group">
-          MAC <span className="text-gold-500 group-hover:text-gold-400 transition-colors">FROIS</span>
+        <Link to="/" className="flex items-center gap-3 text-2xl font-serif tracking-tighter text-white uppercase group">
+          <img src="/logo-fs.png" alt="Estúdio Frois" width="26" height="40" className="h-9 w-auto" />
+          <span>MAC <span className="text-gold-500 group-hover:text-gold-400 transition-colors">FROIS</span></span>
         </Link>
         <div className="hidden md:flex items-center space-x-8">
           {navLinks.map((link) => link.children ? (
@@ -123,7 +124,10 @@ const Footer: React.FC = () => {
       <div className="container mx-auto px-6">
         <div className="grid grid-cols-1 md:grid-cols-3 gap-12 mb-16">
           <div>
-            <h3 className="text-2xl font-serif text-white mb-6 tracking-widest">MAC FROIS</h3>
+            <div className="flex items-center gap-3 mb-6">
+              <img src="/logo-fs.png" alt="Estúdio Frois" width="31" height="48" className="h-12 w-auto" />
+              <h3 className="text-2xl font-serif text-white tracking-widest">MAC FROIS</h3>
+            </div>
             <p className="text-zinc-500 mb-6 max-w-xs leading-relaxed font-light text-sm">
               RETRATISTA ESPECIALIZADO EM POSICIONAMENTO E AUTORIDADE VISUAL. ONDE A VERDADE ENCONTRA A ESTRATÉGIA.
             </p>
