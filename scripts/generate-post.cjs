@@ -415,7 +415,8 @@ function validarConteudo(partes, topico, ctx) {
   const faq = partes.faq.map(f => ({ q: f.q, a: sanitizarLinks(f.a, ctx, avisos) }));
 
   if (/\uFFFD/.test(corpo + partes.resumo + JSON.stringify(faq))) erros.push('caractere corrompido (U+FFFD) no texto');
-  if (/\b(ejecutivo|empresario|fotografo|negocio)\b/i.test(corpo)) erros.push('palavra em espanhol/sem acento no texto');
+  const corpoSemUrls = corpo.replace(/\]\([^)]*\)/g, ']').replace(/https?:\/\/\S+/g, ' ').replace(/(^|\s)\/[a-z0-9\-\/#]+/gi, ' ');
+  if (/\b(ejecutivo|empresario|fotografo|negocio)\b/i.test(corpoSemUrls)) erros.push('palavra em espanhol/sem acento no texto');
   const h2 = parseBlocks(corpo).filter(b => b.type === 'h2').length;
   if (h2 < 4) erros.push(`poucas seções "##" (${h2}); são necessárias de 4 a 6`);
   const palavras = contaPalavras(corpo);
