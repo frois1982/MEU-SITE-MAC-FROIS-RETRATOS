@@ -3,9 +3,9 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Retratos que Vendem · Mac Frois</title>
+<title>Retratos que Vendem | Mac Frois</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,600&family=Jost:wght@300;400;500;600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&family=Jost:wght@300;400;500;600&display=swap" rel="stylesheet">
 <style>
 :root {
   --navy: #001021;
@@ -18,7 +18,7 @@
   --white: #FFFFFF;
   --text-body: #D4C9B0;
   --text-muted: #8A9BB0;
-  --font-display: 'Cormorant Garamond', Georgia, serif;
+  --font-display: 'EB Garamond', Georgia, serif;
   --font-body: 'Jost', 'Century Gothic', sans-serif;
   --transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
 }
@@ -54,7 +54,7 @@ p { font-size: clamp(0.95rem, 1.5vw, 1.05rem); color: var(--text-body); }
 .hero-eyebrow { font-family: var(--font-body); font-size: 0.7rem; font-weight: 500; letter-spacing: 0.4em; text-transform: uppercase; color: var(--gold); margin-bottom: 0.75rem; opacity: 0; animation: fadeUp 0.8s ease 0.2s forwards; }
 .hero h1 { font-size: clamp(1.8rem, 4vw, 3rem); font-weight: 600; color: var(--white); margin-bottom: 0.5rem; opacity: 0; animation: fadeUp 0.8s ease 0.4s forwards; max-width: 800px; }
 .hero h1 em { font-style: italic; color: var(--gold-light); }
-.hero-sub { font-family: var(--font-display); font-size: clamp(0.95rem, 2vw, 1.15rem); font-weight: 300; font-style: italic; color: var(--text-body); margin: 0.75rem auto 0; max-width: 640px; opacity: 0; animation: fadeUp 0.8s ease 0.6s forwards; }
+.hero-sub { font-family: var(--font-display); font-size: clamp(0.95rem, 2vw, 1.15rem); font-weight: 400; font-style: italic; color: var(--text-body); margin: 0.75rem auto 0; max-width: 640px; opacity: 0; animation: fadeUp 0.8s ease 0.6s forwards; }
 .vsl-wrapper { width: 100%; max-width: 760px; margin: 1.25rem auto 1rem; opacity: 0; animation: fadeUp 0.8s ease 0.8s forwards; }
 .vsl-container { position: relative; width: 100%; aspect-ratio: 16/9; background: var(--navy-mid); border: 1px solid rgba(201,168,76,0.3); overflow: hidden; }
 .vsl-placeholder { position: absolute; inset: 0; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 1rem; background: linear-gradient(135deg, var(--navy-mid), var(--navy-light)); }
@@ -276,19 +276,57 @@ p { font-size: clamp(0.95rem, 1.5vw, 1.05rem); color: var(--text-body); }
 .fade-in.visible { opacity: 1; transform: translateY(0); }
 .scroll-hint { position: absolute; bottom: 2rem; left: 50%; transform: translateX(-50%); display: flex; flex-direction: column; align-items: center; gap: 0.5rem; font-family: var(--font-body); font-size: 0.65rem; letter-spacing: 0.3em; text-transform: uppercase; color: var(--gold); opacity: 0.5; animation: bounceScroll 2s infinite; }
 @keyframes bounceScroll { 0%, 100% { transform: translateX(-50%) translateY(0); } 50% { transform: translateX(-50%) translateY(6px); } }
-</style>
+
+/* === retratos (nova) === */
+.strip{display:grid;grid-template-columns:repeat(4,1fr);gap:4px;padding:0 4px;background:var(--navy)}
+.strip img{width:100%;height:auto;aspect-ratio:3/4;object-fit:cover;display:block;filter:saturate(1.05)}
+.strip-cap{text-align:center;padding:1.4rem 1.5rem 0;font-size:.72rem;letter-spacing:.3em;text-transform:uppercase;color:var(--gold);background:var(--navy)}
+.quote-photo{display:grid;grid-template-columns:200px 1fr;gap:2rem;align-items:center;margin:2.5rem 0}
+.quote-photo img{width:100%;aspect-ratio:3/4;object-fit:cover;border:1px solid rgba(201,168,76,.4);box-shadow:0 18px 50px rgba(0,0,0,.5)}
+.quote-photo .transform-quote{margin:0}
+.quote-author{display:block;margin-top:1rem;font-family:var(--font-body);font-style:normal;font-size:.72rem;letter-spacing:.3em;text-transform:uppercase;color:var(--gold)}
+.seg-section{padding:6rem 1.5rem;background:var(--navy);position:relative}
+.seg-inner{max-width:1040px;margin:0 auto}
+.seg-inner h2{text-align:center;margin-bottom:.8rem}
+.seg-inner h2 em{color:var(--gold-light)}
+.seg-sub{text-align:center;max-width:620px;margin:0 auto 3rem}
+.seg-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}
+.seg-grid figure{position:relative;overflow:hidden;border:1px solid rgba(201,168,76,.2);aspect-ratio:3/4}
+.seg-grid img{width:100%;height:100%;object-fit:cover;display:block;transition:transform .8s ease}
+.seg-grid figure:hover img{transform:scale(1.05)}
+.seg-grid figcaption{position:absolute;left:0;right:0;bottom:0;padding:2rem .9rem .7rem;background:linear-gradient(0deg,rgba(0,16,33,.92),transparent);font-size:.68rem;letter-spacing:.25em;text-transform:uppercase;color:var(--gold-light)}
+.ba-section{padding:6rem 1.5rem;background:var(--navy-mid);position:relative}
+.ba-inner{max-width:900px;margin:0 auto;text-align:center}
+.ba-inner h2 em{color:var(--gold-light)}
+.ba-pairs{display:grid;gap:1.6rem;margin:3rem 0 2rem}
+.ba-pair{display:grid;grid-template-columns:1fr 1fr;gap:.9rem}
+.ba-pair figure{position:relative;aspect-ratio:4/5;overflow:hidden;border:1px solid rgba(201,168,76,.25)}
+.ba-pair img{width:100%;height:100%;object-fit:cover;display:block}
+.ba-pair figure:first-child img{filter:grayscale(.35) brightness(.9)}
+.ba-pair figure:last-child{border-color:var(--gold);box-shadow:0 0 40px rgba(201,168,76,.15)}
+.ba-pair figcaption{position:absolute;left:0;bottom:0;padding:.35rem .9rem;font-size:.68rem;letter-spacing:.25em;text-transform:uppercase;background:rgba(0,16,33,.85);color:var(--text-muted)}
+.ba-pair figure:last-child figcaption{background:var(--gold);color:var(--navy)}
+.mosaic-final{display:grid;grid-template-columns:repeat(5,1fr);gap:4px;background:var(--navy)}
+.mosaic-final img{width:100%;height:auto;aspect-ratio:3/4;object-fit:cover;display:block}
+@media(max-width:820px){
+ .strip{grid-template-columns:repeat(2,1fr)}
+ .quote-photo{grid-template-columns:1fr}.quote-photo img{max-width:240px;margin:0 auto}
+ .seg-grid{grid-template-columns:repeat(2,1fr)}
+ .mosaic-final{grid-template-columns:repeat(3,1fr)}.mosaic-final img:nth-child(n+4){display:none}
+}
+img{height:auto}</style>
 </head>
 <body>
 <!-- BOTÃO FLUTUANTE -->
 <div class="floating-cta" id="floatingCta">
   <a href="https://go.hotmart.com/I106036177H" target="_blank" rel="noopener">
     Quero começar agora
-    <span class="floating-cta-price">R$ 247 · lançamento</span>
+    <span class="floating-cta-price">R$ 247 no lançamento</span>
   </a>
 </div>
 <!-- HEADER -->
 <header class="site-header">
-  <div class="logo-header">Fróis Studio · Retratista</div>
+  <div class="logo-header">Mac Frois Retratista</div>
 </header>
 <!-- ═══ BLOCO 01 — HERO ═══ -->
 <section class="hero">
@@ -323,6 +361,13 @@ p { font-size: clamp(0.95rem, 1.5vw, 1.05rem); color: var(--text-body); }
     continue lendo
   </div>
 </section>
+<div class="strip-cap">Retratos de Mac Frois Retratista</div>
+<div class="strip">
+  <img loading="lazy" src="rqv/governante.jpg" alt="Retrato corporativo masculino" width="640" height="853">
+  <img loading="lazy" src="rqv/sabio.jpg" alt="Retrato de ambiente" width="640" height="853">
+  <img loading="lazy" src="rqv/foradalei.jpg" alt="Retrato artístico em preto e branco" width="640" height="853">
+  <img loading="lazy" src="rqv/caracomum.jpg" alt="Retrato corporativo feminino" width="640" height="853">
+</div>
 <!-- ═══ BLOCO 02 — TRANSFORMAÇÃO ═══ -->
 <section class="transform-section">
   <div class="transform-inner fade-in">
@@ -330,12 +375,12 @@ p { font-size: clamp(0.95rem, 1.5vw, 1.05rem); color: var(--text-body); }
     <h2>Como seria a sua vida assim:</h2>
     <div class="divider"></div>
     <div class="transform-scene">
-      <p>Você acorda na manhã de uma sessão de ensaio e não sente aquela pressão familiar no peito aquela sensação de <span class="highlight">"será que o cliente vai questionar o preço?"</span></p>
+      <p>Você acorda na manhã de uma sessão de ensaio e não sente aquela pressão familiar no peito, aquela sensação de <span class="highlight">"será que o cliente vai questionar o preço?"</span></p>
       <p style="margin-top:1.5rem;">Você enviou a proposta.<br>O valor é o seu melhor valor.<br><span class="highlight">E você não teve medo de enviar.</span></p>
       <p style="margin-top:1.5rem;">O cliente respondeu:<br><span class="gold-moment">"Perfeito. Quando podemos agendar?"</span></p>
       <p style="margin-top:1.5rem;">Após o ensaio, você entrega as fotos. Não cinquenta fotos medianas para parecer que deu mais. <span class="highlight">Trinta fotos extraordinárias, selecionadas com critério,</span> que representam o que você é capaz de fazer no seu melhor.</p>
     </div>
-    <div class="transform-quote">"Eu nunca me vi assim em uma foto.<br>Obrigada por me mostrar quem eu sou."</div>
+    <div class="quote-photo"><img loading="lazy" src="rqv/exp4.jpg" alt="Cliente sorrindo durante o ensaio" width="640" height="853"><div class="transform-quote">"Eu nunca me vi assim em uma foto.<br>Obrigada por me mostrar quem eu sou."<span class="quote-author">Any</span></div></div>
     <div class="transform-scene">
       <p>Naquele momento você entende que fotografia não é sobre câmera, não é sobre lente, não é sobre preço.</p>
       <p style="margin-top:1rem; color:var(--white); font-style:italic; font-family:var(--font-display); font-size:1.2rem; text-align:center;">É sobre transformação.<br>E você está no negócio da transformação.</p>
@@ -346,7 +391,7 @@ p { font-size: clamp(0.95rem, 1.5vw, 1.05rem); color: var(--text-body); }
 <div class="inline-cta">
   <p class="inline-cta-text">Pronto para construir a carreira que o seu talento merece?</p>
   <a href="https://go.hotmart.com/I106036177H" target="_blank" rel="noopener" class="btn-cta">Quero começar agora →</a>
-  <p class="price-hint">⚡ Preço de lançamento: <strong>R$ 247</strong> · Sobe para R$ 297 em breve</p>
+  <p class="price-hint">⚡ Preço de lançamento: <strong>R$ 247</strong>. Sobe para R$ 297 em breve</p>
 </div>
 <!-- ═══ BLOCO 03 — PROBLEMA REAL ═══ -->
 <section class="problem-section">
@@ -406,7 +451,7 @@ p { font-size: clamp(0.95rem, 1.5vw, 1.05rem); color: var(--text-body); }
 <div class="inline-cta">
   <p class="inline-cta-text">O método que ninguém te ensinou está aqui. Disponível agora.</p>
   <a href="https://go.hotmart.com/I106036177H" target="_blank" rel="noopener" class="btn-cta">Quero o método completo →</a>
-  <p class="price-hint">⚡ Preço de lançamento: <strong>R$ 247</strong> · Garantia de 7 dias</p>
+  <p class="price-hint">⚡ Preço de lançamento: <strong>R$ 247</strong>. Garantia de 7 dias</p>
 </div>
 <!-- ═══ BLOCO 06 — AUTORIDADE ═══ -->
 <section class="authority-section">
@@ -424,7 +469,7 @@ p { font-size: clamp(0.95rem, 1.5vw, 1.05rem); color: var(--text-body); }
       <p>Já fotografei profissionais que nunca tinham gostado de uma foto de si mesmos. Já acompanhei clientes que usaram as fotos para abrir novas portas na carreira. Já vi a relação de alguém com a própria imagem mudar completamente depois de uma sessão.</p>
       <p>Esse conhecimento está aqui. Construído com cuidado, para que você não precise repetir os erros que eu já cometi por você.</p>
       <span class="authority-name">Mac Frois</span>
-      <span class="authority-title-name">Fróis Studio · Retratista</span>
+      <span class="authority-title-name">Mac Frois Retratista</span>
     </div>
   </div>
 </section>
@@ -432,7 +477,7 @@ p { font-size: clamp(0.95rem, 1.5vw, 1.05rem); color: var(--text-body); }
 <section class="course-intro">
   <div class="course-logo-area fade-in">
     <div class="course-name-display">Retratos que Vendem</div>
-    <div class="course-name-sub">por Mac Frois · Fróis Studio Retratista</div>
+    <div class="course-name-sub">por Mac Frois Retratista</div>
   </div>
   <div class="divider"></div>
   <div class="course-intro-body fade-in">
@@ -446,9 +491,24 @@ p { font-size: clamp(0.95rem, 1.5vw, 1.05rem); color: var(--text-body); }
 <div class="inline-cta">
   <p class="inline-cta-text">Técnica + posicionamento + vendas. Tudo em um único método.</p>
   <a href="https://go.hotmart.com/I106036177H" target="_blank" rel="noopener" class="btn-cta">Quero acessar o curso →</a>
-  <p class="price-hint">⚡ <strong>R$ 247</strong> no lançamento · 12x de R$ 20,58 · Acesso imediato</p>
+  <p class="price-hint">⚡ <strong>R$ 247</strong> no lançamento, 12x de R$ 20,58 e acesso imediato</p>
 </div>
 <!-- ═══ BLOCO 08 — MÓDULOS ═══ -->
+<section class="seg-section">
+  <div class="seg-inner fade-in">
+    <div class="section-label" style="justify-content:center;">o que você vai fotografar</div>
+    <h2>Do corporativo ao artístico, <em>cada retrato com identidade</em></h2>
+    <p class="seg-sub" style="text-align:center">Retratos de Mac Frois Retratista com a luz, a direção e a intenção que você vai aprender.</p>
+    <div class="seg-grid">
+      <figure><img loading="lazy" src="rqv/caracomum.jpg" alt="Retrato corporativo" width="640" height="853"><figcaption>Corporativo</figcaption></figure>
+      <figure><img loading="lazy" src="rqv/criador.jpg" alt="Retrato artístico" width="640" height="853"><figcaption>Artístico</figcaption></figure>
+      <figure><img loading="lazy" src="rqv/governante.jpg" alt="Retrato executivo" width="640" height="853"><figcaption>Executivo</figcaption></figure>
+      <figure><img loading="lazy" src="rqv/explorador.jpg" alt="Retrato de estilo de vida ao ar livre" width="640" height="853"><figcaption>Estilo de vida</figcaption></figure>
+      <figure><img loading="lazy" src="rqv/heroi.jpg" alt="Retrato conceitual" width="640" height="853"><figcaption>Conceitual</figcaption></figure>
+      <figure><img loading="lazy" src="rqv/inocente.jpg" alt="Retrato pessoal" width="640" height="853"><figcaption>Pessoal</figcaption></figure>
+    </div>
+  </div>
+</section>
 <section class="modules-section">
   <div class="container-wide">
     <div class="section-label" style="justify-content:center; margin-bottom:1rem;">o método</div>
@@ -480,9 +540,20 @@ p { font-size: clamp(0.95rem, 1.5vw, 1.05rem); color: var(--text-body); }
 <div class="inline-cta">
   <p class="inline-cta-text">13 módulos. 95+ aulas. 9 bônus. Tudo que você precisa para cobrar o que o seu trabalho vale.</p>
   <a href="https://go.hotmart.com/I106036177H" target="_blank" rel="noopener" class="btn-cta">Quero acesso completo →</a>
-  <p class="price-hint">⚡ Preço de lançamento: <strong>R$ 247</strong> · Sobe para R$ 297 em breve</p>
+  <p class="price-hint">⚡ Preço de lançamento: <strong>R$ 247</strong>. Sobe para R$ 297 em breve</p>
 </div>
 <!-- ═══ BLOCO 09 — PARA QUEM É ═══ -->
+<section class="ba-section">
+  <div class="ba-inner fade-in">
+    <div class="section-label" style="justify-content:center;">a diferença na prática</div>
+    <h2>A mesma pessoa, com <em>luz e direção</em></h2>
+    <p style="max-width:620px;margin:1rem auto 0">É isso que o cliente percebe antes de perguntar o preço.</p>
+    <div class="ba-pairs">
+      <div class="ba-pair"><figure><img loading="lazy" src="rqv/antes-1.jpg" alt="Foto casual, antes" width="720" height="720"><figcaption>Antes</figcaption></figure><figure><img loading="lazy" src="rqv/depois-1.jpg" alt="Retrato profissional, depois" width="720" height="1080"><figcaption>Depois</figcaption></figure></div>
+      <div class="ba-pair"><figure><img loading="lazy" src="rqv/antes-2.jpg" alt="Foto sem direção, antes" width="720" height="901"><figcaption>Antes</figcaption></figure><figure><img loading="lazy" src="rqv/depois-2.jpg" alt="Retrato com luz dirigida, depois" width="720" height="1080"><figcaption>Depois</figcaption></figure></div>
+    </div>
+  </div>
+</section>
 <section class="audience-section">
   <div class="container">
     <div class="section-label" style="justify-content:center; margin-bottom:1rem;">elegibilidade</div>
@@ -532,7 +603,7 @@ p { font-size: clamp(0.95rem, 1.5vw, 1.05rem); color: var(--text-body); }
         <div class="testimonial-author"><div class="author-avatar">J</div><div><span class="author-name">Jamyle Borges</span><span class="author-location">Florianópolis, SC</span></div></div>
       </div>
     </div>
-    <p class="testimonials-note">Resultados reais de alunos reais. Cada história é única os seus dependem da sua dedicação e contexto.</p>
+    <p class="testimonials-note">Resultados reais de alunos reais. Cada história é única. Os seus resultados dependem da sua dedicação e contexto.</p>
   </div>
 </section>
 <!-- ═══ BLOCO 11 — BÔNUS ═══ -->
@@ -543,13 +614,13 @@ p { font-size: clamp(0.95rem, 1.5vw, 1.05rem); color: var(--text-body); }
     <p class="bonus-subtitle">Nove materiais que valem mais do que o preço do curso sozinhos.</p>
     <div class="bonus-list fade-in">
       <div class="bonus-item"><div class="bonus-number">01</div><div class="bonus-content"><h3>Guia Completo de Poses</h3><p>Referência de campo com poses por perfil: corporativo, feminino, masculino, casal e família. Para levar no celular durante os ensaios.</p></div><div class="bonus-value">R$ 97</div></div>
-      <div class="bonus-item"><div class="bonus-number">02</div><div class="bonus-content"><h3>A Sessão Perfeita Checklist Completo</h3><p>6 listas específicas por tipo de ensaio + checklist pós-sessão. Nunca mais vai faltar nada em campo.</p></div><div class="bonus-value">R$ 47</div></div>
+      <div class="bonus-item"><div class="bonus-number">02</div><div class="bonus-content"><h3>A Sessão Perfeita: Checklist Completo</h3><p>6 listas específicas por tipo de ensaio + checklist pós-sessão. Nunca mais vai faltar nada em campo.</p></div><div class="bonus-value">R$ 47</div></div>
       <div class="bonus-item"><div class="bonus-number">03</div><div class="bonus-content"><h3>Contrato Fotográfico Profissional</h3><p>Contrato completo com todas as cláusulas essenciais, LGPD inclusa. Pronto para personalizar e usar na próxima sessão.</p></div><div class="bonus-value">R$ 197</div></div>
-      <div class="bonus-item"><div class="bonus-number">04</div><div class="bonus-content"><h3>Aula Especial: Sua Primeira Sessão Paga</h3><p>Guia completo do zero à entrega da conversa inicial ao depoimento do cliente. Para que o seu primeiro ensaio pago seja memorável.</p></div><div class="bonus-value">R$ 197</div></div>
+      <div class="bonus-item"><div class="bonus-number">04</div><div class="bonus-content"><h3>Aula Especial: Sua Primeira Sessão Paga</h3><p>Guia completo do zero à entrega, da conversa inicial ao depoimento do cliente. Para que o seu primeiro ensaio pago seja memorável.</p></div><div class="bonus-value">R$ 197</div></div>
       <div class="bonus-item"><div class="bonus-number">05</div><div class="bonus-content"><h3>Apostila Completa do Curso</h3><p>Todo o conteúdo dos 13 módulos resumido em um único documento de referência. Para revisão rápida a qualquer momento.</p></div><div class="bonus-value">R$ 47</div></div>
       <div class="bonus-divider"><span class="bonus-divider-label">Super Bônus exclusivos deste lançamento</span></div>
       <div class="super-bonus-intro"><p>Estes quatro materiais foram criados para ir além do curso. São ferramentas de trabalho <strong>para você usar em campo, no orçamento e no set</strong>. Não existem em nenhum outro curso de fotografia no Brasil neste formato.</p></div>
-      <div class="bonus-item super"><div class="bonus-number">06</div><div class="bonus-content"><h3>Calculadora de Preço Real</h3><p>Planilha com três abas integradas Calculadora de Preço, Comparativo de Pacotes e Simulador Anual. Você insere seus custos reais e recebe o preço justo para cobrar. Sem achismo, sem tabela copiada do vizinho.</p></div><div class="bonus-value">R$ 67</div></div>
+      <div class="bonus-item super"><div class="bonus-number">06</div><div class="bonus-content"><h3>Calculadora de Preço Real</h3><p>Planilha com três abas integradas: Calculadora de Preço, Comparativo de Pacotes e Simulador Anual. Você insere seus custos reais e recebe o preço justo para cobrar. Sem achismo, sem tabela copiada do vizinho.</p></div><div class="bonus-value">R$ 67</div></div>
       <div class="bonus-item super"><div class="bonus-number">07</div><div class="bonus-content"><h3>Guia de Equipamentos por Orçamento</h3><p>Preços reais de 2026, três faixas de investimento, tabelas comparativas Canon × Nikon × Sony, flash, modificadores e três kits completos prontos para montar. Chega de pesquisar em fórum e sair mais confuso.</p></div><div class="bonus-value">R$ 97</div></div>
       <div class="bonus-item super"><div class="bonus-number">08</div><div class="bonus-content"><h3>Roteiro de Briefing Profissional</h3><p>Documento editável com oito seções estruturadas, checklist duplo fotógrafo/cliente e área de assinatura. Profissionaliza o atendimento desde o primeiro contato e elimina retrabalho antes de cada sessão.</p></div><div class="bonus-value">R$ 67</div></div>
       <div class="bonus-item super"><div class="bonus-number">09</div><div class="bonus-content"><h3>Guia de Esquemas de Luz para Retratos</h3><p>Os 9 esquemas de iluminação mais usados pelos melhores retratistas do mundo do Rembrandt clássico ao setup artístico com gel. Modificadores, potência em f-stop, fundo recomendado e dica prática para cada setup. Referência visual para levar no set.</p></div><div class="bonus-value">R$ 147</div></div>
@@ -561,7 +632,7 @@ p { font-size: clamp(0.95rem, 1.5vw, 1.05rem); color: var(--text-body); }
 <div class="inline-cta">
   <p class="inline-cta-text">Curso completo + R$ 963 em bônus. Tudo por R$ 247 no lançamento.</p>
   <a href="https://go.hotmart.com/I106036177H" target="_blank" rel="noopener" class="btn-cta">Garantir meu acesso agora →</a>
-  <p class="price-hint">⚡ Oferta de lançamento · <strong>Economia de R$ 50</strong> em relação ao preço final</p>
+  <p class="price-hint">⚡ Oferta de lançamento. <strong>Economia de R$ 50</strong> em relação ao preço final</p>
 </div>
 <!-- ═══ BLOCO 12 — OFERTA ═══ -->
 <section class="offer-section" id="oferta">
@@ -632,7 +703,7 @@ p { font-size: clamp(0.95rem, 1.5vw, 1.05rem); color: var(--text-body); }
     <h2>Perguntas frequentes</h2>
     <div class="divider"></div>
     <div class="faq-list fade-in">
-      <div class="faq-item"><button class="faq-question" onclick="toggleFaq(this)">Preciso ter equipamento profissional para fazer o curso?<span class="faq-icon">+</span></button><div class="faq-answer"><p>Não. O curso foi desenvolvido para ser aplicado com qualquer câmera inclusive com celular. No Módulo 3 você aprende exatamente o que importa no equipamento e o que é mito de mercado.</p></div></div>
+      <div class="faq-item"><button class="faq-question" onclick="toggleFaq(this)">Preciso ter equipamento profissional para fazer o curso?<span class="faq-icon">+</span></button><div class="faq-answer"><p>Não. O curso foi desenvolvido para ser aplicado com qualquer câmera, inclusive com celular. No Módulo 3 você aprende exatamente o que importa no equipamento e o que é mito de mercado.</p></div></div>
       <div class="faq-item"><button class="faq-question" onclick="toggleFaq(this)">Sou iniciante. Este curso é para mim?<span class="faq-icon">+</span></button><div class="faq-answer"><p>Sim. O curso começa do zero e avança progressivamente. Se você está começando, vai aprender do jeito certo desde o início sem vícios e sem o processo doloroso de desaprender erros.</p></div></div>
       <div class="faq-item"><button class="faq-question" onclick="toggleFaq(this)">Já fotografo há anos. Vou aprender algo novo?<span class="faq-icon">+</span></button><div class="faq-answer"><p>Sim. Os módulos de precificação, vendas, posicionamento e captação de clientes são exatamente o que fotógrafos experientes raramente aprendem em outros cursos. Muitos alunos veteranos relatam que foi nessa parte que a carreira mudou.</p></div></div>
       <div class="faq-item"><button class="faq-question" onclick="toggleFaq(this)">Por quanto tempo tenho acesso ao curso?<span class="faq-icon">+</span></button><div class="faq-answer"><p>Acesso completo enquanto o produto estiver ativo na plataforma. Você pode assistir no seu ritmo, rever aulas quantas vezes quiser e acessar de qualquer dispositivo.</p></div></div>
@@ -642,6 +713,13 @@ p { font-size: clamp(0.95rem, 1.5vw, 1.05rem); color: var(--text-body); }
   </div>
 </section>
 <!-- ═══ BLOCO 15 — CTA FINAL ═══ -->
+<div class="mosaic-final">
+  <img loading="lazy" src="rqv/retr3.jpg" alt="Retrato" width="640" height="853">
+  <img loading="lazy" src="rqv/retr4.jpg" alt="Retrato" width="640" height="853">
+  <img loading="lazy" src="rqv/exp2.jpg" alt="Retrato" width="640" height="853">
+  <img loading="lazy" src="rqv/retr5.jpg" alt="Retrato" width="640" height="853">
+  <img loading="lazy" src="rqv/rembrandt.jpg" alt="Retrato" width="640" height="853">
+</div>
 <section class="final-cta">
   <div class="final-cta-inner fade-in">
     <div class="section-label" style="justify-content:center; margin-bottom:1.5rem;">a decisão</div>
@@ -661,14 +739,14 @@ p { font-size: clamp(0.95rem, 1.5vw, 1.05rem); color: var(--text-body); }
 </section>
 <!-- FOOTER -->
 <footer class="site-footer">
-  <div class="footer-logo">Fróis Studio · Retratista</div>
+  <div class="footer-logo">Mac Frois Retratista</div>
   <div class="footer-links">
     <a href="https://instagram.com/froisretratista" target="_blank" rel="noopener">Instagram @froisretratista</a>
     <a href="https://www.macfrois.com.br" target="_blank" rel="noopener">www.macfrois.com.br</a>
     <a href="#">Política de Privacidade</a>
     <a href="#">Termos de Uso</a>
   </div>
-  <p class="footer-copy">© 2026 Retratos que Vendem · Mac Frois · Estúdio Frois · Florianópolis, SC</p>
+  <p class="footer-copy">© 2026 Retratos que Vendem | Mac Frois Retratista | Florianópolis, SC</p>
 </footer>
 <script>
 const floatingCta = document.getElementById('floatingCta');
