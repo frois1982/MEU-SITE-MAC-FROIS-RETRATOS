@@ -16,6 +16,7 @@
           "rewrites": [
                       { "source": "/metodo-frois/(.*)", "destination": "/metodo-frois/$1" },
                       { "source": "/retratos-que-vendem", "destination": "/retratos-que-vendem.html" },
+                      { "source": "/como-comecar-na-fotografia", "destination": "/como-comecar-na-fotografia/index.html" },
                       { "source": "/(.*)", "destination": "/index.html" }
           ]
 }
