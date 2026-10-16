@@ -5,7 +5,7 @@
  "description": "Retrato profissional para advogados e escritórios em Florianópolis: sóbrio, dentro do Provimento 205/2021 da OAB. Estúdio no Estreito. Pacotes a partir de R$ 890.",
  "kicker": "Estúdio Frois · Estreito, Florianópolis — SC",
  "h1": "Foto profissional para advogados em Florianópolis",
- "intro": "O cliente procura o advogado no Google, no LinkedIn e no site do escritório antes da primeira reunião. A foto é parte dessa primeira conversa. Faço retratos sóbrios, com luz cuidada e figurino de alfaiataria, que transmitem preparo sem ostentação, dentro dos limites da publicidade da advocacia.",
+ "intro": "O cliente procura o advogado no Google, no LinkedIn e no site do escritório antes da primeira reunião. A foto é parte dessa primeira conversa. Faço retratos sóbrios, com luz cuidada e figurino de alfaiataria, que transmitem preparo sem ostentação, dentro dos limites da publicidade da advocacia. O estúdio fica no Estreito, em Florianópolis, e também atendo no seu escritório.",
  "whatsapp": "a foto profissional para advogados",
  "pagina": "a foto profissional para advogados",
  "galeria": [
@@ -19,6 +19,13 @@
   }
  ],
  "secoes": [
+  {
+   "h2": "Por que a foto importa para quem advoga",
+   "paragrafos": [
+    "Advocacia é uma escolha baseada em confiança. Antes de ligar, a pessoa pesquisa o seu nome, abre o site do escritório e olha o perfil no LinkedIn e no Instagram. Uma foto antiga, cortada de um evento ou tirada com o celular passa a impressão de descuido, justamente numa profissão em que o cuidado é o que o cliente procura.",
+    "Uma boa foto não promete resultado e não exibe patrimônio. Ela mostra quem é o profissional: postura, seriedade e proximidade. Esse é o tipo de imagem que cabe nas regras de publicidade da advocacia e que ainda ajuda o cliente a decidir por entrar em contato."
+   ]
+  },
   {
    "h2": "O que o Provimento 205/2021 da OAB diz sobre fotos",
    "paragrafos": [
@@ -40,6 +47,39 @@
    "h2": "Onde usar as fotos",
    "paragrafos": [
     "Site do escritório, LinkedIn, Instagram profissional, Google, apresentações, palestras e materiais institucionais. Para equipes, é possível fazer o ensaio de todos os sócios no mesmo dia, com padrão visual único."
+   ]
+  },
+  {
+   "h2": "Retrato para cada perfil na advocacia",
+   "paragrafos": [
+    "A imagem muda conforme o público do advogado. Quem atende empresas costuma pedir um visual mais formal, com blazer e fundo de escritório. Quem atua com família, trabalhista ou consumidor pode mostrar um tom mais próximo, com sorriso e postura acessível. Em escritório pequeno, a foto do sócio-fundador costuma ser a mais vista, e vale ter versões para site, LinkedIn e Instagram.",
+    "Antes da sessão, converso sobre a sua área, o seu cliente ideal e o tom que você quer passar. A partir disso defino luz, cenário e figurino. Por isso o retrato de dois advogados do mesmo escritório pode ser parecido no padrão e diferente na personalidade."
+   ]
+  },
+  {
+   "h2": "Como funciona a sessão",
+   "lista": [
+    "Conversa inicial pelo WhatsApp para entender seu objetivo e seu público.",
+    "Orientação de figurino antes da sessão.",
+    "Sessão no estúdio, no Estreito, ou no seu escritório, com direção de pose.",
+    "Tratamento das fotos e entrega em alta resolução e em versão para web.",
+    "Contrato assinado antes da sessão e nota fiscal em todo projeto."
+   ]
+  },
+  {
+   "h2": "Erros comuns na foto de advogado",
+   "lista": [
+    "Foto de evento, de casamento ou de férias recortada para virar perfil.",
+    "Fundo poluído, com pessoas ao fundo ou objetos que distraem.",
+    "Pose rígida, com cara de documento, que passa distância.",
+    "Cenário que pareça exibir carro, viagem ou patrimônio.",
+    "Fotos diferentes no site, no LinkedIn e no Instagram, sem padrão entre elas."
+   ]
+  },
+  {
+   "h2": "Ensaio para sócios e equipe do escritório",
+   "paragrafos": [
+    "Quando o escritório tem vários advogados, o padrão visual conta tanto quanto a foto de cada um. Faço o ensaio de todos os sócios e da equipe no mesmo dia, com a mesma luz, o mesmo fundo e um critério de figurino, para a página da equipe ficar harmônica. Se o escritório já tem identidade visual, adapto cores e cenário a ela. Peça uma proposta pelo WhatsApp informando quantas pessoas serão fotografadas."
    ]
   }
  ],
@@ -97,12 +137,32 @@
    "label": "Artigo: o que a OAB permite"
   },
   {
+   "to": "/blog/por-que-advogados-e-medicos-precisam-de-fotos-profissionais",
+   "label": "Por que advogados e médicos precisam de fotos profissionais"
+  },
+  {
+   "to": "/blog/quanto-custa-um-fotografo-corporativo-em-florianopolis",
+   "label": "Quanto custa um fotógrafo corporativo em Florianópolis"
+  },
+  {
+   "to": "/blog/como-preparar-seu-figurino-para-um-ensaio-de-marca-pessoal",
+   "label": "Como preparar seu figurino para o ensaio"
+  },
+  {
+   "to": "/blog/headshot-para-linkedin-como-uma-foto-transforma-seu-perfil",
+   "label": "Headshot para LinkedIn"
+  },
+  {
    "to": "/fotografo-para-medicos-florianopolis",
    "label": "Foto profissional para médicos"
   },
   {
    "to": "/portfolio",
    "label": "Portfólio"
+  },
+  {
+   "to": "/contato",
+   "label": "Contato e como chegar ao estúdio"
   }
  ],
  "faq": [
@@ -129,6 +189,22 @@
   {
    "q": "Qual roupa devo usar?",
    "a": "Alfaiataria em tons sóbrios, com bom caimento. Antes da sessão envio a orientação de figurino."
+  },
+  {
+   "q": "Qual o melhor fundo para foto de advogado?",
+   "a": "Um fundo discreto: escritório, estante de livros ou fundo neutro. Evite fundos poluídos ou cenários que pareçam exibir patrimônio, o que o Provimento 205/2021 veda."
+  },
+  {
+   "q": "Posso usar a mesma foto no site, no LinkedIn e no Instagram?",
+   "a": "Pode, e manter o mesmo padrão ajuda o cliente a reconhecer você. Entrego as fotos em alta resolução e em versão para web, prontas para cada uso."
+  },
+  {
+   "q": "Atende advogados fora de Florianópolis?",
+   "a": "O estúdio fica no Estreito, em Florianópolis, e também atendo no seu escritório. Para outras cidades da região, chame no WhatsApp e combinamos."
+  },
+  {
+   "q": "Como agendar a sessão?",
+   "a": "Pelo WhatsApp (48) 99623-1894. Conversamos sobre seu objetivo, escolho o pacote junto com você e combinamos data, local e figurino."
   }
  ],
  "servico": {
