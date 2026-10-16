@@ -92,7 +92,7 @@ async function enviar(ev) {
   const btn = document.getElementById('btn');
   btn.disabled = true; btn.textContent = 'Enviando...';
   try {
-    const res = await fetch('/api/subscribe', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ nome, email }) });
+    const res = await fetch('/api/subscribe', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ nome, email, origem: 'guia-ep05' }) });
     const data = await res.json();
     if (!data.ok) throw new Error(data.error || 'erro');
     document.getElementById('form-section').style.display = 'none';
