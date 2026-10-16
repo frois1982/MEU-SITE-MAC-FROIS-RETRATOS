@@ -1,170 +1,114 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="pt-BR">
 <head>
-<meta charset="UTF-8"/>
-<meta name="viewport" content="width=device-width,initial-scale=1.0"/>
-<title>Imagem com Intenção — E-book Gratuito · Método Frois</title>
-<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700&family=Montserrat:wght@200;300;400;500;600;700&display=swap" rel="stylesheet"/>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Imagem com Intenção: e-book gratuito | Método Frois</title>
+<meta name="description" content="E-book gratuito: descubra o seu arquétipo de identidade visual e construa uma presença que te representa.">
+<link rel="icon" href="/favicon.ico">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=EB+Garamond:wght@500;700&family=Jost:wght@300;400;500&display=swap" rel="stylesheet">
 <style>
-*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
-:root{
-  --bg:#faf8f5;--bg2:#f2ede6;--bg3:#ece5da;
-  --txt:#1c1917;--txt2:#44403c;--dim:#78716c;--dimlt:#a8a29e;
-  --gold:#d97706;--goldb:#b45309;--border:#e7e2da;--white:#faf8f5;
-  --green:#16a34a;--greenbg:#f0fdf4;--red:#dc2626;--redbg:#fef2f2;
-}
-body{background:var(--bg);color:var(--txt);font-family:'Montserrat',sans-serif;
-     font-weight:300;line-height:1.75;min-height:100vh;display:flex;flex-direction:column}
-h1{font-family:'Cinzel',serif;text-transform:uppercase;letter-spacing:.1em;font-weight:700}
-main{flex:1;display:flex;align-items:center;justify-content:center;padding:48px 24px}
-.wrap{width:100%;max-width:500px}
-.eyebrow{font-size:9px;letter-spacing:.4em;color:var(--gold);text-transform:uppercase;font-weight:600;margin-bottom:14px}
-.rule{width:44px;height:2.5px;background:var(--gold);margin:16px 0 20px}
-.hero-title{font-size:clamp(32px,7vw,52px);line-height:1.05;margin-bottom:6px}
-.hero-title span{color:var(--gold)}
-.hero-sub{font-size:14px;color:var(--dim);margin-bottom:28px;line-height:1.7}
-.form-box{background:var(--bg2);padding:32px;border-top:3px solid var(--gold)}
-label{display:block;font-size:10px;letter-spacing:.2em;color:var(--gold);text-transform:uppercase;font-weight:700;margin-bottom:6px}
-input{width:100%;background:var(--bg);border:1.5px solid var(--border);color:var(--txt);
-      font-family:'Montserrat',sans-serif;font-size:14px;padding:12px 14px;margin-bottom:18px;
-      outline:none;transition:border-color .2s}
-input:focus{border-color:var(--gold)}
-.btn{width:100%;background:var(--gold);color:var(--white);font-family:'Montserrat',sans-serif;
-     font-size:12px;font-weight:700;letter-spacing:.22em;text-transform:uppercase;
-     padding:15px;border:none;cursor:pointer;transition:background .2s;
-     display:flex;align-items:center;justify-content:center;gap:10px}
-.btn:hover:not(:disabled){background:var(--goldb)}
-.btn:disabled{opacity:.6;cursor:not-allowed}
-.spinner{width:16px;height:16px;border:2px solid rgba(250,248,245,.4);
-         border-top-color:var(--white);border-radius:50%;animation:spin .7s linear infinite;display:none}
-@keyframes spin{to{transform:rotate(360deg)}}
-.msg-erro{display:none;color:var(--red);font-size:13px;margin-top:12px;
-          padding:12px;background:var(--redbg);border-left:3px solid var(--red)}
-.success-box{display:none;background:var(--greenbg);padding:28px;border-top:3px solid var(--green);text-align:center}
-.success-box h3{font-family:'Cinzel',serif;font-size:14px;color:var(--green);
-               text-transform:uppercase;letter-spacing:.08em;margin-bottom:10px}
-.success-box p{font-size:13px;color:var(--txt2);margin-bottom:20px;line-height:1.65}
-.btn-download{display:inline-block;background:var(--green);color:var(--white);
-              font-family:'Montserrat',sans-serif;font-size:11px;font-weight:700;
-              letter-spacing:.18em;text-transform:uppercase;padding:14px 28px;
-              text-decoration:none;transition:background .2s}
-.btn-download:hover{background:#15803d}
-.success-note{font-size:11px;color:var(--dimlt);margin-top:14px}
-.learns{margin-top:32px}
-.learns-title{font-size:9px;letter-spacing:.3em;color:var(--gold);text-transform:uppercase;font-weight:700;margin-bottom:14px}
-.learn-list{list-style:none}
-.learn-list li{padding:9px 0;border-bottom:1px solid var(--border);font-size:13px;color:var(--txt2);display:flex;gap:10px}
-.learn-list li::before{content:'→';color:var(--gold);font-weight:700;flex-shrink:0}
-footer{text-align:center;padding:28px 24px;border-top:1px solid var(--border)}
-footer p{font-size:11px;color:var(--dimlt)}
-footer a{color:var(--gold);text-decoration:none}
+:root{--m:#001021;--c:#FFFFD4;--o:#EBCF8A;--o2:#DDB772;--t:rgba(255,255,212,.86)}
+*{box-sizing:border-box}
+body{margin:0;min-height:100vh;background:radial-gradient(1200px 700px at 80% -10%,#04223f 0%,var(--m) 55%,#00060d 100%);color:var(--t);font-family:'Jost',system-ui,sans-serif;font-weight:300;line-height:1.6}
+.w{max-width:1040px;margin:0 auto;padding:0 22px}
+.k{font-size:13px;letter-spacing:.34em;color:var(--o);text-transform:uppercase;display:flex;align-items:center;gap:14px}
+.k:before{content:'';width:46px;height:3px;background:linear-gradient(135deg,var(--o2),#FFFFAF,var(--o2))}
+h1,h2,h3{font-family:'EB Garamond',Georgia,serif;color:var(--c)}
+h1{font-weight:700;font-size:clamp(36px,6vw,66px);line-height:1.05;margin:16px 0 14px}
+h1 span{background:linear-gradient(135deg,var(--o2),#FFFFAF,var(--o2));-webkit-background-clip:text;background-clip:text;color:transparent}
+.lead{font-size:19px;max-width:720px}
+h2{font-size:32px;margin:44px 0 6px}
+.reg{height:3px;width:90px;background:linear-gradient(135deg,var(--o2),#FFFFAF,var(--o2));margin:0 0 22px}
+a{color:var(--o)}
+.b{display:inline-block;margin:4px 8px 0 0;padding:10px 18px;border:1.5px solid var(--o);color:var(--c);text-decoration:none;font-size:14px;letter-spacing:.06em;cursor:pointer;background:none;font-family:inherit}
+.b.s{background:linear-gradient(135deg,var(--o2),#FFFFAF,var(--o2));color:var(--m);border-color:transparent;font-weight:500}
+.b.x{opacity:.5;pointer-events:none}
+footer{margin:56px 0 0;padding:30px 0 50px;border-top:1px solid rgba(255,255,212,.18);font-size:14px}
+footer a{text-decoration:none}
+/* hub */
+header.h{padding:64px 0 30px}
+.eps{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:16px}
+.ep{position:relative;background:rgba(0,16,33,.82);border:1.5px solid rgba(255,255,212,.28);padding:22px 22px 20px;box-shadow:0 20px 50px rgba(0,0,0,.45)}
+.ep:before,.ep:after{content:'';position:absolute;width:22px;height:22px;border:0 solid var(--o)}
+.ep:before{left:-1px;top:-1px;border-left-width:3px;border-top-width:3px}.ep:after{right:-1px;bottom:-1px;border-right-width:3px;border-bottom-width:3px}
+.n{font-family:'EB Garamond',Georgia,serif;font-size:54px;line-height:1;color:var(--o);float:left;margin:0 14px 0 0}
+.ep h3{font-size:23px;line-height:1.15;margin:2px 0 4px}
+.d{font-size:13px;letter-spacing:.14em;color:var(--o);text-transform:uppercase}
+.ep p{clear:both;margin:12px 0 12px;font-size:15px}
+.mais{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:16px;margin-top:6px}
+.mais a{display:block;padding:20px;background:rgba(255,255,212,.05);border:1.5px solid rgba(255,255,212,.2);text-decoration:none;color:var(--t)}
+.mais b{display:block;font-family:'EB Garamond',Georgia,serif;font-size:22px;color:var(--c);margin-bottom:4px;font-weight:700}
+/* captura */
+.cap{display:grid;grid-template-columns:minmax(220px,380px) 1fr;gap:44px;align-items:center;padding:56px 0 10px}
+.cap img{width:100%;height:auto;display:block;box-shadow:0 30px 80px rgba(0,0,0,.6);border:1.5px solid rgba(255,255,212,.25)}
+ul.l{padding:0;list-style:none;margin:16px 0 22px}
+ul.l li{padding-left:22px;position:relative;margin:0 0 8px}
+ul.l li:before{content:'';position:absolute;left:0;top:11px;width:8px;height:8px;background:var(--o);transform:rotate(45deg)}
+form{margin-top:10px;max-width:460px}
+input{width:100%;padding:13px 14px;margin:0 0 10px;background:rgba(255,255,212,.07);border:1.5px solid rgba(255,255,212,.3);color:var(--c);font:inherit;font-size:16px}
+input::placeholder{color:rgba(255,255,212,.5)}
+.pv{font-size:13px;opacity:.75;margin-top:8px}
+#erro{display:none;color:#ff9b9b;margin:0 0 8px}
+#ok{display:none}
+#ok h2{margin:0 0 6px}
+@media(max-width:760px){.cap{grid-template-columns:1fr;gap:26px;padding-top:34px}}
 </style>
 </head>
-<body>
-<main>
-  <div class="wrap">
-    <p class="eyebrow">Método Frois · E-book Gratuito</p>
-    <div class="rule"></div>
-    <h1 class="hero-title">Imagem com<br/><span>Intenção</span></h1>
-    <p class="hero-sub">Descubra seu arquétipo de identidade visual e aprenda a construir uma presença que te representa — baseado nos 12 arquétipos de Carol S. Pearson.</p>
+<body><div class="w">
 
+<div class="cap">
+  <img src="/metodo-frois/img/capa-ebook.jpg" alt="Capa do e-book Imagem com Intenção">
+  <div>
+    <div class="k">Método Frois | E-book gratuito</div>
+    <h1>Imagem com <span>Intenção</span></h1>
+    <p class="lead">Descubra o seu arquétipo de identidade visual e aprenda a construir uma presença que te representa, com base nos 12 arquétipos de Carol S. Pearson.</p>
+    <ul class="l"><li>Os 12 arquétipos de identidade visual e como identificar o seu</li><li>O que a sua imagem comunica antes de você falar uma palavra</li><li>O desejo central e o maior medo de cada arquétipo</li><li>A sessão fotográfica ideal para cada perfil</li><li>Marcas de referência e palavras que definem a sua imagem</li></ul>
     <div id="form-section">
-      <div class="form-box">
-        <label for="nome">Seu nome</label>
-        <input type="text" id="nome" placeholder="Como posso te chamar?" autocomplete="given-name"/>
-        <label for="email">Seu melhor e-mail *</label>
-        <input type="email" id="email" placeholder="voce@email.com" autocomplete="email" required/>
-        <button class="btn" id="btn" type="button" onclick="enviar()">
-          <span id="btn-txt">Quero o E-book Gratuito →</span>
-          <span class="spinner" id="spin"></span>
-        </button>
-        <p class="msg-erro" id="msg-erro"></p>
-      </div>
-      <p style="font-size:11px;color:var(--dimlt);text-align:center;margin-top:10px">
-        Sem spam. Seus dados estão seguros. Cancele quando quiser.
-      </p>
+      <form onsubmit="enviar(event)">
+        <input id="nome" type="text" placeholder="Seu nome" autocomplete="given-name">
+        <input id="email" type="email" placeholder="Seu melhor e-mail" autocomplete="email" required>
+        <div id="erro"></div>
+        <button class="b s" id="btn" type="submit">Quero o e-book gratuito</button>
+        <p class="pv">Sem spam. Você recebe o e-book agora e a newsletter do Mac Frois, e pode cancelar quando quiser.</p>
+      </form>
     </div>
-
-    <div class="success-box" id="sucesso">
-      <h3>E-book pronto para você!</h3>
-      <p>Cadastro confirmado! O download vai começar automaticamente.<br/>
-         Você também vai receber o link no seu e-mail.</p>
-      <a href="/metodo-frois/downloads/ebook-imagem-com-intencao.pdf"
-         download="Imagem-com-Intencao-Metodo-Frois.pdf"
-         class="btn-download">↓ Baixar Agora — Imagem com Intenção</a>
-      <p class="success-note">Fique de olho no e-mail — você vai receber a vídeo-aula gratuita em breve.</p>
-    </div>
-
-    <div class="learns">
-      <p class="learns-title">O que você vai aprender</p>
-      <ul class="learn-list">
-        <li>Os 12 arquétipos de identidade visual — e como identificar o seu</li>
-        <li>O que sua imagem comunica antes de você falar uma palavra</li>
-        <li>Os 3 erros que destroem a imagem profissional de qualquer pessoa</li>
-        <li>Como preparar a sessão fotográfica ideal para o seu arquétipo</li>
-        <li>Plano de ação de 7 dias para transformar sua presença agora</li>
-      </ul>
+    <div id="ok">
+      <h2>Pronto! O seu e-book está baixando.</h2>
+      <p>Se o download não começar, <a href="/metodo-frois/downloads/ebook-imagem-com-intencao.pdf" download>clique aqui</a>.</p>
+      <p><a class="b" href="/como-comecar-na-fotografia">Ver a série e os guias gratuitos</a></p>
     </div>
   </div>
-</main>
-
-<footer>
-  <p><a href="https://www.macfrois.com.br">macfrois.com.br</a> · <a href="https://instagram.com/froisretratista">@froisretratista</a> · contato@macfrois.com.br</p>
-  <p style="margin-top:6px">© 2025 Mac Frois — Método Frois. Todos os direitos reservados.</p>
-</footer>
-
+</div>
 <script>
-async function enviar() {
-  const nome  = document.getElementById("nome").value.trim();
-  const email = document.getElementById("email").value.trim();
-  const erro  = document.getElementById("msg-erro");
-
-  erro.style.display = "none";
-
-  if (!email || !email.includes("@")) {
-    erro.textContent = "Por favor, informe um e-mail válido.";
-    erro.style.display = "block";
-    document.getElementById("email").focus();
-    return;
-  }
-
-  document.getElementById("btn").disabled = true;
-  document.getElementById("btn-txt").style.display = "none";
-  document.getElementById("spin").style.display = "block";
-
+async function enviar(ev) {
+  ev.preventDefault();
+  const nome = document.getElementById('nome').value.trim();
+  const email = document.getElementById('email').value.trim();
+  const erro = document.getElementById('erro');
+  erro.style.display = 'none';
+  if (!email || !email.includes('@')) { erro.textContent = 'Por favor, informe um e-mail válido.'; erro.style.display = 'block'; return; }
+  const btn = document.getElementById('btn');
+  btn.disabled = true; btn.textContent = 'Enviando...';
   try {
-    const res = await fetch("/api/subscribe", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ nome, email }),
-    });
-
+    const res = await fetch('/api/subscribe', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ nome, email }) });
     const data = await res.json();
-
-    if (data.ok) {
-      document.getElementById("form-section").style.display = "none";
-      document.getElementById("sucesso").style.display = "block";
-      setTimeout(() => {
-        const a = document.createElement("a");
-        a.href = "/metodo-frois/downloads/ebook-imagem-com-intencao.pdf";
-        a.download = "Imagem-com-Intencao-Metodo-Frois.pdf";
-        a.click();
-      }, 1000);
-    } else {
-      throw new Error(data.error ?? "Erro desconhecido.");
-    }
-  } catch(e) {
-    erro.textContent = "Algo deu errado. Tente novamente em instantes.";
-    erro.style.display = "block";
-    document.getElementById("btn").disabled = false;
-    document.getElementById("btn-txt").style.display = "inline";
-    document.getElementById("spin").style.display = "none";
+    if (!data.ok) throw new Error(data.error || 'erro');
+    document.getElementById('form-section').style.display = 'none';
+    document.getElementById('ok').style.display = 'block';
+    setTimeout(() => { const a = document.createElement('a'); a.href = '/metodo-frois/downloads/ebook-imagem-com-intencao.pdf'; a.download = 'Imagem-com-Intencao-Metodo-Frois.pdf'; a.click(); }, 800);
+  } catch (e) {
+    erro.textContent = 'Algo deu errado. Tente novamente em instantes.'; erro.style.display = 'block';
+    btn.disabled = false; btn.textContent = 'Quero o e-book gratuito';
   }
 }
-
-document.getElementById("email").addEventListener("keydown", e => {
-  if (e.key === "Enter") enviar();
-});
 </script>
+
+<footer>
+  <a href="https://macfrois.com.br">macfrois.com.br</a> &nbsp;|&nbsp; <a href="https://www.instagram.com/froisretratista">@froisretratista</a> &nbsp;|&nbsp; <a href="https://www.youtube.com/@macfroiss">YouTube</a><br>
+  Mac Frois, retratista. Método Frois: retratos com intenção.
+</footer>
+</div>
 </body>
 </html>
