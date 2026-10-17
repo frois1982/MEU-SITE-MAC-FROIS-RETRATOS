@@ -40,8 +40,19 @@ export const Services: React.FC = () => {
 
         {/* RETANGULO 1 — Fotografia Corporativa */}
         <div className="bg-zinc-900 border border-zinc-800 hover:border-zinc-700 transition-all duration-500 p-10 md:p-14 flex flex-col relative overflow-hidden group">
+
+          {/* Foto de fundo (discreta, sem atrapalhar a leitura) */}
+          <img
+            src="https://res.cloudinary.com/dlahvdclb/image/upload/q_auto,w_1400/v1782676107/1000380124.jpg_dmperd.jpg"
+            alt=""
+            aria-hidden="true"
+            loading="lazy"
+            className="absolute inset-0 w-full h-full object-cover object-top grayscale opacity-30 group-hover:opacity-40 group-hover:scale-105 transition-all duration-700 pointer-events-none"
+          />
+          <div className="absolute inset-0 bg-gradient-to-b from-zinc-900/75 via-zinc-900/70 to-zinc-900/90 pointer-events-none" />
           <div className="absolute top-0 left-0 w-1 h-full bg-zinc-600 group-hover:bg-gold-600 transition-colors duration-500" />
 
+          <div className="relative z-10 flex flex-col flex-1">
           <div className="mb-8">
             <p className="text-zinc-500 text-xs tracking-[0.4em] uppercase mb-3">Pacote 01 · 02 · 03</p>
             <h2 className="text-3xl md:text-4xl font-serif text-white mb-4 leading-tight">
@@ -82,15 +93,26 @@ export const Services: React.FC = () => {
               Solicitar Proposta
             </a>
           </div>
+          </div>
         </div>
 
         {/* RETANGULO 2 — Projetos Estrategicos de Imagem */}
         <div className="bg-zinc-900 border border-gold-600/40 hover:border-gold-500 transition-all duration-500 p-10 md:p-14 flex flex-col relative overflow-hidden group">
+          {/* Foto de fundo (discreta, sem atrapalhar a leitura) */}
+          <img
+            src="https://res.cloudinary.com/dlahvdclb/image/upload/q_auto,w_1400/v1782319203/ART_Conceito.jpg_HOME_mnu0wx.jpg"
+            alt=""
+            aria-hidden="true"
+            loading="lazy"
+            className="absolute inset-0 w-full h-full object-cover object-top grayscale opacity-30 group-hover:opacity-40 group-hover:scale-105 transition-all duration-700 pointer-events-none"
+          />
+          <div className="absolute inset-0 bg-gradient-to-b from-zinc-900/75 via-zinc-900/70 to-zinc-900/90 pointer-events-none" />
           <div className="absolute top-0 left-0 w-1 h-full bg-gold-600" />
           <div className="absolute top-0 right-0 bg-gold-600 text-black text-[10px] font-bold px-4 py-1.5 tracking-widest">
             MAXIMA PROFUNDIDADE
           </div>
 
+          <div className="relative z-10 flex flex-col flex-1">
           <div className="mb-8">
             <p className="text-gold-500 text-xs tracking-[0.4em] uppercase mb-3">Projeto Da Vinci · Michelangelo</p>
             <h2 className="text-3xl md:text-4xl font-serif text-white mb-4 leading-tight">
@@ -129,6 +151,7 @@ export const Services: React.FC = () => {
             >
               Solicitar Proposta
             </a>
+          </div>
           </div>
         </div>
       </div>
