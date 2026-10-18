@@ -179,7 +179,11 @@ export const Jornada: React.FC = () => {
 
   useEffect(() => {
     const anterior = document.title;
-    document.title = 'Jornada dos Arquétipos | Mac Frois — Retratos que contam quem você é';
+    // A Jornada é a página inicial: mantém o título e a descrição de busca da home de sempre.
+    document.title = 'Mac Frois | Fotografo de Retratos Corporativos em Florianopolis';
+    document.querySelector('meta[name="description"]')?.setAttribute('content',
+      'Mac Frois é fotógrafo de retratos corporativos e posicionamento de imagem para executivos, empresários e profissionais liberais em Florianópolis, SC.');
+    document.querySelector('link[rel="canonical"]')?.setAttribute('href', 'https://www.macfrois.com.br/');
     const fonte = document.createElement('link');
     fonte.rel = 'stylesheet';
     fonte.href = 'https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;1,400;1,500&display=swap';
@@ -236,7 +240,7 @@ export const Jornada: React.FC = () => {
 
       <header className="jr-hero">
         <div className="jr-hero-texto relative z-10 max-w-2xl mx-auto text-center">
-          <p className="text-[10px] uppercase tracking-[0.4em] text-gold-500">Método Frois</p>
+          <p className="text-[10px] uppercase tracking-[0.4em] text-gold-500">Mac Frois · Retratos em Florianópolis</p>
           <h1 className="mt-6 text-3xl sm:text-5xl text-white leading-tight">
             Existe um jeito seu de estar no mundo
           </h1>
