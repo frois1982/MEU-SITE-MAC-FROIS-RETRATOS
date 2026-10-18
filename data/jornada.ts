@@ -15,7 +15,7 @@ export type CenaJornada = {
   lema: string[]; // três palavras
   simbolos: [string, string, string]; // chaves de SIMBOLOS (components/jornada/Simbolos.tsx)
   cor?: boolean; // true = mantém a cor da foto (padrão: preto e branco)
-  ajuste?: 'caber'; // fotos horizontais: no celular mostra a cena inteira em vez de cortar
+  ajuste?: { caminho?: boolean; rosto?: boolean }; // foto horizontal: no celular mostra a cena inteira em vez de cortar
 };
 
 // Estrutura da roda dos 12 arquétipos (Carol S. Pearson), definida pelo Mac em 18/10/2026.
@@ -113,7 +113,52 @@ export const CENAS: CenaJornada[] = [
     lema: ['Sentir', 'Conectar', 'Encantar'],
     simbolos: ['coracao', 'rosa', 'aneis'],
     cor: true,
-    ajuste: 'caber',
+    ajuste: { caminho: true, rosto: true },
+  },
+  {
+    id: 'heroi',
+    arquetipo: 'O Herói',
+    frase: 'Provar o próprio valor na travessia.',
+    linhas: [
+      'Existe quem espera a batalha passar.',
+      'E existe quem se ajoelha, firma a espada e caminha até ela.',
+      'O retrato do Herói mostra o preço pago e a força que sobrou.',
+    ],
+    // Mesma pessoa: de costas diante do sol, dissolve e revela o herói ajoelhado sobre a espada.
+    // Sobram heroi de cabeça baixa com a espada e o do martelo nas pedras (Cloudinary 1000380118 e 1000380122).
+    fotoCaminho: '/jornada/heroi-costas.webp',
+    fotoRosto: '/jornada/heroi-espada.webp',
+    altCaminho: 'Homem de costas, agachado sobre uma pedra no mar, com uma espada sobre o ombro diante do pôr do sol',
+    altRosto: 'Homem ajoelhado de olhos baixos, com as mãos sobre o cabo de uma espada cravada no chão, ao pôr do sol',
+    posCaminho: '60% 50%',
+    posRosto: '80% 30%',
+    foco: ['50%', '24%'],
+    lema: ['Enfrentar', 'Superar', 'Vencer'],
+    simbolos: ['espada', 'escudo', 'sol'],
+    cor: true,
+    ajuste: { caminho: true },
+  },
+  {
+    id: 'mago',
+    arquetipo: 'O Mago',
+    frase: 'Fazer o impossível parecer inevitável.',
+    linhas: [
+      'Existe quem vê o mundo como ele é.',
+      'E existe quem enxerga o que ele pode se tornar.',
+      'O retrato do Mago transforma presença em visão.',
+    ],
+    // Mesma pessoa: o olhar longe, na floresta, dissolve e revela o homem na sala verde. A troca de cenário é a transformação.
+    // Sobram a foto sentado com o livro na floresta e a de cabeça baixa na adega (ART_Conceito 28 e HOME).
+    fotoCaminho: '/jornada/mago-floresta.webp',
+    fotoRosto: '/jornada/mago-sala.webp',
+    altCaminho: 'Homem de casaco escuro com as mãos nos bolsos, em uma floresta, olhando para longe',
+    altRosto: 'Homem de roupa escura sentado numa poltrona verde, mãos entrelaçadas, olhando de lado em uma sala com painéis de madeira',
+    posCaminho: '53% 40%',
+    posRosto: '52% 40%',
+    foco: ['50%', '31%'],
+    lema: ['Imaginar', 'Transformar', 'Revelar'],
+    simbolos: ['estrela', 'lua', 'olho'],
+    cor: true,
   },
 ];
 

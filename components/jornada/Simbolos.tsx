@@ -74,7 +74,52 @@ export const Aneis: React.FC<{ className?: string }> = ({ className }) => (
   </svg>
 );
 
+// ---- Herói e Mago (provisórios) ----
+export const Espada: React.FC<{ className?: string }> = ({ className }) => (
+  <svg viewBox="0 0 60 140" className={className} aria-hidden="true" {...traco}>
+    <path d="M30 4 L36 22 V92 H24 V22 Z" />
+    <path d="M10 92 H50" />
+    <path d="M30 92 V118" />
+    <circle cx="30" cy="126" r="7" />
+  </svg>
+);
+
+export const Escudo: React.FC<{ className?: string }> = ({ className }) => (
+  <svg viewBox="0 0 100 120" className={className} aria-hidden="true" {...traco}>
+    <path d="M50 8 L90 22 V58 C90 86 70 104 50 114 C30 104 10 86 10 58 V22 Z" />
+    <path d="M50 8 V114 M10 52 H90" />
+  </svg>
+);
+
+export const Sol: React.FC<{ className?: string }> = ({ className }) => (
+  <svg viewBox="0 0 120 80" className={className} aria-hidden="true" {...traco}>
+    <path d="M30 70 A30 30 0 0 1 90 70" />
+    <path d="M6 70 H114 M60 14 V28 M24 30 L34 40 M96 30 L86 40 M10 52 L22 56 M110 52 L98 56" />
+  </svg>
+);
+
+export const Estrela: React.FC<{ className?: string }> = ({ className }) => (
+  <svg viewBox="0 0 100 100" className={className} aria-hidden="true" {...traco}>
+    <path d="M50 6 C54 36 64 46 94 50 C64 54 54 64 50 94 C46 64 36 54 6 50 C36 46 46 36 50 6 Z" />
+    <path d="M82 14 V26 M76 20 H88" />
+  </svg>
+);
+
+export const Lua: React.FC<{ className?: string }> = ({ className }) => (
+  <svg viewBox="0 0 90 110" className={className} aria-hidden="true" {...traco}>
+    <path d="M62 8 C30 14 14 38 14 58 C14 84 36 102 62 100 C42 94 32 76 32 58 C32 38 44 18 62 8 Z" />
+  </svg>
+);
+
+export const Olho: React.FC<{ className?: string }> = ({ className }) => (
+  <svg viewBox="0 0 120 70" className={className} aria-hidden="true" {...traco}>
+    <path d="M6 35 C24 8 96 8 114 35 C96 62 24 62 6 35 Z" />
+    <circle cx="60" cy="35" r="14" /><circle cx="60" cy="35" r="4" />
+  </svg>
+);
+
 export const SIMBOLOS: Record<string, React.FC<{ className?: string }>> = {
+  espada: Espada, escudo: Escudo, sol: Sol, estrela: Estrela, lua: Lua, olho: Olho,
   corrente: CorrenteQuebrada, chama: Chama, raio: Raio, coroa: Coroa, cetro: Cetro, torre: Torre,
   coracao: Coracao, rosa: Rosa, aneis: Aneis,
 };

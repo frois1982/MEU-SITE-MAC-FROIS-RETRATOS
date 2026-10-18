@@ -72,6 +72,8 @@ for (const p of PAGINAS) {
       '<h2>O Rebelde</h2><p>Quebrar o que já não serve. O retrato do Rebelde não pede licença: ele mostra quem rompeu.</p>' +
       '<h2>O Governante</h2><p>Construir o que permanece. O retrato do Governante não levanta a voz: a presença já organiza a sala.</p>' +
       '<h2>O Amante</h2><p>Quando o vínculo aparece, a foto também. O retrato do Amante não encena intimidade: ele a encontra.</p>' +
+      '<h2>O Herói</h2><p>Provar o próprio valor na travessia. O retrato do Herói mostra o preço pago e a força que sobrou.</p>' +
+      '<h2>O Mago</h2><p>Fazer o impossível parecer inevitável. O retrato do Mago transforma presença em visão.</p>' +
       '<h2>Existem 12 arquétipos. Qual é o seu?</h2><p><a href="/contato">Fale com o Mac</a></p></main>';
   }
   if (p.lp) {
