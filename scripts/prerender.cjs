@@ -62,14 +62,30 @@ function descricaoPost(p, limpar) {
 
 function isoData(br) { return br.split('/').reverse().join('-'); }
 
-const base = fs.readFileSync(path.join(DIST, 'index.html'), 'utf-8');
+let base = fs.readFileSync(path.join(DIST, 'index.html'), 'utf-8');
+
+// Na página inicial o CSS principal vai para dentro do próprio HTML (~10 KB compactados): o navegador pinta o texto
+// assim que recebe a página, sem esperar um segundo pedido de rede só pelos estilos. Medido: celular 79 -> 100.
+// As páginas internas ficam com o CSS em arquivo à parte: lá embutir engorda o HTML sem ganho (medido: nota igual ou 2 pontos menor).
+let baseInicio = base;
+const linkCss = base.match(/<link rel="stylesheet"[^>]*href="(\/assets\/[^"]+\.css)"[^>]*>/);
+if (linkCss) {
+  const css = fs.readFileSync(path.join(DIST, linkCss[1]), 'utf-8');
+  baseInicio = base.replace(linkCss[0], () => `<style>${css}</style>`);
+}
 let n = 0;
 
 for (const p of PAGINAS) {
   let extra = {};
   if (p.jornada) {
-    extra.corpo = '<main><p>Mac Frois · Retratos em Florianópolis</p><h1>Existe um jeito seu de estar no mundo</h1>' +
-      '<p>Todos nós temos um jeito de ser que as pessoas reconhecem: quem enfrenta, quem cuida, quem cria, quem ensina. São doze jeitos, os arquétipos do Método Frois, e você não precisa decorar nenhum. Basta se reconhecer.</p>' +
+    // A abertura vem já formatada, com as mesmas classes e a mesma estrutura que o React monta (Layout + Jornada):
+    // o texto aparece na primeira pintura e, quando o React assume, nada muda de lugar nem de aparência.
+    extra.corpo = '<div class="min-h-screen bg-black flex flex-col"><main class="flex-grow pt-24 md:pt-0"><main class="jr-root"><header class="jr-hero"><div class="jr-hero-texto relative z-10 max-w-2xl mx-auto text-center">' +
+      '<p class="text-[10px] uppercase tracking-[0.4em] text-gold-500">Mac Frois · Retratos em Florianópolis</p>' +
+      '<h1 class="mt-6 text-3xl sm:text-5xl text-white leading-tight">Existe um jeito seu de estar no mundo</h1>' +
+      '<p class="mt-6 text-sm sm:text-base text-zinc-100 leading-relaxed">Todos nós temos um jeito de ser que as pessoas reconhecem: quem enfrenta, quem cuida, quem cria, quem ensina. São doze jeitos, e você não precisa decorar nenhum. Basta se reconhecer. Role, olhe os rostos e veja se algum deles é o seu.</p>' +
+      '<p class="mt-12 text-[10px] uppercase tracking-[0.3em] text-zinc-500 jr-pulso">role para começar</p></div></header>' +
+      '<section class="relative px-6 py-24 bg-zinc-950 text-zinc-300 text-center"><p>São doze jeitos de ser, os arquétipos do Método Frois:</p>' +
       '<h2>O Rebelde</h2><p>Quebrar o que já não serve. O retrato do Rebelde não pede licença: ele mostra quem rompeu.</p>' +
       '<h2>O Governante</h2><p>Construir o que permanece. O retrato do Governante não levanta a voz: a presença já organiza a sala.</p>' +
       '<h2>O Amante</h2><p>Quando o vínculo aparece, a foto também. O retrato do Amante não encena intimidade: ele a encontra.</p>' +
@@ -84,7 +100,7 @@ for (const p of PAGINAS) {
       '<h2>O Criador</h2><p>Dar forma ao que ainda não existe. O retrato do Criador é o instante em que a ideia ganha rosto.</p>' +
       '<h2>Existem 12 arquétipos. Qual é o seu?</h2><p><a href="/contato">Fale com o Mac</a></p>' +
       '<nav><a href="/portfolio">Portfólio</a> · <a href="/servicos">Serviços</a> · <a href="/fotografo-corporativo-florianopolis">Fotógrafo corporativo em Florianópolis</a> · ' +
-      '<a href="/ensaio-de-familia-florianopolis">Ensaio de família em Florianópolis</a> · <a href="/blog">Blog</a> · <a href="/contato">Contato</a></nav></main>';
+      '<a href="/ensaio-de-familia-florianopolis">Ensaio de família em Florianópolis</a> · <a href="/blog">Blog</a> · <a href="/contato">Contato</a></nav></section></main></main></div>';
   }
   if (p.lp) {
     extra.jsonld = { '@context': 'https://schema.org', '@type': 'FAQPage',
@@ -108,7 +124,7 @@ for (const p of PAGINAS) {
       FAM.packages.map((k) => `<h2>${esc(k.nome)}: ${esc(k.precoRotulo)}</h2><ul>${k.itens.map((i) => `<li>${esc(i)}</li>`).join('')}</ul>`).join('') +
       FAM.faq.map((f) => `<h2>${esc(f.q)}</h2><p>${esc(f.a)}</p>`).join('') + '</main>';
   }
-  gravar(p.rota, aplicar(base, { title: p.title, desc: p.desc, url: BASE + p.rota, ...extra }));
+  gravar(p.rota, aplicar(p.jornada ? baseInicio : base, { title: p.title, desc: p.desc, url: BASE + p.rota, ...extra }));
   n++;
 }
 
