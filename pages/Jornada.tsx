@@ -45,6 +45,15 @@ const Cena: React.FC<{ cena: CenaJornada; numero: number }> = ({ cena, numero })
       const cobre = r.top <= 0 && r.bottom >= window.innerHeight;
       if (cobre) estado.cobertos.add(cena.id); else estado.cobertos.delete(cena.id);
       const visivel = r.bottom > 0 && r.top < window.innerHeight;
+      // borda em degradê enquanto uma extremidade da cena está à vista (passagem entre cenas)
+      const vh = window.innerHeight;
+      const passando = visivel && !cobre;
+      el.classList.toggle('jr-bordas', passando);
+      if (passando) {
+        const L = vh * 0.24;
+        el.style.setProperty('--ft', `${Math.max(0, Math.min(L, r.top)).toFixed(0)}px`);
+        el.style.setProperty('--fb', `${Math.max(0, Math.min(L, vh - r.bottom)).toFixed(0)}px`);
+      }
       // camadas pesadas só enquanto a cena está perto da tela
       el.classList.toggle('jr-ativa', r.bottom > -window.innerHeight * 0.5 && r.top < window.innerHeight * 1.5);
       const s = (x: number) => Math.min(1, Math.max(0, x));

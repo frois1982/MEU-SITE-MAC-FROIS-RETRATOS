@@ -39,7 +39,7 @@ export const Fundo: React.FC = () => {
     const medir = () => {
       w = window.innerWidth; h = window.innerHeight;
       const largo = w >= 768;
-      dpr = Math.min(window.devicePixelRatio || 1, 1.5);
+      dpr = 1; // o feixe é suave e as partículas minúsculas: resolução cheia só gastaria bateria
       cv.width = Math.round(w * dpr); cv.height = Math.round(h * dpr);
       ctx?.setTransform(dpr, 0, 0, dpr, 0, 0);
       raio = largo ? 380 : 230; cw = largo ? 190 : 118; passo = largo ? 30 : 20;
@@ -61,8 +61,7 @@ export const Fundo: React.FC = () => {
         // a carta sempre olha para a tela (billboard): gira em volta e desgira em si mesma
         el.style.transform =
           `rotateY(${th}deg) translateZ(${raio}px) translateY(${(i - 5.5) * passo}px) rotateY(${-th}deg)`;
-        el.style.opacity = String(luz * (1 - 0.6 * dimTexto));
-        (el.lastElementChild as HTMLElement).style.opacity = String(0.65 * (1 - k)); // sombra: mais escura atrás
+        el.style.opacity = String(luz * (1 - 0.6 * dimTexto)); // atrás: apagado; na frente: aceso
       }
     };
     posicionar(0);
@@ -213,7 +212,6 @@ export const Fundo: React.FC = () => {
           {MINIATURAS.map((src) => (
             <div key={src} className="jr-carta">
               <img src={src} alt="" width={220} height={290} decoding="async" />
-              <div className="jr-sombra" />
             </div>
           ))}
         </div>

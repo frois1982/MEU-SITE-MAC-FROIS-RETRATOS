@@ -9,12 +9,9 @@
 .jr-orbita { position: absolute; inset: 0; perspective: 1100px; perspective-origin: 50% 42%; --cw: 118px; }
 .jr-anel { position: absolute; left: 50%; top: 42%; width: 0; height: 0; transform-style: preserve-3d; transform: rotateX(-10deg); }
 .jr-carta { position: absolute; width: var(--cw); height: calc(var(--cw) * 1.32);
-  margin: calc(var(--cw) * -.66) 0 0 calc(var(--cw) * -.5); will-change: transform, opacity;
-  /* bordas esmaecidas: o retrato se dissolve no fundo em vez de terminar num corte seco */
-  -webkit-mask-image: radial-gradient(ellipse 50% 50% at 50% 50%, #000 52%, transparent 100%);
-          mask-image: radial-gradient(ellipse 50% 50% at 50% 50%, #000 52%, transparent 100%); }
+  margin: calc(var(--cw) * -.66) 0 0 calc(var(--cw) * -.5); will-change: transform, opacity; }
+/* as bordas esmaecidas já vêm na própria imagem (transparência), sem máscara pesada em tempo real */
 .jr-carta img { width: 100%; height: 100%; object-fit: cover; display: block; }
-.jr-sombra { position: absolute; inset: 0; background: #000; }
 
 /* feixe em CSS: usado onde não há canvas (aparelho fraco ou "menos movimento") */
 .jr-feixe-css { display: none; position: absolute; left: 50%; top: 0; bottom: 0; width: min(18vw, 140px); transform: translateX(-50%);
@@ -49,6 +46,11 @@ body:has(.jr-root) footer { position: relative; z-index: 1; }
 /* ---------- Cena ---------- */
 .jr-trilho { position: relative; height: 300svh; --p: 0; --mx: 0; --my: 0; }
 .jr-palco { position: sticky; top: 0; height: 100svh; overflow: hidden; background: #09090b; }
+/* Na passagem de uma cena para a outra, a borda horizontal da cena vira um degradê e se dissolve no fundo,
+   em vez de um corte seco. Só vale durante a passagem; no resto da cena não há máscara. */
+.jr-bordas .jr-palco {
+  -webkit-mask-image: linear-gradient(to bottom, transparent 0, #000 var(--ft, 0px), #000 calc(100% - var(--fb, 0px)), transparent 100%);
+          mask-image: linear-gradient(to bottom, transparent 0, #000 var(--ft, 0px), #000 calc(100% - var(--fb, 0px)), transparent 100%); }
 
 .jr-camada { position: absolute; inset: 0; }
 /* só as cenas perto da tela ganham camada própria na GPU: com todas as doze, o celular sofre e a imagem "craquela" */
