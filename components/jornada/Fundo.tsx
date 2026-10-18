@@ -35,37 +35,71 @@ export const Fundo: React.FC = () => {
     const ctx = cv.getContext('2d');
     const cartas = Array.from(ringEl.children) as HTMLElement[];
 
-    let w = 0, h = 0, dpr = 1, raio = 230, cw = 118, passo = 20;
+    // O anel é uma ELIPSE: larga na horizontal (ocupa a tela do computador) e com menos profundidade.
+    // rx = meia-largura da elipse; rz = profundidade; passo = o quanto a espiral sobe/desce por carta.
+    let w = 0, h = 0, dpr = 1, rx = 150, rz = 230, cw = 140, passo = 22;
+    // Posição e altura de cada capítulo na página: é o que liga o anel à rolagem.
+    let cenas: { top: number; altura: number }[] = [];
     const medir = () => {
       w = window.innerWidth; h = window.innerHeight;
       const largo = w >= 768;
       dpr = 1; // o feixe é suave e as partículas minúsculas: resolução cheia só gastaria bateria
       cv.width = Math.round(w * dpr); cv.height = Math.round(h * dpr);
       ctx?.setTransform(dpr, 0, 0, dpr, 0, 0);
-      raio = largo ? 380 : 230; cw = largo ? 190 : 118; passo = largo ? 30 : 20;
+      if (largo) { cw = Math.min(290, w * 0.2); rx = w * 0.38; rz = Math.min(400, w * 0.28); passo = 36; }
+      else { cw = 140; rx = 150; rz = 230; passo = 22; }
       ringEl.style.setProperty('--cw', `${cw}px`);
+      cenas = Array.from(document.querySelectorAll('.jr-trilho')).map((el) => {
+        const r = el.getBoundingClientRect();
+        return { top: r.top + window.scrollY, altura: r.height };
+      });
     };
     medir();
 
-    let ang = 0;                 // graus: o anel nunca fica parado
-    const velocidade = 4;        // graus por segundo
+    const N = cartas.length;     // 12 cartas, uma por capítulo, na ordem dos capítulos
     const P = 1100;              // perspectiva (px), igual ao CSS
 
-    const posicionar = (dimTexto: number) => {
-      for (let i = 0; i < cartas.length; i++) {
-        const th = i * 30 + ang;
-        const c = Math.cos((th * Math.PI) / 180);
-        const k = (c + 1) / 2;                       // 1 = na frente, 0 = atrás
+    // Qual carta deve estar na frente, em número fracionário (3,0 = a carta 3 na frente).
+    // Antes do capítulo k a carta k já está na frente; durante o capítulo (que cobre a tela) o anel gira até a carta k+1,
+    // de modo que, no intervalo seguinte, o retrato do próximo capítulo já esteja na frente.
+    const cartaDaFrente = () => {
+      if (!cenas.length) return 0;
+      const y = window.scrollY, meio = y + h / 2;
+      for (let k = 0; k < cenas.length; k++) {
+        const { top, altura } = cenas[k];
+        if (meio < top + altura) {
+          if (meio < top || k === cenas.length - 1) return k;
+          const p = Math.min(1, Math.max(0, (y - top) / Math.max(1, altura - h)));
+          return k + p * p * (3 - 2 * p);
+        }
+      }
+      return cenas.length - 1;
+    };
+    let gSuave = cartaDaFrente();  // acompanha a rolagem com inércia, para o anel deslizar em vez de pular
+    const posicaoRelativa = (i: number, g: number) => {
+      let u = (((i - g) % N) + N) % N;
+      if (u > N / 2) u -= N;
+      return u;                    // 0 = na frente, ±6 = nas costas
+    };
+
+    const posicionar = (dimTexto: number, g: number) => {
+      for (let i = 0; i < N; i++) {
+        const u = posicaoRelativa(i, g);
+        const th = (u * Math.PI * 2) / N;
+        const sx = Math.sin(th), cz = Math.cos(th);
+        const x = rx * sx, z = rz * cz;
+        const k = (cz + 1) / 2;                      // 1 = na frente, 0 = atrás
         const luz = 0.1 + 0.9 * Math.pow(k, 1.4);
         const el = cartas[i];
-        // a carta sempre olha para a tela (billboard): gira em volta e desgira em si mesma
-        el.style.transform =
-          `rotateY(${th}deg) translateZ(${raio}px) translateY(${(i - 5.5) * passo}px) rotateY(${-th}deg)`;
-        // atrás: apagado; na frente: aceso. O texto só escurece o miolo (véu da abertura); o anel em si apaga pouco.
-        el.style.opacity = String(luz * (1 - 0.2 * dimTexto));
+        // a carta olha sempre para a tela (billboard) e a espiral sobe e desce com a posição
+        el.style.transform = `translate3d(${x.toFixed(1)}px, ${(u * passo).toFixed(1)}px, ${z.toFixed(1)}px)`;
+        // atrás: apagado; na frente: aceso. Com texto na tela (abertura), só o miolo, atrás do texto, escurece;
+        // as cartas das laterais seguem acesas.
+        const miolo = Math.exp(-Math.pow(x / (w * 0.24), 2));
+        el.style.opacity = String(luz * (1 - 0.88 * dimTexto * miolo));
       }
     };
-    posicionar(0);
+    posicionar(0, gSuave);
 
     if (atual === 'estatico' || !ctx) return () => undefined;
 
@@ -85,7 +119,7 @@ export const Fundo: React.FC = () => {
       ctx.clearRect(0, 0, w, h);
       ctx.globalCompositeOperation = 'lighter';
       const cx = w / 2;
-      const bw = Math.max(46, w * 0.085);
+      const bw = Math.max(54, w * 0.1);
 
       // halo largo e suave
       let g = ctx.createLinearGradient(cx - bw * 4, 0, cx + bw * 4, 0);
@@ -125,12 +159,13 @@ export const Fundo: React.FC = () => {
           const lado = Math.random() < 0.5 ? -1 : 1;
           gerar(cx + (Math.random() - 0.5) * bw, Math.random() * h, lado * (15 + Math.random() * 55), -(20 + Math.random() * 70));
         } else {
-          const i = Math.floor(Math.random() * cartas.length);
-          const th = (i * 30 + ang) * Math.PI / 180;
+          const i = Math.floor(Math.random() * N);
+          const u = posicaoRelativa(i, gSuave);
+          const th = (u * Math.PI * 2) / N;
           const c = Math.cos(th);
           if (c > 0.25) {
-            const s = P / (P - raio * c);
-            gerar(cx + raio * Math.sin(th) * s, h * 0.42 + (i - 5.5) * passo * s, (Math.random() - 0.5) * 50, (Math.random() - 0.7) * 40);
+            const s = P / (P - rz * c);
+            gerar(cx + rx * Math.sin(th) * s, h * 0.42 + u * passo * s, (Math.random() - 0.5) * 50, (Math.random() - 0.7) * 40);
           }
         }
       }
@@ -158,14 +193,15 @@ export const Fundo: React.FC = () => {
       if (document.hidden) { ultimo = agora; return; }
       const dt = Math.min(0.05, (agora - ultimo) / 1000);
       ultimo = agora;
-      ang = (ang + velocidade * dt) % 360;
+      // a carta da frente segue a rolagem com inércia; um leve balanço mantém o anel sempre em movimento
+      gSuave += (cartaDaFrente() - gSuave) * Math.min(1, dt * 3.2);
 
       // se um capítulo cobre a tela, não gasta bateria desenhando atrás dele
       if (estado.cobertos.size > 0) return;
 
       const dim = nivelTexto();
       const e = 1 - 0.85 * dim;
-      posicionar(dim);
+      posicionar(dim, gSuave + 0.12 * Math.sin(agora / 4000));
 
       if (atual === 'cheio') {
         desenhar(agora / 1000, e, dt);
@@ -201,7 +237,13 @@ export const Fundo: React.FC = () => {
       }, 250);
     };
     window.addEventListener('resize', aoRedimensionar);
-    return () => { cancelAnimationFrame(raf); window.clearTimeout(atraso); window.removeEventListener('resize', aoRedimensionar); };
+    // as posições dos capítulos podem mudar um pouco depois que fontes e imagens chegam: mede de novo
+    const remedir = window.setTimeout(medir, 1500);
+    window.addEventListener('load', medir);
+    return () => {
+      cancelAnimationFrame(raf); window.clearTimeout(atraso); window.clearTimeout(remedir);
+      window.removeEventListener('resize', aoRedimensionar); window.removeEventListener('load', medir);
+    };
   }, []);
 
   return (
@@ -212,7 +254,7 @@ export const Fundo: React.FC = () => {
         <div className="jr-anel" ref={anel}>
           {MINIATURAS.map((src) => (
             <div key={src} className="jr-carta">
-              <img src={src} alt="" width={220} height={290} decoding="async" />
+              <img src={src} alt="" width={400} height={528} decoding="async" />
             </div>
           ))}
         </div>
