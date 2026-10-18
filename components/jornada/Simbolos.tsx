@@ -51,8 +51,32 @@ export const Torre: React.FC<{ className?: string }> = ({ className }) => (
   </svg>
 );
 
+// ---- Amante (provisórios) ----
+export const Coracao: React.FC<{ className?: string }> = ({ className }) => (
+  <svg viewBox="0 0 100 100" className={className} aria-hidden="true" {...traco}>
+    <path d="M50 90 C8 58 12 20 36 20 C46 20 50 28 50 34 C50 28 54 20 64 20 C88 20 92 58 50 90 Z" />
+  </svg>
+);
+
+export const Rosa: React.FC<{ className?: string }> = ({ className }) => (
+  <svg viewBox="0 0 100 130" className={className} aria-hidden="true" {...traco}>
+    <path d="M50 40 C34 40 28 22 44 16 C58 10 76 22 70 40 C66 54 46 58 38 46 C32 36 42 28 50 30 C56 32 56 40 50 40 Z" />
+    <path d="M50 58 V124" />
+    <path d="M50 98 C64 92 76 96 82 82 C66 80 56 86 50 98 Z" />
+    <path d="M50 84 C38 80 28 84 22 72 C36 70 46 74 50 84 Z" />
+  </svg>
+);
+
+export const Aneis: React.FC<{ className?: string }> = ({ className }) => (
+  <svg viewBox="0 0 110 80" className={className} aria-hidden="true" {...traco}>
+    <circle cx="40" cy="40" r="26" />
+    <circle cx="70" cy="40" r="26" />
+  </svg>
+);
+
 export const SIMBOLOS: Record<string, React.FC<{ className?: string }>> = {
   corrente: CorrenteQuebrada, chama: Chama, raio: Raio, coroa: Coroa, cetro: Cetro, torre: Torre,
+  coracao: Coracao, rosa: Rosa, aneis: Aneis,
 };
 
 // Estrada em perspectiva, ilustração provisória até existir a foto de costas.

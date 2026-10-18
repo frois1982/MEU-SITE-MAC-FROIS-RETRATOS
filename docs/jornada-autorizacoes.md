@@ -6,6 +6,7 @@ Lista para o Mac preencher. O contrato trata a autorização como opcional, ent�
 |---|---|---|---|---|
 | rebelde-fumaca.webp, rebelde-frontal.webp | Rebelde | (preencher) | (preencher) | |
 | governante-calmo.webp, governante-comando.webp | Governante | (preencher; mesma pessoa nas duas) | (preencher) | |
+| amante-olhar.webp, amante-sorriso.webp | Amante | Casal (preencher; mesmo casal nas duas) | (preencher) | |
 | governante-mesa.webp | Governante (reserva, ainda não usada) | (preencher) | (preencher) | |
 
 Regra: nunca usar imagem ou relato que identifique paciente do SAMU.

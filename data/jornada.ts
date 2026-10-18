@@ -14,6 +14,8 @@ export type CenaJornada = {
   foco: [string, string]; // onde o círculo de revelação nasce (x, y), em %
   lema: string[]; // três palavras
   simbolos: [string, string, string]; // chaves de SIMBOLOS (components/jornada/Simbolos.tsx)
+  cor?: boolean; // true = mantém a cor da foto (padrão: preto e branco)
+  ajuste?: 'caber'; // fotos horizontais: no celular mostra a cena inteira em vez de cortar
 };
 
 export const CENAS: CenaJornada[] = [
@@ -57,6 +59,28 @@ export const CENAS: CenaJornada[] = [
     foco: ['46%', '20%'],
     lema: ['Liderar', 'Ordenar', 'Perdurar'],
     simbolos: ['coroa', 'cetro', 'torre'],
+  },
+  {
+    id: 'amante',
+    arquetipo: 'O Amante',
+    frase: 'Quando o vínculo aparece, a foto também.',
+    linhas: [
+      'Existe quem posa para a câmera.',
+      'E existe quem se entrega ao momento, ao outro, ao que sente.',
+      'O retrato do Amante não encena intimidade: ele a encontra.',
+    ],
+    // Mesmo casal nas duas fotos: o olhar que se busca dissolve e revela o sorriso.
+    fotoCaminho: '/jornada/amante-olhar.webp',
+    fotoRosto: '/jornada/amante-sorriso.webp',
+    altCaminho: 'Casal em sala de luz quente: ela, de vestido claro, toca o queixo dele, de terno azul, que a olha sorrindo',
+    altRosto: 'Casal em sala de luz quente: ela sorri enquanto ajeita o lenço do paletó dele, que a olha de volta',
+    posCaminho: '48% 50%',
+    posRosto: '55% 50%',
+    foco: ['50%', '34%'],
+    lema: ['Sentir', 'Conectar', 'Encantar'],
+    simbolos: ['coracao', 'rosa', 'aneis'],
+    cor: true,
+    ajuste: 'caber',
   },
 ];
 
