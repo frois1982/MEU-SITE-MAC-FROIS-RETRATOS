@@ -121,6 +121,18 @@ export const Portfolio: React.FC = () => {
     touchStartX.current = null;
   };
 
+  // carrega antes as fotos vizinhas, para a troca ser instantânea
+  useEffect(() => {
+    if (selectedIndex === null) return;
+    const n = filteredItems.length;
+    [1, -1, 2, -2].forEach((d) => {
+      const vizinho = filteredItems[(selectedIndex + d + n) % n];
+      if (!vizinho) return;
+      new Image().src = larguraCloudinary(vizinho.imageUrl, 800);
+      new Image().src = larguraCloudinary(vizinho.imageUrl, 1200);
+    });
+  }, [selectedIndex, filteredItems]);
+
   useEffect(() => {
     if (selectedIndex !== null) {
       document.body.style.overflow = 'hidden';
@@ -221,14 +233,26 @@ export const Portfolio: React.FC = () => {
           </button>
 
           <div className="relative max-w-7xl max-h-full flex items-center justify-center px-4">
-            <img 
-              key={selectedItem.id}
-              src={larguraCloudinary(selectedItem.imageUrl, 1600)}
-              alt={selectedItem.title} 
-              className="max-w-full max-h-[80vh] object-contain shadow-2xl animate-in zoom-in-95 duration-500 select-none"
-              onClick={(e) => e.stopPropagation()} 
-            />
-            
+            <div key={selectedItem.id} className="relative flex items-center justify-center">
+              {/* versão leve (a mesma da grade, já em cache) aparece na hora; a grande entra por cima quando termina de carregar */}
+              <img
+                src={larguraCloudinary(selectedItem.imageUrl, 800)}
+                alt={selectedItem.title}
+                className="max-w-full max-h-[80vh] object-contain shadow-2xl select-none"
+                onClick={(e) => e.stopPropagation()}
+              />
+              <img
+                src={larguraCloudinary(selectedItem.imageUrl, 1200)}
+                alt=""
+                aria-hidden="true"
+                decoding="async"
+                onLoad={(e) => { e.currentTarget.style.opacity = '1'; }}
+                style={{ opacity: 0, transition: 'opacity 300ms ease' }}
+                className="absolute inset-0 w-full h-full object-contain select-none"
+                onClick={(e) => e.stopPropagation()}
+              />
+            </div>
+
             <div className="absolute -bottom-20 left-0 right-0 text-center animate-in slide-in-from-bottom-4 duration-500">
               <h3 className="text-2xl font-serif text-white">{selectedItem.title}</h3>
               <div className="flex items-center justify-center gap-4 mt-2">
