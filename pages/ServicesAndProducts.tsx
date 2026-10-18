@@ -261,7 +261,7 @@ export const Products: React.FC = () => {
               <p className="text-gold-500 text-xs tracking-[0.3em] uppercase mb-2">Mini-curso</p>
               <h3 className="text-2xl font-serif text-white mb-3">Iluminacao Profissional</h3>
               <p className="text-zinc-500 text-sm tracking-wider leading-relaxed mb-6 flex-1">
-                Tecnicas de iluminacao profissional para foto e video. Funciona com smartphone ou camera. Para criadores de conteudo e fotografos.
+                Aprenda a iluminar seus videos, aulas e fotos com a janela, o celular e o que voce ja tem. Para quem grava conteudo e quer parecer profissional.
               </p>
               <div className="mb-6">
                 <p className="text-zinc-600 text-xs tracking-widest uppercase mb-1">Investimento</p>
