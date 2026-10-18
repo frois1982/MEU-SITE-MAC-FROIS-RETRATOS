@@ -20,7 +20,6 @@ const paginasEstaticas = [
   { url: '/fotografo-para-medicos-florianopolis', priority: '0.8' },
   { url: '/blog', priority: '0.8' },
   { url: '/contato', priority: '0.7' },
-  { url: '/lumina-pro', priority: '0.7' },
   { url: '/metodo-frois/minicurso.html', priority: '0.8' },
   { url: '/metodo-frois/captura.html', priority: '0.7' },
   { url: '/retratos-que-vendem', priority: '0.8' },

@@ -20,7 +20,6 @@ const PAGINAS = [
   { rota: '/portfolio', title: 'Portfolio | Mac Frois - Retratos Corporativos Florianopolis', desc: 'Veja o portfolio de Mac Frois - retratos corporativos, posicionamento de imagem e fotografia de marca pessoal para executivos e profissionais liberais em Florianopolis, SC.' },
   { rota: '/servicos', title: 'Projetos | Mac Frois — Retratos Corporativos e Posicionamento de Imagem', desc: 'Fotografia corporativa e projetos estrategicos de imagem em Florianopolis, SC. Pacotes a partir de R$890.' },
   { rota: '/produtos', title: 'Produtos Digitais | Mac Frois — Cursos de Fotografia', desc: 'Cursos digitais de fotografia por Mac Frois. Iluminacao Profissional e Retratos que Vendem disponíveis agora no Hotmart.' },
-  { rota: '/lumina-pro', title: 'Lumina Pro | Mac Frois — Minicurso de Iluminação Profissional', desc: 'Lumina Pro — Minicurso de Iluminação Profissional por Mac Frois. Aprenda as técnicas de iluminação usadas em retratos corporativos de alto impacto. R$97.' },
   { rota: '/blog', title: 'Blog | Mac Frois — Fotografia, Imagem e Marca Pessoal', desc: 'Artigos sobre fotografia corporativa, posicionamento de imagem, marca pessoal e estratégias para profissionais e executivos em Florianópolis, SC.' },
   { rota: '/contato', title: 'Contato | Mac Frois — Fotógrafo Corporativo em Florianópolis', desc: 'Entre em contato com Mac Frois para agendar sua sessão de retratos corporativos em Florianópolis, SC. WhatsApp (48) 99623-1894.' },
 ];
