@@ -79,6 +79,8 @@ for (const p of PAGINAS) {
       '<h2>O Explorador</h2><p>Ir além do mapa para se encontrar. O retrato do Explorador guarda a estrada que o trouxe até aqui.</p>' +
       '<h2>O Sábio</h2><p>Ver com clareza para guiar os outros. O retrato do Sábio mostra a calma de quem já pensou duas vezes.</p>' +
       '<h2>O Inocente</h2><p>Voltar a olhar o mundo sem medo. O retrato do Inocente é feito de luz suave e verdade simples.</p>' +
+      '<h2>O Cuidador</h2><p>Quem cuida também precisa de pausa. O retrato do Cuidador mostra a força que mora na delicadeza.</p>' +
+      '<h2>O Criador</h2><p>Dar forma ao que ainda não existe. O retrato do Criador é o instante em que a ideia ganha rosto.</p>' +
       '<h2>Existem 12 arquétipos. Qual é o seu?</h2><p><a href="/contato">Fale com o Mac</a></p></main>';
   }
   if (p.lp) {

@@ -268,6 +268,48 @@ export const CENAS: CenaJornada[] = [
     simbolos: ['margarida', 'pomba', 'nuvem'],
     cor: 'revela',
   },
+  {
+    id: 'cuidador',
+    arquetipo: 'O Cuidador',
+    frase: 'Quem cuida também precisa de pausa.',
+    linhas: [
+      'Existe quem cuida de tudo e de todos.',
+      'E existe quem aprendeu que cuidar também é parar, respirar e se ouvir.',
+      'O retrato do Cuidador mostra a força que mora na delicadeza.',
+    ],
+    // Mesma pessoa (a mesma do Inocente e do Sábio): cuidar da natureza dissolve na pausa com o café.
+    fotoCaminho: '/jornada/cuidador-natureza.webp',
+    fotoRosto: '/jornada/cuidador-pausa.webp',
+    altCaminho: 'Mulher de mochila numa trilha na mata, tocando com cuidado as folhas de uma árvore',
+    altRosto: 'Mulher de cabelo escuro segurando uma xícara de café, com a mão junto ao rosto, olhando para baixo com serenidade',
+    posCaminho: '47% 40%',
+    posRosto: '100% 50%',
+    foco: ['50%', '38%'],
+    lema: ['Cuidar', 'Proteger', 'Nutrir'],
+    simbolos: ['folha', 'ninho', 'gota'],
+    cor: true,
+    ajuste: { rosto: true },
+  },
+  {
+    id: 'criador',
+    arquetipo: 'O Criador',
+    frase: 'Dar forma ao que ainda não existe.',
+    linhas: [
+      'Existe quem aceita o mundo como está montado.',
+      'E existe quem olha para a estrutura e vê o que pode construir.',
+      'O retrato do Criador é o instante em que a ideia ganha rosto.',
+    ],
+    // Mesma pessoa (a mesma do Mago): o perfil no ambiente industrial dissolve e revela o rosto sorrindo.
+    fotoCaminho: '/jornada/criador-trilho.webp',
+    fotoRosto: '/jornada/criador-retrato.webp',
+    altCaminho: 'Retrato em preto e branco de um homem de casaco, de perfil, apoiado num corrimão em um ambiente industrial',
+    altRosto: 'Retrato em preto e branco de um homem de barba olhando para o lado com leve sorriso, em um ambiente escuro',
+    posCaminho: '18% 30%',
+    posRosto: '85% 30%',
+    foco: ['50%', '33%'],
+    lema: ['Inventar', 'Moldar', 'Expressar'],
+    simbolos: ['lapis', 'engrenagem', 'lampada'],
+  },
 ];
 
 // As cenas seguem a ordem da roda: identidade, estrutura, conexão, marca.

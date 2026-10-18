@@ -14,6 +14,8 @@ Lista para o Mac preencher. O contrato trata a autorização como opcional, ent�
 | explorador-horizonte.webp, explorador-retrato.webp | Explorador | Cliente (mesma pessoa do Herói) | Mac confirmou em 18/10/2026 | |
 | sabio-biblioteca.webp, sabio-escada.webp | Sábio | Cliente (mesma pessoa nas duas) | idem | |
 | inocente-xicara.webp, inocente-luz.webp | Inocente | Cliente (mesma pessoa nas duas) | idem | |
+| cuidador-natureza.webp, cuidador-pausa.webp | Cuidador | Cliente (a mesma do Inocente e do Sábio) | Mac confirmou em 18/10/2026 | |
+| criador-trilho.webp, criador-retrato.webp | Criador | Cliente (o mesmo do Mago) | idem | |
 | governante-mesa.webp | Governante (reserva, ainda não usada) | (preencher) | (preencher) | |
 
 Regra: nunca usar imagem ou relato que identifique paciente do SAMU.

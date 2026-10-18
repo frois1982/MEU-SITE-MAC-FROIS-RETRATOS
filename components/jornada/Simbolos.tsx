@@ -234,7 +234,53 @@ export const Vela: React.FC<{ className?: string }> = ({ className }) => (
   </svg>
 );
 
+// ---- Cuidador e Criador (provisórios) ----
+export const Folha: React.FC<{ className?: string }> = ({ className }) => (
+  <svg viewBox="0 0 100 100" className={className} aria-hidden="true" {...traco}>
+    <path d="M14 88 C4 40 46 8 90 12 C92 56 60 92 14 88 Z" />
+    <path d="M14 88 L60 42" />
+  </svg>
+);
+
+export const Ninho: React.FC<{ className?: string }> = ({ className }) => (
+  <svg viewBox="0 0 100 100" className={className} aria-hidden="true" {...traco}>
+    <path d="M12 54 C12 82 32 94 50 94 C68 94 88 82 88 54 Z" />
+    <path d="M18 60 C34 70 66 70 82 60" />
+    <path d="M50 30 C42 30 38 42 44 48 C48 52 52 52 56 48 C62 42 58 30 50 30 Z" />
+  </svg>
+);
+
+export const Gota: React.FC<{ className?: string }> = ({ className }) => (
+  <svg viewBox="0 0 100 100" className={className} aria-hidden="true" {...traco}>
+    <path d="M50 8 C30 36 22 52 22 64 C22 80 34 92 50 92 C66 92 78 80 78 64 C78 52 70 36 50 8 Z" />
+  </svg>
+);
+
+export const Lapis: React.FC<{ className?: string }> = ({ className }) => (
+  <svg viewBox="0 0 100 100" className={className} aria-hidden="true" {...traco}>
+    <path d="M18 82 L14 96 L30 92 L86 36 L72 22 Z" />
+    <path d="M62 32 L76 46 M22 78 L28 86" />
+  </svg>
+);
+
+export const Engrenagem: React.FC<{ className?: string }> = ({ className }) => (
+  <svg viewBox="0 0 100 100" className={className} aria-hidden="true" {...traco}>
+    <circle cx="50" cy="50" r="24" /><circle cx="50" cy="50" r="9" />
+    {[0, 45, 90, 135, 180, 225, 270, 315].map((a) => (
+      <rect key={a} x="44" y="8" width="12" height="14" transform={`rotate(${a} 50 50)`} />
+    ))}
+  </svg>
+);
+
+export const Lampada: React.FC<{ className?: string }> = ({ className }) => (
+  <svg viewBox="0 0 100 100" className={className} aria-hidden="true" {...traco}>
+    <path d="M50 6 C30 6 20 20 20 36 C20 50 30 54 34 66 H66 C70 54 80 50 80 36 C80 20 70 6 50 6 Z" />
+    <path d="M36 74 H64 M40 82 H60 M44 90 H56" />
+  </svg>
+);
+
 export const SIMBOLOS: Record<string, React.FC<{ className?: string }>> = {
+  folha: Folha, ninho: Ninho, gota: Gota, lapis: Lapis, engrenagem: Engrenagem, lampada: Lampada,
   margarida: Margarida, pomba: Pomba, nuvem: Nuvem, bussola: Bussola, montanha: Montanha,
   trilha: Trilha, livro: Livro, coruja: Coruja, vela: Vela,
   mascara: Mascara, chapeu: Chapeu, confete: Confete, casa: Casa, maos: Maos, cafe: Cafe,
