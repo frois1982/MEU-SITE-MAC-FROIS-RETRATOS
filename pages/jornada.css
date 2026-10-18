@@ -27,15 +27,14 @@
 .jr-rosto img {
   filter: grayscale(1) contrast(1.05) brightness(calc(.55 + var(--p) * .5));
   transform: scale(calc(1.18 - var(--p) * .18)) translate3d(calc(var(--mx) * -6px), calc(var(--my) * -6px), 0);
-  object-position: 50% 22%;
 }
 /* camada de cima: o caminho, dissolve em círculo a partir do rosto e some */
 .jr-caminho {
   opacity: clamp(0, calc(1.25 - var(--p) * 2.1), 1);
   transform: scale(calc(1 + var(--p) * .22)) translate3d(calc(var(--mx) * 8px), 0, 0);
   filter: grayscale(1) blur(calc(var(--p) * 10px));
-  -webkit-mask-image: radial-gradient(circle at 50% 38%, transparent calc(var(--p) * 150% - 40%), #000 calc(var(--p) * 150%));
-          mask-image: radial-gradient(circle at 50% 38%, transparent calc(var(--p) * 150% - 40%), #000 calc(var(--p) * 150%));
+  -webkit-mask-image: radial-gradient(circle at var(--fx, 50%) var(--fy, 38%), transparent calc(var(--p) * 150% - 40%), #000 calc(var(--p) * 150%));
+          mask-image: radial-gradient(circle at var(--fx, 50%) var(--fy, 38%), transparent calc(var(--p) * 150% - 40%), #000 calc(var(--p) * 150%));
 }
 
 .jr-vinheta {

@@ -6,8 +6,12 @@ export type CenaJornada = {
   frase: string;
   linhas: string[]; // aparecem uma a uma conforme a rolagem
   fotoRosto: string; // retrato que é revelado
-  fotoCaminho: string | null; // foto de costas na estrada (null = ilustração provisória)
+  fotoCaminho: string | null; // foto que dissolve por cima (null = ilustração provisória)
   altRosto: string;
+  altCaminho: string;
+  posRosto: string; // object-position (recorte no celular)
+  posCaminho: string;
+  foco: [string, string]; // onde o círculo de revelação nasce (x, y), em %
 };
 
 export const CENAS: CenaJornada[] = [
@@ -20,10 +24,14 @@ export const CENAS: CenaJornada[] = [
       'E existe quem para, olha para frente e escolhe outro caminho.',
       'O retrato do Rebelde não pede licença: ele mostra quem rompeu.',
     ],
-    // Foto provisória, já publicada no site. Trocar pelo retrato real do arquétipo.
-    fotoRosto: '/metodo-frois/img/minicurso/retrato-2.jpg',
-    fotoCaminho: null,
-    altRosto: 'Retrato em preto e branco de uma mulher olhando para o lado, com leve sorriso',
+    // Ensaio do arquétipo Rebelde. Sobram duas fotos (charuto e olhar baixo) para outros momentos.
+    fotoRosto: '/jornada/rebelde-frontal.webp',
+    fotoCaminho: '/jornada/rebelde-fumaca.webp',
+    altRosto: 'Retrato em preto e branco de um homem de óculos escuros, jaqueta jeans e taco de beisebol no ombro, sentado num sofá de couro',
+    altCaminho: 'Retrato em preto e branco de um homem de óculos escuros soltando fumaça, com taco de beisebol no ombro',
+    posRosto: '50% 20%',
+    posCaminho: '30% 25%',
+    foco: ['50%', '22%'],
   },
 ];
 

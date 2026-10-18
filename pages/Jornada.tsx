@@ -54,17 +54,17 @@ const Cena: React.FC<{ cena: CenaJornada; numero: number }> = ({ cena, numero })
   const t = (n: number) => ({ ['--t' as any]: n } as React.CSSProperties);
 
   return (
-    <section ref={trilho} className="jr-trilho" aria-labelledby={`cena-${cena.id}`}>
+    <section ref={trilho} className="jr-trilho" aria-labelledby={`cena-${cena.id}`} style={{ ['--fx' as any]: cena.foco[0], ['--fy' as any]: cena.foco[1] }}>
       <div ref={palco} className="jr-palco">
         <div className="jr-barra" />
 
         <div className="jr-camada jr-rosto">
-          <img src={cena.fotoRosto} alt={cena.altRosto} loading="lazy" decoding="async" />
+          <img src={cena.fotoRosto} alt={cena.altRosto} loading="lazy" decoding="async" style={{ objectPosition: cena.posRosto }} />
         </div>
 
         <div className="jr-camada jr-caminho" aria-hidden="true">
           {cena.fotoCaminho
-            ? <img src={cena.fotoCaminho} alt="" loading="lazy" decoding="async" />
+            ? <img src={cena.fotoCaminho} alt="" loading="lazy" decoding="async" style={{ objectPosition: cena.posCaminho }} />
             : <EstradaProvisoria className="jr-fundo" />}
         </div>
 
