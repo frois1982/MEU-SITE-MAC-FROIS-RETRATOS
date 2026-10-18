@@ -64,7 +64,7 @@ export const Fundo: React.FC = () => {
     // O anel gira sozinho, devagar, o tempo todo (4 graus por segundo). Quando um capítulo se aproxima, a carta dele
     // sai de onde estiver no anel e VOA até o centro da frente, tomando o lugar da que estava lá (que esmaece).
     let ang = 0;
-    const velocidade = 4;
+    const velocidade = 2;
     const suave = (x: number) => { const t = Math.min(1, Math.max(0, x)); return t * t * (3 - 2 * t); };
 
     // Linha do tempo de cada carta k (guiada pela rolagem, então vale para descer e para subir). c1 = centro do intervalo seguinte:
