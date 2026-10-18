@@ -24,6 +24,37 @@ export const Raio: React.FC<{ className?: string }> = ({ className }) => (
   </svg>
 );
 
+// ---- Governante (provisórios) ----
+export const Coroa: React.FC<{ className?: string }> = ({ className }) => (
+  <svg viewBox="0 0 120 100" className={className} aria-hidden="true" {...traco}>
+    <path d="M14 78 L8 30 L38 54 L60 18 L82 54 L112 30 L106 78 Z" />
+    <path d="M14 90 H106" />
+    <circle cx="8" cy="26" r="4" /><circle cx="60" cy="13" r="4" /><circle cx="112" cy="26" r="4" />
+  </svg>
+);
+
+export const Cetro: React.FC<{ className?: string }> = ({ className }) => (
+  <svg viewBox="0 0 60 140" className={className} aria-hidden="true" {...traco}>
+    <circle cx="30" cy="22" r="14" />
+    <path d="M30 8 V36 M16 22 H44" />
+    <path d="M24 38 H36 L33 50 H27 Z" />
+    <path d="M30 50 V128" />
+    <path d="M22 132 H38" />
+  </svg>
+);
+
+export const Torre: React.FC<{ className?: string }> = ({ className }) => (
+  <svg viewBox="0 0 100 130" className={className} aria-hidden="true" {...traco}>
+    <path d="M22 122 V44 H14 V20 H30 V30 H40 V20 H60 V30 H70 V20 H86 V44 H78 V122 Z" />
+    <path d="M42 122 V94 Q50 84 58 94 V122" />
+    <path d="M44 62 H56 M44 74 H56" />
+  </svg>
+);
+
+export const SIMBOLOS: Record<string, React.FC<{ className?: string }>> = {
+  corrente: CorrenteQuebrada, chama: Chama, raio: Raio, coroa: Coroa, cetro: Cetro, torre: Torre,
+};
+
 // Estrada em perspectiva, ilustração provisória até existir a foto de costas.
 export const EstradaProvisoria: React.FC<{ className?: string }> = ({ className }) => (
   <svg viewBox="0 0 400 700" preserveAspectRatio="xMidYMid slice" className={className} aria-hidden="true">

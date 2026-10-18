@@ -78,6 +78,7 @@
   font-size: clamp(2.6rem, 12vw, 4.6rem); line-height: 1; color: #fff; margin-top: .6rem;
 }
 .jr-titulo em { font-style: italic; }
+.jr-lema { font-size: 11px; text-transform: uppercase; letter-spacing: .35em; color: #fbbf24; margin-top: 1rem; }
 .jr-frase { font-family: 'Cormorant Garamond', Georgia, serif; font-style: italic; font-size: 1.25rem; color: #fbbf24; margin-top: .6rem; }
 .jr-corpo { font-family: 'Cormorant Garamond', Georgia, serif; font-size: 1.15rem; line-height: 1.45; color: #e4e4e7; }
 @media (min-width: 640px) { .jr-corpo { font-size: 1.3rem; } .jr-frase { font-size: 1.45rem; } }

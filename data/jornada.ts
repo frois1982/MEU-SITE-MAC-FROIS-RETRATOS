@@ -12,6 +12,8 @@ export type CenaJornada = {
   posRosto: string; // object-position (recorte no celular)
   posCaminho: string;
   foco: [string, string]; // onde o círculo de revelação nasce (x, y), em %
+  lema: string[]; // três palavras
+  simbolos: [string, string, string]; // chaves de SIMBOLOS (components/jornada/Simbolos.tsx)
 };
 
 export const CENAS: CenaJornada[] = [
@@ -32,6 +34,8 @@ export const CENAS: CenaJornada[] = [
     posRosto: '50% 20%',
     posCaminho: '30% 25%',
     foco: ['50%', '22%'],
+    lema: ['Romper', 'Ousar', 'Libertar'],
+    simbolos: ['corrente', 'chama', 'raio'],
   },
 ];
 

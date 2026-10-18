@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import { Volume2, VolumeX, MessageCircle } from 'lucide-react';
 import { CENAS, WHATSAPP_JORNADA, CenaJornada } from '../data/jornada';
 import { CursorJornada } from '../components/jornada/Cursor';
-import { CorrenteQuebrada, Chama, Raio, EstradaProvisoria } from '../components/jornada/Simbolos';
+import { SIMBOLOS, EstradaProvisoria } from '../components/jornada/Simbolos';
 import { alternarSom, clique } from '../components/jornada/som';
 import './jornada.css';
 
@@ -96,9 +96,10 @@ const Cena: React.FC<{ cena: CenaJornada; numero: number }> = ({ cena, numero })
 
         <div className="jr-camada jr-vinheta" />
 
-        <div className="jr-simbolo jr-s1"><CorrenteQuebrada /></div>
-        <div className="jr-simbolo jr-s2"><Chama /></div>
-        <div className="jr-simbolo jr-s3"><Raio /></div>
+        {cena.simbolos.map((s, i) => {
+          const Simbolo = SIMBOLOS[s];
+          return <div key={s} className={`jr-simbolo jr-s${i + 1}`}><Simbolo /></div>;
+        })}
 
         <div className="jr-etiqueta">
           <p className="text-[10px] uppercase tracking-[0.4em] text-gold-500">Capítulo {numero} · Arquétipo</p>
@@ -111,7 +112,8 @@ const Cena: React.FC<{ cena: CenaJornada; numero: number }> = ({ cena, numero })
             <h2 id={`cena-${cena.id}`} className="jr-in jr-titulo" style={t(0.26)}>
               O <em>{cena.arquetipo.replace(/^O\s+/, '')}</em>
             </h2>
-            <p className="jr-in jr-frase" style={t(0.34)}>{cena.frase}</p>
+            <p className="jr-in jr-lema" style={t(0.3)}>{cena.lema.join(' · ')}</p>
+            <p className="jr-in jr-frase" style={t(0.36)}>{cena.frase}</p>
             <div className="mt-6 space-y-3">
               {cena.linhas.map((l, i) => (
                 <p key={i} className="jr-in jr-corpo" style={t(0.46 + i * 0.12)}>{l}</p>
