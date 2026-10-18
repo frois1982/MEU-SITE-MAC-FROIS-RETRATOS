@@ -184,10 +184,6 @@ export const Jornada: React.FC = () => {
     document.querySelector('meta[name="description"]')?.setAttribute('content',
       'Mac Frois é fotógrafo de retratos corporativos e posicionamento de imagem para executivos, empresários e profissionais liberais em Florianópolis, SC.');
     document.querySelector('link[rel="canonical"]')?.setAttribute('href', 'https://www.macfrois.com.br/');
-    const fonte = document.createElement('link');
-    fonte.rel = 'stylesheet';
-    fonte.href = 'https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;1,400;1,500&display=swap';
-    document.head.appendChild(fonte);
 
     // Na abertura há texto na tela: o feixe fica mais discreto para a leitura ser tranquila.
     const hero = document.querySelector('.jr-hero');
@@ -204,7 +200,7 @@ export const Jornada: React.FC = () => {
     const aoClicarNaPagina = () => clique(true);
     window.addEventListener('click', aoClicarNaPagina);
     return () => {
-      document.title = anterior; fonte.remove();
+      document.title = anterior;
       window.removeEventListener('scroll', marcarHero);
       window.removeEventListener('click', aoClicarNaPagina);
       estado.texto.delete('hero');

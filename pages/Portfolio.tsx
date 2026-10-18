@@ -4,6 +4,10 @@ import { SectionTitle, Skeleton } from '../components/UI';
 import { PortfolioItem } from '../types';
 import { X, Maximize2, ChevronLeft, ChevronRight } from 'lucide-react';
 
+// As fotos vêm do Cloudinary, que entrega a mesma foto em qualquer largura. Cada tela baixa só a largura de que precisa
+// (srcset); a foto ampliada pede uma versão maior. A qualidade e o formato continuam automáticos (q_auto, f_auto).
+const larguraCloudinary = (url: string, largura: number) => url.replace(/w_\d+/, `w_${largura}`);
+
 export const Portfolio: React.FC = () => {
   useEffect(() => {
     document.title = 'Portfolio | Mac Frois - Retratos Corporativos Florianopolis';
@@ -175,9 +179,13 @@ export const Portfolio: React.FC = () => {
                 onClick={() => setSelectedIndex(index)}
                 className="relative group overflow-hidden break-inside-avoid rounded-sm border border-zinc-900 bg-zinc-900 shadow-xl cursor-zoom-in"
               >
-                <img 
-                  src={item.imageUrl} 
-                  alt={item.title} 
+                <img
+                  src={larguraCloudinary(item.imageUrl, 800)}
+                  srcSet={[480, 800, 1200].map((w) => `${larguraCloudinary(item.imageUrl, w)} ${w}w`).join(', ')}
+                  sizes="(min-width: 1024px) 33vw, (min-width: 768px) 50vw, 100vw"
+                  loading="lazy"
+                  decoding="async"
+                  alt={item.title}
                   className="w-full h-auto grayscale transition-all duration-1000 group-hover:scale-105 group-hover:grayscale-0 group-hover:brightness-[0.4]" 
                 />
                 <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-all duration-500 flex flex-col items-center justify-center p-8 text-center">
@@ -215,7 +223,7 @@ export const Portfolio: React.FC = () => {
           <div className="relative max-w-7xl max-h-full flex items-center justify-center px-4">
             <img 
               key={selectedItem.id}
-              src={selectedItem.imageUrl} 
+              src={larguraCloudinary(selectedItem.imageUrl, 1600)}
               alt={selectedItem.title} 
               className="max-w-full max-h-[80vh] object-contain shadow-2xl animate-in zoom-in-95 duration-500 select-none"
               onClick={(e) => e.stopPropagation()} 
