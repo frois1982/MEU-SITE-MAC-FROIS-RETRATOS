@@ -12,6 +12,7 @@ import BlogPost from './pages/BlogPost';
 import { CorporatePhotographer } from './pages/CorporatePhotographer';
 import { FamilyPhotographer } from './pages/FamilyPhotographer';
 import { LandingPage, PAGINAS_LANDING } from './pages/LandingPage';
+import { Jornada } from './pages/Jornada';
 
 // Scroll to top helper
 const ScrollToTop = () => {
@@ -40,6 +41,7 @@ const App: React.FC = () => {
           {PAGINAS_LANDING.map((p) => (
             <Route key={p.rota} path={p.rota} element={<LandingPage page={p} />} />
           ))}
+          <Route path="/jornada" element={<Jornada />} />
           <Route path="/contato" element={<Contact />} />
           <Route path="/admin" element={<Admin />} />
         </Routes>

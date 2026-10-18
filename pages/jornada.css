@@ -1,0 +1,90 @@
+/* Página /jornada. Tudo guiado pela variável --p (0 a 1) = progresso da rolagem da cena.
+   O JavaScript só escreve --p; o resto é CSS, então não re-renderiza o React a cada rolagem. */
+
+.jr-root { background: #09090b; color: #e4e4e7; }
+
+/* ---------- Abertura ---------- */
+.jr-hero {
+  min-height: 100svh; display: flex; flex-direction: column; justify-content: center;
+  padding: 7rem 1.5rem 4rem; position: relative; overflow: hidden;
+  background: radial-gradient(120% 80% at 50% 0%, #1b1b20 0%, #09090b 60%);
+}
+.jr-hero::after { /* grão sutil */
+  content: ''; position: absolute; inset: 0; pointer-events: none; opacity: .07; mix-blend-mode: overlay;
+  background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='160' height='160'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2'/></filter><rect width='160' height='160' filter='url(%23n)'/></svg>");
+}
+.jr-pulso { animation: jr-pulso 2.4s ease-in-out infinite; }
+@keyframes jr-pulso { 0%,100% { opacity: .35; transform: translateY(0); } 50% { opacity: 1; transform: translateY(8px); } }
+
+/* ---------- Cena ---------- */
+.jr-trilho { position: relative; height: 430svh; --p: 0; --mx: 0; --my: 0; }
+.jr-palco { position: sticky; top: 0; height: 100svh; overflow: hidden; background: #09090b; }
+
+.jr-camada { position: absolute; inset: 0; will-change: transform, opacity; }
+.jr-camada img, .jr-camada svg.jr-fundo { width: 100%; height: 100%; object-fit: cover; display: block; }
+
+/* camada de baixo: o rosto */
+.jr-rosto img {
+  filter: grayscale(1) contrast(1.05) brightness(calc(.55 + var(--p) * .5));
+  transform: scale(calc(1.18 - var(--p) * .18)) translate3d(calc(var(--mx) * -6px), calc(var(--my) * -6px), 0);
+  object-position: 50% 22%;
+}
+/* camada de cima: o caminho, dissolve em círculo a partir do rosto e some */
+.jr-caminho {
+  opacity: clamp(0, calc(1.25 - var(--p) * 2.1), 1);
+  transform: scale(calc(1 + var(--p) * .22)) translate3d(calc(var(--mx) * 8px), 0, 0);
+  filter: grayscale(1) blur(calc(var(--p) * 10px));
+  -webkit-mask-image: radial-gradient(circle at 50% 38%, transparent calc(var(--p) * 150% - 40%), #000 calc(var(--p) * 150%));
+          mask-image: radial-gradient(circle at 50% 38%, transparent calc(var(--p) * 150% - 40%), #000 calc(var(--p) * 150%));
+}
+
+.jr-vinheta {
+  background:
+    linear-gradient(to top, rgba(9,9,11,.92) 0%, rgba(9,9,11,.55) 34%, rgba(9,9,11,0) 62%),
+    radial-gradient(120% 90% at 50% 40%, rgba(0,0,0,0) 55%, rgba(0,0,0,.6) 100%);
+  pointer-events: none;
+}
+
+/* símbolos: sobem em velocidades diferentes (paralaxe) e acompanham o mouse */
+.jr-simbolo {
+  position: absolute; color: #fbbf24; pointer-events: none;
+  opacity: clamp(0, calc((var(--p) - .18) * 3), .8);
+}
+.jr-simbolo svg { width: 100%; height: auto; display: block; }
+.jr-s1 { width: 18vw; max-width: 96px; left: 8%; top: 22%;
+  transform: translate3d(calc(var(--mx) * 16px), calc(var(--p) * -140px + var(--my) * 10px), 0) rotate(calc(var(--p) * -24deg)); }
+.jr-s2 { width: 15vw; max-width: 80px; right: 9%; top: 16%;
+  transform: translate3d(calc(var(--mx) * -22px), calc(var(--p) * -220px + var(--my) * 14px), 0) rotate(calc(var(--p) * 18deg)); }
+.jr-s3 { width: 12vw; max-width: 64px; right: 16%; top: 48%;
+  transform: translate3d(calc(var(--mx) * 28px), calc(var(--p) * -90px + var(--my) * 18px), 0); }
+
+/* textos (HTML real, sempre no DOM) */
+.jr-etiqueta {
+  position: absolute; left: 0; right: 0; top: 18%; text-align: center; padding: 0 1.5rem;
+  opacity: clamp(0, calc(1 - var(--p) * 7), 1);
+}
+.jr-texto { position: absolute; left: 0; right: 0; bottom: 0; padding: 0 4.5rem calc(env(safe-area-inset-bottom) + 12svh) 1.5rem; }
+@media (min-width: 640px) { .jr-texto { padding: 0 1.5rem calc(env(safe-area-inset-bottom) + 10svh); } }
+.jr-in { /* entra quando --p passa de --t */
+  opacity: clamp(0, calc((var(--p) - var(--t)) * 7), 1);
+  transform: translate3d(0, calc((1 - clamp(0, (var(--p) - var(--t)) * 7, 1)) * 26px), 0);
+}
+
+/* barra de progresso fina */
+.jr-barra { position: absolute; left: 0; top: 0; height: 2px; background: #f59e0b; width: calc(var(--p) * 100%); z-index: 5; }
+
+/* ---------- Cursor ---------- */
+.jr-cursor {
+  position: fixed; left: -18px; top: -18px; width: 36px; height: 36px; border-radius: 50%;
+  border: 1px solid rgba(251,191,36,.85); pointer-events: none; z-index: 9999; opacity: 0;
+  transition: opacity .25s, width .25s, height .25s, margin .25s, background .25s;
+}
+.jr-cursor--grande { width: 64px; height: 64px; margin: -14px 0 0 -14px; background: rgba(251,191,36,.12); }
+@media (hover: hover) and (pointer: fine) { .jr-root, .jr-root a, .jr-root button { cursor: none; } }
+
+/* ---------- Movimento reduzido ---------- */
+@media (prefers-reduced-motion: reduce) {
+  .jr-trilho { height: 100svh; --p: 1; }
+  .jr-pulso { animation: none; }
+  .jr-in, .jr-caminho, .jr-simbolo, .jr-rosto img { transition: none; }
+}

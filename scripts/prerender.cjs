@@ -13,6 +13,7 @@ const esc = (s) => String(s).replace(/&/g, '&amp;').replace(/"/g, '&quot;').repl
 const LP = JSON.parse(fs.readFileSync(path.join(__dirname, '../data/fotografo-corporativo.json'), 'utf-8'));
 const FAM = JSON.parse(fs.readFileSync(path.join(__dirname, '../data/ensaio-familia.json'), 'utf-8'));
 const PAGINAS = [
+  { rota: '/jornada', title: 'Jornada dos Arquétipos | Mac Frois — Retratos que contam quem você é', desc: 'Uma trilha interativa pelos arquétipos que guiam o Método Frois: primeiro a estratégia, depois a câmera. Retratos de posicionamento em Florianópolis, SC.', jornada: true },
   { rota: '/ensaio-de-familia-florianopolis', title: FAM.title, desc: FAM.description, fam: true },
   { rota: '/fotografo-corporativo-florianopolis', title: LP.title, desc: LP.description, lp: true },
   { rota: '/portfolio', title: 'Portfolio | Mac Frois - Retratos Corporativos Florianopolis', desc: 'Veja o portfolio de Mac Frois - retratos corporativos, posicionamento de imagem e fotografia de marca pessoal para executivos e profissionais liberais em Florianopolis, SC.' },
@@ -65,6 +66,12 @@ let n = 0;
 
 for (const p of PAGINAS) {
   let extra = {};
+  if (p.jornada) {
+    extra.corpo = '<main><h1>Antes da câmera, existe uma história</h1>' +
+      '<p>Todo retrato do Método Frois começa por uma pergunta: que arquétipo você carrega? Siga a trilha e veja como a estratégia vem primeiro, e a câmera depois.</p>' +
+      '<h2>O Rebelde</h2><p>Quebrar o que já não serve. O retrato do Rebelde não pede licença: ele mostra quem rompeu.</p>' +
+      '<h2>Existem 12 arquétipos. Qual é o seu?</h2><p><a href="/contato">Fale com o Mac</a></p></main>';
+  }
   if (p.lp) {
     extra.jsonld = { '@context': 'https://schema.org', '@type': 'FAQPage',
       mainEntity: LP.faq.map((f) => ({ '@type': 'Question', name: f.q, acceptedAnswer: { '@type': 'Answer', text: f.a } })) };
