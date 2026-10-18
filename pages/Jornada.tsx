@@ -1,7 +1,9 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { Volume2, VolumeX, MessageCircle } from 'lucide-react';
-import { CENAS_NA_RODA, TRIADES, WHATSAPP_JORNADA, MINIATURAS, CenaJornada, infoArquetipo } from '../data/jornada';
+import { CENAS_NA_RODA, TRIADES, WHATSAPP_JORNADA, CenaJornada, infoArquetipo } from '../data/jornada';
+import { Fundo } from '../components/jornada/Fundo';
+import { estado } from '../components/jornada/estado';
 import { CursorJornada } from '../components/jornada/Cursor';
 import { alternarSom, clique } from '../components/jornada/som';
 import './jornada.css';
@@ -34,10 +36,21 @@ const Cena: React.FC<{ cena: CenaJornada; numero: number }> = ({ cena, numero })
       // Um único clique por cena, quando o título começa a ser revelado.
       if (!tocou && atual > 0.34) { clique(); tocou = true; }
       else if (tocou && atual < 0.2) tocou = false;
+      publicar();
       if (atual !== alvo) raf = requestAnimationFrame(quadro);
+    };
+    // Avisa o fundo: se esta cena cobre a tela (ele para de desenhar) e quanto texto está aparecendo (ele escurece).
+    const publicar = () => {
+      const r = el.getBoundingClientRect();
+      const cobre = r.top <= 0 && r.bottom >= window.innerHeight;
+      if (cobre) estado.cobertos.add(cena.id); else estado.cobertos.delete(cena.id);
+      const visivel = r.bottom > 0 && r.top < window.innerHeight;
+      const s = (x: number) => Math.min(1, Math.max(0, x));
+      estado.texto.set(cena.id, visivel ? s((atual - 0.3) / 0.2) * (1 - s((atual - 0.97) / 0.03)) : 0);
     };
     const atualizar = () => {
       medir();
+      publicar();
       if (!movimento) return;
       if (!raf) raf = requestAnimationFrame(quadro);
     };
@@ -73,6 +86,8 @@ const Cena: React.FC<{ cena: CenaJornada; numero: number }> = ({ cena, numero })
       window.removeEventListener('resize', aoRolar);
       window.removeEventListener('pointermove', aoMover);
       el.removeEventListener('click', aoClicar);
+      estado.cobertos.delete(cena.id);
+      estado.texto.delete(cena.id);
     };
   }, []);
 
@@ -131,11 +146,26 @@ export const Jornada: React.FC = () => {
     fonte.rel = 'stylesheet';
     fonte.href = 'https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;1,400;1,500&display=swap';
     document.head.appendChild(fonte);
-    return () => { document.title = anterior; fonte.remove(); };
+
+    // Na abertura há texto na tela: o feixe fica mais discreto para a leitura ser tranquila.
+    const hero = document.querySelector('.jr-hero');
+    const marcarHero = () => {
+      if (!hero) return;
+      const r = hero.getBoundingClientRect();
+      estado.texto.set('hero', 0.55 * Math.min(1, Math.max(0, r.bottom / (window.innerHeight * 0.6))));
+    };
+    marcarHero();
+    window.addEventListener('scroll', marcarHero, { passive: true });
+    return () => {
+      document.title = anterior; fonte.remove();
+      window.removeEventListener('scroll', marcarHero);
+      estado.texto.delete('hero');
+    };
   }, []);
 
   return (
     <main className="jr-root">
+      <Fundo />
       <CursorJornada />
 
       <button
@@ -150,15 +180,6 @@ export const Jornada: React.FC = () => {
       </button>
 
       <header className="jr-hero">
-        <div className="jr-orbita" aria-hidden="true">
-          <div className="jr-anel">
-            {MINIATURAS.map((src, i) => (
-              <div key={src} className="jr-carta" style={{ ['--i' as any]: i }}>
-                <img src={src} alt="" width={220} height={290} decoding="async" />
-              </div>
-            ))}
-          </div>
-        </div>
         <div className="relative z-10 max-w-2xl mx-auto text-center">
           <p className="text-[10px] uppercase tracking-[0.4em] text-gold-500">Método Frois</p>
           <h1 className="mt-6 text-3xl sm:text-5xl text-white leading-tight">
@@ -173,9 +194,18 @@ export const Jornada: React.FC = () => {
         </div>
       </header>
 
-      {CENAS_NA_RODA.map((c, i) => <Cena key={c.id} cena={c} numero={i + 1} />)}
+      {CENAS_NA_RODA.map((c, i) => (
+        <React.Fragment key={c.id}>
+          {/* Intervalo: o texto some e o feixe e os retratos voltam a aparecer, antes do próximo capítulo */}
+          <div className="jr-intervalo">
+            <p>{i === 0 ? 'Começa por aqui' : 'Próximo'}<strong>{c.arquetipo}</strong></p>
+          </div>
+          <Cena cena={c} numero={i + 1} />
+        </React.Fragment>
+      ))}
+      <div className="jr-intervalo" />
 
-      <section className="px-6 py-24 bg-zinc-950 border-t border-zinc-900" aria-labelledby="roda">
+      <section className="relative px-6 py-24 bg-zinc-950 border-t border-zinc-900" aria-labelledby="roda">
         <div className="max-w-3xl mx-auto">
           <p className="text-center text-[10px] uppercase tracking-[0.4em] text-gold-500">A roda</p>
           <h2 id="roda" className="jr-titulo !text-3xl sm:!text-5xl text-center">Doze arquétipos, <em>quatro</em> desejos</h2>
@@ -200,7 +230,7 @@ export const Jornada: React.FC = () => {
         </div>
       </section>
 
-      <section className="px-6 py-28 text-center bg-zinc-950">
+      <section className="relative px-6 py-28 text-center bg-zinc-950">
         <div className="max-w-xl mx-auto">
           <p className="text-[10px] uppercase tracking-[0.4em] text-gold-500">Capítulos seguintes</p>
           <h2 className="mt-5 text-2xl sm:text-3xl text-white">Existem 12 arquétipos. Qual é o seu?</h2>
