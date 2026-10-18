@@ -1,7 +1,6 @@
 import React, { useEffect } from 'react';
-import { BrowserRouter, Routes, Route, useLocation } from 'react-router-dom';
+import { BrowserRouter, Routes, Route, Navigate, useLocation } from 'react-router-dom';
 import { Layout } from './components/Layout';
-import { Home } from './pages/Home';
 import { Portfolio } from './pages/Portfolio';
 import { Services, Products } from './pages/ServicesAndProducts';
 import { Blog } from './pages/Blog';
@@ -12,6 +11,7 @@ import BlogPost from './pages/BlogPost';
 import { CorporatePhotographer } from './pages/CorporatePhotographer';
 import { FamilyPhotographer } from './pages/FamilyPhotographer';
 import { LandingPage, PAGINAS_LANDING } from './pages/LandingPage';
+import { Jornada } from './pages/Jornada';
 
 // Scroll to top helper
 const ScrollToTop = () => {
@@ -28,7 +28,7 @@ const App: React.FC = () => {
       <ScrollToTop />
       <Layout>
         <Routes>
-          <Route path="/" element={<Home />} />
+          <Route path="/" element={<Jornada />} />
           <Route path="/portfolio" element={<Portfolio />} />
           <Route path="/servicos" element={<Services />} />
           <Route path="/produtos" element={<Products />} />
@@ -40,6 +40,7 @@ const App: React.FC = () => {
           {PAGINAS_LANDING.map((p) => (
             <Route key={p.rota} path={p.rota} element={<LandingPage page={p} />} />
           ))}
+          <Route path="/jornada" element={<Navigate to="/" replace />} />
           <Route path="/contato" element={<Contact />} />
           <Route path="/admin" element={<Admin />} />
         </Routes>

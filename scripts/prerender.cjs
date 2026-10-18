@@ -13,6 +13,8 @@ const esc = (s) => String(s).replace(/&/g, '&amp;').replace(/"/g, '&quot;').repl
 const LP = JSON.parse(fs.readFileSync(path.join(__dirname, '../data/fotografo-corporativo.json'), 'utf-8'));
 const FAM = JSON.parse(fs.readFileSync(path.join(__dirname, '../data/ensaio-familia.json'), 'utf-8'));
 const PAGINAS = [
+  // A Jornada é a página inicial ("/"): mantém o título e a descrição de busca da home de sempre.
+  { rota: '/', title: 'Mac Frois | Fotografo de Retratos Corporativos em Florianopolis', desc: 'Mac Frois e fotografo especialista em retratos corporativos e posicionamento de imagem para executivos, empresarios e profissionais liberais em Florianopolis, SC.', jornada: true },
   { rota: '/ensaio-de-familia-florianopolis', title: FAM.title, desc: FAM.description, fam: true },
   { rota: '/fotografo-corporativo-florianopolis', title: LP.title, desc: LP.description, lp: true },
   { rota: '/portfolio', title: 'Portfolio | Mac Frois - Retratos Corporativos Florianopolis', desc: 'Veja o portfolio de Mac Frois - retratos corporativos, posicionamento de imagem e fotografia de marca pessoal para executivos e profissionais liberais em Florianopolis, SC.' },
@@ -65,6 +67,25 @@ let n = 0;
 
 for (const p of PAGINAS) {
   let extra = {};
+  if (p.jornada) {
+    extra.corpo = '<main><p>Mac Frois · Retratos em Florianópolis</p><h1>Existe um jeito seu de estar no mundo</h1>' +
+      '<p>Todos nós temos um jeito de ser que as pessoas reconhecem: quem enfrenta, quem cuida, quem cria, quem ensina. São doze jeitos, os arquétipos do Método Frois, e você não precisa decorar nenhum. Basta se reconhecer.</p>' +
+      '<h2>O Rebelde</h2><p>Quebrar o que já não serve. O retrato do Rebelde não pede licença: ele mostra quem rompeu.</p>' +
+      '<h2>O Governante</h2><p>Construir o que permanece. O retrato do Governante não levanta a voz: a presença já organiza a sala.</p>' +
+      '<h2>O Amante</h2><p>Quando o vínculo aparece, a foto também. O retrato do Amante não encena intimidade: ele a encontra.</p>' +
+      '<h2>O Herói</h2><p>Provar o próprio valor na travessia. O retrato do Herói mostra o preço pago e a força que sobrou.</p>' +
+      '<h2>O Mago</h2><p>Fazer o impossível parecer inevitável. O retrato do Mago transforma presença em visão.</p>' +
+      '<h2>O Bobo da Corte</h2><p>Levar a vida a sério sem perder o riso. O retrato do Bobo da Corte não é piada: é presença que desarma.</p>' +
+      '<h2>A Pessoa Comum</h2><p>Ser inteiro sem precisar parecer especial. O retrato da Pessoa Comum tem a coragem do natural: ninguém precisa fingir.</p>' +
+      '<h2>O Explorador</h2><p>Ir além do mapa para se encontrar. O retrato do Explorador guarda a estrada que o trouxe até aqui.</p>' +
+      '<h2>O Sábio</h2><p>Ver com clareza para guiar os outros. O retrato do Sábio mostra a calma de quem já pensou duas vezes.</p>' +
+      '<h2>O Inocente</h2><p>Voltar a olhar o mundo sem medo. O retrato do Inocente é feito de luz suave e verdade simples.</p>' +
+      '<h2>O Cuidador</h2><p>Quem cuida também precisa de pausa. O retrato do Cuidador mostra a força que mora na delicadeza.</p>' +
+      '<h2>O Criador</h2><p>Dar forma ao que ainda não existe. O retrato do Criador é o instante em que a ideia ganha rosto.</p>' +
+      '<h2>Existem 12 arquétipos. Qual é o seu?</h2><p><a href="/contato">Fale com o Mac</a></p>' +
+      '<nav><a href="/portfolio">Portfólio</a> · <a href="/servicos">Serviços</a> · <a href="/fotografo-corporativo-florianopolis">Fotógrafo corporativo em Florianópolis</a> · ' +
+      '<a href="/ensaio-de-familia-florianopolis">Ensaio de família em Florianópolis</a> · <a href="/blog">Blog</a> · <a href="/contato">Contato</a></nav></main>';
+  }
   if (p.lp) {
     extra.jsonld = { '@context': 'https://schema.org', '@type': 'FAQPage',
       mainEntity: LP.faq.map((f) => ({ '@type': 'Question', name: f.q, acceptedAnswer: { '@type': 'Answer', text: f.a } })) };

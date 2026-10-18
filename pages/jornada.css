@@ -1,0 +1,161 @@
+/* Página /jornada. Tudo guiado pela variável --p (0 a 1) = progresso da rolagem da cena.
+   O JavaScript só escreve --p; o resto é CSS, então não re-renderiza o React a cada rolagem. */
+
+.jr-root { position: relative; color: #e4e4e7; }
+
+/* ---------- Fundo fixo: feixe, partículas e anel de retratos ---------- */
+.jr-fundo-fixo { position: fixed; inset: 0; z-index: 0; overflow: hidden; pointer-events: none; background: #030304; }
+.jr-canvas { position: absolute; inset: 0; width: 100%; height: 100%; }
+.jr-orbita { position: absolute; inset: 0; perspective: 1100px; perspective-origin: 50% 42%; --cw: 118px; }
+.jr-anel { position: absolute; left: 50%; top: 42%; width: 0; height: 0; transform-style: preserve-3d; transform: rotateX(-10deg); }
+.jr-carta { position: absolute; width: var(--cw); height: calc(var(--cw) * 1.32);
+  margin: calc(var(--cw) * -.66) 0 0 calc(var(--cw) * -.5); will-change: transform, opacity; }
+/* as bordas esmaecidas já vêm na própria imagem (transparência), sem máscara pesada em tempo real */
+.jr-carta img { width: 100%; height: 100%; object-fit: cover; display: block; }
+
+/* feixe em CSS: usado onde não há canvas (aparelho fraco ou "menos movimento") */
+.jr-feixe-css { display: none; position: absolute; left: 50%; top: 0; bottom: 0; width: min(18vw, 140px); transform: translateX(-50%);
+  background: linear-gradient(90deg, rgba(255,190,100,0), rgba(255,205,130,.22) 38%, rgba(255,248,230,.8) 50%, rgba(255,205,130,.22) 62%, rgba(255,190,100,0));
+  box-shadow: 0 0 80px 20px rgba(255,170,70,.12); }
+.jr-nivel-simples .jr-feixe-css, .jr-nivel-estatico .jr-feixe-css { display: block; }
+.jr-nivel-simples .jr-feixe-css { animation: jr-respira 5s ease-in-out infinite; }
+.jr-nivel-simples .jr-canvas, .jr-nivel-estatico .jr-canvas { display: none; }
+@keyframes jr-respira { 0%,100% { opacity: .75; } 50% { opacity: 1; } }
+
+/* o rodapé do site precisa ficar acima do fundo fixo */
+body:has(.jr-root) footer { position: relative; z-index: 1; }
+
+/* ---------- Abertura ---------- */
+.jr-hero { position: relative; min-height: 100svh; display: flex; flex-direction: column; justify-content: center; padding: 7rem 1.5rem 4rem; overflow: hidden; }
+/* véu só em volta do bloco de texto (acompanha o tamanho dele), com borda esmaecida: em cima e embaixo os retratos aparecem acesos */
+.jr-hero-texto { position: relative; }
+.jr-hero-texto::before { content: ''; position: absolute; inset: -3.5rem -2.5rem; z-index: -1; pointer-events: none;
+  background: radial-gradient(ellipse closest-side, rgba(3,3,4,.9) 0%, rgba(3,3,4,.84) 55%, rgba(3,3,4,0) 100%); }
+.jr-hero h1, .jr-hero p { text-shadow: 0 1px 14px rgba(0,0,0,.95), 0 0 3px rgba(0,0,0,.8); }
+.jr-intervalo { position: relative; height: 70svh; display: flex; align-items: flex-end; justify-content: center; padding: 0 1.5rem 12svh; text-align: center; }
+.jr-intervalo p { font-size: 10px; text-transform: uppercase; letter-spacing: .35em; color: #a1a1aa; text-shadow: 0 0 12px #000; }
+.jr-intervalo strong { display: block; margin-top: .6rem; font-family: 'Cormorant Garamond', Georgia, serif; font-weight: 400;
+  font-size: 1.6rem; letter-spacing: .02em; text-transform: none; color: #fff; }
+
+.jr-hero::after { /* grão sutil */
+  content: ''; position: absolute; inset: 0; pointer-events: none; opacity: .07; mix-blend-mode: overlay;
+  background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='160' height='160'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2'/></filter><rect width='160' height='160' filter='url(%23n)'/></svg>");
+}
+.jr-pulso { animation: jr-pulso 2.4s ease-in-out infinite; }
+@keyframes jr-pulso { 0%,100% { opacity: .35; transform: translateY(0); } 50% { opacity: 1; transform: translateY(8px); } }
+
+/* ---------- Cena ---------- */
+.jr-trilho { position: relative; height: 300svh; --p: 0; --mx: 0; --my: 0; }
+.jr-palco { position: sticky; top: 0; height: 100svh; overflow: hidden; background: #09090b; }
+/* Na passagem de uma cena para a outra, a borda horizontal da cena vira um degradê e se dissolve no fundo,
+   em vez de um corte seco. Só vale durante a passagem; no resto da cena não há máscara. */
+.jr-bordas .jr-palco {
+  -webkit-mask-image: linear-gradient(to bottom, transparent 0, #000 var(--ft, 0px), #000 calc(100% - var(--fb, 0px)), transparent 100%);
+          mask-image: linear-gradient(to bottom, transparent 0, #000 var(--ft, 0px), #000 calc(100% - var(--fb, 0px)), transparent 100%); }
+
+.jr-camada { position: absolute; inset: 0; }
+/* só as cenas perto da tela ganham camada própria na GPU: com todas as doze, o celular sofre e a imagem "craquela" */
+.jr-ativa .jr-camada { will-change: transform, opacity; }
+/* quando a foto desce, o vão no topo se funde ao fundo em degradê (a barra do site cobre parte dele) */
+.jr-camada::before { content: ''; position: absolute; left: 0; right: 0; top: 0; z-index: 2; pointer-events: none;
+  height: calc(var(--desce, 0px) + 9svh); opacity: var(--tem-desce, 0);
+  background: linear-gradient(to bottom, #09090b 0%, rgba(9,9,11,.85) 55%, rgba(9,9,11,0) 100%); }
+.jr-camada img, .jr-camada svg.jr-fundo { width: 100%; height: 100%; object-fit: cover; display: block; }
+
+/* camada de baixo: o rosto */
+.jr-rosto img {
+  filter: grayscale(1) contrast(1.05); /* fixo: filtro que muda a cada quadro pesa demais */
+  transform: scale(calc(1.18 - var(--p) * .18)) translate3d(calc(var(--mx) * -6px), calc(var(--my) * -6px + var(--desce, 0px)), 0);
+}
+/* o rosto começa mais escuro e acende com a rolagem (camada preta que some, em vez de filtro) */
+.jr-rosto::after { content: ''; position: absolute; inset: 0; background: #000; pointer-events: none;
+  opacity: calc(.45 - var(--p) * .45); }
+/* camada de cima: o caminho, dissolve em círculo a partir do rosto e some */
+.jr-caminho {
+  opacity: clamp(0, calc(1.25 - var(--p) * 2.1), 1);
+  transform: scale(calc(1 + var(--p) * .22)) translate3d(calc(var(--mx) * 8px), var(--desce, 0px), 0);
+  filter: grayscale(1);
+  -webkit-mask-image: radial-gradient(circle at var(--fx, 50%) var(--fy, 38%), transparent calc(var(--p) * 150% - 40%), #000 calc(var(--p) * 150%));
+          mask-image: radial-gradient(circle at var(--fx, 50%) var(--fy, 38%), transparent calc(var(--p) * 150% - 40%), #000 calc(var(--p) * 150%));
+}
+
+.jr-vinheta {
+  background:
+    linear-gradient(to top, rgba(9,9,11,.92) 0%, rgba(9,9,11,.55) 34%, rgba(9,9,11,0) 62%),
+    radial-gradient(120% 90% at 50% 40%, rgba(0,0,0,0) 55%, rgba(0,0,0,.6) 100%);
+  pointer-events: none;
+}
+
+/* textos (HTML real, sempre no DOM) */
+.jr-etiqueta {
+  position: absolute; left: 0; right: 0; top: 18%; text-align: center; padding: 0 1.5rem;
+  opacity: clamp(0, calc(1 - var(--p) * 7), 1);
+}
+.jr-texto { position: absolute; left: 0; right: 0; bottom: 0; padding: 0 1.5rem calc(env(safe-area-inset-bottom) + 12svh); }
+@media (min-width: 640px) { .jr-texto { padding: 0 1.5rem calc(env(safe-area-inset-bottom) + 10svh); } }
+/* Entra quando --p passa de --t: surge de um borrão e se firma, como no site do Jimmy Nelson. */
+.jr-in {
+  --k: clamp(0, calc((var(--p) - var(--t)) * 6), 1);
+  opacity: var(--k);
+  filter: blur(calc((1 - var(--k)) * 7px));
+  transform: translate3d(0, calc((1 - var(--k)) * 14px), 0);
+  letter-spacing: calc(0.02em + (1 - var(--k)) * 0.12em);
+}
+.jr-rotulo { font-size: 10px; text-transform: uppercase; letter-spacing: .4em; color: #f59e0b; }
+.jr-titulo {
+  font-family: 'Cormorant Garamond', Georgia, serif; text-transform: none; font-weight: 400;
+  font-size: clamp(2.6rem, 12vw, 4.6rem); line-height: 1; color: #fff; margin-top: .6rem;
+}
+.jr-titulo em { font-style: italic; }
+.jr-lema { font-size: 10px; text-transform: uppercase; letter-spacing: .24em; white-space: nowrap; color: #fbbf24; margin-top: 1rem; }
+.jr-frase { font-family: 'Cormorant Garamond', Georgia, serif; font-style: italic; font-size: 1.25rem; color: #fbbf24; margin-top: .6rem; }
+.jr-corpo { font-family: 'Cormorant Garamond', Georgia, serif; font-size: 1.15rem; line-height: 1.45; color: #e4e4e7; }
+@media (min-width: 640px) { .jr-corpo { font-size: 1.3rem; } .jr-frase { font-size: 1.45rem; } }
+
+/* barra de progresso fina */
+.jr-barra { position: absolute; left: 0; top: 0; height: 2px; background: #f59e0b; width: calc(var(--p) * 100%); z-index: 5; }
+
+/* Cena em cores (ex.: Amante): sem preto e branco */
+.jr-cor .jr-rosto img, .jr-revela .jr-rosto img { filter: none; }
+.jr-cor .jr-caminho { filter: none; }
+
+/* Foto horizontal em tela vertical: mostra a cena inteira sobre um fundo desfocado da própria foto */
+.jr-desfoque { display: none; }
+@media (max-aspect-ratio: 4/5) {
+  .jr-caber .jr-desfoque { display: block; position: absolute; inset: 0; filter: blur(26px) brightness(.45) saturate(1.1) !important; transform: scale(1.25) !important; }
+  .jr-caber .jr-principal {
+    position: absolute; left: 0; top: 14%; height: 64%;
+    -webkit-mask-image: linear-gradient(to bottom, transparent, #000 14%, #000 86%, transparent);
+            mask-image: linear-gradient(to bottom, transparent, #000 14%, #000 86%, transparent);
+  }
+}
+
+/* Setas de salto rápido (início e fim da jornada) */
+.jr-setas { position: fixed; right: 10px; top: 40%; z-index: 50; display: flex; flex-direction: column; gap: 10px; }
+.jr-setas button { width: 34px; height: 34px; border-radius: 50%; display: flex; align-items: center; justify-content: center;
+  color: #d4d4d8; background: rgba(9,9,11,.6); border: 1px solid rgba(113,113,122,.6); backdrop-filter: blur(4px);
+  opacity: .75; transition: opacity .25s, color .25s, border-color .25s, transform .25s; }
+.jr-setas button:hover { opacity: 1; color: #fbbf24; border-color: #f59e0b; }
+.jr-setas button.jr-seta-oculta { opacity: 0; pointer-events: none; transform: scale(.8); }
+@media (min-width: 768px) { .jr-setas { right: 22px; } .jr-setas button { width: 40px; height: 40px; } }
+
+/* ---------- Cursor ---------- */
+.jr-cursor {
+  position: fixed; left: -18px; top: -18px; width: 36px; height: 36px; border-radius: 50%;
+  border: 1px solid rgba(251,191,36,.85); pointer-events: none; z-index: 9999; opacity: 0;
+  transition: opacity .25s, width .25s, height .25s, margin .25s, background .25s;
+}
+.jr-cursor-bolinha { position: fixed; left: -4px; top: -4px; width: 8px; height: 8px; border-radius: 50%;
+  background: #fbbf24; pointer-events: none; z-index: 10000; opacity: 0; transition: opacity .25s; }
+.jr-cursor span { position: absolute; inset: 0; display: flex; align-items: center; justify-content: center;
+  font-size: 9px; letter-spacing: .25em; text-transform: uppercase; color: #fbbf24; opacity: 0; transition: opacity .2s; }
+.jr-cursor--grande span { opacity: 1; }
+.jr-cursor--grande { width: 64px; height: 64px; margin: -14px 0 0 -14px; background: rgba(251,191,36,.12); }
+@media (hover: hover) and (pointer: fine) { .jr-root, .jr-root a, .jr-root button { cursor: none; } }
+
+/* ---------- Movimento reduzido ---------- */
+@media (prefers-reduced-motion: reduce) {
+  .jr-trilho { height: 100svh; --p: 1; }
+  .jr-pulso { animation: none; }
+  .jr-in, .jr-caminho, .jr-rosto img { transition: none; }
+}
