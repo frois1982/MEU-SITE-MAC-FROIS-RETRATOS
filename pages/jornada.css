@@ -44,19 +44,6 @@
   pointer-events: none;
 }
 
-/* símbolos: sobem em velocidades diferentes (paralaxe) e acompanham o mouse */
-.jr-simbolo {
-  position: absolute; color: #fbbf24; pointer-events: none;
-  opacity: clamp(0, calc((var(--p) - .18) * 3), .8);
-}
-.jr-simbolo svg { width: 100%; height: auto; display: block; }
-.jr-s1 { width: 18vw; max-width: 96px; left: 8%; top: 22%;
-  transform: translate3d(calc(var(--mx) * 16px), calc(var(--p) * -140px + var(--my) * 10px), 0) rotate(calc(var(--p) * -24deg)); }
-.jr-s2 { width: 15vw; max-width: 80px; right: 9%; top: 16%;
-  transform: translate3d(calc(var(--mx) * -22px), calc(var(--p) * -220px + var(--my) * 14px), 0) rotate(calc(var(--p) * 18deg)); }
-.jr-s3 { width: 12vw; max-width: 64px; right: 16%; top: 48%;
-  transform: translate3d(calc(var(--mx) * 28px), calc(var(--p) * -90px + var(--my) * 18px), 0); }
-
 /* textos (HTML real, sempre no DOM) */
 .jr-etiqueta {
   position: absolute; left: 0; right: 0; top: 18%; text-align: center; padding: 0 1.5rem;
@@ -117,5 +104,5 @@
 @media (prefers-reduced-motion: reduce) {
   .jr-trilho { height: 100svh; --p: 1; }
   .jr-pulso { animation: none; }
-  .jr-in, .jr-caminho, .jr-simbolo, .jr-rosto img { transition: none; }
+  .jr-in, .jr-caminho, .jr-rosto img { transition: none; }
 }

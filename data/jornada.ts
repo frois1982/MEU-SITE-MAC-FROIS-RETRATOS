@@ -6,14 +6,13 @@ export type CenaJornada = {
   frase: string;
   linhas: string[]; // aparecem uma a uma conforme a rolagem
   fotoRosto: string; // retrato que é revelado
-  fotoCaminho: string | null; // foto que dissolve por cima (null = ilustração provisória)
+  fotoCaminho: string; // foto que dissolve por cima
   altRosto: string;
   altCaminho: string;
   posRosto: string; // object-position (recorte no celular)
   posCaminho: string;
   foco: [string, string]; // onde o círculo de revelação nasce (x, y), em %
   lema: string[]; // três palavras
-  simbolos: [string, string, string]; // chaves de SIMBOLOS (components/jornada/Simbolos.tsx)
   cor?: boolean | 'revela'; // true = cor nas duas fotos; 'revela' = foto de cima em cinza, revelada em cor (padrão: preto e branco)
   ajuste?: { caminho?: boolean; rosto?: boolean }; // foto horizontal: no celular mostra a cena inteira em vez de cortar
 };
@@ -70,7 +69,6 @@ export const CENAS: CenaJornada[] = [
     posCaminho: '30% 25%',
     foco: ['50%', '22%'],
     lema: ['Romper', 'Ousar', 'Libertar'],
-    simbolos: ['corrente', 'chama', 'raio'],
   },
   {
     id: 'governante',
@@ -91,7 +89,6 @@ export const CENAS: CenaJornada[] = [
     posRosto: '50% 18%',
     foco: ['46%', '20%'],
     lema: ['Liderar', 'Ordenar', 'Perdurar'],
-    simbolos: ['coroa', 'cetro', 'torre'],
   },
   {
     id: 'amante',
@@ -111,7 +108,6 @@ export const CENAS: CenaJornada[] = [
     posRosto: '55% 50%',
     foco: ['50%', '34%'],
     lema: ['Sentir', 'Conectar', 'Encantar'],
-    simbolos: ['coracao', 'rosa', 'aneis'],
     cor: true,
     ajuste: { caminho: true, rosto: true },
   },
@@ -134,7 +130,6 @@ export const CENAS: CenaJornada[] = [
     posRosto: '80% 30%',
     foco: ['50%', '24%'],
     lema: ['Enfrentar', 'Superar', 'Vencer'],
-    simbolos: ['espada', 'escudo', 'sol'],
     cor: true,
     ajuste: { caminho: true },
   },
@@ -157,7 +152,6 @@ export const CENAS: CenaJornada[] = [
     posRosto: '52% 40%',
     foco: ['50%', '31%'],
     lema: ['Imaginar', 'Transformar', 'Revelar'],
-    simbolos: ['estrela', 'lua', 'olho'],
     cor: true,
   },
   {
@@ -178,7 +172,6 @@ export const CENAS: CenaJornada[] = [
     posRosto: '66% 30%',
     foco: ['50%', '24%'],
     lema: ['Rir', 'Aliviar', 'Aproximar'],
-    simbolos: ['mascara', 'chapeu', 'confete'],
     cor: true,
     ajuste: { caminho: true },
   },
@@ -201,7 +194,6 @@ export const CENAS: CenaJornada[] = [
     posRosto: '53% 40%',
     foco: ['50%', '40%'],
     lema: ['Pertencer', 'Acolher', 'Confiar'],
-    simbolos: ['casa', 'maos', 'cafe'],
     cor: 'revela',
   },
   {
@@ -222,7 +214,6 @@ export const CENAS: CenaJornada[] = [
     posRosto: '40% 25%',
     foco: ['50%', '19%'],
     lema: ['Buscar', 'Atravessar', 'Descobrir'],
-    simbolos: ['bussola', 'montanha', 'trilha'],
     cor: true,
   },
   {
@@ -243,7 +234,6 @@ export const CENAS: CenaJornada[] = [
     posRosto: '61% 30%',
     foco: ['50%', '28%'],
     lema: ['Estudar', 'Compreender', 'Iluminar'],
-    simbolos: ['livro', 'coruja', 'vela'],
     cor: true,
     ajuste: { caminho: true },
   },
@@ -265,7 +255,6 @@ export const CENAS: CenaJornada[] = [
     posRosto: '27% 30%',
     foco: ['50%', '24%'],
     lema: ['Confiar', 'Recomeçar', 'Florescer'],
-    simbolos: ['margarida', 'pomba', 'nuvem'],
     cor: 'revela',
   },
   {
@@ -286,7 +275,6 @@ export const CENAS: CenaJornada[] = [
     posRosto: '100% 50%',
     foco: ['50%', '38%'],
     lema: ['Cuidar', 'Proteger', 'Nutrir'],
-    simbolos: ['folha', 'ninho', 'gota'],
     cor: true,
     ajuste: { rosto: true },
   },
@@ -308,7 +296,6 @@ export const CENAS: CenaJornada[] = [
     posRosto: '85% 30%',
     foco: ['50%', '33%'],
     lema: ['Inventar', 'Moldar', 'Expressar'],
-    simbolos: ['lapis', 'engrenagem', 'lampada'],
   },
 ];
 

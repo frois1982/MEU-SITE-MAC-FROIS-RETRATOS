@@ -3,7 +3,6 @@ import { Link } from 'react-router-dom';
 import { Volume2, VolumeX, MessageCircle } from 'lucide-react';
 import { CENAS_NA_RODA, TRIADES, WHATSAPP_JORNADA, CenaJornada, infoArquetipo } from '../data/jornada';
 import { CursorJornada } from '../components/jornada/Cursor';
-import { SIMBOLOS, EstradaProvisoria } from '../components/jornada/Simbolos';
 import { alternarSom, clique } from '../components/jornada/som';
 import './jornada.css';
 
@@ -18,7 +17,7 @@ const Cena: React.FC<{ cena: CenaJornada; numero: number }> = ({ cena, numero })
     if (!el) return;
     const movimento = !reduzido();
     let raf = 0;
-    let degrau = -1;
+    let tocou = false;
     let alvo = 0;   // onde a rolagem está
     let atual = 0;  // o que aparece na tela: persegue o alvo com inércia (efeito "desliza")
 
@@ -32,8 +31,9 @@ const Cena: React.FC<{ cena: CenaJornada; numero: number }> = ({ cena, numero })
       atual += (alvo - atual) * 0.09;
       if (Math.abs(alvo - atual) < 0.0004) atual = alvo;
       el.style.setProperty('--p', atual.toFixed(4));
-      const d = atual > 0.74 ? 3 : atual > 0.62 ? 2 : atual > 0.5 ? 1 : atual > 0.3 ? 0 : -1;
-      if (d !== degrau) { if (degrau !== -1 || d > -1) clique(); degrau = d; }
+      // Um único clique por cena, quando o título começa a ser revelado.
+      if (!tocou && atual > 0.34) { clique(); tocou = true; }
+      else if (tocou && atual < 0.2) tocou = false;
       if (atual !== alvo) raf = requestAnimationFrame(quadro);
     };
     const atualizar = () => {
@@ -52,7 +52,6 @@ const Cena: React.FC<{ cena: CenaJornada; numero: number }> = ({ cena, numero })
       const topo = window.scrollY + r.top;
       const proximo = momentos.find((m) => m > alvo + 0.04);
       if (proximo === undefined) return;
-      clique();
       window.scrollTo({ top: topo + total * proximo, behavior: 'smooth' });
     };
     if (movimento) el.addEventListener('click', aoClicar);
@@ -91,20 +90,11 @@ const Cena: React.FC<{ cena: CenaJornada; numero: number }> = ({ cena, numero })
         </div>
 
         <div className={`jr-camada jr-caminho${cena.ajuste?.caminho ? ' jr-caber' : ''}`} aria-hidden="true">
-          {cena.fotoCaminho
-            ? <>
-                {cena.ajuste?.caminho && <img src={cena.fotoCaminho} alt="" className="jr-desfoque" loading="lazy" decoding="async" />}
-                <img src={cena.fotoCaminho} alt={cena.altCaminho} className="jr-principal" loading="lazy" decoding="async" style={{ objectPosition: cena.posCaminho }} />
-              </>
-            : <EstradaProvisoria className="jr-fundo" />}
+          {cena.ajuste?.caminho && <img src={cena.fotoCaminho} alt="" className="jr-desfoque" loading="lazy" decoding="async" />}
+          <img src={cena.fotoCaminho} alt={cena.altCaminho} className="jr-principal" loading="lazy" decoding="async" style={{ objectPosition: cena.posCaminho }} />
         </div>
 
         <div className="jr-camada jr-vinheta" />
-
-        {cena.simbolos.map((s, i) => {
-          const Simbolo = SIMBOLOS[s];
-          return <div key={s} className={`jr-simbolo jr-s${i + 1}`}><Simbolo /></div>;
-        })}
 
         <div className="jr-etiqueta">
           <p className="text-[10px] uppercase tracking-[0.4em] text-gold-500">Capítulo {numero} · {info.triade}</p>
