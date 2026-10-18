@@ -31,7 +31,8 @@ const App: React.FC = () => {
     <BrowserRouter>
       <ScrollToTop />
       <Layout>
-        <Suspense fallback={<div className="min-h-[70vh] bg-zinc-950" />}>
+        {/* Enquanto a página carrega, o rodapé fica escondido: assim ele não "pula" quando o conteúdo chega */}
+        <Suspense fallback={<div className="min-h-screen bg-zinc-950"><style>{'footer{display:none}'}</style></div>}>
           <Routes>
             <Route path="/" element={<Jornada />} />
             <Route path="/portfolio" element={<Portfolio />} />
