@@ -37,6 +37,27 @@ export const CENAS: CenaJornada[] = [
     lema: ['Romper', 'Ousar', 'Libertar'],
     simbolos: ['corrente', 'chama', 'raio'],
   },
+  {
+    id: 'governante',
+    arquetipo: 'O Governante',
+    frase: 'Construir o que permanece.',
+    linhas: [
+      'Existe quem espera que alguém assuma o comando.',
+      'E existe quem assume a responsabilidade e põe ordem no que importa.',
+      'O retrato do Governante não levanta a voz: a presença já organiza a sala.',
+    ],
+    // Mesma pessoa nas duas fotos: o calmo na poltrona dissolve e revela o olhar de comando.
+    // Sobra governante-mesa.webp (outra pessoa, ponta da mesa) para um momento próprio.
+    fotoCaminho: '/jornada/governante-calmo.webp',
+    fotoRosto: '/jornada/governante-comando.webp',
+    altCaminho: 'Retrato de um homem grisalho de terno preto e camisa marrom, sentado numa poltrona de couro com as mãos entrelaçadas',
+    altRosto: 'Retrato de um homem grisalho de barba curta, olhando firme para a câmera enquanto ajeita a gola do terno, com relógio no pulso',
+    posCaminho: '50% 30%',
+    posRosto: '50% 18%',
+    foco: ['46%', '20%'],
+    lema: ['Liderar', 'Ordenar', 'Perdurar'],
+    simbolos: ['coroa', 'cetro', 'torre'],
+  },
 ];
 
 export const WHATSAPP_JORNADA =

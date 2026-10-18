@@ -1,0 +1,11 @@
+# Autorização de imagem: fotos da Jornada
+
+Lista para o Mac preencher. O contrato trata a autorização como opcional, então cada foto usada em /jornada precisa de confirmação para uso no site.
+
+| Arquivo | Arquétipo | Pessoa | Autorizou uso no site? | Data |
+|---|---|---|---|---|
+| rebelde-fumaca.webp, rebelde-frontal.webp | Rebelde | (preencher) | (preencher) | |
+| governante-calmo.webp, governante-comando.webp | Governante | (preencher; mesma pessoa nas duas) | (preencher) | |
+| governante-mesa.webp | Governante (reserva, ainda não usada) | (preencher) | (preencher) | |
+
+Regra: nunca usar imagem ou relato que identifique paciente do SAMU.
