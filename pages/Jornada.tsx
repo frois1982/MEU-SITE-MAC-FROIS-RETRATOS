@@ -235,7 +235,7 @@ export const Jornada: React.FC = () => {
       </div>
 
       <header className="jr-hero">
-        <div className="relative z-10 max-w-2xl mx-auto text-center">
+        <div className="jr-hero-texto relative z-10 max-w-2xl mx-auto text-center">
           <p className="text-[10px] uppercase tracking-[0.4em] text-gold-500">Método Frois</p>
           <h1 className="mt-6 text-3xl sm:text-5xl text-white leading-tight">
             Existe um jeito seu de estar no mundo

@@ -61,7 +61,8 @@ export const Fundo: React.FC = () => {
         // a carta sempre olha para a tela (billboard): gira em volta e desgira em si mesma
         el.style.transform =
           `rotateY(${th}deg) translateZ(${raio}px) translateY(${(i - 5.5) * passo}px) rotateY(${-th}deg)`;
-        el.style.opacity = String(luz * (1 - 0.6 * dimTexto)); // atrás: apagado; na frente: aceso
+        // atrás: apagado; na frente: aceso. O texto só escurece o miolo (véu da abertura); o anel em si apaga pouco.
+        el.style.opacity = String(luz * (1 - 0.2 * dimTexto));
       }
     };
     posicionar(0);
