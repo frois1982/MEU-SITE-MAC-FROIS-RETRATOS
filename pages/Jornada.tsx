@@ -1,7 +1,7 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { Volume2, VolumeX, MessageCircle } from 'lucide-react';
-import { CENAS, WHATSAPP_JORNADA, CenaJornada } from '../data/jornada';
+import { CENAS_NA_RODA, TRIADES, WHATSAPP_JORNADA, CenaJornada, infoArquetipo } from '../data/jornada';
 import { CursorJornada } from '../components/jornada/Cursor';
 import { SIMBOLOS, EstradaProvisoria } from '../components/jornada/Simbolos';
 import { alternarSom, clique } from '../components/jornada/som';
@@ -77,6 +77,7 @@ const Cena: React.FC<{ cena: CenaJornada; numero: number }> = ({ cena, numero })
     };
   }, []);
 
+  const info = infoArquetipo(cena.id);
   const t = (n: number) => ({ ['--t' as any]: n } as React.CSSProperties);
 
   return (
@@ -106,13 +107,13 @@ const Cena: React.FC<{ cena: CenaJornada; numero: number }> = ({ cena, numero })
         })}
 
         <div className="jr-etiqueta">
-          <p className="text-[10px] uppercase tracking-[0.4em] text-gold-500">Capítulo {numero} · Arquétipo</p>
+          <p className="text-[10px] uppercase tracking-[0.4em] text-gold-500">Capítulo {numero} · {info.triade}</p>
           <p className="mt-3 text-xs text-zinc-400 tracking-[0.2em] uppercase jr-pulso">role para seguir o caminho</p>
         </div>
 
         <div className="jr-texto">
           <div className="max-w-xl mx-auto text-center">
-            <p className="jr-in jr-rotulo" style={t(0.22)}>Arquétipo</p>
+            <p className="jr-in jr-rotulo" style={t(0.22)}>Busca: {info.motivacao}</p>
             <h2 id={`cena-${cena.id}`} className="jr-in jr-titulo" style={t(0.26)}>
               O <em>{cena.arquetipo.replace(/^O\s+/, '')}</em>
             </h2>
@@ -172,7 +173,32 @@ export const Jornada: React.FC = () => {
         </div>
       </header>
 
-      {CENAS.map((c, i) => <Cena key={c.id} cena={c} numero={i + 1} />)}
+      {CENAS_NA_RODA.map((c, i) => <Cena key={c.id} cena={c} numero={i + 1} />)}
+
+      <section className="px-6 py-24 bg-zinc-950 border-t border-zinc-900" aria-labelledby="roda">
+        <div className="max-w-3xl mx-auto">
+          <p className="text-center text-[10px] uppercase tracking-[0.4em] text-gold-500">A roda</p>
+          <h2 id="roda" className="jr-titulo !text-3xl sm:!text-5xl text-center">Doze arquétipos, <em>quatro</em> desejos</h2>
+          <div className="mt-12 grid gap-8 sm:grid-cols-2">
+            {TRIADES.map((tri) => (
+              <div key={tri.id} className="border border-zinc-800 p-6">
+                <h3 className="text-[11px] tracking-[0.3em] text-gold-400">{tri.nome}</h3>
+                <ul className="mt-4 space-y-2">
+                  {tri.arquetipos.map((a) => {
+                    const pronto = CENAS_NA_RODA.some((c) => c.id === a.id);
+                    return (
+                      <li key={a.id} className={`flex justify-between text-sm ${pronto ? 'text-white' : 'text-zinc-600'}`}>
+                        <span>{a.nome}</span>
+                        <span className="text-xs">{pronto ? a.motivacao : 'em breve'}</span>
+                      </li>
+                    );
+                  })}
+                </ul>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
 
       <section className="px-6 py-28 text-center bg-zinc-950">
         <div className="max-w-xl mx-auto">

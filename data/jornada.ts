@@ -18,6 +18,39 @@ export type CenaJornada = {
   ajuste?: 'caber'; // fotos horizontais: no celular mostra a cena inteira em vez de cortar
 };
 
+// Estrutura da roda dos 12 arquétipos (Carol S. Pearson), definida pelo Mac em 18/10/2026.
+// Quatro tríades; cada uma busca uma coisa. `motivacao` é o anel interno da roda.
+export type Triade = { id: string; nome: string; arquetipos: { id: string; nome: string; motivacao: string }[] };
+
+export const TRIADES: Triade[] = [
+  { id: 'identidade', nome: 'Descobrir sua identidade', arquetipos: [
+    { id: 'inocente', nome: 'O Inocente', motivacao: 'Felicidade' },
+    { id: 'explorador', nome: 'O Explorador', motivacao: 'Liberdade' },
+    { id: 'sabio', nome: 'O Sábio', motivacao: 'Conhecimento' } ] },
+  { id: 'estrutura', nome: 'Fornecer estrutura', arquetipos: [
+    { id: 'cuidador', nome: 'O Cuidador', motivacao: 'Compaixão' },
+    { id: 'criador', nome: 'O Criador', motivacao: 'Criatividade' },
+    { id: 'governante', nome: 'O Governante', motivacao: 'Prosperidade' } ] },
+  { id: 'conexao', nome: 'Conectar-se aos outros', arquetipos: [
+    { id: 'pessoa-comum', nome: 'A Pessoa Comum', motivacao: 'Segurança' },
+    { id: 'amante', nome: 'O Amante', motivacao: 'Amor' },
+    { id: 'bobo', nome: 'O Bobo da Corte', motivacao: 'Diversão' } ] },
+  { id: 'marca', nome: 'Deixar sua marca', arquetipos: [
+    { id: 'heroi', nome: 'O Herói', motivacao: 'Sucesso' },
+    { id: 'rebelde', nome: 'O Rebelde', motivacao: 'Ruptura' },
+    { id: 'mago', nome: 'O Mago', motivacao: 'Poder' } ] },
+];
+
+export const infoArquetipo = (id: string) => {
+  for (const t of TRIADES) {
+    const a = t.arquetipos.find((x) => x.id === id);
+    if (a) return { triade: t.nome, motivacao: a.motivacao };
+  }
+  return { triade: 'Arquétipo', motivacao: '' };
+};
+
+export const CENAS_ORDENADAS_PELA_RODA = ['identidade', 'estrutura', 'conexao', 'marca'];
+
 export const CENAS: CenaJornada[] = [
   {
     id: 'rebelde',
@@ -83,6 +116,10 @@ export const CENAS: CenaJornada[] = [
     ajuste: 'caber',
   },
 ];
+
+// As cenas seguem a ordem da roda: identidade, estrutura, conexão, marca.
+const ORDEM = TRIADES.flatMap((t) => t.arquetipos.map((a) => a.id));
+export const CENAS_NA_RODA = [...CENAS].sort((a, b) => ORDEM.indexOf(a.id) - ORDEM.indexOf(b.id));
 
 export const WHATSAPP_JORNADA =
   'https://wa.me/5548996231894?text=' +
