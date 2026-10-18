@@ -10,6 +10,10 @@ import './jornada.css';
 
 const reduzido = () => typeof window !== 'undefined' && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
+// Reenquadramento: desce a foto; em foto que enche a altura, o vão que sobra no topo ganha um degradê escuro.
+const estiloDescer = (n: number | undefined, caber: boolean): React.CSSProperties | undefined =>
+  n ? ({ ['--desce' as any]: `${n}svh`, ['--tem-desce' as any]: caber ? 0 : 1 } as React.CSSProperties) : undefined;
+
 const Cena: React.FC<{ cena: CenaJornada; numero: number }> = ({ cena, numero }) => {
   const trilho = useRef<HTMLElement>(null);
   const palco = useRef<HTMLDivElement>(null);
@@ -111,13 +115,13 @@ const Cena: React.FC<{ cena: CenaJornada; numero: number }> = ({ cena, numero })
         <div className="jr-barra" />
 
         <div className={`jr-camada jr-rosto${cena.ajuste?.rosto ? ' jr-caber' : ''}`}
-             style={cena.descer?.rosto ? ({ ['--desce' as any]: `${cena.descer.rosto}svh` } as React.CSSProperties) : undefined}>
+             style={estiloDescer(cena.descer?.rosto, !!cena.ajuste?.rosto)}>
           {cena.ajuste?.rosto && <img src={cena.fotoRosto} alt="" aria-hidden="true" className="jr-desfoque" loading="lazy" decoding="async" />}
           <img src={cena.fotoRosto} alt={cena.altRosto} className="jr-principal" loading="lazy" decoding="async" style={{ objectPosition: cena.posRosto }} />
         </div>
 
         <div className={`jr-camada jr-caminho${cena.ajuste?.caminho ? ' jr-caber' : ''}`} aria-hidden="true"
-             style={cena.descer?.caminho ? ({ ['--desce' as any]: `${cena.descer.caminho}svh` } as React.CSSProperties) : undefined}>
+             style={estiloDescer(cena.descer?.caminho, !!cena.ajuste?.caminho)}>
           {cena.ajuste?.caminho && <img src={cena.fotoCaminho} alt="" className="jr-desfoque" loading="lazy" decoding="async" />}
           <img src={cena.fotoCaminho} alt={cena.altCaminho} className="jr-principal" loading="lazy" decoding="async" style={{ objectPosition: cena.posCaminho }} />
         </div>
@@ -169,9 +173,15 @@ export const Jornada: React.FC = () => {
     };
     marcarHero();
     window.addEventListener('scroll', marcarHero, { passive: true });
+
+    // O mesmo clique suave do título toca também quando o visitante clica (mouse) ou toca (celular).
+    // "click" não dispara quando a pessoa só rola a tela, então não há barulho na rolagem.
+    const aoClicarNaPagina = () => clique(true);
+    window.addEventListener('click', aoClicarNaPagina);
     return () => {
       document.title = anterior; fonte.remove();
       window.removeEventListener('scroll', marcarHero);
+      window.removeEventListener('click', aoClicarNaPagina);
       estado.texto.delete('hero');
     };
   }, []);

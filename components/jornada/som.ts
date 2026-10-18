@@ -64,11 +64,12 @@ export const alternarSom = async (): Promise<boolean> => {
 // Clique de trackpad: um estalo seco e curtíssimo (ruído filtrado) + um "tum" grave quase inaudível.
 let ruido: AudioBuffer | null = null;
 let ultimoClique = 0;
-export const clique = () => {
+export const clique = (deClique = false) => {
   if (!ligado || !ctx || !mestre) return;
   // Rolagem rápida não pode empilhar cliques: no máximo um a cada meio segundo.
+  // Um clique de verdade (mouse ou toque) é mais curto: até um a cada 120 ms.
   const agora = performance.now();
-  if (agora - ultimoClique < 500) return;
+  if (agora - ultimoClique < (deClique ? 120 : 500)) return;
   ultimoClique = agora;
   const t = ctx.currentTime;
   if (!ruido) {

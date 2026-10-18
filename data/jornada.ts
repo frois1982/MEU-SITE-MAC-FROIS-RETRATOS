@@ -258,7 +258,7 @@ export const CENAS: CenaJornada[] = [
     posRosto: '27% 30%',
     foco: ['50%', '24%'],
     lema: ['Confiar', 'Recomeçar', 'Florescer'],
-    descer: { rosto: 9 },
+    descer: { rosto: 15 },
     cor: 'revela',
   },
   {
