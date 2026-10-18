@@ -166,7 +166,77 @@ export const Cafe: React.FC<{ className?: string }> = ({ className }) => (
   </svg>
 );
 
+// ---- Inocente, Explorador e Sábio (provisórios) ----
+export const Margarida: React.FC<{ className?: string }> = ({ className }) => (
+  <svg viewBox="0 0 100 130" className={className} aria-hidden="true" {...traco}>
+    {[0, 45, 90, 135, 180, 225, 270, 315].map((a) => (
+      <ellipse key={a} cx="50" cy="36" rx="7" ry="16" transform={`rotate(${a} 50 50)`} />
+    ))}
+    <circle cx="50" cy="50" r="8" />
+    <path d="M50 66 V124" /><path d="M50 100 C62 94 72 96 78 84 C64 82 54 88 50 100 Z" />
+  </svg>
+);
+
+export const Pomba: React.FC<{ className?: string }> = ({ className }) => (
+  <svg viewBox="0 0 120 80" className={className} aria-hidden="true" {...traco}>
+    <path d="M8 50 C28 16 52 24 60 46 C68 24 92 16 112 50 C92 42 72 50 60 64 C48 50 28 42 8 50 Z" />
+  </svg>
+);
+
+export const Nuvem: React.FC<{ className?: string }> = ({ className }) => (
+  <svg viewBox="0 0 120 90" className={className} aria-hidden="true" {...traco}>
+    <path d="M30 72 H88 C102 72 108 56 94 50 C94 34 72 28 64 42 C54 32 34 38 38 54 C22 54 18 72 30 72 Z" />
+  </svg>
+);
+
+export const Bussola: React.FC<{ className?: string }> = ({ className }) => (
+  <svg viewBox="0 0 100 100" className={className} aria-hidden="true" {...traco}>
+    <circle cx="50" cy="50" r="40" />
+    <path d="M50 18 L58 50 L50 82 L42 50 Z" />
+    <path d="M50 6 V12 M50 88 V94 M6 50 H12 M88 50 H94" />
+  </svg>
+);
+
+export const Montanha: React.FC<{ className?: string }> = ({ className }) => (
+  <svg viewBox="0 0 120 100" className={className} aria-hidden="true" {...traco}>
+    <path d="M6 88 L42 30 L60 58 L74 40 L114 88 Z" />
+    <path d="M32 46 L42 30 L52 44 L46 42 L42 49 L37 42 Z" />
+  </svg>
+);
+
+export const Trilha: React.FC<{ className?: string }> = ({ className }) => (
+  <svg viewBox="0 0 100 110" className={className} aria-hidden="true" {...traco}>
+    <path d="M24 102 C14 70 80 74 68 48 C60 30 36 36 44 18" strokeDasharray="3 7" />
+    <circle cx="44" cy="12" r="6" />
+  </svg>
+);
+
+export const Livro: React.FC<{ className?: string }> = ({ className }) => (
+  <svg viewBox="0 0 110 100" className={className} aria-hidden="true" {...traco}>
+    <path d="M8 22 C24 16 42 18 55 28 V86 C42 78 24 76 8 82 Z" />
+    <path d="M102 22 C86 16 68 18 55 28 V86 C68 78 86 76 102 82 Z" />
+  </svg>
+);
+
+export const Coruja: React.FC<{ className?: string }> = ({ className }) => (
+  <svg viewBox="0 0 100 110" className={className} aria-hidden="true" {...traco}>
+    <path d="M22 24 L30 36 C40 30 60 30 70 36 L78 24 L80 58 C80 90 66 102 50 102 C34 102 20 90 20 58 Z" />
+    <circle cx="38" cy="52" r="10" /><circle cx="62" cy="52" r="10" />
+    <circle cx="38" cy="52" r="3" /><circle cx="62" cy="52" r="3" />
+    <path d="M50 60 L46 70 L54 70 Z" />
+  </svg>
+);
+
+export const Vela: React.FC<{ className?: string }> = ({ className }) => (
+  <svg viewBox="0 0 60 120" className={className} aria-hidden="true" {...traco}>
+    <path d="M30 6 C40 20 42 28 30 36 C18 28 20 20 30 6 Z" />
+    <path d="M30 36 V46 M20 46 H40 V104 H20 Z M12 104 H48" />
+  </svg>
+);
+
 export const SIMBOLOS: Record<string, React.FC<{ className?: string }>> = {
+  margarida: Margarida, pomba: Pomba, nuvem: Nuvem, bussola: Bussola, montanha: Montanha,
+  trilha: Trilha, livro: Livro, coruja: Coruja, vela: Vela,
   mascara: Mascara, chapeu: Chapeu, confete: Confete, casa: Casa, maos: Maos, cafe: Cafe,
   espada: Espada, escudo: Escudo, sol: Sol, estrela: Estrela, lua: Lua, olho: Olho,
   corrente: CorrenteQuebrada, chama: Chama, raio: Raio, coroa: Coroa, cetro: Cetro, torre: Torre,
