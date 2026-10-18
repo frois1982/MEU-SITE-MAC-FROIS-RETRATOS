@@ -9,7 +9,10 @@
 .jr-orbita { position: absolute; inset: 0; perspective: 1100px; perspective-origin: 50% 42%; --cw: 118px; }
 .jr-anel { position: absolute; left: 50%; top: 42%; width: 0; height: 0; transform-style: preserve-3d; transform: rotateX(-10deg); }
 .jr-carta { position: absolute; width: var(--cw); height: calc(var(--cw) * 1.32);
-  margin: calc(var(--cw) * -.66) 0 0 calc(var(--cw) * -.5); border-radius: 3px; overflow: hidden; will-change: transform, opacity; }
+  margin: calc(var(--cw) * -.66) 0 0 calc(var(--cw) * -.5); will-change: transform, opacity;
+  /* bordas esmaecidas: o retrato se dissolve no fundo em vez de terminar num corte seco */
+  -webkit-mask-image: radial-gradient(ellipse 50% 50% at 50% 50%, #000 52%, transparent 100%);
+          mask-image: radial-gradient(ellipse 50% 50% at 50% 50%, #000 52%, transparent 100%); }
 .jr-carta img { width: 100%; height: 100%; object-fit: cover; display: block; }
 .jr-sombra { position: absolute; inset: 0; background: #000; }
 
@@ -29,7 +32,8 @@ body:has(.jr-root) footer { position: relative; z-index: 1; }
 .jr-hero { position: relative; min-height: 100svh; display: flex; flex-direction: column; justify-content: center; padding: 7rem 1.5rem 4rem; overflow: hidden; }
 .jr-hero::before { /* véu só atrás do texto, para ler sem esforço sobre o feixe */
   content: ''; position: absolute; inset: 0; pointer-events: none;
-  background: radial-gradient(60% 42% at 50% 50%, rgba(3,3,4,.72), rgba(3,3,4,0) 100%); }
+  background: radial-gradient(78% 52% at 50% 50%, rgba(3,3,4,.9) 0%, rgba(3,3,4,.82) 55%, rgba(3,3,4,0) 100%); }
+.jr-hero h1, .jr-hero p { text-shadow: 0 1px 14px rgba(0,0,0,.95), 0 0 3px rgba(0,0,0,.8); }
 .jr-intervalo { position: relative; height: 70svh; display: flex; align-items: flex-end; justify-content: center; padding: 0 1.5rem 12svh; text-align: center; }
 .jr-intervalo p { font-size: 10px; text-transform: uppercase; letter-spacing: .35em; color: #a1a1aa; text-shadow: 0 0 12px #000; }
 .jr-intervalo strong { display: block; margin-top: .6rem; font-family: 'Cormorant Garamond', Georgia, serif; font-weight: 400;
@@ -46,19 +50,24 @@ body:has(.jr-root) footer { position: relative; z-index: 1; }
 .jr-trilho { position: relative; height: 300svh; --p: 0; --mx: 0; --my: 0; }
 .jr-palco { position: sticky; top: 0; height: 100svh; overflow: hidden; background: #09090b; }
 
-.jr-camada { position: absolute; inset: 0; will-change: transform, opacity; }
+.jr-camada { position: absolute; inset: 0; }
+/* só as cenas perto da tela ganham camada própria na GPU: com todas as doze, o celular sofre e a imagem "craquela" */
+.jr-ativa .jr-camada { will-change: transform, opacity; }
 .jr-camada img, .jr-camada svg.jr-fundo { width: 100%; height: 100%; object-fit: cover; display: block; }
 
 /* camada de baixo: o rosto */
 .jr-rosto img {
-  filter: grayscale(1) contrast(1.05) brightness(calc(.55 + var(--p) * .5));
+  filter: grayscale(1) contrast(1.05); /* fixo: filtro que muda a cada quadro pesa demais */
   transform: scale(calc(1.18 - var(--p) * .18)) translate3d(calc(var(--mx) * -6px), calc(var(--my) * -6px), 0);
 }
+/* o rosto começa mais escuro e acende com a rolagem (camada preta que some, em vez de filtro) */
+.jr-rosto::after { content: ''; position: absolute; inset: 0; background: #000; pointer-events: none;
+  opacity: calc(.45 - var(--p) * .45); }
 /* camada de cima: o caminho, dissolve em círculo a partir do rosto e some */
 .jr-caminho {
   opacity: clamp(0, calc(1.25 - var(--p) * 2.1), 1);
   transform: scale(calc(1 + var(--p) * .22)) translate3d(calc(var(--mx) * 8px), 0, 0);
-  filter: grayscale(1) blur(calc(var(--p) * 10px));
+  filter: grayscale(1);
   -webkit-mask-image: radial-gradient(circle at var(--fx, 50%) var(--fy, 38%), transparent calc(var(--p) * 150% - 40%), #000 calc(var(--p) * 150%));
           mask-image: radial-gradient(circle at var(--fx, 50%) var(--fy, 38%), transparent calc(var(--p) * 150% - 40%), #000 calc(var(--p) * 150%));
 }
@@ -100,8 +109,8 @@ body:has(.jr-root) footer { position: relative; z-index: 1; }
 .jr-barra { position: absolute; left: 0; top: 0; height: 2px; background: #f59e0b; width: calc(var(--p) * 100%); z-index: 5; }
 
 /* Cena em cores (ex.: Amante): sem preto e branco */
-.jr-cor .jr-rosto img, .jr-revela .jr-rosto img { filter: brightness(calc(.6 + var(--p) * .45)); }
-.jr-cor .jr-caminho { filter: blur(calc(var(--p) * 10px)); }
+.jr-cor .jr-rosto img, .jr-revela .jr-rosto img { filter: none; }
+.jr-cor .jr-caminho { filter: none; }
 
 /* Foto horizontal em tela vertical: mostra a cena inteira sobre um fundo desfocado da própria foto */
 .jr-desfoque { display: none; }

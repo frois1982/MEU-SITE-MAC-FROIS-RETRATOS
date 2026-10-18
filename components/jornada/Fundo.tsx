@@ -61,7 +61,7 @@ export const Fundo: React.FC = () => {
         // a carta sempre olha para a tela (billboard): gira em volta e desgira em si mesma
         el.style.transform =
           `rotateY(${th}deg) translateZ(${raio}px) translateY(${(i - 5.5) * passo}px) rotateY(${-th}deg)`;
-        el.style.opacity = String(luz * (1 - 0.45 * dimTexto));
+        el.style.opacity = String(luz * (1 - 0.6 * dimTexto));
         (el.lastElementChild as HTMLElement).style.opacity = String(0.65 * (1 - k)); // sombra: mais escura atrás
       }
     };
@@ -187,8 +187,21 @@ export const Fundo: React.FC = () => {
     };
     raf = requestAnimationFrame(quadro);
 
-    window.addEventListener('resize', medir);
-    return () => { cancelAnimationFrame(raf); window.removeEventListener('resize', medir); };
+    // A barra de endereço do celular aparece e some ao rolar e dispara "resize" toda hora.
+    // Refazer o canvas a cada vez causava tremor nas trocas de tela: só mede de novo se a largura
+    // mudou ou se a altura mudou bastante (giro do aparelho), e com atraso.
+    let ultimaLargura = window.innerWidth, ultimaAltura = window.innerHeight, atraso = 0;
+    const aoRedimensionar = () => {
+      window.clearTimeout(atraso);
+      atraso = window.setTimeout(() => {
+        if (window.innerWidth !== ultimaLargura || Math.abs(window.innerHeight - ultimaAltura) > 200) {
+          ultimaLargura = window.innerWidth; ultimaAltura = window.innerHeight;
+          medir();
+        }
+      }, 250);
+    };
+    window.addEventListener('resize', aoRedimensionar);
+    return () => { cancelAnimationFrame(raf); window.clearTimeout(atraso); window.removeEventListener('resize', aoRedimensionar); };
   }, []);
 
   return (

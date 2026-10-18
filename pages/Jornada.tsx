@@ -45,6 +45,8 @@ const Cena: React.FC<{ cena: CenaJornada; numero: number }> = ({ cena, numero })
       const cobre = r.top <= 0 && r.bottom >= window.innerHeight;
       if (cobre) estado.cobertos.add(cena.id); else estado.cobertos.delete(cena.id);
       const visivel = r.bottom > 0 && r.top < window.innerHeight;
+      // camadas pesadas só enquanto a cena está perto da tela
+      el.classList.toggle('jr-ativa', r.bottom > -window.innerHeight * 0.5 && r.top < window.innerHeight * 1.5);
       const s = (x: number) => Math.min(1, Math.max(0, x));
       estado.texto.set(cena.id, visivel ? s((atual - 0.3) / 0.2) * (1 - s((atual - 0.97) / 0.03)) : 0);
     };
@@ -152,7 +154,7 @@ export const Jornada: React.FC = () => {
     const marcarHero = () => {
       if (!hero) return;
       const r = hero.getBoundingClientRect();
-      estado.texto.set('hero', 0.55 * Math.min(1, Math.max(0, r.bottom / (window.innerHeight * 0.6))));
+      estado.texto.set('hero', 0.8 * Math.min(1, Math.max(0, r.bottom / (window.innerHeight * 0.6))));
     };
     marcarHero();
     window.addEventListener('scroll', marcarHero, { passive: true });
@@ -185,7 +187,7 @@ export const Jornada: React.FC = () => {
           <h1 className="mt-6 text-3xl sm:text-5xl text-white leading-tight">
             Existe um jeito seu de estar no mundo
           </h1>
-          <p className="mt-6 text-sm sm:text-base text-zinc-300 leading-relaxed">
+          <p className="mt-6 text-sm sm:text-base text-zinc-100 leading-relaxed">
             Todos nós temos um jeito de ser que as pessoas reconhecem: quem enfrenta, quem cuida,
             quem cria, quem ensina. São doze jeitos, e você não precisa decorar nenhum. Basta se reconhecer.
             Role, olhe os rostos e veja se algum deles é o seu.
