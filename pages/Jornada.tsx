@@ -1,6 +1,6 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { Link } from 'react-router-dom';
-import { Volume2, VolumeX, MessageCircle } from 'lucide-react';
+import { Volume2, VolumeX, MessageCircle, ChevronUp, ChevronDown } from 'lucide-react';
 import { CENAS_NA_RODA, TRIADES, WHATSAPP_JORNADA, CenaJornada, infoArquetipo } from '../data/jornada';
 import { Fundo } from '../components/jornada/Fundo';
 import { estado } from '../components/jornada/estado';
@@ -155,6 +155,27 @@ const Cena: React.FC<{ cena: CenaJornada; numero: number }> = ({ cena, numero })
 
 export const Jornada: React.FC = () => {
   const [som, setSom] = useState(false);
+  const [longeDoTopo, setLongeDoTopo] = useState(false);
+  const [longeDoFim, setLongeDoFim] = useState(true);
+
+  // Salto rápido: sem rolar a página inteira (são doze cenas). Muda o estado só quando cruza o limite.
+  useEffect(() => {
+    const ver = () => {
+      const topo = window.scrollY > window.innerHeight * 0.5;
+      const convite = document.getElementById('convite');
+      const fim = !convite || convite.getBoundingClientRect().top > window.innerHeight * 0.4;
+      setLongeDoTopo((a) => (a === topo ? a : topo));
+      setLongeDoFim((a) => (a === fim ? a : fim));
+    };
+    ver();
+    window.addEventListener('scroll', ver, { passive: true });
+    return () => window.removeEventListener('scroll', ver);
+  }, []);
+  const irAoInicio = () => window.scrollTo({ top: 0, behavior: 'instant' as ScrollBehavior });
+  const irAoFim = () => {
+    const convite = document.getElementById('convite');
+    if (convite) window.scrollTo({ top: convite.getBoundingClientRect().top + window.scrollY - 40, behavior: 'instant' as ScrollBehavior });
+  };
 
   useEffect(() => {
     const anterior = document.title;
@@ -201,6 +222,17 @@ export const Jornada: React.FC = () => {
         {som ? <Volume2 size={16} /> : <VolumeX size={16} />}
         <span>{som ? 'Som ligado' : 'Som desligado'}</span>
       </button>
+
+      <div className="jr-setas">
+        <button type="button" onClick={irAoInicio} aria-label="Voltar ao início da jornada" title="Início"
+          className={longeDoTopo ? '' : 'jr-seta-oculta'} tabIndex={longeDoTopo ? 0 : -1}>
+          <ChevronUp size={18} />
+        </button>
+        <button type="button" onClick={irAoFim} aria-label="Ir ao fim da jornada" title="Fim"
+          className={longeDoFim ? '' : 'jr-seta-oculta'} tabIndex={longeDoFim ? 0 : -1}>
+          <ChevronDown size={18} />
+        </button>
+      </div>
 
       <header className="jr-hero">
         <div className="relative z-10 max-w-2xl mx-auto text-center">
@@ -253,7 +285,7 @@ export const Jornada: React.FC = () => {
         </div>
       </section>
 
-      <section className="relative px-6 py-28 text-center bg-zinc-950">
+      <section id="convite" className="relative px-6 py-28 text-center bg-zinc-950">
         <div className="max-w-xl mx-auto">
           <p className="text-[10px] uppercase tracking-[0.4em] text-gold-500">Capítulos seguintes</p>
           <h2 className="mt-5 text-2xl sm:text-3xl text-white">Existem 12 arquétipos. Qual é o seu?</h2>
