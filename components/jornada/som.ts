@@ -2,7 +2,8 @@
 // Começa DESLIGADO: navegadores só liberam áudio depois de um toque do usuário.
 let ctx: AudioContext | null = null;
 let mestre: GainNode | null = null;
-let ambiente: { osc: OscillatorNode[]; stop: () => void } | null = null;
+import { construirAmbiente, Ambiente } from './ambiente';
+let ambiente: Ambiente | null = null;
 let ligado = false;
 
 const criar = () => {
@@ -17,28 +18,8 @@ const criar = () => {
 
 const iniciarAmbiente = () => {
   if (!ctx || !mestre || ambiente) return;
-  // Pad grave e suave: duas ondas levemente desafinadas + filtro + oscilação lenta.
-  const filtro = ctx.createBiquadFilter();
-  filtro.type = 'lowpass';
-  filtro.frequency.value = 420;
-  const ganho = ctx.createGain();
-  ganho.gain.value = 0.07;
-  const lfo = ctx.createOscillator();
-  const lfoGanho = ctx.createGain();
-  lfo.frequency.value = 0.08;
-  lfoGanho.gain.value = 0.03;
-  lfo.connect(lfoGanho).connect(ganho.gain);
-  const osc = [55, 82.6, 110.4].map((f) => {
-    const o = ctx!.createOscillator();
-    o.type = 'sine';
-    o.frequency.value = f;
-    o.connect(filtro);
-    o.start();
-    return o;
-  });
-  filtro.connect(ganho).connect(mestre);
-  lfo.start();
-  ambiente = { osc: [...osc, lfo], stop: () => { osc.forEach((o) => o.stop()); lfo.stop(); } };
+  // Meditativo, afinado em 432 Hz (ver ambiente.ts).
+  ambiente = construirAmbiente(ctx, mestre);
 };
 
 export const somLigado = () => ligado;
@@ -50,13 +31,17 @@ export const alternarSom = async (): Promise<boolean> => {
     await ctx.resume();
     iniciarAmbiente();
     mestre.gain.cancelScheduledValues(ctx.currentTime);
-    mestre.gain.linearRampToValueAtTime(1, ctx.currentTime + 1.5);
+    mestre.gain.setValueAtTime(mestre.gain.value, ctx.currentTime);
+    mestre.gain.linearRampToValueAtTime(1, ctx.currentTime + 6);   // entra devagar, como uma respiração
     ligado = true;
     clique();
   } else {
     mestre.gain.cancelScheduledValues(ctx.currentTime);
-    mestre.gain.linearRampToValueAtTime(0, ctx.currentTime + 0.6);
+    mestre.gain.setValueAtTime(mestre.gain.value, ctx.currentTime);
+    mestre.gain.linearRampToValueAtTime(0, ctx.currentTime + 1.5);
     ligado = false;
+    // depois do fade, desliga de verdade (economiza bateria)
+    setTimeout(() => { if (!ligado) { ambiente?.parar(); ambiente = null; } }, 1700);
   }
   return ligado;
 };
