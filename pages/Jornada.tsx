@@ -81,7 +81,7 @@ const Cena: React.FC<{ cena: CenaJornada; numero: number }> = ({ cena, numero })
   const t = (n: number) => ({ ['--t' as any]: n } as React.CSSProperties);
 
   return (
-    <section ref={trilho} className={`jr-trilho${cena.cor ? ' jr-cor' : ''}`} aria-labelledby={`cena-${cena.id}`} style={{ ['--fx' as any]: cena.foco[0], ['--fy' as any]: cena.foco[1] }}>
+    <section ref={trilho} className={`jr-trilho${cena.cor === 'revela' ? ' jr-revela' : cena.cor ? ' jr-cor' : ''}`} aria-labelledby={`cena-${cena.id}`} style={{ ['--fx' as any]: cena.foco[0], ['--fy' as any]: cena.foco[1] }}>
       <div ref={palco} className="jr-palco" data-cursor data-rotulo="Ver">
         <div className="jr-barra" />
 
@@ -115,7 +115,7 @@ const Cena: React.FC<{ cena: CenaJornada; numero: number }> = ({ cena, numero })
           <div className="max-w-xl mx-auto text-center">
             <p className="jr-in jr-rotulo" style={t(0.22)}>Busca: {info.motivacao}</p>
             <h2 id={`cena-${cena.id}`} className="jr-in jr-titulo" style={t(0.26)}>
-              O <em>{cena.arquetipo.replace(/^O\s+/, '')}</em>
+              {cena.arquetipo.split(' ')[0]} <em>{cena.arquetipo.split(' ').slice(1).join(' ')}</em>
             </h2>
             <p className="jr-in jr-lema" style={t(0.3)}>{cena.lema.join(' · ')}</p>
             <p className="jr-in jr-frase" style={t(0.36)}>{cena.frase}</p>

@@ -118,7 +118,56 @@ export const Olho: React.FC<{ className?: string }> = ({ className }) => (
   </svg>
 );
 
+// ---- Bobo da Corte e Pessoa Comum (provisórios) ----
+export const Mascara: React.FC<{ className?: string }> = ({ className }) => (
+  <svg viewBox="0 0 100 110" className={className} aria-hidden="true" {...traco}>
+    <path d="M12 16 C34 8 66 8 88 16 C92 58 76 96 50 102 C24 96 8 58 12 16 Z" />
+    <path d="M26 40 Q36 32 44 40 M56 40 Q64 32 74 40" />
+    <path d="M28 62 Q50 88 72 62" />
+  </svg>
+);
+
+export const Chapeu: React.FC<{ className?: string }> = ({ className }) => (
+  <svg viewBox="0 0 120 100" className={className} aria-hidden="true" {...traco}>
+    <path d="M14 84 L22 34 L46 58 L60 22 L74 58 L98 34 L106 84 Z" />
+    <path d="M10 84 H110" />
+    <circle cx="22" cy="28" r="6" /><circle cx="60" cy="16" r="6" /><circle cx="98" cy="28" r="6" />
+  </svg>
+);
+
+export const Confete: React.FC<{ className?: string }> = ({ className }) => (
+  <svg viewBox="0 0 100 100" className={className} aria-hidden="true" {...traco}>
+    <path d="M14 22 L26 30 M70 12 L74 26 M86 52 L74 58 M20 70 L32 64 M52 86 L56 74 M44 30 L50 42" />
+    <circle cx="80" cy="30" r="4" /><circle cx="36" cy="50" r="4" /><circle cx="68" cy="76" r="4" /><circle cx="14" cy="46" r="3" />
+  </svg>
+);
+
+export const Casa: React.FC<{ className?: string }> = ({ className }) => (
+  <svg viewBox="0 0 110 100" className={className} aria-hidden="true" {...traco}>
+    <path d="M10 50 L55 12 L100 50" />
+    <path d="M22 44 V92 H88 V44" />
+    <path d="M46 92 V64 H64 V92" />
+  </svg>
+);
+
+export const Maos: React.FC<{ className?: string }> = ({ className }) => (
+  <svg viewBox="0 0 120 80" className={className} aria-hidden="true" {...traco}>
+    <path d="M6 44 L30 28 L52 30 L66 42 L52 54 L34 52" />
+    <path d="M114 44 L90 28 L68 30 L54 42 L68 54 L86 52" />
+    <path d="M30 28 L36 16 M90 28 L84 16" />
+  </svg>
+);
+
+export const Cafe: React.FC<{ className?: string }> = ({ className }) => (
+  <svg viewBox="0 0 100 100" className={className} aria-hidden="true" {...traco}>
+    <path d="M18 40 H74 V66 C74 82 62 90 46 90 C30 90 18 82 18 66 Z" />
+    <path d="M74 48 H84 C92 48 92 66 82 66 H74" />
+    <path d="M34 28 C28 20 40 16 34 8 M50 28 C44 20 56 16 50 8" />
+  </svg>
+);
+
 export const SIMBOLOS: Record<string, React.FC<{ className?: string }>> = {
+  mascara: Mascara, chapeu: Chapeu, confete: Confete, casa: Casa, maos: Maos, cafe: Cafe,
   espada: Espada, escudo: Escudo, sol: Sol, estrela: Estrela, lua: Lua, olho: Olho,
   corrente: CorrenteQuebrada, chama: Chama, raio: Raio, coroa: Coroa, cetro: Cetro, torre: Torre,
   coracao: Coracao, rosa: Rosa, aneis: Aneis,

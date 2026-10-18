@@ -14,7 +14,7 @@ export type CenaJornada = {
   foco: [string, string]; // onde o círculo de revelação nasce (x, y), em %
   lema: string[]; // três palavras
   simbolos: [string, string, string]; // chaves de SIMBOLOS (components/jornada/Simbolos.tsx)
-  cor?: boolean; // true = mantém a cor da foto (padrão: preto e branco)
+  cor?: boolean | 'revela'; // true = cor nas duas fotos; 'revela' = foto de cima em cinza, revelada em cor (padrão: preto e branco)
   ajuste?: { caminho?: boolean; rosto?: boolean }; // foto horizontal: no celular mostra a cena inteira em vez de cortar
 };
 
@@ -159,6 +159,50 @@ export const CENAS: CenaJornada[] = [
     lema: ['Imaginar', 'Transformar', 'Revelar'],
     simbolos: ['estrela', 'lua', 'olho'],
     cor: true,
+  },
+  {
+    id: 'bobo',
+    arquetipo: 'O Bobo da Corte',
+    frase: 'Levar a vida a sério sem perder o riso.',
+    linhas: [
+      'Existe quem confunde seriedade com cara fechada.',
+      'E existe quem faz da leveza um jeito de dizer a verdade.',
+      'O retrato do Bobo da Corte não é piada: é presença que desarma.',
+    ],
+    // Mesma pessoa: o sorriso sereno dissolve e revela a gargalhada.
+    fotoCaminho: '/jornada/bobo-calma.webp',
+    fotoRosto: '/jornada/bobo-riso.webp',
+    altCaminho: 'Mulher de óculos e blazer azul, sentada numa poltrona de couro, sorrindo para a câmera',
+    altRosto: 'Mulher de óculos e blazer amarelo rindo de cabeça inclinada, diante de um fundo verde',
+    posCaminho: '50% 50%',
+    posRosto: '66% 30%',
+    foco: ['50%', '24%'],
+    lema: ['Rir', 'Aliviar', 'Aproximar'],
+    simbolos: ['mascara', 'chapeu', 'confete'],
+    cor: true,
+    ajuste: { caminho: true },
+  },
+  {
+    id: 'pessoa-comum',
+    arquetipo: 'A Pessoa Comum',
+    frase: 'Ser inteiro sem precisar parecer especial.',
+    linhas: [
+      'Existe quem tenta parecer maior do que é.',
+      'E existe quem se sente em casa sendo exatamente quem é.',
+      'O retrato da Pessoa Comum tem a coragem do natural: ninguém precisa fingir.',
+    ],
+    // Só há uma foto: ela aparece em cinza e se revela em cor. O comum ganha cor.
+    // Ideal: um ensaio com par de fotos da mesma pessoa, como nos outros arquétipos.
+    fotoCaminho: '/jornada/comum-riso.webp',
+    fotoRosto: '/jornada/comum-riso.webp',
+    altCaminho: 'Homem de óculos e barba rindo de cabeça baixa, de camisa xadrez',
+    altRosto: 'Homem de óculos e barba rindo de cabeça baixa, de camisa xadrez clara',
+    posCaminho: '53% 40%',
+    posRosto: '53% 40%',
+    foco: ['50%', '40%'],
+    lema: ['Pertencer', 'Acolher', 'Confiar'],
+    simbolos: ['casa', 'maos', 'cafe'],
+    cor: 'revela',
   },
 ];
 

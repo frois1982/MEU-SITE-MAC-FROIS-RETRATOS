@@ -74,6 +74,8 @@ for (const p of PAGINAS) {
       '<h2>O Amante</h2><p>Quando o vínculo aparece, a foto também. O retrato do Amante não encena intimidade: ele a encontra.</p>' +
       '<h2>O Herói</h2><p>Provar o próprio valor na travessia. O retrato do Herói mostra o preço pago e a força que sobrou.</p>' +
       '<h2>O Mago</h2><p>Fazer o impossível parecer inevitável. O retrato do Mago transforma presença em visão.</p>' +
+      '<h2>O Bobo da Corte</h2><p>Levar a vida a sério sem perder o riso. O retrato do Bobo da Corte não é piada: é presença que desarma.</p>' +
+      '<h2>A Pessoa Comum</h2><p>Ser inteiro sem precisar parecer especial. O retrato da Pessoa Comum tem a coragem do natural: ninguém precisa fingir.</p>' +
       '<h2>Existem 12 arquétipos. Qual é o seu?</h2><p><a href="/contato">Fale com o Mac</a></p></main>';
   }
   if (p.lp) {

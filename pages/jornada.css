@@ -87,7 +87,7 @@
 .jr-barra { position: absolute; left: 0; top: 0; height: 2px; background: #f59e0b; width: calc(var(--p) * 100%); z-index: 5; }
 
 /* Cena em cores (ex.: Amante): sem preto e branco */
-.jr-cor .jr-rosto img { filter: brightness(calc(.6 + var(--p) * .45)); }
+.jr-cor .jr-rosto img, .jr-revela .jr-rosto img { filter: brightness(calc(.6 + var(--p) * .45)); }
 .jr-cor .jr-caminho { filter: blur(calc(var(--p) * 10px)); }
 
 /* Foto horizontal em tela vertical: mostra a cena inteira sobre um fundo desfocado da própria foto */
