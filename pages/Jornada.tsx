@@ -1,11 +1,12 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { Suspense, lazy, useEffect, useRef, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { Volume2, VolumeX, MessageCircle, ChevronUp, ChevronDown } from 'lucide-react';
 import { CENAS_NA_RODA, TRIADES, WHATSAPP_JORNADA, CenaJornada, infoArquetipo } from '../data/jornada';
-import { Fundo } from '../components/jornada/Fundo';
+// O fundo animado e o cursor chegam logo depois da primeira pintura: o texto de abertura não espera por eles.
+const Fundo = lazy(() => import('../components/jornada/Fundo').then((m) => ({ default: m.Fundo })));
+const CursorJornada = lazy(() => import('../components/jornada/Cursor').then((m) => ({ default: m.CursorJornada })));
 import { estado } from '../components/jornada/estado';
-import { CursorJornada } from '../components/jornada/Cursor';
-import { alternarSom, clique } from '../components/jornada/som';
+import { alternarSom, clique } from '../components/jornada/somCarga';
 import './jornada.css';
 
 const reduzido = () => typeof window !== 'undefined' && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
@@ -209,8 +210,10 @@ export const Jornada: React.FC = () => {
 
   return (
     <main className="jr-root">
-      <Fundo />
-      <CursorJornada />
+      <Suspense fallback={null}>
+        <Fundo />
+        <CursorJornada />
+      </Suspense>
 
       <button
         type="button"
