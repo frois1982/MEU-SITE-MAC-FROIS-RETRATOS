@@ -17,7 +17,7 @@
 @keyframes jr-pulso { 0%,100% { opacity: .35; transform: translateY(0); } 50% { opacity: 1; transform: translateY(8px); } }
 
 /* ---------- Cena ---------- */
-.jr-trilho { position: relative; height: 430svh; --p: 0; --mx: 0; --my: 0; }
+.jr-trilho { position: relative; height: 300svh; --p: 0; --mx: 0; --my: 0; }
 .jr-palco { position: sticky; top: 0; height: 100svh; overflow: hidden; background: #09090b; }
 
 .jr-camada { position: absolute; inset: 0; will-change: transform, opacity; }
@@ -62,12 +62,25 @@
   position: absolute; left: 0; right: 0; top: 18%; text-align: center; padding: 0 1.5rem;
   opacity: clamp(0, calc(1 - var(--p) * 7), 1);
 }
-.jr-texto { position: absolute; left: 0; right: 0; bottom: 0; padding: 0 4.5rem calc(env(safe-area-inset-bottom) + 12svh) 1.5rem; }
+.jr-texto { position: absolute; left: 0; right: 0; bottom: 0; padding: 0 1.5rem calc(env(safe-area-inset-bottom) + 12svh); }
 @media (min-width: 640px) { .jr-texto { padding: 0 1.5rem calc(env(safe-area-inset-bottom) + 10svh); } }
-.jr-in { /* entra quando --p passa de --t */
-  opacity: clamp(0, calc((var(--p) - var(--t)) * 7), 1);
-  transform: translate3d(0, calc((1 - clamp(0, (var(--p) - var(--t)) * 7, 1)) * 26px), 0);
+/* Entra quando --p passa de --t: surge de um borrão e se firma, como no site do Jimmy Nelson. */
+.jr-in {
+  --k: clamp(0, calc((var(--p) - var(--t)) * 6), 1);
+  opacity: var(--k);
+  filter: blur(calc((1 - var(--k)) * 7px));
+  transform: translate3d(0, calc((1 - var(--k)) * 14px), 0);
+  letter-spacing: calc(0.02em + (1 - var(--k)) * 0.12em);
 }
+.jr-rotulo { font-size: 10px; text-transform: uppercase; letter-spacing: .4em; color: #f59e0b; }
+.jr-titulo {
+  font-family: 'Cormorant Garamond', Georgia, serif; text-transform: none; font-weight: 400;
+  font-size: clamp(2.6rem, 12vw, 4.6rem); line-height: 1; color: #fff; margin-top: .6rem;
+}
+.jr-titulo em { font-style: italic; }
+.jr-frase { font-family: 'Cormorant Garamond', Georgia, serif; font-style: italic; font-size: 1.25rem; color: #fbbf24; margin-top: .6rem; }
+.jr-corpo { font-family: 'Cormorant Garamond', Georgia, serif; font-size: 1.15rem; line-height: 1.45; color: #e4e4e7; }
+@media (min-width: 640px) { .jr-corpo { font-size: 1.3rem; } .jr-frase { font-size: 1.45rem; } }
 
 /* barra de progresso fina */
 .jr-barra { position: absolute; left: 0; top: 0; height: 2px; background: #f59e0b; width: calc(var(--p) * 100%); z-index: 5; }
@@ -78,6 +91,9 @@
   border: 1px solid rgba(251,191,36,.85); pointer-events: none; z-index: 9999; opacity: 0;
   transition: opacity .25s, width .25s, height .25s, margin .25s, background .25s;
 }
+.jr-cursor span { position: absolute; inset: 0; display: flex; align-items: center; justify-content: center;
+  font-size: 9px; letter-spacing: .25em; text-transform: uppercase; color: #fbbf24; opacity: 0; transition: opacity .2s; }
+.jr-cursor--grande span { opacity: 1; }
 .jr-cursor--grande { width: 64px; height: 64px; margin: -14px 0 0 -14px; background: rgba(251,191,36,.12); }
 @media (hover: hover) and (pointer: fine) { .jr-root, .jr-root a, .jr-root button { cursor: none; } }
 

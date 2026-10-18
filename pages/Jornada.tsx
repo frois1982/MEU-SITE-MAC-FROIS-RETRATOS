@@ -19,18 +19,43 @@ const Cena: React.FC<{ cena: CenaJornada; numero: number }> = ({ cena, numero })
     const movimento = !reduzido();
     let raf = 0;
     let degrau = -1;
+    let alvo = 0;   // onde a rolagem está
+    let atual = 0;  // o que aparece na tela: persegue o alvo com inércia (efeito "desliza")
 
-    const atualizar = () => {
-      raf = 0;
-      if (!movimento) return;
+    const medir = () => {
       const r = el.getBoundingClientRect();
       const total = r.height - window.innerHeight;
-      const p = Math.min(1, Math.max(0, -r.top / total));
-      el.style.setProperty('--p', p.toFixed(4));
-      const d = p > 0.74 ? 3 : p > 0.62 ? 2 : p > 0.5 ? 1 : p > 0.3 ? 0 : -1;
-      if (d !== degrau) { if (degrau !== -1 || d > -1) clique(); degrau = d; }
+      alvo = Math.min(1, Math.max(0, -r.top / total));
     };
-    const aoRolar = () => { if (!raf) raf = requestAnimationFrame(atualizar); };
+    const quadro = () => {
+      raf = 0;
+      atual += (alvo - atual) * 0.09;
+      if (Math.abs(alvo - atual) < 0.0004) atual = alvo;
+      el.style.setProperty('--p', atual.toFixed(4));
+      const d = atual > 0.74 ? 3 : atual > 0.62 ? 2 : atual > 0.5 ? 1 : atual > 0.3 ? 0 : -1;
+      if (d !== degrau) { if (degrau !== -1 || d > -1) clique(); degrau = d; }
+      if (atual !== alvo) raf = requestAnimationFrame(quadro);
+    };
+    const atualizar = () => {
+      medir();
+      if (!movimento) return;
+      if (!raf) raf = requestAnimationFrame(quadro);
+    };
+    const aoRolar = atualizar;
+
+    // Clicar na cena leva direto ao próximo momento (rosto, texto, fim).
+    const momentos = [0, 0.5, 0.78, 1];
+    const aoClicar = (e: MouseEvent) => {
+      if ((e.target as HTMLElement).closest('a,button')) return;
+      const r = el.getBoundingClientRect();
+      const total = r.height - window.innerHeight;
+      const topo = window.scrollY + r.top;
+      const proximo = momentos.find((m) => m > alvo + 0.04);
+      if (proximo === undefined) return;
+      clique();
+      window.scrollTo({ top: topo + total * proximo, behavior: 'smooth' });
+    };
+    if (movimento) el.addEventListener('click', aoClicar);
 
     // Paralaxe com o mouse (só onde existe mouse).
     const mouse = window.matchMedia('(hover: hover) and (pointer: fine)').matches && movimento;
@@ -48,6 +73,7 @@ const Cena: React.FC<{ cena: CenaJornada; numero: number }> = ({ cena, numero })
       window.removeEventListener('scroll', aoRolar);
       window.removeEventListener('resize', aoRolar);
       window.removeEventListener('pointermove', aoMover);
+      el.removeEventListener('click', aoClicar);
     };
   }, []);
 
@@ -55,7 +81,7 @@ const Cena: React.FC<{ cena: CenaJornada; numero: number }> = ({ cena, numero })
 
   return (
     <section ref={trilho} className="jr-trilho" aria-labelledby={`cena-${cena.id}`} style={{ ['--fx' as any]: cena.foco[0], ['--fy' as any]: cena.foco[1] }}>
-      <div ref={palco} className="jr-palco">
+      <div ref={palco} className="jr-palco" data-cursor data-rotulo="Ver">
         <div className="jr-barra" />
 
         <div className="jr-camada jr-rosto">
@@ -80,16 +106,15 @@ const Cena: React.FC<{ cena: CenaJornada; numero: number }> = ({ cena, numero })
         </div>
 
         <div className="jr-texto">
-          <div className="max-w-xl mx-auto">
-            <h2 id={`cena-${cena.id}`} className="jr-in text-4xl sm:text-5xl text-white leading-tight" style={t(0.3)}>
-              {cena.arquetipo}
+          <div className="max-w-xl mx-auto text-center">
+            <p className="jr-in jr-rotulo" style={t(0.22)}>Arquétipo</p>
+            <h2 id={`cena-${cena.id}`} className="jr-in jr-titulo" style={t(0.26)}>
+              O <em>{cena.arquetipo.replace(/^O\s+/, '')}</em>
             </h2>
-            <p className="jr-in mt-3 font-serif text-gold-400 text-sm sm:text-base tracking-[0.2em] uppercase" style={t(0.36)}>
-              {cena.frase}
-            </p>
-            <div className="mt-5 space-y-3">
+            <p className="jr-in jr-frase" style={t(0.34)}>{cena.frase}</p>
+            <div className="mt-6 space-y-3">
               {cena.linhas.map((l, i) => (
-                <p key={i} className="jr-in text-sm sm:text-base text-zinc-200 leading-relaxed" style={t(0.5 + i * 0.12)}>{l}</p>
+                <p key={i} className="jr-in jr-corpo" style={t(0.46 + i * 0.12)}>{l}</p>
               ))}
             </div>
           </div>
@@ -105,7 +130,11 @@ export const Jornada: React.FC = () => {
   useEffect(() => {
     const anterior = document.title;
     document.title = 'Jornada dos Arquétipos | Mac Frois — Retratos que contam quem você é';
-    return () => { document.title = anterior; };
+    const fonte = document.createElement('link');
+    fonte.rel = 'stylesheet';
+    fonte.href = 'https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;1,400;1,500&display=swap';
+    document.head.appendChild(fonte);
+    return () => { document.title = anterior; fonte.remove(); };
   }, []);
 
   return (

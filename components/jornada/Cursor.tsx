@@ -3,6 +3,7 @@ import React, { useEffect, useRef } from 'react';
 // Cursor circular só em telas com mouse. No celular não aparece e não custa nada.
 export const CursorJornada: React.FC = () => {
   const ref = useRef<HTMLDivElement>(null);
+  const rotulo = useRef<HTMLSpanElement>(null);
 
   useEffect(() => {
     if (!window.matchMedia('(hover: hover) and (pointer: fine)').matches) return;
@@ -14,6 +15,8 @@ export const CursorJornada: React.FC = () => {
       el.style.opacity = '1';
       const alvo = (e.target as HTMLElement | null)?.closest('a,button,[data-cursor]');
       el.classList.toggle('jr-cursor--grande', !!alvo);
+      const rot = (e.target as HTMLElement | null)?.closest('[data-rotulo]')?.getAttribute('data-rotulo') || '';
+      if (rotulo.current) rotulo.current.textContent = rot;
     };
     const sair = () => { el.style.opacity = '0'; };
     const loop = () => {
@@ -32,5 +35,5 @@ export const CursorJornada: React.FC = () => {
     };
   }, []);
 
-  return <div ref={ref} className="jr-cursor" aria-hidden="true" />;
+  return <div ref={ref} className="jr-cursor" aria-hidden="true"><span ref={rotulo} /></div>;
 };

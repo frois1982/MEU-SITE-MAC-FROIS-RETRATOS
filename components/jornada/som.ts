@@ -61,19 +61,38 @@ export const alternarSom = async (): Promise<boolean> => {
   return ligado;
 };
 
-// Clique sutil ao interagir.
+// Clique de trackpad: um estalo seco e curtíssimo (ruído filtrado) + um "tum" grave quase inaudível.
+let ruido: AudioBuffer | null = null;
 export const clique = () => {
   if (!ligado || !ctx || !mestre) return;
   const t = ctx.currentTime;
-  const o = ctx.createOscillator();
+  if (!ruido) {
+    ruido = ctx.createBuffer(1, Math.floor(ctx.sampleRate * 0.03), ctx.sampleRate);
+    const d = ruido.getChannelData(0);
+    for (let i = 0; i < d.length; i++) d[i] = (Math.random() * 2 - 1) * (1 - i / d.length);
+  }
+  const src = ctx.createBufferSource();
+  src.buffer = ruido;
+  const filtro = ctx.createBiquadFilter();
+  filtro.type = 'bandpass';
+  filtro.frequency.value = 2600;
+  filtro.Q.value = 0.9;
   const g = ctx.createGain();
-  o.type = 'sine';
-  o.frequency.setValueAtTime(880, t);
-  o.frequency.exponentialRampToValueAtTime(520, t + 0.09);
   g.gain.setValueAtTime(0.0001, t);
-  g.gain.exponentialRampToValueAtTime(0.12, t + 0.008);
-  g.gain.exponentialRampToValueAtTime(0.0001, t + 0.14);
-  o.connect(g).connect(mestre);
+  g.gain.exponentialRampToValueAtTime(0.16, t + 0.002);
+  g.gain.exponentialRampToValueAtTime(0.0001, t + 0.03);
+  src.connect(filtro).connect(g).connect(mestre);
+  src.start(t);
+
+  const o = ctx.createOscillator();
+  const g2 = ctx.createGain();
+  o.type = 'sine';
+  o.frequency.setValueAtTime(170, t);
+  o.frequency.exponentialRampToValueAtTime(90, t + 0.04);
+  g2.gain.setValueAtTime(0.0001, t);
+  g2.gain.exponentialRampToValueAtTime(0.06, t + 0.003);
+  g2.gain.exponentialRampToValueAtTime(0.0001, t + 0.05);
+  o.connect(g2).connect(mestre);
   o.start(t);
-  o.stop(t + 0.16);
+  o.stop(t + 0.06);
 };
