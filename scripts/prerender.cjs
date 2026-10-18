@@ -67,8 +67,8 @@ let n = 0;
 for (const p of PAGINAS) {
   let extra = {};
   if (p.jornada) {
-    extra.corpo = '<main><h1>Antes da câmera, existe uma história</h1>' +
-      '<p>Todo retrato do Método Frois começa por uma pergunta: que arquétipo você carrega? Siga a trilha e veja como a estratégia vem primeiro, e a câmera depois.</p>' +
+    extra.corpo = '<main><h1>Existe um jeito seu de estar no mundo</h1>' +
+      '<p>Todos nós temos um jeito de ser que as pessoas reconhecem: quem enfrenta, quem cuida, quem cria, quem ensina. São doze jeitos, os arquétipos do Método Frois, e você não precisa decorar nenhum. Basta se reconhecer.</p>' +
       '<h2>O Rebelde</h2><p>Quebrar o que já não serve. O retrato do Rebelde não pede licença: ele mostra quem rompeu.</p>' +
       '<h2>O Governante</h2><p>Construir o que permanece. O retrato do Governante não levanta a voz: a presença já organiza a sala.</p>' +
       '<h2>O Amante</h2><p>Quando o vínculo aparece, a foto também. O retrato do Amante não encena intimidade: ele a encontra.</p>' +

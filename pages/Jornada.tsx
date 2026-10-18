@@ -1,7 +1,7 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { Volume2, VolumeX, MessageCircle } from 'lucide-react';
-import { CENAS_NA_RODA, TRIADES, WHATSAPP_JORNADA, CenaJornada, infoArquetipo } from '../data/jornada';
+import { CENAS_NA_RODA, TRIADES, WHATSAPP_JORNADA, MINIATURAS, CenaJornada, infoArquetipo } from '../data/jornada';
 import { CursorJornada } from '../components/jornada/Cursor';
 import { alternarSom, clique } from '../components/jornada/som';
 import './jornada.css';
@@ -150,14 +150,24 @@ export const Jornada: React.FC = () => {
       </button>
 
       <header className="jr-hero">
+        <div className="jr-orbita" aria-hidden="true">
+          <div className="jr-anel">
+            {MINIATURAS.map((src, i) => (
+              <div key={src} className="jr-carta" style={{ ['--i' as any]: i }}>
+                <img src={src} alt="" width={220} height={290} decoding="async" />
+              </div>
+            ))}
+          </div>
+        </div>
         <div className="relative z-10 max-w-2xl mx-auto text-center">
           <p className="text-[10px] uppercase tracking-[0.4em] text-gold-500">Método Frois</p>
           <h1 className="mt-6 text-3xl sm:text-5xl text-white leading-tight">
-            Antes da câmera, existe uma história
+            Existe um jeito seu de estar no mundo
           </h1>
-          <p className="mt-6 text-sm sm:text-base text-zinc-400 leading-relaxed">
-            Todo retrato que eu faço começa por uma pergunta: que arquétipo você carrega?
-            Siga a trilha e veja como a estratégia vem primeiro, e a câmera depois.
+          <p className="mt-6 text-sm sm:text-base text-zinc-300 leading-relaxed">
+            Todos nós temos um jeito de ser que as pessoas reconhecem: quem enfrenta, quem cuida,
+            quem cria, quem ensina. São doze jeitos, e você não precisa decorar nenhum. Basta se reconhecer.
+            Role, olhe os rostos e veja se algum deles é o seu.
           </p>
           <p className="mt-12 text-[10px] uppercase tracking-[0.3em] text-zinc-500 jr-pulso">role para começar</p>
         </div>

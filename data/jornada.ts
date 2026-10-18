@@ -303,6 +303,12 @@ export const CENAS: CenaJornada[] = [
 const ORDEM = TRIADES.flatMap((t) => t.arquetipos.map((a) => a.id));
 export const CENAS_NA_RODA = [...CENAS].sort((a, b) => ORDEM.indexOf(a.id) - ORDEM.indexOf(b.id));
 
+// Miniaturas (220x290) dos rostos revelados, para o fundo em espiral da abertura.
+export const MINIATURAS = [
+  'governante-comando', 'inocente-luz', 'rebelde-frontal', 'sabio-escada', 'heroi-espada', 'bobo-riso',
+  'mago-sala', 'cuidador-pausa', 'explorador-retrato', 'amante-sorriso', 'criador-retrato', 'comum-riso',
+].map((n) => `/jornada/mini/${n}.webp`);
+
 export const WHATSAPP_JORNADA =
   'https://wa.me/5548996231894?text=' +
   encodeURIComponent('Olá Mac, vi a Jornada no seu site e quero entender qual é o meu arquétipo.');
