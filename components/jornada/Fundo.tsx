@@ -81,7 +81,7 @@ export const Fundo: React.FC = () => {
       if (!prox) return [chegada, 0, 0];              // a última carta fica em foco
       const c1 = prox.top - 0.35 * h;
       const dissolve = suave((meio - (c1 - 0.25 * h)) / (0.4 * h));
-      const volta = suave((meio - (c1 + 0.15 * h)) / (0.35 * h));
+      const volta = suave((meio - (c1 + 0.1 * h)) / (0.75 * h));
       return [chegada, dissolve, volta];
     };
     const pa = new Array(N).fill(0) as number[];     // chegada, dissolve e volta com inércia, para fluir em vez de pular
@@ -150,14 +150,13 @@ export const Fundo: React.FC = () => {
         const alcance = rect.width * 1.15 * Math.sin(Math.min(1, amp) * Math.PI * 0.5);   // nuvem se abre e se fecha com a rolagem
         // no começo cada partícula é um quadradinho do tamanho da célula (a foto vira um mosaico completo);
         // conforme a nuvem se abre, cada uma encolhe até virar um grão fino, como as partículas do fundo
-        const fino = w < 768 ? 1.25 : 1.6;
-        const celula = rect.width / COLUNAS + 0.7;
-        const tamanho = fino + (celula - fino) * (1 - suave(amp / 0.28));
+        const fino = w < 768 ? 1.1 : 1.35;
+        const tamanho = fino;                        // sempre fina, do primeiro instante ao último (fagulhas minúsculas)
         ctxP.globalAlpha = suave(amp / 0.12) * (0.95 - 0.35 * amp);
         // a nuvem brilha (soma luz) em vez de escurecer a foto que aparece por baixo
-        ctxP.globalCompositeOperation = amp > 0.16 ? 'lighter' : 'source-over';
-        const salto = amp < 0.12 ? 1 : saltoParticulas;       // o mosaico do começo precisa de todas, para cobrir a foto
-        const tam = amp < 0.12 ? tamanho : tamanho * Math.sqrt(salto);   // com menos partículas, cada uma um pouco maior
+        ctxP.globalCompositeOperation = 'lighter';
+        const salto = saltoParticulas;
+        const tam = tamanho * Math.sqrt(salto);      // se o aparelho pedir menos partículas, cada uma fica só um pouco maior
         const u0 = rect.width / COLUNAS, v0 = rect.height / LINHAS;
         const bx = cx0 - rect.width / 2 + u0 / 2, by = cy0 - rect.height / 2 + v0 / 2;
         const pisca = agora * 1.6;
@@ -189,7 +188,7 @@ export const Fundo: React.FC = () => {
       let focoMax = 0;
       for (let i = 0; i < N; i++) {
         const [a, d, r] = alvoDaCarta(i);
-        pa[i] += (a - pa[i]) * passo_; dd[i] += (d - dd[i]) * passo_; rr[i] += (r - rr[i]) * passo_;
+        pa[i] += (a - pa[i]) * passo_; dd[i] += (d - dd[i]) * passo_; rr[i] += (r - rr[i]) * passo_ * 0.5;   // a volta e o refazer são mais lentos
         const f = pa[i] * (1 - rr[i]);
         if (f > focoMax) focoMax = f;
       }
@@ -218,7 +217,7 @@ export const Fundo: React.FC = () => {
         if (desfeita > 0.015) {
           // a foto vira nuvem de partículas finas (desenhadas no canvas de cima); nos aparelhos simples, só esmaece
           // a foto inteira some aos poucos, enquanto o mosaico de partículas aparece por cima (sem corte brusco)
-          el.style.opacity = String((base + (1 - base) * f) * (1 - suave(desfeita / (comParticulas ? 0.2 : 1))));
+          el.style.opacity = String((base + (1 - base) * f) * (1 - suave(desfeita / (comParticulas ? 0.45 : 1))));
           if (comParticulas) nuvens.push({ i, amp: desfeita, rect: el.getBoundingClientRect() });
         } else {
           el.style.opacity = String(base + (1 - base) * f);
