@@ -64,12 +64,14 @@ function isoData(br) { return br.split('/').reverse().join('-'); }
 
 let base = fs.readFileSync(path.join(DIST, 'index.html'), 'utf-8');
 
-// O CSS principal vai para dentro do próprio HTML (só ~10 KB compactados): o navegador pinta o texto assim que
-// recebe a página, sem esperar um segundo pedido de rede só pelos estilos. Vale para todas as páginas.
+// Na página inicial o CSS principal vai para dentro do próprio HTML (~10 KB compactados): o navegador pinta o texto
+// assim que recebe a página, sem esperar um segundo pedido de rede só pelos estilos. Medido: celular 79 -> 100.
+// As páginas internas ficam com o CSS em arquivo à parte: lá embutir engorda o HTML sem ganho (medido: nota igual ou 2 pontos menor).
+let baseInicio = base;
 const linkCss = base.match(/<link rel="stylesheet"[^>]*href="(\/assets\/[^"]+\.css)"[^>]*>/);
 if (linkCss) {
   const css = fs.readFileSync(path.join(DIST, linkCss[1]), 'utf-8');
-  base = base.replace(linkCss[0], () => `<style>${css}</style>`);
+  baseInicio = base.replace(linkCss[0], () => `<style>${css}</style>`);
 }
 let n = 0;
 
@@ -122,7 +124,7 @@ for (const p of PAGINAS) {
       FAM.packages.map((k) => `<h2>${esc(k.nome)}: ${esc(k.precoRotulo)}</h2><ul>${k.itens.map((i) => `<li>${esc(i)}</li>`).join('')}</ul>`).join('') +
       FAM.faq.map((f) => `<h2>${esc(f.q)}</h2><p>${esc(f.a)}</p>`).join('') + '</main>';
   }
-  gravar(p.rota, aplicar(base, { title: p.title, desc: p.desc, url: BASE + p.rota, ...extra }));
+  gravar(p.rota, aplicar(p.jornada ? baseInicio : base, { title: p.title, desc: p.desc, url: BASE + p.rota, ...extra }));
   n++;
 }
 
