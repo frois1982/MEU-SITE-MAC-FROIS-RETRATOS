@@ -60,7 +60,7 @@ body:has(.jr-root) footer { position: relative; z-index: 1; }
 /* camada de baixo: o rosto */
 .jr-rosto img {
   filter: grayscale(1) contrast(1.05); /* fixo: filtro que muda a cada quadro pesa demais */
-  transform: scale(calc(1.18 - var(--p) * .18)) translate3d(calc(var(--mx) * -6px), calc(var(--my) * -6px), 0);
+  transform: scale(calc(1.18 - var(--p) * .18)) translate3d(calc(var(--mx) * -6px), calc(var(--my) * -6px + var(--desce, 0px)), 0);
 }
 /* o rosto começa mais escuro e acende com a rolagem (camada preta que some, em vez de filtro) */
 .jr-rosto::after { content: ''; position: absolute; inset: 0; background: #000; pointer-events: none;
@@ -68,7 +68,7 @@ body:has(.jr-root) footer { position: relative; z-index: 1; }
 /* camada de cima: o caminho, dissolve em círculo a partir do rosto e some */
 .jr-caminho {
   opacity: clamp(0, calc(1.25 - var(--p) * 2.1), 1);
-  transform: scale(calc(1 + var(--p) * .22)) translate3d(calc(var(--mx) * 8px), 0, 0);
+  transform: scale(calc(1 + var(--p) * .22)) translate3d(calc(var(--mx) * 8px), var(--desce, 0px), 0);
   filter: grayscale(1);
   -webkit-mask-image: radial-gradient(circle at var(--fx, 50%) var(--fy, 38%), transparent calc(var(--p) * 150% - 40%), #000 calc(var(--p) * 150%));
           mask-image: radial-gradient(circle at var(--fx, 50%) var(--fy, 38%), transparent calc(var(--p) * 150% - 40%), #000 calc(var(--p) * 150%));

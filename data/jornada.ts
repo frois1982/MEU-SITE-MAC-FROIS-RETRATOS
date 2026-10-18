@@ -15,6 +15,7 @@ export type CenaJornada = {
   lema: string[]; // três palavras
   cor?: boolean | 'revela'; // true = cor nas duas fotos; 'revela' = foto de cima em cinza, revelada em cor (padrão: preto e branco)
   ajuste?: { caminho?: boolean; rosto?: boolean }; // foto horizontal: no celular mostra a cena inteira em vez de cortar
+  descer?: { caminho?: number; rosto?: number }; // reenquadramento: desce a foto (em % da altura da tela) para o rosto sair de baixo da barra do site
 };
 
 // Estrutura da roda dos 12 arquétipos (Carol S. Pearson), definida pelo Mac em 18/10/2026.
@@ -108,6 +109,7 @@ export const CENAS: CenaJornada[] = [
     posRosto: '55% 50%',
     foco: ['50%', '34%'],
     lema: ['Sentir', 'Conectar', 'Encantar'],
+    descer: { caminho: 8, rosto: 8 },
     cor: true,
     ajuste: { caminho: true, rosto: true },
   },
@@ -172,6 +174,7 @@ export const CENAS: CenaJornada[] = [
     posRosto: '66% 30%',
     foco: ['50%', '24%'],
     lema: ['Rir', 'Aliviar', 'Aproximar'],
+    descer: { caminho: 8, rosto: 9 },
     cor: true,
     ajuste: { caminho: true },
   },
@@ -255,6 +258,7 @@ export const CENAS: CenaJornada[] = [
     posRosto: '27% 30%',
     foco: ['50%', '24%'],
     lema: ['Confiar', 'Recomeçar', 'Florescer'],
+    descer: { rosto: 9 },
     cor: 'revela',
   },
   {

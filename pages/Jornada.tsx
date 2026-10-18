@@ -110,12 +110,14 @@ const Cena: React.FC<{ cena: CenaJornada; numero: number }> = ({ cena, numero })
       <div ref={palco} className="jr-palco" data-cursor data-rotulo="Ver">
         <div className="jr-barra" />
 
-        <div className={`jr-camada jr-rosto${cena.ajuste?.rosto ? ' jr-caber' : ''}`}>
+        <div className={`jr-camada jr-rosto${cena.ajuste?.rosto ? ' jr-caber' : ''}`}
+             style={cena.descer?.rosto ? ({ ['--desce' as any]: `${cena.descer.rosto}svh` } as React.CSSProperties) : undefined}>
           {cena.ajuste?.rosto && <img src={cena.fotoRosto} alt="" aria-hidden="true" className="jr-desfoque" loading="lazy" decoding="async" />}
           <img src={cena.fotoRosto} alt={cena.altRosto} className="jr-principal" loading="lazy" decoding="async" style={{ objectPosition: cena.posRosto }} />
         </div>
 
-        <div className={`jr-camada jr-caminho${cena.ajuste?.caminho ? ' jr-caber' : ''}`} aria-hidden="true">
+        <div className={`jr-camada jr-caminho${cena.ajuste?.caminho ? ' jr-caber' : ''}`} aria-hidden="true"
+             style={cena.descer?.caminho ? ({ ['--desce' as any]: `${cena.descer.caminho}svh` } as React.CSSProperties) : undefined}>
           {cena.ajuste?.caminho && <img src={cena.fotoCaminho} alt="" className="jr-desfoque" loading="lazy" decoding="async" />}
           <img src={cena.fotoCaminho} alt={cena.altCaminho} className="jr-principal" loading="lazy" decoding="async" style={{ objectPosition: cena.posCaminho }} />
         </div>
