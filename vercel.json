@@ -1,6 +1,5 @@
 {
           "redirects": [
-                      { "source": "/lumina-pro", "destination": "/produtos", "permanent": true },
                       {
                                     "source": "/(.*)",
                                     "has": [{ "type": "host", "value": "macfrois.com.br" }],
