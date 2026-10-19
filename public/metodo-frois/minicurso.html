@@ -167,14 +167,12 @@ footer p{font-size:.8rem;margin:.3rem 0;color:var(--text-muted)}
     <p class="eyebrow">Minicurso gravado do Método Frois</p>
     <h1>Seu conteúdo é bom. A <em>luz</em> está fazendo ele parecer amador.</h1>
     <p class="sub">Aprenda a iluminar seus vídeos, aulas e gravações com a janela, o celular e o que você já tem em casa. Sem estúdio, sem equipamento caro.</p>
-    <!-- VÍDEO (VSL): quando a nova VSL estiver gravada, ative este bloco e o script no final da página, trocando o ID do YouTube.
     <div class="video" id="video">
       <button type="button" aria-label="Assistir ao vídeo" id="playbtn">
         <img src="img/minicurso/poster-vsl.jpg" alt="Vídeo de apresentação do minicurso" width="1280" height="720">
         <span class="play"><svg width="26" height="30" viewBox="0 0 26 30"><path d="M2 2l22 13L2 28z" fill="#E8C96A"/></svg></span>
       </button>
     </div>
-    -->
     <a class="btn" href="https://go.hotmart.com/D105725476T" rel="noopener">Quero iluminar melhor por R$ 97<small>4 módulos, 15 aulas e acesso vitalício</small></a>
     <div class="badges"><span>Compra segura pela Hotmart</span><span>Acesso imediato</span><span>Garantia de 7 dias</span></div>
   </div>
@@ -387,18 +385,17 @@ footer p{font-size:.8rem;margin:.3rem 0;color:var(--text-muted)}
 <div class="float" id="float"><a class="btn" href="https://go.hotmart.com/D105725476T" rel="noopener">Quero o minicurso por R$ 97</a></div>
 
 <script>
-/* PLAYER DA VSL (ativar junto com o bloco de vídeo do topo e trocar o ID):
 (function(){
   var b=document.getElementById('playbtn'),v=document.getElementById('video');
   b.addEventListener('click',function(){
     var f=document.createElement('iframe');
-    f.src='https://www.youtube-nocookie.com/embed/jQi29YIkW20?autoplay=1&rel=0&modestbranding=1';
+    f.src='https://www.youtube-nocookie.com/embed/RgdoD-fHkLo?autoplay=1&rel=0&modestbranding=1';
     f.title='Iluminação Profissional: vídeo de apresentação';
     f.allow='accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; fullscreen';
     f.allowFullscreen=true;
     v.replaceChild(f,b);
   });
-*/
+})();
 (function(){
   var fl=document.getElementById('float'),hero=document.querySelector('.hero'),of=document.getElementById('oferta');
   function chk(){
