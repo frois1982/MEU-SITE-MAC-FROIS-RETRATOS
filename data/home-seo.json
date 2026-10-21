@@ -1,0 +1,56 @@
+{
+  "description": "Mac Frois é fotógrafo de retratos em Florianópolis, SC: retratos corporativos, posicionamento de imagem para executivos e profissionais liberais, ensaios de família e de casal.",
+  "eyebrow": "Mac Frois · Estúdio Frois · Florianópolis, SC",
+  "h1": "Fotógrafo de retratos em Florianópolis",
+  "intro": "Retratos corporativos, posicionamento de imagem e ensaios de família e de casal, com estratégia antes da câmera. Há mais de 10 anos, Mac Frois fotografa executivos, empresários, profissionais liberais e famílias em Florianópolis e na Grande Florianópolis, em estúdio ou em locação.",
+  "links": [
+    { "to": "/fotografo-corporativo-florianopolis", "label": "Retrato corporativo" },
+    { "to": "/ensaio-de-familia-florianopolis", "label": "Ensaio de família" },
+    { "to": "/ensaio-de-casal-florianopolis", "label": "Ensaio de casal" }
+  ],
+  "rolar": "role e descubra o seu arquétipo",
+  "arquetipos": {
+    "h2": "O que são arquétipos e por que eles guiam o retrato",
+    "abertura": "Arquétipo é um padrão universal de comportamento, de imagem e de símbolo. Ele aparece nos mitos, nos contos e nos sonhos de todas as culturas: o herói que enfrenta, o sábio que orienta, o cuidador que acolhe. Por serem reconhecidos de imediato, os arquétipos funcionam como uma linguagem que todo mundo entende sem precisar de explicação.",
+    "blocos": [
+      {
+        "h3": "De onde vem a ideia",
+        "p": "O conceito foi levado à psicologia pelo psiquiatra suíço Carl Gustav Jung, no início do século XX, que descreveu os arquétipos como imagens primordiais do inconsciente coletivo. Décadas depois, a psicóloga e escritora americana Carol S. Pearson organizou esses padrões em doze arquétipos, em obras como Awakening the Heroes Within (1991). Com Margaret Mark, ela aplicou a ideia à construção de marcas no livro The Hero and the Outlaw (2001). Daí vêm os 12 arquétipos de marca usados no mundo todo."
+      },
+      {
+        "h3": "Como funciona",
+        "p": "Cada arquétipo tem um desejo central, e os doze se dividem em quatro grupos conforme o que buscam: descobrir a identidade, dar estrutura, conectar-se aos outros e deixar a própria marca. Quem se reconhece em um arquétipo tende a comunicar com mais coerência: a roupa, o cenário, a luz, a postura e as palavras passam a dizer a mesma coisa."
+      },
+      {
+        "h3": "As marcas e os arquétipos",
+        "p": "Grandes marcas costumam ser associadas a um arquétipo dominante, e isso ajuda a entender por que a ideia é tão poderosa: você reconhece a personalidade de uma marca antes de ler qualquer texto dela. Os exemplos na lista acima são associações frequentes na literatura de marketing, citadas apenas para ilustrar. As marcas mencionadas não têm relação com o Mac Frois."
+      },
+      {
+        "h3": "No Método Frois",
+        "p": "Nos projetos de posicionamento de imagem, os arquétipos são definidos antes da sessão, junto com o dossiê estratégico. Primeiro a estratégia. Depois a câmera. Assim o retrato deixa de ser só uma foto bonita e passa a mostrar, com verdade, quem a pessoa é e o que ela quer comunicar."
+      }
+    ]
+  },
+  "convite": {
+    "rotulo": "Capítulos seguintes",
+    "h2": "Existem 12 arquétipos. Qual é o seu?",
+    "texto": "Responda 12 perguntas rápidas e descubra o seu arquétipo principal e o secundário, em cerca de 2 minutos. Descobrir isso é o primeiro passo do dossiê estratégico que antecede cada sessão.",
+    "botao": "Descobrir o meu arquétipo",
+    "quiz": "/metodo-frois/quiz.html",
+    "aviso": "O quiz é uma ferramenta de reflexão sobre imagem e comunicação, não um teste psicológico nem um diagnóstico."
+  },
+  "marcas": {
+    "inocente": "Dove",
+    "explorador": "Jeep",
+    "sabio": "Google",
+    "cuidador": "Johnson & Johnson",
+    "criador": "Lego",
+    "governante": "Mercedes-Benz",
+    "pessoa-comum": "IKEA",
+    "amante": "Chanel",
+    "bobo": "M&M's",
+    "heroi": "Nike",
+    "rebelde": "Harley-Davidson",
+    "mago": "Disney"
+  }
+}

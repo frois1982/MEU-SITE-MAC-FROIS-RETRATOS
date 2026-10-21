@@ -1,7 +1,8 @@
 import React, { Suspense, lazy, useEffect, useRef, useState } from 'react';
 import { Link } from 'react-router-dom';
-import { Volume2, VolumeX, MessageCircle, ChevronUp, ChevronDown } from 'lucide-react';
-import { CENAS_NA_RODA, TRIADES, WHATSAPP_JORNADA, CenaJornada, infoArquetipo } from '../data/jornada';
+import { Volume2, VolumeX, ChevronUp, ChevronDown } from 'lucide-react';
+import { CENAS_NA_RODA, TRIADES, CenaJornada, infoArquetipo } from '../data/jornada';
+import seo from '../data/home-seo.json';
 // O fundo animado e o cursor chegam logo depois da primeira pintura: o texto de abertura não espera por eles.
 const Fundo = lazy(() => import('../components/jornada/Fundo').then((m) => ({ default: m.Fundo })));
 const CursorJornada = lazy(() => import('../components/jornada/Cursor').then((m) => ({ default: m.CursorJornada })));
@@ -182,8 +183,7 @@ export const Jornada: React.FC = () => {
     const anterior = document.title;
     // A Jornada é a página inicial: mantém o título e a descrição de busca da home de sempre.
     document.title = 'Mac Frois | Fotografo de Retratos Corporativos em Florianopolis';
-    document.querySelector('meta[name="description"]')?.setAttribute('content',
-      'Mac Frois é fotógrafo de retratos corporativos e posicionamento de imagem para executivos, empresários e profissionais liberais em Florianópolis, SC.');
+    document.querySelector('meta[name="description"]')?.setAttribute('content', seo.description);
     document.querySelector('link[rel="canonical"]')?.setAttribute('href', 'https://www.macfrois.com.br/');
 
     // Na abertura há texto na tela: o feixe fica mais discreto para a leitura ser tranquila.
@@ -239,16 +239,18 @@ export const Jornada: React.FC = () => {
 
       <header className="jr-hero">
         <div className="jr-hero-texto relative z-10 max-w-2xl mx-auto text-center">
-          <p className="text-[10px] uppercase tracking-[0.4em] text-gold-500">Mac Frois · Retratos em Florianópolis</p>
-          <h1 className="mt-6 text-3xl sm:text-5xl text-white leading-tight">
-            Existe um jeito seu de estar no mundo
-          </h1>
-          <p className="mt-6 text-sm sm:text-base text-zinc-100 leading-relaxed">
-            Todos nós temos um jeito de ser que as pessoas reconhecem: quem enfrenta, quem cuida,
-            quem cria, quem ensina. São doze jeitos, e você não precisa decorar nenhum. Basta se reconhecer.
-            Role, olhe os rostos e veja se algum deles é o seu.
+          <p className="text-[10px] uppercase tracking-[0.4em] text-gold-500">{seo.eyebrow}</p>
+          <h1 className="mt-6 text-3xl sm:text-5xl text-white leading-tight">{seo.h1}</h1>
+          <p className="mt-6 text-sm sm:text-base text-zinc-100 leading-relaxed">{seo.intro}</p>
+          <p className="mt-6 text-[11px] uppercase tracking-[0.2em] text-zinc-300">
+            {seo.links.map((l, i) => (
+              <React.Fragment key={l.to}>
+                {i > 0 && <span className="text-zinc-600"> · </span>}
+                <Link to={l.to} className="underline underline-offset-4 hover:text-gold-400">{l.label}</Link>
+              </React.Fragment>
+            ))}
           </p>
-          <p className="mt-12 text-[10px] uppercase tracking-[0.3em] text-zinc-500 jr-pulso">role para começar</p>
+          <p className="mt-10 text-[10px] uppercase tracking-[0.3em] text-zinc-500 jr-pulso">{seo.rolar}</p>
         </div>
       </header>
 
@@ -276,7 +278,7 @@ export const Jornada: React.FC = () => {
                     const pronto = CENAS_NA_RODA.some((c) => c.id === a.id);
                     return (
                       <li key={a.id} className={`flex justify-between text-sm ${pronto ? 'text-white' : 'text-zinc-600'}`}>
-                        <span>{a.nome}</span>
+                        <span>{a.nome}<small className="block text-[10px] text-zinc-500">ex.: {(seo.marcas as Record<string, string>)[a.id]}</small></span>
                         <span className="text-xs">{pronto ? a.motivacao : 'em breve'}</span>
                       </li>
                     );
@@ -288,22 +290,32 @@ export const Jornada: React.FC = () => {
         </div>
       </section>
 
+      <section className="relative px-6 py-24 bg-black border-t border-zinc-900" aria-labelledby="arquetipos-o-que-sao">
+        <div className="max-w-2xl mx-auto">
+          <h2 id="arquetipos-o-que-sao" className="jr-titulo !text-3xl sm:!text-4xl text-center">{seo.arquetipos.h2}</h2>
+          <p className="mt-8 text-sm sm:text-base text-zinc-300 leading-relaxed">{seo.arquetipos.abertura}</p>
+          {seo.arquetipos.blocos.map((b) => (
+            <div key={b.h3} className="mt-10">
+              <h3 className="text-[11px] uppercase tracking-[0.3em] text-gold-400">{b.h3}</h3>
+              <p className="mt-3 text-sm sm:text-base text-zinc-300 leading-relaxed">{b.p}</p>
+            </div>
+          ))}
+        </div>
+      </section>
+
       <section id="convite" className="relative px-6 py-28 text-center bg-zinc-950">
         <div className="max-w-xl mx-auto">
-          <p className="text-[10px] uppercase tracking-[0.4em] text-gold-500">Capítulos seguintes</p>
-          <h2 className="mt-5 text-2xl sm:text-3xl text-white">Existem 12 arquétipos. Qual é o seu?</h2>
-          <p className="mt-5 text-sm text-zinc-400 leading-relaxed">
-            Descobrir isso é o primeiro passo do dossiê estratégico que antecede cada sessão.
-          </p>
+          <p className="text-[10px] uppercase tracking-[0.4em] text-gold-500">{seo.convite.rotulo}</p>
+          <h2 className="mt-5 text-2xl sm:text-3xl text-white">{seo.convite.h2}</h2>
+          <p className="mt-5 text-sm text-zinc-400 leading-relaxed">{seo.convite.texto}</p>
           <a
-            href={WHATSAPP_JORNADA}
-            target="_blank"
-            rel="noopener noreferrer"
+            href={seo.convite.quiz}
             onClick={() => clique()}
             className="mt-10 inline-flex items-center gap-3 bg-gold-600 hover:bg-gold-500 text-black px-8 py-4 text-[11px] uppercase tracking-[0.25em] font-semibold transition-colors"
           >
-            <MessageCircle size={18} /> Falar com o Mac no WhatsApp
+            {seo.convite.botao}
           </a>
+          <p className="mt-4 text-[11px] text-zinc-500 leading-relaxed">{seo.convite.aviso}</p>
           <div className="mt-8">
             <Link to="/servicos" className="text-[11px] uppercase tracking-[0.25em] text-zinc-400 hover:text-gold-400 underline underline-offset-8">
               Ver os projetos

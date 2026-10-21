@@ -12,9 +12,10 @@ const esc = (s) => String(s).replace(/&/g, '&amp;').replace(/"/g, '&quot;').repl
 
 const LP = JSON.parse(fs.readFileSync(path.join(__dirname, '../data/fotografo-corporativo.json'), 'utf-8'));
 const FAM = JSON.parse(fs.readFileSync(path.join(__dirname, '../data/ensaio-familia.json'), 'utf-8'));
+const SEO = JSON.parse(fs.readFileSync(path.join(__dirname, '../data/home-seo.json'), 'utf-8'));
 const PAGINAS = [
   // A Jornada é a página inicial ("/"): mantém o título e a descrição de busca da home de sempre.
-  { rota: '/', title: 'Mac Frois | Fotografo de Retratos Corporativos em Florianopolis', desc: 'Mac Frois e fotografo especialista em retratos corporativos e posicionamento de imagem para executivos, empresarios e profissionais liberais em Florianopolis, SC.', jornada: true },
+  { rota: '/', title: 'Mac Frois | Fotografo de Retratos Corporativos em Florianopolis', desc: SEO.description, jornada: true },
   { rota: '/ensaio-de-familia-florianopolis', title: FAM.title, desc: FAM.description, fam: true },
   { rota: '/fotografo-corporativo-florianopolis', title: LP.title, desc: LP.description, lp: true },
   { rota: '/portfolio', title: 'Portfolio | Mac Frois - Retratos Corporativos Florianopolis', desc: 'Veja o portfolio de Mac Frois - retratos corporativos, posicionamento de imagem e fotografia de marca pessoal para executivos e profissionais liberais em Florianopolis, SC.' },
@@ -80,10 +81,11 @@ for (const p of PAGINAS) {
     // A abertura vem já formatada, com as mesmas classes e a mesma estrutura que o React monta (Layout + Jornada):
     // o texto aparece na primeira pintura e, quando o React assume, nada muda de lugar nem de aparência.
     extra.corpo = '<div class="min-h-screen bg-black flex flex-col"><main class="flex-grow pt-24 md:pt-0"><main class="jr-root"><header class="jr-hero"><div class="jr-hero-texto relative z-10 max-w-2xl mx-auto text-center">' +
-      '<p class="text-[10px] uppercase tracking-[0.4em] text-gold-500">Mac Frois · Retratos em Florianópolis</p>' +
-      '<h1 class="mt-6 text-3xl sm:text-5xl text-white leading-tight">Existe um jeito seu de estar no mundo</h1>' +
-      '<p class="mt-6 text-sm sm:text-base text-zinc-100 leading-relaxed">Todos nós temos um jeito de ser que as pessoas reconhecem: quem enfrenta, quem cuida, quem cria, quem ensina. São doze jeitos, e você não precisa decorar nenhum. Basta se reconhecer. Role, olhe os rostos e veja se algum deles é o seu.</p>' +
-      '<p class="mt-12 text-[10px] uppercase tracking-[0.3em] text-zinc-500 jr-pulso">role para começar</p></div></header>' +
+      `<p class="text-[10px] uppercase tracking-[0.4em] text-gold-500">${esc(SEO.eyebrow)}</p>` +
+      `<h1 class="mt-6 text-3xl sm:text-5xl text-white leading-tight">${esc(SEO.h1)}</h1>` +
+      `<p class="mt-6 text-sm sm:text-base text-zinc-100 leading-relaxed">${esc(SEO.intro)}</p>` +
+      `<p class="mt-6 text-[11px] uppercase tracking-[0.2em] text-zinc-300">${SEO.links.map((l) => `<a href="${l.to}" class="underline underline-offset-4 hover:text-gold-400">${esc(l.label)}</a>`).join('<span class="text-zinc-600"> · </span>')}</p>` +
+      `<p class="mt-10 text-[10px] uppercase tracking-[0.3em] text-zinc-500 jr-pulso">${esc(SEO.rolar)}</p></div></header>` +
       '<section class="relative px-6 py-24 bg-zinc-950 text-zinc-300 text-center"><p>São doze jeitos de ser, os arquétipos do Método Frois:</p>' +
       '<h2>O Rebelde</h2><p>Quebrar o que já não serve. O retrato do Rebelde não pede licença: ele mostra quem rompeu.</p>' +
       '<h2>O Governante</h2><p>Construir o que permanece. O retrato do Governante não levanta a voz: a presença já organiza a sala.</p>' +
@@ -97,7 +99,9 @@ for (const p of PAGINAS) {
       '<h2>O Inocente</h2><p>Voltar a olhar o mundo sem medo. O retrato do Inocente é feito de luz suave e verdade simples.</p>' +
       '<h2>O Cuidador</h2><p>Quem cuida também precisa de pausa. O retrato do Cuidador mostra a força que mora na delicadeza.</p>' +
       '<h2>O Criador</h2><p>Dar forma ao que ainda não existe. O retrato do Criador é o instante em que a ideia ganha rosto.</p>' +
-      '<h2>Existem 12 arquétipos. Qual é o seu?</h2><p><a href="/contato">Fale com o Mac</a></p>' +
+      `<h2>${esc(SEO.arquetipos.h2)}</h2><p>${esc(SEO.arquetipos.abertura)}</p>` +
+      SEO.arquetipos.blocos.map((b) => `<h3>${esc(b.h3)}</h3><p>${esc(b.p)}</p>`).join('') +
+      `<h2>${esc(SEO.convite.h2)}</h2><p>${esc(SEO.convite.texto)}</p><p><a href="${SEO.convite.quiz}">${esc(SEO.convite.botao)}</a></p><p>${esc(SEO.convite.aviso)}</p>` +
       '<nav><a href="/portfolio">Portfólio</a> · <a href="/servicos">Serviços</a> · <a href="/fotografo-corporativo-florianopolis">Fotógrafo corporativo em Florianópolis</a> · ' +
       '<a href="/ensaio-de-familia-florianopolis">Ensaio de família em Florianópolis</a> · <a href="/blog">Blog</a> · <a href="/contato">Contato</a></nav></section></main></main></div>';
   }
