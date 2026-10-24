@@ -90,7 +90,7 @@ export const Contact: React.FC = () => {
   return (
     <div className="pt-32 pb-24 bg-black min-h-screen">
       <div className="container mx-auto px-6">
-        <SectionTitle title="Fale Conosco" subtitle="O RETRATO COMO ATIVO ESTRATÉGICO" />
+        <SectionTitle title="Fale Conosco" subtitle="O RETRATO COMO ATIVO ESTRATÉGICO" h1 />
         
         <div className="grid lg:grid-cols-2 gap-16">
           {/* Contact Info */}

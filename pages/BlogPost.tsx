@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import { useParams, useNavigate, Link } from 'react-router-dom';
 import { isRich, parseBlocks, parseInline } from '../lib/richtext.js';
+import { tituloSeo } from '../lib/tituloSeo.js';
+import titulosSeo from '../data/titulos-seo.json';
 
 interface Post {
   id: string;
@@ -84,7 +86,7 @@ const BlogPost: React.FC = () => {
       .then(data => {
         setPost(data);
         setLoading(false);
-        document.title = `${data.title} | Mac Frois`;
+        document.title = tituloSeo(data.slug, data.title, titulosSeo as Record<string, string>);
         const meta = document.querySelector('meta[name="description"]');
         if (meta) meta.setAttribute('content', data.excerpt || data.title);
       })

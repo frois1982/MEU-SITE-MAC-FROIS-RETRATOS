@@ -13,13 +13,40 @@ const esc = (s) => String(s).replace(/&/g, '&amp;').replace(/"/g, '&quot;').repl
 const LP = JSON.parse(fs.readFileSync(path.join(__dirname, '../data/fotografo-corporativo.json'), 'utf-8'));
 const FAM = JSON.parse(fs.readFileSync(path.join(__dirname, '../data/ensaio-familia.json'), 'utf-8'));
 const SEO = JSON.parse(fs.readFileSync(path.join(__dirname, '../data/home-seo.json'), 'utf-8'));
+const TITULOS = JSON.parse(fs.readFileSync(path.join(__dirname, '../data/titulos-seo.json'), 'utf-8'));
+
+const WPP = '(48) 99623-1894';
+const ESTATICO = {
+  '/portfolio': () => '<main><h1>Portfólio de retratos corporativos em Florianópolis</h1>' +
+    '<p>Retratos corporativos, fotografia de marca pessoal, ensaios de família e de casal feitos por Mac Frois no estúdio do Estreito e em locações de Florianópolis e região.</p>' +
+    '<p>Cada imagem nasce de um briefing: quem você é, para quem você fala e o que a foto precisa dizer. Navegue pelas categorias Corporativo, Retratos e Artístico e clique em qualquer foto para ampliar.</p>' +
+    '<h2>Quer um retrato assim?</h2><p>Veja como funciona a <a href="/fotografo-corporativo-florianopolis">sessão de retrato corporativo em Florianópolis</a>, os <a href="/servicos">projetos e pacotes</a> ou o <a href="/ensaio-de-familia-florianopolis">ensaio de família</a>. Para agendar, fale pelo <a href="/contato">contato</a>.</p></main>',
+  '/servicos': () => '<main><h1>Autoridade em Imagem</h1>' +
+    '<p>Fotografia corporativa para profissionais que querem ser reconhecidos como referência, em Florianópolis, SC.</p>' +
+    '<h2>Fotografia corporativa</h2><p>Sessões focadas, de 1 a 3 horas, em estúdio ou locação externa, com fotos tratadas para LinkedIn, site, Google Meu Negócio e redes sociais. Pacotes a partir de R$ 890. Veja <a href="/fotografo-corporativo-florianopolis">como funciona a sessão do fotógrafo corporativo em Florianópolis</a>.</p>' +
+    '<h2>Projeto Da Vinci</h2><p>Projeto de posicionamento de imagem com cinco encontros: análise e dossiê inicial, criação de movimento, definição de arquétipo, alinhamento da sessão e sessão fotográfica de 3 horas.</p>' +
+    '<h2>Projeto Michelangelo</h2><p>Imersão completa com oito encontros: os cinco do Da Vinci, sessão fotográfica de 6 horas e três calls de acompanhamento depois da entrega.</p>' +
+    `<h2>Quanto custa?</h2><p>Os Projetos Da Vinci e Michelangelo têm proposta personalizada, depois de uma conversa sobre seus objetivos. Fale com Mac Frois pelo WhatsApp ${WPP}. Atendimento presencial em Florianópolis, contrato e nota fiscal em todos os projetos; pagamento via Pix, cartão em até 12x ou transferência.</p></main>`,
+  '/contato': () => '<main><h1>Contato: agende sua sessão de retratos em Florianópolis</h1>' +
+    '<p>Fale com Mac Frois para agendar uma sessão de retrato corporativo, ensaio de família ou ensaio de casal, ou para pedir a proposta de um projeto de posicionamento de imagem.</p>' +
+    `<h2>Onde fica o estúdio</h2><p>Rua Fúlvio Aducci, 757, sala 201, Estreito, Florianópolis, SC.</p>` +
+    `<h2>Como falar</h2><p>WhatsApp e telefone: ${WPP}. E-mail: frois.mac@gmail.com. Ou preencha o formulário desta página, com nome, telefone, e-mail, o tipo de projeto e uma mensagem.</p>` +
+    '<p>Antes de falar, você pode ver o <a href="/portfolio">portfólio</a>, os <a href="/servicos">projetos e pacotes</a> ou as <a href="/blog">dúvidas respondidas no blog</a>.</p></main>',
+  '/blog': () => {
+    const lista = JSON.parse(fs.readFileSync(path.join(POSTS, 'index.json'), 'utf-8'));
+    const vistos = new Set();
+    return '<main><h1>Blog: fotografia, imagem e marca pessoal</h1>' +
+      '<p>Artigos de Mac Frois sobre retrato corporativo, posicionamento de imagem, marca pessoal e ensaios de família para profissionais, executivos e famílias de Florianópolis, SC.</p>' +
+      lista.filter((m) => !vistos.has(m.slug) && vistos.add(m.slug)).map((m) => `<article><h2><a href="/blog/${m.slug}">${esc(m.title)}</a></h2><p>${esc(m.excerpt || '')}</p></article>`).join('') + '</main>';
+  },
+};
 const PAGINAS = [
   // A Jornada é a página inicial ("/"): mantém o título e a descrição de busca da home de sempre.
   { rota: '/', title: 'Mac Frois | Fotografo de Retratos Corporativos em Florianopolis', desc: SEO.description, jornada: true },
   { rota: '/ensaio-de-familia-florianopolis', title: FAM.title, desc: FAM.description, fam: true },
   { rota: '/fotografo-corporativo-florianopolis', title: LP.title, desc: LP.description, lp: true },
-  { rota: '/portfolio', title: 'Portfolio | Mac Frois - Retratos Corporativos Florianopolis', desc: 'Veja o portfolio de Mac Frois - retratos corporativos, posicionamento de imagem e fotografia de marca pessoal para executivos e profissionais liberais em Florianopolis, SC.' },
-  { rota: '/servicos', title: 'Projetos | Mac Frois — Retratos Corporativos e Posicionamento de Imagem', desc: 'Fotografia corporativa e projetos estrategicos de imagem em Florianopolis, SC. Pacotes a partir de R$890.' },
+  { rota: '/portfolio', title: 'Portfólio de Retratos Corporativos | Mac Frois', desc: 'Portfólio de Mac Frois: retratos corporativos, marca pessoal, ensaios de família e de casal em Florianópolis. Veja os trabalhos e agende sua sessão.' },
+  { rota: '/servicos', title: 'Projetos de retrato corporativo em Florianópolis | Mac Frois', desc: 'Fotografia corporativa e projetos estrategicos de imagem em Florianopolis, SC. Pacotes a partir de R$890.' },
   { rota: '/produtos', title: 'Produtos Digitais | Mac Frois — Cursos de Fotografia', desc: 'Cursos digitais de fotografia por Mac Frois. Iluminacao Profissional e Retratos que Vendem disponíveis agora no Hotmart.' },
   { rota: '/blog', title: 'Blog | Mac Frois — Fotografia, Imagem e Marca Pessoal', desc: 'Artigos sobre fotografia corporativa, posicionamento de imagem, marca pessoal e estratégias para profissionais e executivos em Florianópolis, SC.' },
   { rota: '/contato', title: 'Contato | Mac Frois — Fotógrafo Corporativo em Florianópolis', desc: 'Entre em contato com Mac Frois para agendar sua sessão de retratos corporativos em Florianópolis, SC. WhatsApp (48) 99623-1894.' },
@@ -127,6 +154,7 @@ for (const p of PAGINAS) {
       FAM.packages.map((k) => `<h2>${esc(k.nome)}: ${esc(k.precoRotulo)}</h2><ul>${k.itens.map((i) => `<li>${esc(i)}</li>`).join('')}</ul>`).join('') +
       FAM.faq.map((f) => `<h2>${esc(f.q)}</h2><p>${esc(f.a)}</p>`).join('') + '</main>';
   }
+  if (ESTATICO[p.rota]) extra.corpo = ESTATICO[p.rota]();
   gravar(p.rota, aplicar(p.jornada ? baseInicio : base, { title: p.title, desc: p.desc, url: BASE + p.rota, ...extra }));
   n++;
 }
@@ -160,6 +188,7 @@ for (const arq of fs.readdirSync(DIR_LP).filter((f) => f.endsWith('.json'))) {
 (async () => {
   // lib/richtext.js é ESM (compartilhado com o React); aqui entra por import dinâmico.
   const { isRich, parseBlocks, blocksToHtml, inlineToHtml, plainText } = await import('../lib/richtext.js');
+  const { tituloSeo } = await import('../lib/tituloSeo.js');
   const manifesto = JSON.parse(fs.readFileSync(path.join(POSTS, 'index.json'), 'utf-8'));
   const vistos = new Set();
   for (const m of manifesto) {
@@ -195,7 +224,7 @@ for (const arq of fs.readdirSync(DIR_LP).filter((f) => f.endsWith('.json'))) {
     const corpo = rico
       ? `<article><h1>${esc(p.title)}</h1><p>${esc(p.date)}</p>${blocksToHtml(parseBlocks(p.content))}${faqHtml}</article>`
       : `<article><h1>${esc(p.title)}</h1><p>${esc(p.date)}</p><div style="white-space:pre-wrap">${esc(p.content)}</div></article>`;
-    gravar(`/blog/${p.slug}`, aplicar(base, { title: `${p.title} | Mac Frois`, desc, url, image: p.imageUrl, type: 'article', jsonld, corpo }));
+    gravar(`/blog/${p.slug}`, aplicar(base, { title: tituloSeo(p.slug, p.title, TITULOS), desc, url, image: p.imageUrl, type: 'article', jsonld, corpo }));
     n++;
   }
   console.log(`Prerender: ${n} páginas geradas em dist/`);

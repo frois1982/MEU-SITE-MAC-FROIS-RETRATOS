@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom';
 
 export const Services: React.FC = () => {
   useEffect(() => {
-    document.title = 'Projetos | Mac Frois — Retratos Corporativos e Posicionamento de Imagem';
+    document.title = 'Projetos de retrato corporativo em Florianópolis | Mac Frois';
     const meta = document.querySelector('meta[name="description"]');
     if (meta) meta.setAttribute('content', 'Fotografia corporativa e projetos estrategicos de imagem em Florianopolis, SC. Pacotes a partir de R$890.');
     const canonical = document.querySelector('link[rel="canonical"]');
