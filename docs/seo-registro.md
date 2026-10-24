@@ -18,7 +18,7 @@ Medido no Chrome do Mac, com personalização desligada (`pws=0`). É uma aproxi
 | fotógrafo profissional em florianópolis | fora das 20 primeiras | busca genérica, a mais disputada |
 | Mac Frois (busca pelo nome) | 1º, com 4 links da página (home, contato, portfólio, blog) | sem problema |
 
-Em todas as buscas, a página que o Google mostra é a **home**. As páginas dedicadas (`/fotografo-corporativo-florianopolis`, `/ensaio-de-familia-florianopolis`) não apareceram nas posições que verifiquei.
+Nas buscas que fiz, a página mostrada foi a **home**. O Search Console mostra que a landing `/fotografo-corporativo-florianopolis` também recebe impressões (veja mais abaixo).
 
 ### Google Meu Negócio
 - Perfil confirmado: "Mac Frois", R. Fúlvio Aducci, 757, sala 201, Estreito, Florianópolis.
@@ -43,15 +43,25 @@ Em todas as buscas, a página que o Google mostra é a **home**. As páginas ded
 - **Páginas com pouquíssimo texto no HTML inicial e sem H1:** `/portfolio`, `/servicos`, `/blog`, `/contato` (de 8 a 11 palavras no HTML pré-renderizado). O Google consegue ler depois de executar o JavaScript, mas é mais lento e menos confiável.
 - `/retratos-que-vendem` está sem descrição, sem canonical e sem dados estruturados. `/metodo-frois/captura.html` está sem canonical e sem dados estruturados.
 
-### Search Console
-**Não foi possível ler.** A propriedade `macfrois.com.br` não está acessível nas duas contas Google logadas no Chrome do Mac. Falta o Mac dizer em qual conta ela está ou conceder acesso. Sem isso, estes números não existem ainda: páginas indexadas, cliques, impressões, consultas e Core Web Vitals.
+### Search Console (propriedade `https://www.macfrois.com.br/`, conta frois.mac@gmail.com)
+O endereço certo é o da propriedade por prefixo de URL (não é a propriedade de domínio `sc-domain:`).
+
+- **Indexação:** 43 páginas indexadas, 0 não indexadas por erro. Há 1 página "rastreada, mas não indexada no momento" (qual página: descobrir na semana que vem em Indexação > Páginas).
+- **Sitemap:** `/sitemap.xml` enviado em 05/10/2026, lido em 23/10, status "Processado", 42 páginas encontradas.
+- **Core Web Vitals:** sem dados de uso suficientes (celular e computador). É normal em site com pouco tráfego, não é problema.
+- **Desempenho, últimos 3 meses (23/07 a 22/10):** 37 cliques, 749 impressões, CTR 4,9%, posição média 8,4.
+- **Últimas 4 semanas (25/09 a 22/10):** 33 cliques e 595 impressões. Ou seja, quase todo o resultado veio dessas 4 semanas (nos 2 meses anteriores foram cerca de 4 cliques e 154 impressões). O crescimento é real, mas o volume ainda é pequeno.
+- **Páginas que mais recebem cliques:** home (27 cliques, 312 impressões, posição 7,7), `/fotografo-corporativo-florianopolis` (3 cliques, 63 impressões, posição 5,5), `/contato` (2; 97 impressões), `/portfolio` (2; 68). No blog, o que mais aparece é "headshot para LinkedIn" (60 impressões), "quanto custa um fotógrafo corporativo" (43) e "melhores praias para ensaio de família" (22).
+- **Consultas principais:** "fotografo em florianopolis" (4 cliques, 16 impressões, posição 12,4) é a única com mais de 1 clique. Várias consultas que aparecem não são do seu público ("foto 3x4", "revelação de fotos", "mac studio"). Consultas boas com poucas impressões: "arquetipo da marca" (posição 20), "foto de perfil vendas" (10,3), "fotógrafo corporativo" (6,0).
+- Obs.: nas buscas que fiz, a home foi a página mostrada; no Search Console, a landing `/fotografo-corporativo-florianopolis` aparece com posição média 5,5, então ela já é mostrada em parte das buscas.
 
 ### O que fazer (em ordem de impacto)
-1. Resolver o acesso ao Search Console e exportar a linha de base (3 meses).
+1. Exportar do Search Console a linha de base (Desempenho > Exportar, 3 meses) e guardar em `docs/`.
 2. Completar o perfil do Meu Negócio (a "força do perfil") e pedir mais avaliações com o link próprio. O perfil está na posição 5 do Maps, e subir para a posição 3 tem efeito direto sobre os contatos.
 3. Reduzir os títulos do blog para até 60 caracteres e acertar as descrições fora do tamanho.
 4. Dar texto e H1 estáticos para `/portfolio`, `/servicos`, `/blog` e `/contato`.
-5. Fazer as páginas dedicadas (corporativo e família) serem as que aparecem nas buscas, reforçando os links internos da home para elas. Hoje o Google prefere a home.
+5. Reforçar os links internos da home para as páginas dedicadas (corporativo e família), para que elas disputem as buscas junto com a home.
+6. Investigar a página "rastreada, mas não indexada" e pedir indexação das páginas novas pelo Search Console (Inspeção de URL).
 
 ---
 
