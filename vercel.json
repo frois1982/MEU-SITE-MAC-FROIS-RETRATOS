@@ -1,5 +1,6 @@
 {
           "redirects": [
+                      { "source": "/ensaio-de-familia-na-praia-florianopolis", "destination": "/ensaio-de-familia-florianopolis#praias", "permanent": true },
                       {
                                     "source": "/(.*)",
                                     "has": [{ "type": "host", "value": "macfrois.com.br" }],

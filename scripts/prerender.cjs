@@ -12,6 +12,8 @@ const esc = (s) => String(s).replace(/&/g, '&amp;').replace(/"/g, '&quot;').repl
 
 const LP = JSON.parse(fs.readFileSync(path.join(__dirname, '../data/fotografo-corporativo.json'), 'utf-8'));
 const FAM = JSON.parse(fs.readFileSync(path.join(__dirname, '../data/ensaio-familia.json'), 'utf-8'));
+const PRAIAS = JSON.parse(fs.readFileSync(path.join(__dirname, '../data/ensaio-familia-praias.json'), 'utf-8'));
+const FAM_FAQ = [...FAM.faq, ...PRAIAS.faq];
 const SEO = JSON.parse(fs.readFileSync(path.join(__dirname, '../data/home-seo.json'), 'utf-8'));
 const TITULOS = JSON.parse(fs.readFileSync(path.join(__dirname, '../data/titulos-seo.json'), 'utf-8'));
 
@@ -144,7 +146,7 @@ for (const p of PAGINAS) {
       ...FAM.alemDoTempo.contratos.map((k) => ({ nome: k.nome, preco: k.preco })),
     ];  // preço só quando divulgado; os demais são sob consulta
     extra.jsonld = { '@context': 'https://schema.org', '@graph': [
-      { '@type': 'FAQPage', mainEntity: FAM.faq.map((f) => ({ '@type': 'Question', name: f.q, acceptedAnswer: { '@type': 'Answer', text: f.a } })) },
+      { '@type': 'FAQPage', mainEntity: FAM_FAQ.map((f) => ({ '@type': 'Question', name: f.q, acceptedAnswer: { '@type': 'Answer', text: f.a } })) },
       { '@type': 'Service', name: 'Ensaio fotográfico de família em Florianópolis', serviceType: 'Fotografia de família',
         provider: { '@id': BASE + '/#negocio' }, areaServed: { '@type': 'City', name: 'Florianópolis' },
         hasOfferCatalog: { '@type': 'OfferCatalog', name: 'Pacotes de ensaio de família',
@@ -152,7 +154,10 @@ for (const p of PAGINAS) {
     ] };
     extra.corpo = `<main><h1>${esc(FAM.h1)}</h1><p>${esc(FAM.intro)}</p>` +
       FAM.packages.map((k) => `<h2>${esc(k.nome)}: ${esc(k.precoRotulo)}</h2><ul>${k.itens.map((i) => `<li>${esc(i)}</li>`).join('')}</ul>`).join('') +
-      FAM.faq.map((f) => `<h2>${esc(f.q)}</h2><p>${esc(f.a)}</p>`).join('') + '</main>';
+      `<h2>${esc(PRAIAS.h2)}</h2><p>${esc(PRAIAS.intro)}</p>` +
+      PRAIAS.secoes.map((x) => `<h3>${esc(x.h2)}</h3>${(x.paragrafos || []).map((t) => `<p>${esc(t)}</p>`).join('')}${x.lista ? `<ul>${x.lista.map((i) => `<li>${esc(i)}</li>`).join('')}</ul>` : ''}`).join('') +
+      PRAIAS.praias.map((x) => `<h3>${esc(x.h)}</h3>${x.p.map((t) => `<p>${esc(t)}</p>`).join('')}${x.link ? `<p><a href="${x.link}">${esc(x.nome)}</a></p>` : ''}`).join('') +
+      FAM_FAQ.map((f) => `<h2>${esc(f.q)}</h2><p>${esc(f.a)}</p>`).join('') + '</main>';
   }
   if (ESTATICO[p.rota]) extra.corpo = ESTATICO[p.rota]();
   gravar(p.rota, aplicar(p.jornada ? baseInicio : base, { title: p.title, desc: p.desc, url: BASE + p.rota, ...extra }));

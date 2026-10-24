@@ -171,7 +171,7 @@ const PAGINAS_INTERNAS = [
   ['/fotografo-corporativo-florianopolis', 'serviço de retrato corporativo e fotografia de autoridade'],
   ['/ensaio-de-familia-florianopolis', 'ensaio de família (pacotes Momento, Memória, Legado)'],
   ['/ensaio-de-casal-florianopolis', 'ensaio de casal (pacotes Momento, Memória, Legado)'],
-  ['/ensaio-de-familia-na-praia-florianopolis', 'ensaio de família na praia (Praia do Forte, Campeche, Jurerê, Guarda do Embaú, Praia do Maço)'],
+  ['/ensaio-de-familia-florianopolis#praias', 'ensaio de família na praia (Praia do Forte, Campeche, Jurerê, Guarda do Embaú, Praia do Maço)'],
   ['/fotografo-para-advogados-florianopolis', 'foto profissional para advogados'],
   ['/fotografo-para-medicos-florianopolis', 'foto profissional para médicos'],
   ['/portfolio', 'portfólio de fotos'],

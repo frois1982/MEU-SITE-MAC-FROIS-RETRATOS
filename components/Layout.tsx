@@ -26,7 +26,6 @@ const Navbar: React.FC = () => {
       { name: 'Corporativo', path: '/fotografo-corporativo-florianopolis' },
       { name: 'Família', path: '/ensaio-de-familia-florianopolis' },
       { name: 'Casal', path: '/ensaio-de-casal-florianopolis' },
-      { name: 'Família na praia', path: '/ensaio-de-familia-na-praia-florianopolis' },
     ] },
     { name: 'Serviços', path: '/servicos' },
     { name: 'Produtos', path: '/produtos' },
@@ -158,7 +157,7 @@ const Footer: React.FC = () => {
                 <Link to="/ensaio-de-casal-florianopolis" className="hover:text-gold-500 transition-colors underline underline-offset-4 decoration-zinc-700">ENSAIO DE CASAL EM FLORIANÓPOLIS</Link>
               </li>
               <li>
-                <Link to="/ensaio-de-familia-na-praia-florianopolis" className="hover:text-gold-500 transition-colors underline underline-offset-4 decoration-zinc-700">ENSAIO DE FAMÍLIA NA PRAIA</Link>
+                <Link to="/ensaio-de-familia-florianopolis#praias" className="hover:text-gold-500 transition-colors underline underline-offset-4 decoration-zinc-700">ENSAIO DE FAMÍLIA NA PRAIA</Link>
               </li>
               <li>
                 <Link to="/fotografo-para-advogados-florianopolis" className="hover:text-gold-500 transition-colors underline underline-offset-4 decoration-zinc-700">FOTO PARA ADVOGADOS</Link>
