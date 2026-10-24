@@ -11,7 +11,6 @@ const paginasEstaticas = [
   { url: '/fotografo-corporativo-florianopolis', priority: '0.9' },
   { url: '/ensaio-de-familia-florianopolis', priority: '0.9' },
   { url: '/ensaio-de-casal-florianopolis', priority: '0.9' },
-  { url: '/ensaio-de-familia-na-praia-florianopolis', priority: '0.9' },
   { url: '/ensaio-de-familia-praia-do-forte-florianopolis', priority: '0.8' },
   { url: '/ensaio-de-familia-guarda-do-embau-palhoca', priority: '0.8' },
   { url: '/ensaio-de-familia-campeche-florianopolis', priority: '0.8' },

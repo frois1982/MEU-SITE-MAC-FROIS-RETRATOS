@@ -1,7 +1,8 @@
 import React, { useEffect } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 import { Check, ChevronDown } from 'lucide-react';
 import page from '../data/ensaio-familia.json';
+import praias from '../data/ensaio-familia-praias.json';
 
 const WHATSAPP = (assunto: string) =>
   'https://wa.me/5548996231894?text=' + encodeURIComponent(`Olá Mac, vi a página de ensaio de família e gostaria de saber mais sobre ${assunto}.`);
@@ -35,6 +36,13 @@ export const FamilyPhotographer: React.FC = () => {
   }, []);
 
   const at = page.alemDoTempo;
+  const faqs = [...page.faq, ...praias.faq];
+  const { hash } = useLocation();
+  useEffect(() => {
+    if (!hash) return;
+    const t = window.setTimeout(() => document.getElementById(hash.slice(1))?.scrollIntoView({ behavior: 'smooth' }), 150);
+    return () => window.clearTimeout(t);
+  }, [hash]);
 
   return (
     <div className={`min-h-screen ${C.creme} ${C.marrom}`}>
@@ -149,6 +157,42 @@ export const FamilyPhotographer: React.FC = () => {
         </div>
       </section>
 
+      {/* Praias */}
+      <section id="praias" className="max-w-3xl mx-auto px-6 pt-20 pb-4 scroll-mt-24">
+        <p className={`${C.terra} text-xs tracking-[0.4em] uppercase mb-3 text-center`}>{praias.kicker}</p>
+        <h2 className="text-2xl md:text-3xl font-serif text-center mb-5">{praias.h2}</h2>
+        <p className="text-[#6B5648] text-sm md:text-base leading-relaxed text-center mb-12">{praias.intro}</p>
+        {praias.secoes.map((s: any) => (
+          <div key={s.h2} className="mb-10">
+            <h3 className="text-xl font-serif mb-4">{s.h2}</h3>
+            {s.paragrafos?.map((p: string) => <p key={p} className="text-[#6B5648] text-sm md:text-base leading-relaxed mb-3">{p}</p>)}
+            {s.lista && (
+              <ul className="space-y-3">
+                {s.lista.map((i: string) => (
+                  <li key={i} className="flex items-start text-sm md:text-base text-[#4a382e]">
+                    <Check size={14} className={`${C.terra} mr-3 shrink-0 mt-1.5`} />{i}
+                  </li>
+                ))}
+              </ul>
+            )}
+          </div>
+        ))}
+        <h3 className="text-xl font-serif mb-6">Onde fotografo famílias na praia</h3>
+        <div className="space-y-6">
+          {praias.praias.map((p: any) => (
+            <article key={p.id} id={p.id} className="bg-white border border-[#EADFCF] p-6 scroll-mt-24">
+              <h4 className="font-serif text-lg mb-3">{p.h}</h4>
+              {p.p.map((t: string) => <p key={t} className="text-[#6B5648] text-sm leading-relaxed mb-3">{t}</p>)}
+              {p.link && <Link to={p.link} className={`${C.terra} text-sm underline underline-offset-4`}>Ver a página da {p.nome}</Link>}
+            </article>
+          ))}
+        </div>
+        <p className="text-[#6B5648] text-sm text-center mt-8">
+          Prefere ler o guia completo? <Link to="/blog/melhores-praias-de-florianopolis-para-ensaio-de-familia" className={`${C.terra} underline underline-offset-4`}>As 5 melhores praias de Florianópolis para ensaio de família</Link>.
+          Casal? Veja o <Link to="/ensaio-de-casal-florianopolis" className={`${C.terra} underline underline-offset-4`}>ensaio de casal</Link>.
+        </p>
+      </section>
+
       {/* Sobre */}
       <section className="max-w-3xl mx-auto px-6 py-20 text-center">
         <p className={`${C.terra} text-xs tracking-[0.4em] uppercase mb-3`}>Quem fotografa</p>
@@ -166,7 +210,7 @@ export const FamilyPhotographer: React.FC = () => {
         <p className={`${C.terra} text-xs tracking-[0.4em] uppercase mb-3 text-center`}>Dúvidas frequentes</p>
         <h2 className="text-2xl md:text-3xl font-serif text-center mb-10">Antes de agendar</h2>
         <div className="space-y-3">
-          {page.faq.map((f) => (
+          {faqs.map((f) => (
             <details key={f.q} className="group bg-white border border-[#EADFCF] p-5">
               <summary className="flex justify-between items-center cursor-pointer list-none text-sm md:text-base">
                 {f.q}

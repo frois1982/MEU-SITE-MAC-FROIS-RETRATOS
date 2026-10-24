@@ -1,27 +1,7 @@
 {
- "rota": "/ensaio-de-familia-na-praia-florianopolis",
- "tema": "warm",
- "title": "Ensaio de família na praia em Florianópolis | Mac Frois",
- "description": "Ensaio fotográfico de família na praia em Florianópolis: Praia do Forte, Campeche, Jurerê, Guarda do Embaú, Praia do Maço e mais. Pacotes a partir de R$ 990.",
- "kicker": "Estúdio Frois · Florianópolis e Palhoça — SC",
- "h1": "Ensaio de família na praia em Florianópolis",
+ "kicker": "Ensaio na praia",
+ "h2": "Ensaio de família na praia: onde fotografar em Florianópolis",
  "intro": "Fotografo famílias nas praias de Florianópolis e de Palhoça: Praia do Forte, Campeche, Jurerê, Guarda do Embaú, Praia do Maço e outras. A escolha da praia depende da idade das crianças, da luz que vocês querem e de quanto estão dispostos a caminhar. Abaixo estão as praias, com o que cada uma oferece.",
- "whatsapp": "o ensaio de família na praia",
- "pagina": "ensaio de família na praia",
- "galeria": [
-  {
-   "src": "/familia/familia-praia-ombros.jpg",
-   "alt": "Família caminhando na Praia do Forte, em Florianópolis, com o filho nos ombros do pai"
-  },
-  {
-   "src": "/familia/pai-e-filho-na-praia.jpg",
-   "alt": "Pai levantando o filho no ar na Praia do Forte, com o céu azul ao fundo"
-  },
-  {
-   "src": "/familia/mae-e-filho-na-praia.jpg",
-   "alt": "Mãe e filho de óculos escuros sentados na areia da Praia do Forte, com o pai ao fundo"
-  }
- ],
  "secoes": [
   {
    "h2": "Como escolher a praia do ensaio",
@@ -118,71 +98,7 @@
    ]
   }
  ],
- "pacotesTitulo": "Quanto custa um ensaio de família na praia?",
- "pacotesSub": "Os mesmos pacotes do ensaio de família; a sessão externa na praia está incluída.",
- "pacotes": [
-  {
-   "nome": "Momento",
-   "frase": "Um instante que vale guardar.",
-   "preco": 990,
-   "rotulo": "A partir de R$ 990",
-   "destaque": false,
-   "itens": [
-    "Sessão de até 1 hora, em locação externa",
-    "1 figurino",
-    "15 fotos digitais tratadas, em alta resolução",
-    "Orientação de figurino antes da sessão"
-   ]
-  },
-  {
-   "nome": "Memória",
-   "frase": "Para ter a família nas paredes e nas mãos.",
-   "preco": 2490,
-   "rotulo": "A partir de R$ 2.490",
-   "destaque": true,
-   "itens": [
-    "Sessão de até 2 horas, em locação externa",
-    "Até 3 figurinos",
-    "30 fotos digitais tratadas, em alta resolução",
-    "30 fotos impressas 10×15 cm, em álbum",
-    "1 quadro 60×90 cm, em caixa com vidro",
-    "Consultoria e alinhamento de imagem"
-   ]
-  },
-  {
-   "nome": "Legado",
-   "frase": "A história da família, contada em dois capítulos.",
-   "preco": null,
-   "rotulo": "Sob consulta",
-   "destaque": false,
-   "itens": [
-    "2 sessões, com escolha do local de cada uma",
-    "50 fotos digitais tratadas",
-    "Álbum premium 25×25 cm",
-    "Quadros para a parede",
-    "Vídeo e making off em 4K"
-   ]
-  }
- ],
- "extras": [
-  "Sessões externas em praias mais distantes ou segunda sessão externa no Legado podem ter acréscimo, combinado na proposta.",
-  "Chuva em sessão externa: remarcação sem custo.",
-  "Sinal de 30% para reservar a data; o restante no cartão de crédito, em até 6x (Momento e Memória) ou 12x (Legado), cobrado antes da sessão. Não há pagamento no dia. Todo projeto é formalizado com contrato e nota fiscal."
- ],
- "links": [
-  {
-   "to": "/ensaio-de-familia-florianopolis",
-   "label": "Ensaio de família: pacotes e detalhes"
-  },
-  {
-   "to": "/ensaio-de-casal-florianopolis",
-   "label": "Ensaio de casal"
-  },
-  {
-   "to": "/blog/melhores-praias-de-florianopolis-para-ensaio-de-familia",
-   "label": "Guia: 5 melhores praias para ensaio de família"
-  }
- ],
+ "legenda": "Ensaio de família na Praia do Forte, Florianópolis. Fotos publicadas com autorização dos clientes.",
  "faq": [
   {
    "q": "Qual a melhor praia de Florianópolis para um ensaio de família?",
@@ -191,10 +107,6 @@
   {
    "q": "Qual o melhor horário para o ensaio na praia?",
    "a": "Ao nascer do sol ou cerca de 1 hora e meia antes do pôr do sol, quando a luz é suave e a praia está mais vazia. Em temporada, as primeiras horas da manhã são as mais tranquilas."
-  },
-  {
-   "q": "Quanto custa um ensaio de família na praia em Florianópolis?",
-   "a": "Os pacotes começam em R$ 990 (Momento: até 1 hora, 15 fotos digitais). O Memória, a partir de R$ 2.490, tem até 2 horas, 30 fotos digitais, álbum com 30 fotos impressas e um quadro 60×90 cm. O Legado é sob consulta. A praia não muda o preço do pacote, salvo deslocamentos mais longos."
   },
   {
    "q": "Fotografa na Praia do Maço e na Guarda do Embaú, em Palhoça?",
@@ -207,21 +119,6 @@
   {
    "q": "Existe restrição para fotografar em praias dentro de parques?",
    "a": "Em áreas de parque, como a Praia do Moçambique, dentro do Parque Estadual do Rio Vermelho, vale conferir as regras com o IMA antes de marcar a sessão."
-  },
-  {
-   "q": "O que vestir no ensaio de família na praia?",
-   "a": "Tons claros e terrosos, tecidos leves e uma paleta que combine entre os membros da família, sem estampas muito chamativas. Depois de reservar a data, envio a orientação de figurino."
-  },
-  {
-   "q": "Vocês fotografam casal na praia também?",
-   "a": "Sim. Veja a página de ensaio de casal, com pacotes a partir de R$ 990."
   }
- ],
- "servico": {
-  "nome": "Ensaio fotográfico de família na praia em Florianópolis",
-  "tipo": "Fotografia de família",
-  "catalogo": "Pacotes de ensaio de família na praia",
-  "prefixo": "Ensaio de família"
- },
- "galeriaLegenda": "Ensaio de família na Praia do Forte, Florianópolis. Fotos publicadas com autorização dos clientes."
+ ]
 }
