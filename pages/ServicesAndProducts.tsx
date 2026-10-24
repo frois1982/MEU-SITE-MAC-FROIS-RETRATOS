@@ -208,6 +208,9 @@ export const Products: React.FC = () => {
         <p className="text-zinc-500 text-sm max-w-lg mx-auto tracking-wider leading-relaxed">
           Conhecimento pratico para fotografos e criadores de conteudo que querem resultados reais.
         </p>
+        <p className="text-zinc-600 text-sm max-w-xl mx-auto tracking-wider leading-relaxed mt-4">
+          Cursos digitais de Mac Frois, com acesso imediato pela Hotmart: do curso completo de retratos corporativos ao minicurso de iluminacao para video e foto.
+        </p>
       </div>
 
       <div className="max-w-6xl mx-auto px-6 pb-24">

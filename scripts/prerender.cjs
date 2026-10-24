@@ -29,6 +29,12 @@ const ESTATICO = {
     '<h2>Projeto Da Vinci</h2><p>Projeto de posicionamento de imagem com cinco encontros: análise e dossiê inicial, criação de movimento, definição de arquétipo, alinhamento da sessão e sessão fotográfica de 3 horas.</p>' +
     '<h2>Projeto Michelangelo</h2><p>Imersão completa com oito encontros: os cinco do Da Vinci, sessão fotográfica de 6 horas e três calls de acompanhamento depois da entrega.</p>' +
     `<h2>Quanto custa?</h2><p>Os Projetos Da Vinci e Michelangelo têm proposta personalizada, depois de uma conversa sobre seus objetivos. Fale com Mac Frois pelo WhatsApp ${WPP}. Atendimento presencial em Florianópolis, contrato e nota fiscal em todos os projetos; pagamento via Pix, cartão em até 12x ou transferência.</p></main>`,
+  '/produtos': () => '<main><h1>Cursos e Produtos</h1>' +
+    '<p>Cursos digitais de Mac Frois para fotógrafos e criadores de conteúdo que querem resultados reais, com acesso imediato pela Hotmart.</p>' +
+    '<h2>Retratos que Vendem</h2><p>Curso completo de fotografia de retratos corporativos. Para quem quer aprender do zero ou evoluir como profissional: técnicas de iluminação, câmera, lente, posicionamento e como fechar clientes de alto valor com a sua fotografia. <a href="/retratos-que-vendem">Ver o curso Retratos que Vendem</a>.</p>' +
+    '<h2>Iluminação Profissional</h2><p>Minicurso gravado com 4 módulos e 15 aulas para quem grava vídeos, aulas e conteúdo e quer usar a luz com a janela e o celular, sem estúdio e sem equipamento caro. Os princípios valem para vídeo e para foto. Investimento de R$ 97, com garantia de 7 dias. <a href="/metodo-frois/minicurso.html">Ver o minicurso Iluminação Profissional</a>.</p>' +
+    '<h2>Retratos pelo Celular</h2><p>Em breve: um curso para criar retratos profissionais usando apenas o smartphone. Para ser avisado do lançamento, fale com Mac Frois pelo WhatsApp (48) 99623-1894.</p>' +
+    '<p>Prefere ser fotografado? Veja os <a href="/servicos">projetos e pacotes de retrato corporativo em Florianópolis</a> ou o <a href="/portfolio">portfólio</a>.</p></main>',
   '/contato': () => '<main><h1>Contato: agende sua sessão de retratos em Florianópolis</h1>' +
     '<p>Fale com Mac Frois para agendar uma sessão de retrato corporativo, ensaio de família ou ensaio de casal, ou para pedir a proposta de um projeto de posicionamento de imagem.</p>' +
     `<h2>Onde fica o estúdio</h2><p>Rua Fúlvio Aducci, 757, sala 201, Estreito, Florianópolis, SC.</p>` +
