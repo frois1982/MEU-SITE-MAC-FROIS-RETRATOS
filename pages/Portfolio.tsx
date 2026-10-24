@@ -10,9 +10,9 @@ const larguraCloudinary = (url: string, largura: number) => url.replace(/w_\d+/,
 
 export const Portfolio: React.FC = () => {
   useEffect(() => {
-    document.title = 'Portfolio | Mac Frois - Retratos Corporativos Florianopolis';
+    document.title = 'Portfólio de Retratos Corporativos | Mac Frois';
     const meta = document.querySelector('meta[name="description"]');
-    if (meta) meta.setAttribute('content', 'Veja o portfolio de Mac Frois - retratos corporativos, posicionamento de imagem e fotografia de marca pessoal para executivos e profissionais liberais em Florianopolis, SC.');
+    if (meta) meta.setAttribute('content', 'Portfólio de Mac Frois: retratos corporativos, marca pessoal, ensaios de família e de casal em Florianópolis. Veja os trabalhos e agende sua sessão.');
     const canonical = document.querySelector('link[rel="canonical"]');
     if (canonical) canonical.setAttribute('href', 'https://www.macfrois.com.br/portfolio');
   }, []);
@@ -154,7 +154,8 @@ export const Portfolio: React.FC = () => {
   return (
     <div className="pt-32 pb-24 bg-black min-h-screen">
       <div className="container mx-auto px-6 text-zinc-200">
-        <SectionTitle title="Portfolio" subtitle="Trabalhos Dinamicos" />
+        <SectionTitle title="Portfólio" subtitle="Retratos corporativos em Florianópolis" h1 />
+        <p className="text-zinc-500 text-sm max-w-2xl mx-auto text-center -mt-6 mb-12 leading-relaxed">Retratos corporativos, marca pessoal, ensaios de família e de casal feitos no estúdio do Estreito e em locações de Florianópolis. Clique em qualquer foto para ampliar.</p>
         
         <div className="flex flex-col items-center mb-20">
           <div className="flex flex-wrap justify-center gap-4 mb-6">

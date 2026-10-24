@@ -22,13 +22,16 @@ export const Button: React.FC<ButtonProps> = ({ variant = 'primary', className =
   );
 };
 
-export const SectionTitle: React.FC<{ title: string; subtitle?: string }> = ({ title, subtitle }) => (
+export const SectionTitle: React.FC<{ title: string; subtitle?: string; h1?: boolean }> = ({ title, subtitle, h1 }) => {
+  const Titulo = h1 ? 'h1' : 'h2';
+  return (
   <div className="mb-12 text-center">
     {subtitle && <span className="text-gold-500 uppercase tracking-widest text-xs font-semibold mb-2 block">{subtitle}</span>}
-    <h2 className="text-3xl md:text-5xl text-white italic">{title}</h2>
+    <Titulo className="text-3xl md:text-5xl text-white italic">{title}</Titulo>
     <div className="w-16 h-0.5 bg-gold-600 mx-auto mt-6"></div>
   </div>
 );
+};
 
 export const Card: React.FC<{ children: React.ReactNode; className?: string }> = ({ children, className = '' }) => (
   <div className={`bg-zinc-900/50 border border-zinc-800 p-6 md:p-8 hover:border-gold-600/50 transition-colors duration-300 ${className}`}>
