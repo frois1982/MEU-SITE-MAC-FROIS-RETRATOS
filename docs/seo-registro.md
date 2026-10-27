@@ -4,6 +4,19 @@ Como usar: copie o bloco "Modelo" no fim, preencha com a data e acrescente acima
 
 ---
 
+## 27/10/2026 (3 dias depois dos ajustes de título, H1, página de família unificada e pedidos de indexação)
+
+Buscas (posição orgânica, Florianópolis, `pws=0`): corporativo 11ª (era ~14ª; quem aparece é `/contato`) | retrato corporativo 4ª (era 5ª) | ensaio de família 3ª (era 8ª; agora aparece a página `/ensaio-de-familia-florianopolis`) | fotógrafo de família fora das 19 primeiras (era ~17ª) | profissional fora das 20 primeiras (igual)
+Maps (posição, primeiros 10): corporativo 9ª (era 5ª) | família fora dos 10 primeiros (era 5ª) | profissional 7ª (igual). O Maps oscila conforme o ponto do mapa, então vale repetir antes de concluir.
+IA do Google (Modo IA): "melhor fotógrafo de retratos corporativos em Florianópolis" cita o Mac Frois em 1º lugar. "Melhor fotógrafo profissional em Florianópolis" cita o Mac Frois em 1º, na categoria retrato corporativo. "Melhor fotógrafo de família em Florianópolis" não cita o Mac Frois.
+Meu Negócio: 5,0 com 85 avaliações (sem novas desde 24/10) | 322 interações com clientes (eram 317)
+Search Console, 28 dias até 25/10 (o Google atrasa cerca de 2 dias): 32 cliques | 679 impressões | CTR 4,7% | posição média 8,9. Janela anterior (25/09 a 22/10): 33 cliques, 595 impressões, CTR 5,5%, posição 7,9. Indexadas: 44 (eram 43) | 0 por erro | 1 "rastreada, mas não indexada" | sitemap lido em 26/10, 41 URLs.
+Consultas novas: "personal branding" (18 impressões, posição 36), "foto carteira oab" (3 impressões, posição 38).
+Auditoria do site (41 URLs): todas 200, 69 imagens e nenhuma sem texto alternativo, títulos de blog OK. Sobram: `/retratos-que-vendem` sem descrição, sem canonical e sem dados estruturados; `/metodo-frois/captura.html` sem canonical e sem dados estruturados; `/portfolio` e `/contato` com cerca de 105 palavras.
+Ajustes feitos nesta semana: títulos do blog, textos e H1 em portfólio/serviços/blog/contato/produtos, página de família unificada com as praias, 10 pedidos de indexação.
+
+---
+
 ## 24/10/2026 (linha de base)
 
 ### Posição no Google (busca orgânica, Florianópolis)
