@@ -1,6 +1,7 @@
 
 import React, { useState, useEffect } from 'react';
 import { Link, useLocation } from 'react-router-dom';
+import { AvalieGoogleRodape } from './AvalieGoogle';
 import { Menu, X, Instagram, Mail, Phone, MapPin, Camera, Youtube, Check, Loader2, MessageCircle, FlaskConical } from 'lucide-react';
 
 interface LayoutProps { children: React.ReactNode; }
@@ -172,6 +173,9 @@ const Footer: React.FC = () => {
               <li className="flex items-center">
                 <Mail size={18} className="mr-3 text-gold-600" />
                 <a href="mailto:frois.mac@gmail.com" className="hover:text-gold-500 transition-colors">FROIS.MAC@GMAIL.COM</a>
+              </li>
+              <li className="pt-2">
+                <AvalieGoogleRodape />
               </li>
             </ul>
           </div>

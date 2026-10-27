@@ -2,6 +2,7 @@
 import React, { useState, useEffect } from 'react';
 import { SectionTitle, Button, Card } from '../components/UI';
 import { Mail, Phone, MapPin, CheckCircle2, Loader2 } from 'lucide-react';
+import { AvalieGoogle } from '../components/AvalieGoogle';
 
 export const Contact: React.FC = () => {
   useEffect(() => {
@@ -257,6 +258,8 @@ export const Contact: React.FC = () => {
             </form>
           </Card>
         </div>
+
+        <AvalieGoogle />
       </div>
     </div>
   );
