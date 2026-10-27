@@ -39,6 +39,7 @@ const ESTATICO = {
     '<p>Fale com Mac Frois para agendar uma sessão de retrato corporativo, ensaio de família ou ensaio de casal, ou para pedir a proposta de um projeto de posicionamento de imagem.</p>' +
     `<h2>Onde fica o estúdio</h2><p>Rua Fúlvio Aducci, 757, sala 201, Estreito, Florianópolis, SC.</p>` +
     `<h2>Como falar</h2><p>WhatsApp e telefone: ${WPP}. E-mail: frois.mac@gmail.com. Ou preencha o formulário desta página, com nome, telefone, e-mail, o tipo de projeto e uma mensagem.</p>` +
+    '<h2>Já foi fotografado por aqui?</h2><p>Conte como foi a sua experiência: <a href="https://g.page/r/CRUJqKRkYwEEEAE/review">avaliar o estúdio no Google</a>.</p>' +
     '<p>Antes de falar, você pode ver o <a href="/portfolio">portfólio</a>, os <a href="/servicos">projetos e pacotes</a> ou as <a href="/blog">dúvidas respondidas no blog</a>.</p></main>',
   '/blog': () => {
     const lista = JSON.parse(fs.readFileSync(path.join(POSTS, 'index.json'), 'utf-8'));
