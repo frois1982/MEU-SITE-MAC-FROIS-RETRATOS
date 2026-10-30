@@ -49,6 +49,16 @@ export const Home: React.FC = () => {
   ];
 
   const CAROUSEL_IMAGES = [
+    '/retratos/ela-2582-w_800.jpg',
+    '/retratos/ele-2788-w_800.jpg',
+    '/retratos/ela-2615-w_800.jpg',
+    '/retratos/ele-2781-w_800.jpg',
+    '/retratos/ela-2670-w_800.jpg',
+    '/retratos/ele-2805-w_800.jpg',
+    '/retratos/ela-2709-w_800.jpg',
+    '/retratos/ele-2825-w_800.jpg',
+    '/retratos/ela-2742-w_800.jpg',
+    '/retratos/ele-2873-w_800.jpg',
     'https://res.cloudinary.com/dlahvdclb/image/upload/q_auto,f_auto,w_800/CORP_Empresario.jpg_21_bjqwpc',
     'https://res.cloudinary.com/dlahvdclb/image/upload/q_auto,f_auto,w_800/CORP_Empresario.jpg_8_nxkkrn',
     'https://res.cloudinary.com/dlahvdclb/image/upload/q_auto,f_auto,w_800/CORP_Empresario.jpg_1_t7953b',

@@ -29,6 +29,10 @@ export const Portfolio: React.FC = () => {
 
     const fetchCloudinary = async () => {
       try {
+        // fotos hospedadas no próprio site (sessões novas): entram primeiro, antes das do Cloudinary
+        const locais: PortfolioItem[] = await fetch('/portfolio-local.json')
+          .then((r) => (r.ok ? r.json() : []))
+          .catch(() => []);
         const res = await fetch(
           `https://res.cloudinary.com/${CLOUD_NAME}/image/list/portfolio.json`,
           { cache: 'no-cache' }
@@ -56,7 +60,7 @@ export const Portfolio: React.FC = () => {
                   imageUrl: `https://res.cloudinary.com/${CLOUD_NAME}/image/upload/q_auto,f_auto,w_800/${publicId}`
                 };
               });
-            setItems(mappedItems);
+            setItems([...locais, ...mappedItems]);
             setLoading(false);
             return;
           }
@@ -66,7 +70,7 @@ export const Portfolio: React.FC = () => {
         const fallbackRes = await fetch('/portfolio-images.json');
         if (fallbackRes.ok) {
           const fallbackData = await fallbackRes.json();
-          setItems(fallbackData);
+          setItems([...locais, ...fallbackData]);
         }
       } catch (err) {
         console.error('Erro Cloudinary:', err);
