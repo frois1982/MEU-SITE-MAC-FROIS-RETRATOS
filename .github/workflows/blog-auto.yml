@@ -22,6 +22,7 @@ jobs:
       - name: Gerar post
         env:
           ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+          BLOG_MODEL: claude-sonnet-5-5
           LANG: en_US.UTF-8
           LC_ALL: en_US.UTF-8
         run: node scripts/generate-post.cjs

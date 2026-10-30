@@ -9,7 +9,7 @@ Buffer.prototype.toJSON = Buffer.prototype.toJSON;
 const { pathToFileURL } = require('url');
 const ROOT = path.join(__dirname, '..');
 const POSTS_DIR = process.env.POSTS_DIR || path.join(ROOT, 'public/posts');
-const MODELO = process.env.BLOG_MODEL || 'claude-haiku-4-5-20251001';
+const MODELO = process.env.BLOG_MODEL || 'claude-sonnet-5-5';
 const MOCK_ARTICLE = process.env.MOCK_ARTICLE || ''; // testes: lê o artigo de um arquivo em vez de chamar a API
 const SKIP_NET = process.env.SKIP_NET === '1';       // testes: não faz requisições de rede
 
@@ -213,6 +213,8 @@ REGRA MAIS IMPORTANTE — NÃO INVENTE NADA:
 - Não invente números, porcentagens, estatísticas, estudos, pesquisas, datas, leis, resoluções ou prazos.
 - Não invente clientes, casos, depoimentos ou histórias ("uma cliente me contou…" é proibido).
 - Preços e prazos do estúdio só podem ser os que constam em FATOS acima, copiados exatamente.
+- PROIBIDO escrever o símbolo % ou qualquer valor em R$ que não esteja em FATOS; nada de "R$ 300", "30%", "o dobro" com número. Use palavras como "mais confiança", "mais cliques", sem número.
+- PROIBIDO frases de experiência com clientes: "já atendi", "trabalho com corretores há anos", "certa vez", "uma cliente", "me contou". Fale de princípios e do que acontece numa sessão, sem relatar casos.
 - Se não tiver certeza de um fato, não o escreva. Prefira princípios, orientações práticas e a experiência de fotografar, que não dependem de dado externo.
 
 FORMATO (markup simples, sem HTML):
