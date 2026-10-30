@@ -10,6 +10,14 @@ import { estado } from '../components/jornada/estado';
 import { alternarSom, clique } from '../components/jornada/somCarga';
 import './jornada.css';
 
+const ELA = 'Retrato corporativo de uma mulher de cabelo longo, em estúdio';
+const ELE = 'Retrato corporativo de um homem de barba, em estúdio';
+// Fotos do site (public/retratos), uma de cada, alternando ela e ele.
+const RETRATOS_RECENTES = [
+  ['ela-2582', ELA], ['ele-2788', ELE], ['ela-2615', ELA], ['ele-2781', ELE], ['ela-2670', ELA],
+  ['ele-2805', ELE], ['ela-2709', ELA], ['ele-2825', ELE], ['ela-2742', ELA], ['ele-2873', ELE],
+].map(([arquivo, alt]) => ({ arquivo, alt }));
+
 const reduzido = () => typeof window !== 'undefined' && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
 // Reenquadramento: desce a foto; em foto que enche a altura, o vão que sobra no topo ganha um degradê escuro.
@@ -300,6 +308,33 @@ export const Jornada: React.FC = () => {
               <p className="mt-3 text-sm sm:text-base text-zinc-300 leading-relaxed">{b.p}</p>
             </div>
           ))}
+        </div>
+      </section>
+
+      <section className="relative px-6 py-24 bg-zinc-950 border-t border-zinc-900" aria-labelledby="retratos-recentes">
+        <div className="max-w-6xl mx-auto">
+          <p className="text-[10px] uppercase tracking-[0.4em] text-gold-500 text-center">Trabalhos recentes</p>
+          <h2 id="retratos-recentes" className="mt-5 jr-titulo !text-3xl sm:!text-4xl text-center">Retratos feitos no estúdio</h2>
+          <div className="mt-12 grid grid-cols-2 md:grid-cols-5 gap-3 md:gap-4">
+            {RETRATOS_RECENTES.map((r) => (
+              <Link key={r.arquivo} to="/portfolio" className="block overflow-hidden rounded-sm border border-zinc-900 bg-zinc-900 aspect-[2/3]">
+                <img
+                  src={`/retratos/${r.arquivo}-w_800.jpg`}
+                  srcSet={`/retratos/${r.arquivo}-w_480.jpg 480w, /retratos/${r.arquivo}-w_800.jpg 800w`}
+                  sizes="(min-width: 768px) 20vw, 50vw"
+                  alt={r.alt}
+                  loading="lazy"
+                  decoding="async"
+                  className="w-full h-full object-cover transition-transform duration-700 hover:scale-105"
+                />
+              </Link>
+            ))}
+          </div>
+          <div className="mt-10 text-center">
+            <Link to="/portfolio" className="text-[11px] uppercase tracking-[0.25em] text-zinc-400 hover:text-gold-400 underline underline-offset-8">
+              Ver o portfólio completo
+            </Link>
+          </div>
         </div>
       </section>
 
