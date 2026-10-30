@@ -4,6 +4,14 @@ Como usar: copie o bloco "Modelo" no fim, preencha com a data e acrescente acima
 
 ---
 
+## 30/10/2026 (conferência sem login pessoal: pws=0 no Google, mapa centrado no estúdio)
+Buscas (posição orgânica): fotógrafo corporativo florianópolis 5º (home; era ~11º em 27/10) | fotógrafo profissional florianópolis fora da 1ª página | fotógrafo de família florianópolis fora dos resultados de texto, mas a página de família aparece em Imagens
+Maps (posição orgânica, sem contar patrocinados): corporativo 3º (5º na lista; era 9º) | profissional 3º (era 7º) | família 3º (era fora dos 10) — atrás de Gabriela Souza (21 avaliações) e Zanetta (112); à frente de Camila Stuart (143) e Cyntia Costa (80), que têm mais avaliações
+Meu Negócio: 91 avaliações, nota 5,0 (eram 85 em 24/10; 2 novas respondidas em 30/10)
+Search Console (28 dias até 28/10): 30 cliques | 803 impressões | CTR 3,7% | posição média 10,6. Impressões subindo nos últimos dias. Consulta principal: "fotografo em florianopolis" (16 impressões, 4 cliques)
+Ajustes feitos: gerador do blog trocado para Sonnet 5.5 com regras mais duras (a execução de 30/10 tinha falhado com Haiku); post de corretores publicado; título de busca do post ajustado; indexação do post solicitada (/blog já estava indexado)
+Atenção: o Maps varia com o ponto do mapa; repetir sempre do mesmo ponto para comparar.
+
 ## 27/10/2026 (3 dias depois dos ajustes de título, H1, página de família unificada e pedidos de indexação)
 
 Buscas (posição orgânica, Florianópolis, `pws=0`): corporativo 11ª (era ~14ª; quem aparece é `/contato`) | retrato corporativo 4ª (era 5ª) | ensaio de família 3ª (era 8ª; agora aparece a página `/ensaio-de-familia-florianopolis`) | fotógrafo de família fora das 19 primeiras (era ~17ª) | profissional fora das 20 primeiras (igual)
