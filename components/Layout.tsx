@@ -6,6 +6,36 @@ import { Menu, X, Instagram, Mail, Phone, MapPin, Camera, Youtube, Check, Loader
 
 interface LayoutProps { children: React.ReactNode; }
 
+type NavChild = { name: string; path: string };
+
+// Submenu do desktop: abre ao passar o mouse (ou foco por teclado) e fecha ao clicar num item ou ao tirar o mouse.
+const NavDropdown: React.FC<{ link: { name: string; children?: NavChild[] }; pathname: string }> = ({ link, pathname }) => {
+  const [aberto, setAberto] = useState(false);
+  const filhos = link.children || [];
+  return (
+    <div
+      className="relative"
+      onMouseEnter={() => setAberto(true)}
+      onMouseLeave={() => setAberto(false)}
+      onFocus={() => setAberto(true)}
+      onBlur={(e) => { if (!e.currentTarget.contains(e.relatedTarget as Node | null)) setAberto(false); }}
+    >
+      <button type="button" aria-expanded={aberto} className={`text-[11px] uppercase tracking-[0.25em] hover:text-gold-500 transition-colors inline-flex items-center gap-1 ${filhos.some(c => c.path === pathname) ? 'text-gold-500 font-bold' : 'text-zinc-400'}`}>
+        {link.name} <span aria-hidden className="text-[8px]">▾</span>
+      </button>
+      <div className={`absolute left-1/2 -translate-x-1/2 top-full pt-4 ${aberto ? 'block' : 'hidden'}`}>
+        <div className="bg-zinc-950 border border-zinc-800 py-3 min-w-[220px] shadow-xl">
+          {filhos.map((c) => (
+            <Link key={c.path} to={c.path} onClick={() => setAberto(false)} className={`block px-6 py-3 text-[11px] uppercase tracking-[0.25em] hover:text-gold-500 hover:bg-zinc-900 transition-colors ${pathname === c.path ? 'text-gold-500 font-bold' : 'text-zinc-400'}`}>
+              {c.name}
+            </Link>
+          ))}
+        </div>
+      </div>
+    </div>
+  );
+};
+
 const Navbar: React.FC = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
@@ -42,20 +72,7 @@ const Navbar: React.FC = () => {
         </Link>
         <div className="hidden md:flex items-center space-x-8">
           {navLinks.map((link) => link.children ? (
-            <div key={link.name} className="relative group">
-              <button type="button" className={`text-[11px] uppercase tracking-[0.25em] hover:text-gold-500 transition-colors inline-flex items-center gap-1 ${link.children.some(c => c.path === location.pathname) ? 'text-gold-500 font-bold' : 'text-zinc-400'}`}>
-                {link.name} <span aria-hidden className="text-[8px]">▾</span>
-              </button>
-              <div className="absolute left-1/2 -translate-x-1/2 top-full pt-4 hidden group-hover:block group-focus-within:block">
-                <div className="bg-zinc-950 border border-zinc-800 py-3 min-w-[220px] shadow-xl">
-                  {link.children.map((c) => (
-                    <Link key={c.path} to={c.path} className={`block px-6 py-3 text-[11px] uppercase tracking-[0.25em] hover:text-gold-500 hover:bg-zinc-900 transition-colors ${location.pathname === c.path ? 'text-gold-500 font-bold' : 'text-zinc-400'}`}>
-                      {c.name}
-                    </Link>
-                  ))}
-                </div>
-              </div>
-            </div>
+            <NavDropdown key={link.name} link={link} pathname={location.pathname} />
           ) : (
             <Link key={link.path} to={link.path} className={`text-[11px] uppercase tracking-[0.25em] hover:text-gold-500 transition-colors ${location.pathname === link.path ? 'text-gold-500 font-bold' : 'text-zinc-400'}`}>
               {link.name}
