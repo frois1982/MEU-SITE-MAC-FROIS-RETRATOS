@@ -145,17 +145,19 @@ const Cena: React.FC<{ cena: CenaJornada; numero: number }> = ({ cena, numero })
 
         <div className="jr-texto">
           <div className="max-w-xl mx-auto text-center">
-            <p className="jr-in jr-rotulo" style={t(0.22)}>Busca: {info.motivacao}</p>
-            <h2 id={`cena-${cena.id}`} className="jr-in jr-titulo" style={t(0.26)}>
-              {cena.arquetipo.split(' ')[0]} <em>{cena.arquetipo.split(' ').slice(1).join(' ')}</em>
+            <p className="jr-in jr-rotulo" style={t(0.22)}>{cena.arquetipo} · busca: {info.motivacao}</p>
+            <h2 id={`cena-${cena.id}`} className="jr-in jr-titulo jr-titulo-seo" style={t(0.26)}>
+              {cena.titulo[0]} <em>{cena.titulo[1]}</em>
             </h2>
-            <p className="jr-in jr-lema" style={t(0.3)}>{cena.lema.join(' · ')}</p>
-            <p className="jr-in jr-frase" style={t(0.36)}>{cena.frase}</p>
-            <div className="mt-6 space-y-3">
+            <p className="jr-in jr-frase" style={t(0.34)}>{cena.frase}</p>
+            <div className="mt-5 space-y-3">
               {cena.linhas.map((l, i) => (
-                <p key={i} className="jr-in jr-corpo" style={t(0.46 + i * 0.12)}>{l}</p>
+                <p key={i} className="jr-in jr-corpo" style={t(0.44 + i * 0.12)}>{l}</p>
               ))}
             </div>
+            <p className="jr-in jr-link" style={t(0.7)}>
+              <Link to={cena.link.to}>{cena.link.label} →</Link>
+            </p>
           </div>
         </div>
       </div>
@@ -190,7 +192,7 @@ export const Jornada: React.FC = () => {
   useEffect(() => {
     const anterior = document.title;
     // A Jornada é a página inicial: mantém o título e a descrição de busca da home de sempre.
-    document.title = 'Mac Frois | Fotografo de Retratos Corporativos em Florianopolis';
+    document.title = seo.titulo;
     document.querySelector('meta[name="description"]')?.setAttribute('content', seo.description);
     document.querySelector('link[rel="canonical"]')?.setAttribute('href', 'https://www.macfrois.com.br/');
 
@@ -273,6 +275,33 @@ export const Jornada: React.FC = () => {
       ))}
       <div className="jr-intervalo" />
 
+      <section className="relative px-6 py-24 bg-zinc-950 border-t border-zinc-900" aria-labelledby="retratos-recentes">
+        <div className="max-w-6xl mx-auto">
+          <p className="text-[10px] uppercase tracking-[0.4em] text-gold-500 text-center">Trabalhos recentes</p>
+          <h2 id="retratos-recentes" className="mt-5 jr-titulo !text-3xl sm:!text-4xl text-center">Retratos feitos no estúdio</h2>
+          <div className="mt-12 grid grid-cols-2 md:grid-cols-5 gap-3 md:gap-4">
+            {RETRATOS_RECENTES.map((r) => (
+              <Link key={r.arquivo} to="/portfolio" className="block overflow-hidden rounded-sm border border-zinc-900 bg-zinc-900 aspect-[2/3]">
+                <img
+                  src={`/retratos/${r.arquivo}-w_800.jpg`}
+                  srcSet={`/retratos/${r.arquivo}-w_480.jpg 480w, /retratos/${r.arquivo}-w_800.jpg 800w`}
+                  sizes="(min-width: 768px) 20vw, 50vw"
+                  alt={r.alt}
+                  loading="lazy"
+                  decoding="async"
+                  className="w-full h-full object-cover transition-transform duration-700 hover:scale-105"
+                />
+              </Link>
+            ))}
+          </div>
+          <div className="mt-10 text-center">
+            <Link to="/portfolio" className="text-[11px] uppercase tracking-[0.25em] text-zinc-400 hover:text-gold-400 underline underline-offset-8">
+              Ver o portfólio completo
+            </Link>
+          </div>
+        </div>
+      </section>
+
       <section className="relative px-6 py-24 bg-zinc-950 border-t border-zinc-900" aria-labelledby="roda">
         <div className="max-w-3xl mx-auto">
           <p className="text-center text-[10px] uppercase tracking-[0.4em] text-gold-500">A roda</p>
@@ -311,29 +340,17 @@ export const Jornada: React.FC = () => {
         </div>
       </section>
 
-      <section className="relative px-6 py-24 bg-zinc-950 border-t border-zinc-900" aria-labelledby="retratos-recentes">
-        <div className="max-w-6xl mx-auto">
-          <p className="text-[10px] uppercase tracking-[0.4em] text-gold-500 text-center">Trabalhos recentes</p>
-          <h2 id="retratos-recentes" className="mt-5 jr-titulo !text-3xl sm:!text-4xl text-center">Retratos feitos no estúdio</h2>
-          <div className="mt-12 grid grid-cols-2 md:grid-cols-5 gap-3 md:gap-4">
-            {RETRATOS_RECENTES.map((r) => (
-              <Link key={r.arquivo} to="/portfolio" className="block overflow-hidden rounded-sm border border-zinc-900 bg-zinc-900 aspect-[2/3]">
-                <img
-                  src={`/retratos/${r.arquivo}-w_800.jpg`}
-                  srcSet={`/retratos/${r.arquivo}-w_480.jpg 480w, /retratos/${r.arquivo}-w_800.jpg 800w`}
-                  sizes="(min-width: 768px) 20vw, 50vw"
-                  alt={r.alt}
-                  loading="lazy"
-                  decoding="async"
-                  className="w-full h-full object-cover transition-transform duration-700 hover:scale-105"
-                />
-              </Link>
+      <section className="relative px-6 py-24 bg-zinc-950 border-t border-zinc-900" aria-labelledby="duvidas">
+        <div className="max-w-2xl mx-auto">
+          <p className="text-center text-[10px] uppercase tracking-[0.4em] text-gold-500">Dúvidas frequentes</p>
+          <h2 id="duvidas" className="mt-5 jr-titulo !text-3xl sm:!text-4xl text-center">Perguntas sobre as sessões e os arquétipos</h2>
+          <div className="mt-10 space-y-3">
+            {seo.faq.map((f) => (
+              <details key={f.q} className="group border border-zinc-800 p-5">
+                <summary className="cursor-pointer list-none text-white text-sm sm:text-base">{f.q}</summary>
+                <p className="mt-4 text-sm text-zinc-400 leading-relaxed">{f.a}</p>
+              </details>
             ))}
-          </div>
-          <div className="mt-10 text-center">
-            <Link to="/portfolio" className="text-[11px] uppercase tracking-[0.25em] text-zinc-400 hover:text-gold-400 underline underline-offset-8">
-              Ver o portfólio completo
-            </Link>
           </div>
         </div>
       </section>

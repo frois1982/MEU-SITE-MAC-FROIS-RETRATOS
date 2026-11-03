@@ -1,0 +1,182 @@
+{
+  "rebelde": {
+    "titulo": [
+      "Retrato de marca pessoal",
+      "com personalidade"
+    ],
+    "frase": "Fotógrafo de marca pessoal em Florianópolis para quem foge do óbvio.",
+    "linhas": [
+      "Nem todo profissional quer a foto de terno e fundo cinza: o retrato certo mostra o seu jeito de pensar e de trabalhar.",
+      "O Rebelde guia a direção: roupa, cenário e luz que rompem com o padrão."
+    ],
+    "link": {
+      "to": "/fotografo-corporativo-florianopolis",
+      "label": "Retrato corporativo e de marca pessoal"
+    }
+  },
+  "governante": {
+    "titulo": [
+      "Fotógrafo corporativo",
+      "para executivos e empresários"
+    ],
+    "frase": "Retrato executivo em Florianópolis que passa autoridade antes da primeira reunião.",
+    "linhas": [
+      "Sessão dirigida de 1 a 3 horas, no estúdio do Estreito ou no seu escritório, com fotos tratadas para site, LinkedIn e imprensa.",
+      "O Governante orienta a postura: a presença já organiza a sala."
+    ],
+    "link": {
+      "to": "/fotografo-corporativo-florianopolis",
+      "label": "Fotografia corporativa em Florianópolis"
+    }
+  },
+  "amante": {
+    "titulo": [
+      "Ensaio de casal",
+      "em Florianópolis"
+    ],
+    "frase": "Fotógrafo de casal: o vínculo aparece quando ninguém está posando.",
+    "linhas": [
+      "Vocês são conduzidos com calma, sem poses de catálogo, em estúdio ou em locação.",
+      "O Amante guia o olhar: a conexão entre vocês é o assunto da foto."
+    ],
+    "link": {
+      "to": "/ensaio-de-casal-florianopolis",
+      "label": "Ensaio de casal em Florianópolis"
+    }
+  },
+  "heroi": {
+    "titulo": [
+      "Fotografia de autoridade",
+      "para quem construiu uma trajetória"
+    ],
+    "frase": "Retrato profissional que conta a sua história, não só o seu cargo.",
+    "linhas": [
+      "Quem chegou longe merece uma imagem à altura do caminho: experiência e firmeza, sem cara de propaganda.",
+      "O Herói guia a sessão: a conquista aparece no olhar e na postura."
+    ],
+    "link": {
+      "to": "/blog/fotografia-de-autoridade-o-que-diferencia-uma-foto-comum-de-uma-foto-que-vende",
+      "label": "O que é fotografia de autoridade"
+    }
+  },
+  "mago": {
+    "titulo": [
+      "Foto profissional para mentores,",
+      "consultores e coaches"
+    ],
+    "frase": "Retrato de posicionamento para quem vende conhecimento e transformação.",
+    "linhas": [
+      "Mentores e consultores vendem confiança antes de vender o serviço: a foto certa sustenta um posicionamento premium.",
+      "O Mago guia a imagem: visão e presença que fazem a mudança parecer possível."
+    ],
+    "link": {
+      "to": "/fotografo-corporativo-florianopolis",
+      "label": "Retratos para mentores e consultores"
+    }
+  },
+  "bobo": {
+    "titulo": [
+      "Fotos profissionais",
+      "para redes sociais e Instagram"
+    ],
+    "frase": "Retrato leve e descontraído, que mostra a pessoa por trás da marca.",
+    "linhas": [
+      "Nem todo perfil precisa ser sério para ser profissional: o bom humor aproxima o público.",
+      "O Bobo da Corte guia o clima da sessão: leveza que desarma."
+    ],
+    "link": {
+      "to": "/portfolio",
+      "label": "Ver o portfólio de retratos"
+    }
+  },
+  "pessoa-comum": {
+    "titulo": [
+      "Foto de perfil profissional",
+      "para LinkedIn"
+    ],
+    "frase": "Headshot natural, sem pose forçada, para o seu perfil e o seu currículo.",
+    "linhas": [
+      "A foto do LinkedIn costuma ser o primeiro contato de um recrutador ou cliente com você: o foco aqui é parecer confiável e à vontade.",
+      "A Pessoa Comum guia o resultado: a coragem do natural."
+    ],
+    "link": {
+      "to": "/blog/headshot-para-linkedin-como-uma-foto-transforma-seu-perfil",
+      "label": "Headshot para LinkedIn"
+    }
+  },
+  "explorador": {
+    "titulo": [
+      "Retrato profissional",
+      "para empreendedores e autônomos"
+    ],
+    "frase": "Fotógrafo para quem trabalha por conta própria e é a própria marca.",
+    "linhas": [
+      "Quem empreende não tem departamento de marketing: a foto precisa trabalhar por você e abrir portas para novos clientes.",
+      "O Explorador guia a imagem de quem foi além do mapa para construir o próprio caminho."
+    ],
+    "link": {
+      "to": "/servicos",
+      "label": "Projetos e pacotes de retrato"
+    }
+  },
+  "sabio": {
+    "titulo": [
+      "Foto profissional",
+      "para advogados e especialistas"
+    ],
+    "frase": "Retrato de advogados, professores e consultores que transmite clareza e credibilidade.",
+    "linhas": [
+      "Em profissões de confiança, a foto precisa ser sóbria e inspirar segurança. Veja o que a OAB permite.",
+      "O Sábio guia a sessão: a calma de quem pensa duas vezes."
+    ],
+    "link": {
+      "to": "/fotografo-para-advogados-florianopolis",
+      "label": "Fotógrafo para advogados em Florianópolis"
+    }
+  },
+  "inocente": {
+    "titulo": [
+      "Ensaio de família",
+      "em Florianópolis"
+    ],
+    "frase": "Fotógrafo de família para registrar a leveza do que é simples.",
+    "linhas": [
+      "Um ensaio sem roteiro rígido, no estúdio ou nas praias da região, com fotos leves e sinceras.",
+      "O Inocente guia o olhar: luz suave e verdade simples."
+    ],
+    "link": {
+      "to": "/ensaio-de-familia-florianopolis",
+      "label": "Ensaio de família em Florianópolis"
+    }
+  },
+  "cuidador": {
+    "titulo": [
+      "Foto profissional para médicos",
+      "e profissionais da saúde"
+    ],
+    "frase": "Retrato que mostra acolhimento e competência a quem busca o seu cuidado.",
+    "linhas": [
+      "Quem escolhe um profissional de saúde procura confiança antes da primeira consulta. Veja o que o CFM permite.",
+      "O Cuidador guia a imagem: a força que mora na delicadeza."
+    ],
+    "link": {
+      "to": "/fotografo-para-medicos-florianopolis",
+      "label": "Fotógrafo para médicos em Florianópolis"
+    }
+  },
+  "criador": {
+    "titulo": [
+      "Retrato autoral",
+      "para criadores e artistas"
+    ],
+    "frase": "Fotografia autoral em Florianópolis para quem cria, produz e publica.",
+    "linhas": [
+      "Podcasters, artistas e produtores de conteúdo precisam de uma imagem reconhecível, com luz e atmosfera de autor.",
+      "O Criador guia a sessão: a ideia ganha rosto."
+    ],
+    "link": {
+      "to": "/blog/podcast-e-imagem-como-construir-autoridade-em-video-e-foto-ao-mesmo-tempo",
+      "label": "Podcast e imagem"
+    }
+  }
+}

@@ -107,6 +107,10 @@ body:has(.jr-root) footer { position: relative; z-index: 1; }
   font-size: clamp(2.6rem, 12vw, 4.6rem); line-height: 1; color: #fff; margin-top: .6rem;
 }
 .jr-titulo em { font-style: italic; }
+.jr-titulo-seo { font-size: clamp(1.9rem, 7.5vw, 3.2rem); line-height: 1.08; }
+.jr-link { margin-top: 1.1rem; font-size: 11px; text-transform: uppercase; letter-spacing: .22em; }
+.jr-link a { color: #fbbf24; text-decoration: underline; text-underline-offset: 6px; }
+.jr-link a:hover { color: #fff; }
 .jr-lema { font-size: 10px; text-transform: uppercase; letter-spacing: .24em; white-space: nowrap; color: #fbbf24; margin-top: 1rem; }
 .jr-frase { font-family: 'Cormorant Garamond', Georgia, serif; font-style: italic; font-size: 1.25rem; color: #fbbf24; margin-top: .6rem; }
 .jr-corpo { font-family: 'Cormorant Garamond', Georgia, serif; font-size: 1.15rem; line-height: 1.45; color: #e4e4e7; }

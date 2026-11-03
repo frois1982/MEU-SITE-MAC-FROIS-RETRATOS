@@ -1,18 +1,35 @@
 {
-  "description": "Mac Frois é fotógrafo de retratos em Florianópolis, SC: retratos corporativos, posicionamento de imagem para executivos e ensaios de família e casal.",
+  "description": "Mac Frois, fotógrafo profissional em Florianópolis: retratos corporativos, ensaios de família e de casal, em estúdio ou locação. Pacotes a partir de R$ 890.",
   "eyebrow": "Mac Frois · Estúdio Frois · Florianópolis, SC",
-  "h1": "Fotógrafo de retratos em Florianópolis",
-  "intro": "Retratos corporativos, posicionamento de imagem e ensaios de família e de casal, com estratégia antes da câmera. Há mais de 10 anos, Mac Frois fotografa executivos, empresários, profissionais liberais e famílias em Florianópolis e na Grande Florianópolis, em estúdio ou em locação.",
+  "h1": "Fotógrafo profissional em Florianópolis",
+  "intro": "Retratos corporativos, ensaios de família e de casal, há mais de 10 anos, no estúdio do Estreito ou em locação, com estratégia antes da câmera. Role para ver cada tipo de retrato.",
   "links": [
-    { "to": "/fotografo-corporativo-florianopolis", "label": "Retrato corporativo" },
-    { "to": "/ensaio-de-familia-florianopolis", "label": "Ensaio de família" },
-    { "to": "/ensaio-de-casal-florianopolis", "label": "Ensaio de casal" }
+    {
+      "to": "/fotografo-corporativo-florianopolis",
+      "label": "Retrato corporativo"
+    },
+    {
+      "to": "/ensaio-de-familia-florianopolis",
+      "label": "Ensaio de família"
+    },
+    {
+      "to": "/ensaio-de-casal-florianopolis",
+      "label": "Ensaio de casal"
+    }
   ],
-  "rolar": "role e descubra o seu arquétipo",
+  "rolar": "role para conhecer cada tipo de retrato",
   "arquetipos": {
-    "h2": "O que são arquétipos e por que eles guiam o retrato",
+    "h2": "Arquétipos: o que são e como estruturam a sua imagem",
     "abertura": "Arquétipo é um padrão universal de comportamento, de imagem e de símbolo. Ele aparece nos mitos, nos contos e nos sonhos de todas as culturas: o herói que enfrenta, o sábio que orienta, o cuidador que acolhe. Por serem reconhecidos de imediato, os arquétipos funcionam como uma linguagem que todo mundo entende sem precisar de explicação.",
     "blocos": [
+      {
+        "h3": "O que os arquétipos fazem pela sua imagem",
+        "p": "Quando você conhece o seu arquétipo, as decisões ficam mais simples: a roupa, o cenário, a luz, a postura e o tom das palavras passam a contar a mesma história. É essa coerência que traz autoridade, relevância e credibilidade: o cliente percebe quem você é antes mesmo de conversar com você."
+      },
+      {
+        "h3": "Como estruturar a sua imagem",
+        "p": "Comece descobrindo o seu arquétipo principal e o secundário no teste logo abaixo. Depois, defina o que a sua imagem precisa dizer, escolha figurino e cenário coerentes e conduza a sessão com direção. No Método Frois esse caminho é feito junto, antes da câmera."
+      },
       {
         "h3": "De onde vem a ideia",
         "p": "O conceito foi levado à psicologia pelo psiquiatra suíço Carl Gustav Jung, no início do século XX, que descreveu os arquétipos como imagens primordiais do inconsciente coletivo. Décadas depois, a psicóloga e escritora americana Carol S. Pearson organizou esses padrões em doze arquétipos, em obras como Awakening the Heroes Within (1991). Com Margaret Mark, ela aplicou a ideia à construção de marcas no livro The Hero and the Outlaw (2001). Daí vêm os 12 arquétipos de marca usados no mundo todo."
@@ -52,5 +69,32 @@
     "heroi": "Nike",
     "rebelde": "Harley-Davidson",
     "mago": "Disney"
-  }
+  },
+  "titulo": "Fotógrafo Profissional em Florianópolis | Mac Frois",
+  "faq": [
+    {
+      "q": "O que é um arquétipo de marca?",
+      "a": "É um padrão universal de personalidade, como o Herói, o Sábio ou o Cuidador, usado para dar coerência à forma como uma pessoa ou marca se comunica. No retrato, ele orienta figurino, cenário, luz e postura."
+    },
+    {
+      "q": "Preciso conhecer o meu arquétipo antes de fazer a sessão?",
+      "a": "Não é obrigatório, mas ajuda. O teste leva cerca de 2 minutos e é o primeiro passo do dossiê estratégico que antecede a sessão nos projetos de posicionamento de imagem."
+    },
+    {
+      "q": "Quanto custa uma sessão de fotografia corporativa em Florianópolis?",
+      "a": "Os pacotes de fotografia corporativa começam em R$ 890. Os Projetos Estratégicos de Imagem têm investimento sob consulta. Os detalhes estão na página de fotógrafo corporativo em Florianópolis."
+    },
+    {
+      "q": "Você fotografa famílias e casais?",
+      "a": "Sim. Além dos retratos corporativos, Mac Frois faz ensaios de família e ensaios de casal em Florianópolis, no estúdio ou em locação, com a mesma direção cuidadosa."
+    },
+    {
+      "q": "Onde fica o estúdio e onde você atende?",
+      "a": "O estúdio fica no bairro Estreito, em Florianópolis, SC. Também é possível fotografar em locação, como escritório, consultório ou praia, em Florianópolis e na Grande Florianópolis."
+    },
+    {
+      "q": "O teste de arquétipo é um teste psicológico?",
+      "a": "Não. São 12 perguntas rápidas, pensadas como ferramenta de reflexão sobre imagem e comunicação, não como teste psicológico nem diagnóstico."
+    }
+  ]
 }

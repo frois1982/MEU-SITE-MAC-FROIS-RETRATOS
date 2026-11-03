@@ -15,6 +15,7 @@ const FAM = JSON.parse(fs.readFileSync(path.join(__dirname, '../data/ensaio-fami
 const PRAIAS = JSON.parse(fs.readFileSync(path.join(__dirname, '../data/ensaio-familia-praias.json'), 'utf-8'));
 const FAM_FAQ = [...FAM.faq, ...PRAIAS.faq];
 const SEO = JSON.parse(fs.readFileSync(path.join(__dirname, '../data/home-seo.json'), 'utf-8'));
+const CENAS = JSON.parse(fs.readFileSync(path.join(__dirname, '../data/home-cenas.json'), 'utf-8'));
 const TITULOS = JSON.parse(fs.readFileSync(path.join(__dirname, '../data/titulos-seo.json'), 'utf-8'));
 
 const WPP = '(48) 99623-1894';
@@ -51,7 +52,7 @@ const ESTATICO = {
 };
 const PAGINAS = [
   // A Jornada é a página inicial ("/"): mantém o título e a descrição de busca da home de sempre.
-  { rota: '/', title: 'Mac Frois | Fotografo de Retratos Corporativos em Florianopolis', desc: SEO.description, jornada: true },
+  { rota: '/', title: SEO.titulo, desc: SEO.description, jornada: true },
   { rota: '/ensaio-de-familia-florianopolis', title: FAM.title, desc: FAM.description, fam: true },
   { rota: '/fotografo-corporativo-florianopolis', title: LP.title, desc: LP.description, lp: true },
   { rota: '/portfolio', title: 'Portfólio de Retratos Corporativos | Mac Frois', desc: 'Portfólio de Mac Frois: retratos corporativos, marca pessoal, ensaios de família e de casal em Florianópolis. Veja os trabalhos e agende sua sessão.' },
@@ -114,6 +115,7 @@ let n = 0;
 for (const p of PAGINAS) {
   let extra = {};
   if (p.jornada) {
+    extra.jsonld = { '@context': 'https://schema.org', '@type': 'FAQPage', mainEntity: SEO.faq.map((f) => ({ '@type': 'Question', name: f.q, acceptedAnswer: { '@type': 'Answer', text: f.a } })) };
     // A abertura vem já formatada, com as mesmas classes e a mesma estrutura que o React monta (Layout + Jornada):
     // o texto aparece na primeira pintura e, quando o React assume, nada muda de lugar nem de aparência.
     extra.corpo = '<div class="min-h-screen bg-black flex flex-col"><main class="flex-grow pt-24 md:pt-0"><main class="jr-root"><header class="jr-hero"><div class="jr-hero-texto relative z-10 max-w-2xl mx-auto text-center">' +
@@ -122,21 +124,11 @@ for (const p of PAGINAS) {
       `<p class="mt-6 text-sm sm:text-base text-zinc-100 leading-relaxed">${esc(SEO.intro)}</p>` +
       `<p class="mt-6 text-[11px] uppercase tracking-[0.2em] text-zinc-300">${SEO.links.map((l) => `<a href="${l.to}" class="underline underline-offset-4 hover:text-gold-400">${esc(l.label)}</a>`).join('<span class="text-zinc-600"> · </span>')}</p>` +
       `<p class="mt-10 text-[10px] uppercase tracking-[0.3em] text-zinc-500 jr-pulso">${esc(SEO.rolar)}</p></div></header>` +
-      '<section class="relative px-6 py-24 bg-zinc-950 text-zinc-300 text-center"><p>São doze jeitos de ser, os arquétipos do Método Frois:</p>' +
-      '<h2>O Rebelde</h2><p>Quebrar o que já não serve. O retrato do Rebelde não pede licença: ele mostra quem rompeu.</p>' +
-      '<h2>O Governante</h2><p>Construir o que permanece. O retrato do Governante não levanta a voz: a presença já organiza a sala.</p>' +
-      '<h2>O Amante</h2><p>Quando o vínculo aparece, a foto também. O retrato do Amante não encena intimidade: ele a encontra.</p>' +
-      '<h2>O Herói</h2><p>Provar o próprio valor na travessia. O retrato do Herói mostra o preço pago e a força que sobrou.</p>' +
-      '<h2>O Mago</h2><p>Fazer o impossível parecer inevitável. O retrato do Mago transforma presença em visão.</p>' +
-      '<h2>O Bobo da Corte</h2><p>Levar a vida a sério sem perder o riso. O retrato do Bobo da Corte não é piada: é presença que desarma.</p>' +
-      '<h2>A Pessoa Comum</h2><p>Ser inteiro sem precisar parecer especial. O retrato da Pessoa Comum tem a coragem do natural: ninguém precisa fingir.</p>' +
-      '<h2>O Explorador</h2><p>Ir além do mapa para se encontrar. O retrato do Explorador guarda a estrada que o trouxe até aqui.</p>' +
-      '<h2>O Sábio</h2><p>Ver com clareza para guiar os outros. O retrato do Sábio mostra a calma de quem já pensou duas vezes.</p>' +
-      '<h2>O Inocente</h2><p>Voltar a olhar o mundo sem medo. O retrato do Inocente é feito de luz suave e verdade simples.</p>' +
-      '<h2>O Cuidador</h2><p>Quem cuida também precisa de pausa. O retrato do Cuidador mostra a força que mora na delicadeza.</p>' +
-      '<h2>O Criador</h2><p>Dar forma ao que ainda não existe. O retrato do Criador é o instante em que a ideia ganha rosto.</p>' +
+      '<section class="relative px-6 py-24 bg-zinc-950 text-zinc-300 text-center">' +
+      Object.values(CENAS).map((c) => `<h2>${esc(c.titulo.join(' '))}</h2><p>${esc(c.frase)}</p>${c.linhas.map((l) => `<p>${esc(l)}</p>`).join('')}<p><a href="${c.link.to}">${esc(c.link.label)}</a></p>`).join('') +
       `<h2>${esc(SEO.arquetipos.h2)}</h2><p>${esc(SEO.arquetipos.abertura)}</p>` +
       SEO.arquetipos.blocos.map((b) => `<h3>${esc(b.h3)}</h3><p>${esc(b.p)}</p>`).join('') +
+      `<h2>Perguntas sobre as sessões e os arquétipos</h2>${SEO.faq.map((f) => `<h3>${esc(f.q)}</h3><p>${esc(f.a)}</p>`).join('')}` +
       `<h2>${esc(SEO.convite.h2)}</h2><p>${esc(SEO.convite.texto)}</p><p><a href="${SEO.convite.quiz}">${esc(SEO.convite.botao)}</a></p><p>${esc(SEO.convite.aviso)}</p>` +
       '<nav><a href="/portfolio">Portfólio</a> · <a href="/servicos">Serviços</a> · <a href="/fotografo-corporativo-florianopolis">Fotógrafo corporativo em Florianópolis</a> · ' +
       '<a href="/ensaio-de-familia-florianopolis">Ensaio de família em Florianópolis</a> · <a href="/blog">Blog</a> · <a href="/contato">Contato</a></nav></section></main></main></div>';

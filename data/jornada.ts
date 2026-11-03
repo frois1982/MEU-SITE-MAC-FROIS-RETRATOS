@@ -1,9 +1,13 @@
+import TEXTOS from './home-cenas.json';
+
 // Conteúdo da página /jornada. Cada cena é um arquétipo.
 // RASCUNHO: textos e fotos são provisórios, o Mac revisa e troca.
 export type CenaJornada = {
   id: string;
   arquetipo: string;
+  titulo: [string, string]; // H2 buscável: [parte normal, parte em itálico]
   frase: string;
+  link: { to: string; label: string }; // página que aprofunda o assunto
   linhas: string[]; // aparecem uma a uma conforme a rolagem
   fotoRosto: string; // retrato que é revelado
   fotoCaminho: string; // foto que dissolve por cima
@@ -51,16 +55,11 @@ export const infoArquetipo = (id: string) => {
 
 export const CENAS_ORDENADAS_PELA_RODA = ['identidade', 'estrutura', 'conexao', 'marca'];
 
-export const CENAS: CenaJornada[] = [
+type Base = Omit<CenaJornada, 'titulo' | 'frase' | 'linhas' | 'link'>;
+const BASE: Base[] = [
   {
     id: 'rebelde',
     arquetipo: 'O Rebelde',
-    frase: 'Quebrar o que já não serve.',
-    linhas: [
-      'Existe quem segue a estrada que lhe entregaram.',
-      'E existe quem para, olha para frente e escolhe outro caminho.',
-      'O retrato do Rebelde não pede licença: ele mostra quem rompeu.',
-    ],
     // Ensaio do arquétipo Rebelde. Sobram duas fotos (charuto e olhar baixo) para outros momentos.
     fotoRosto: '/jornada/rebelde-frontal.webp',
     fotoCaminho: '/jornada/rebelde-fumaca.webp',
@@ -74,12 +73,6 @@ export const CENAS: CenaJornada[] = [
   {
     id: 'governante',
     arquetipo: 'O Governante',
-    frase: 'Construir o que permanece.',
-    linhas: [
-      'Existe quem espera que alguém assuma o comando.',
-      'E existe quem assume a responsabilidade e põe ordem no que importa.',
-      'O retrato do Governante não levanta a voz: a presença já organiza a sala.',
-    ],
     // Mesma pessoa nas duas fotos: o calmo na poltrona dissolve e revela o olhar de comando.
     // Sobra governante-mesa.webp (outra pessoa, ponta da mesa) para um momento próprio.
     fotoCaminho: '/jornada/governante-calmo.webp',
@@ -94,12 +87,6 @@ export const CENAS: CenaJornada[] = [
   {
     id: 'amante',
     arquetipo: 'O Amante',
-    frase: 'Quando o vínculo aparece, a foto também.',
-    linhas: [
-      'Existe quem posa para a câmera.',
-      'E existe quem se entrega ao momento, ao outro, ao que sente.',
-      'O retrato do Amante não encena intimidade: ele a encontra.',
-    ],
     // Mesmo casal nas duas fotos: o olhar que se busca dissolve e revela o sorriso.
     fotoCaminho: '/jornada/amante-olhar.webp',
     fotoRosto: '/jornada/amante-sorriso.webp',
@@ -116,12 +103,6 @@ export const CENAS: CenaJornada[] = [
   {
     id: 'heroi',
     arquetipo: 'O Herói',
-    frase: 'Provar o próprio valor na travessia.',
-    linhas: [
-      'Existe quem espera a batalha passar.',
-      'E existe quem se ajoelha, firma a espada e caminha até ela.',
-      'O retrato do Herói mostra o preço pago e a força que sobrou.',
-    ],
     // Mesma pessoa: de costas diante do sol, dissolve e revela o herói ajoelhado sobre a espada.
     // Sobram heroi de cabeça baixa com a espada e o do martelo nas pedras (Cloudinary 1000380118 e 1000380122).
     fotoCaminho: '/jornada/heroi-costas.webp',
@@ -138,12 +119,6 @@ export const CENAS: CenaJornada[] = [
   {
     id: 'mago',
     arquetipo: 'O Mago',
-    frase: 'Fazer o impossível parecer inevitável.',
-    linhas: [
-      'Existe quem vê o mundo como ele é.',
-      'E existe quem enxerga o que ele pode se tornar.',
-      'O retrato do Mago transforma presença em visão.',
-    ],
     // Mesma pessoa: o olhar longe, na floresta, dissolve e revela o homem na sala verde. A troca de cenário é a transformação.
     // Sobram a foto sentado com o livro na floresta e a de cabeça baixa na adega (ART_Conceito 28 e HOME).
     fotoCaminho: '/jornada/mago-floresta.webp',
@@ -159,12 +134,6 @@ export const CENAS: CenaJornada[] = [
   {
     id: 'bobo',
     arquetipo: 'O Bobo da Corte',
-    frase: 'Levar a vida a sério sem perder o riso.',
-    linhas: [
-      'Existe quem confunde seriedade com cara fechada.',
-      'E existe quem faz da leveza um jeito de dizer a verdade.',
-      'O retrato do Bobo da Corte não é piada: é presença que desarma.',
-    ],
     // Mesma pessoa: o sorriso sereno dissolve e revela a gargalhada.
     fotoCaminho: '/jornada/bobo-calma.webp',
     fotoRosto: '/jornada/bobo-riso.webp',
@@ -181,12 +150,6 @@ export const CENAS: CenaJornada[] = [
   {
     id: 'pessoa-comum',
     arquetipo: 'A Pessoa Comum',
-    frase: 'Ser inteiro sem precisar parecer especial.',
-    linhas: [
-      'Existe quem tenta parecer maior do que é.',
-      'E existe quem se sente em casa sendo exatamente quem é.',
-      'O retrato da Pessoa Comum tem a coragem do natural: ninguém precisa fingir.',
-    ],
     // Só há uma foto: ela aparece em cinza e se revela em cor. O comum ganha cor.
     // Ideal: um ensaio com par de fotos da mesma pessoa, como nos outros arquétipos.
     fotoCaminho: '/jornada/comum-riso.webp',
@@ -202,12 +165,6 @@ export const CENAS: CenaJornada[] = [
   {
     id: 'explorador',
     arquetipo: 'O Explorador',
-    frase: 'Ir além do mapa para se encontrar.',
-    linhas: [
-      'Existe quem prefere o lugar seguro.',
-      'E existe quem dá as costas ao conhecido e olha para o horizonte.',
-      'O retrato do Explorador guarda a estrada que o trouxe até aqui.',
-    ],
     // Mesma pessoa (a mesma do Herói): de costas diante do horizonte, dissolve e revela o rosto.
     fotoCaminho: '/jornada/explorador-horizonte.webp',
     fotoRosto: '/jornada/explorador-retrato.webp',
@@ -222,12 +179,6 @@ export const CENAS: CenaJornada[] = [
   {
     id: 'sabio',
     arquetipo: 'O Sábio',
-    frase: 'Ver com clareza para guiar os outros.',
-    linhas: [
-      'Existe quem acumula informação.',
-      'E existe quem transforma o que leu em discernimento.',
-      'O retrato do Sábio mostra a calma de quem já pensou duas vezes.',
-    ],
     // Mesma pessoa: o olhar distante entre os livros dissolve e revela o olhar firme na escada da biblioteca.
     fotoCaminho: '/jornada/sabio-biblioteca.webp',
     fotoRosto: '/jornada/sabio-escada.webp',
@@ -243,12 +194,6 @@ export const CENAS: CenaJornada[] = [
   {
     id: 'inocente',
     arquetipo: 'O Inocente',
-    frase: 'Voltar a olhar o mundo sem medo.',
-    linhas: [
-      'Existe quem carrega o peso de provar sempre mais.',
-      'E existe quem se permite a leveza de começar de novo.',
-      'O retrato do Inocente é feito de luz suave e verdade simples.',
-    ],
     // Mesma pessoa: o preto e branco contemplativo, com a xícara, dissolve e revela o sorriso suave em cor.
     fotoCaminho: '/jornada/inocente-xicara.webp',
     fotoRosto: '/jornada/inocente-luz.webp',
@@ -264,12 +209,6 @@ export const CENAS: CenaJornada[] = [
   {
     id: 'cuidador',
     arquetipo: 'O Cuidador',
-    frase: 'Quem cuida também precisa de pausa.',
-    linhas: [
-      'Existe quem cuida de tudo e de todos.',
-      'E existe quem aprendeu que cuidar também é parar, respirar e se ouvir.',
-      'O retrato do Cuidador mostra a força que mora na delicadeza.',
-    ],
     // Mesma pessoa (a mesma do Inocente e do Sábio): cuidar da natureza dissolve na pausa com o café.
     fotoCaminho: '/jornada/cuidador-natureza.webp',
     fotoRosto: '/jornada/cuidador-pausa.webp',
@@ -285,12 +224,6 @@ export const CENAS: CenaJornada[] = [
   {
     id: 'criador',
     arquetipo: 'O Criador',
-    frase: 'Dar forma ao que ainda não existe.',
-    linhas: [
-      'Existe quem aceita o mundo como está montado.',
-      'E existe quem olha para a estrutura e vê o que pode construir.',
-      'O retrato do Criador é o instante em que a ideia ganha rosto.',
-    ],
     // Mesma pessoa (a mesma do Mago): o perfil no ambiente industrial dissolve e revela o rosto sorrindo.
     fotoCaminho: '/jornada/criador-trilho.webp',
     fotoRosto: '/jornada/criador-retrato.webp',
@@ -302,6 +235,9 @@ export const CENAS: CenaJornada[] = [
     lema: ['Inventar', 'Moldar', 'Expressar'],
   },
 ];
+
+// Os textos (H2 buscável, frase, linhas e link) ficam em home-cenas.json: o mesmo arquivo alimenta o React e o HTML pré-renderizado.
+export const CENAS: CenaJornada[] = BASE.map((c) => ({ ...c, ...(TEXTOS as unknown as Record<string, Pick<CenaJornada, 'titulo' | 'frase' | 'linhas' | 'link'>>)[c.id] }));
 
 // As cenas seguem a ordem da roda: identidade, estrutura, conexão, marca.
 const ORDEM = TRIADES.flatMap((t) => t.arquetipos.map((a) => a.id));
