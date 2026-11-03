@@ -216,7 +216,8 @@ const BASE: Base[] = [
     foco: ['50%', '35%'],
     lema: ['Cuidar', 'Proteger', 'Nutrir'],
     cor: true,
-    ajuste: { caminho: true },
+    ajuste: { caminho: true, rosto: true },
+    descer: { rosto: -13 },
   },
   {
     id: 'criador',
