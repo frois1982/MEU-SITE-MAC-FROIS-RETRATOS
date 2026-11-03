@@ -28,5 +28,75 @@
       "q": "Como funciona o pagamento?",
       "a": "O pagamento pode ser feito por Pix, cartão de crédito em até 12x ou transferência bancária. Todo projeto é formalizado com contrato e nota fiscal."
     }
+  ],
+  "secoes": [
+    {
+      "h2": "Por que um retrato corporativo muda a primeira impressão",
+      "paragrafos": [
+        "Antes de ligar ou marcar uma reunião, quase todo cliente procura você no Google, no LinkedIn e no Instagram. A foto é a primeira coisa que ele vê, e é ela que diz, em um segundo, se você parece alguém em quem confiar.",
+        "Um retrato corporativo bem feito não é uma foto de documento nem uma selfie caprichada. É uma imagem planejada para mostrar a sua atuação, o seu nível de serviço e o seu jeito de trabalhar, de forma natural e sem pose forçada."
+      ]
+    },
+    {
+      "h2": "Onde fazemos a sessão de fotografia corporativa",
+      "paragrafos": [
+        "A sessão acontece no estúdio, no bairro Estreito, em Florianópolis, com iluminação controlada e fundo pensado para o seu perfil. Se fizer mais sentido para a sua imagem, vou até o seu escritório, consultório ou outro ambiente de trabalho em Florianópolis e região.",
+        "Em qualquer um dos casos você é dirigido do começo ao fim: postura, expressão, mãos e olhar. Você não precisa saber posar, e é essa condução que deixa o resultado natural."
+      ]
+    },
+    {
+      "h2": "Fotos prontas para cada uso",
+      "paragrafos": [
+        "As fotos são tratadas e entregues em alta resolução e em versão leve para a web, para você usar no que precisar:"
+      ],
+      "lista": [
+        "Perfil do LinkedIn e currículo",
+        "Site institucional e página sobre",
+        "Google Meu Negócio e diretórios profissionais",
+        "Instagram e demais redes sociais",
+        "Imprensa, palestras, livros e materiais impressos",
+        "Apresentações comerciais e propostas"
+      ]
+    },
+    {
+      "h2": "Fotografia corporativa para a sua profissão",
+      "paragrafos": [
+        "Cada área tem códigos e regras próprias de imagem. Por isso a orientação de figurino e de estratégia muda conforme a sua atuação."
+      ],
+      "links": [
+        {
+          "href": "/fotografo-para-advogados-florianopolis",
+          "label": "Fotógrafo para advogados em Florianópolis"
+        },
+        {
+          "href": "/fotografo-para-medicos-florianopolis",
+          "label": "Fotógrafo para médicos em Florianópolis"
+        },
+        {
+          "href": "/blog/headshot-para-linkedin-como-uma-foto-transforma-seu-perfil",
+          "label": "Headshot para LinkedIn: como uma foto transforma seu perfil"
+        }
+      ]
+    },
+    {
+      "h2": "Investimento e como contratar",
+      "paragrafos": [
+        "Os pacotes de fotografia corporativa começam em R$ 890. Para entender o que está incluído em cada formato e o que pesa no valor, leia o guia de preços ou fale direto comigo pelo WhatsApp."
+      ],
+      "links": [
+        {
+          "href": "/blog/quanto-custa-um-fotografo-corporativo-em-florianopolis",
+          "label": "Quanto custa um fotógrafo corporativo em Florianópolis"
+        },
+        {
+          "href": "/servicos",
+          "label": "Projetos e pacotes"
+        },
+        {
+          "href": "/portfolio",
+          "label": "Portfólio de retratos"
+        }
+      ]
+    }
   ]
 }

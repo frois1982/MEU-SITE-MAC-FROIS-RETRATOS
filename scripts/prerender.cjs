@@ -145,6 +145,7 @@ for (const p of PAGINAS) {
     extra.jsonld = { '@context': 'https://schema.org', '@type': 'FAQPage',
       mainEntity: LP.faq.map((f) => ({ '@type': 'Question', name: f.q, acceptedAnswer: { '@type': 'Answer', text: f.a } })) };
     extra.corpo = `<main><h1>${esc(LP.h1)}</h1><p>${esc(LP.intro)}</p>` +
+      LP.secoes.map((x) => `<h2>${esc(x.h2)}</h2>${x.paragrafos.map((t) => `<p>${esc(t)}</p>`).join('')}${x.lista ? `<ul>${x.lista.map((i) => `<li>${esc(i)}</li>`).join('')}</ul>` : ''}${x.links ? `<ul>${x.links.map((l) => `<li><a href="${l.href}">${esc(l.label)}</a></li>`).join('')}</ul>` : ''}`).join('') +
       LP.faq.map((f) => `<h2>${esc(f.q)}</h2><p>${esc(f.a)}</p>`).join('') + '</main>';
   }
   if (p.fam) {

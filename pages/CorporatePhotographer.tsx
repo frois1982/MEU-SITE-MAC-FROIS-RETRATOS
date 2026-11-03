@@ -102,6 +102,30 @@ export const CorporatePhotographer: React.FC = () => {
         </p>
       </section>
 
+      {/* Textos de apoio (mesmos do HTML pré-renderizado) */}
+      <section className="max-w-3xl mx-auto px-6 pb-20 space-y-12">
+        {page.secoes.map((x: { h2: string; paragrafos: string[]; lista?: string[]; links?: { href: string; label: string }[] }) => (
+          <div key={x.h2}>
+            <h2 className="text-2xl font-serif mb-4">{x.h2}</h2>
+            {x.paragrafos.map((t) => <p key={t} className="text-zinc-400 text-sm md:text-base leading-relaxed mb-3">{t}</p>)}
+            {x.lista && (
+              <ul className="space-y-2 mt-3">
+                {x.lista.map((i) => (
+                  <li key={i} className="flex items-start text-zinc-300 text-sm"><Check size={14} className="text-gold-500 mr-3 shrink-0 mt-1" />{i}</li>
+                ))}
+              </ul>
+            )}
+            {x.links && (
+              <ul className="space-y-2 mt-3 text-sm">
+                {x.links.map((l) => (
+                  <li key={l.href}><Link to={l.href} className="text-gold-500 hover:underline underline-offset-4">{l.label} →</Link></li>
+                ))}
+              </ul>
+            )}
+          </div>
+        ))}
+      </section>
+
       {/* Como funciona */}
       <section className="max-w-5xl mx-auto px-6 pb-20">
         <p className="text-gold-500 text-xs tracking-[0.4em] uppercase mb-3 text-center">Como funciona</p>
