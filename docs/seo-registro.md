@@ -4,6 +4,16 @@ Como usar: copie o bloco "Modelo" no fim, preencha com a data e acrescente acima
 
 ---
 
+## 03/11/2026 (conferência sem login pessoal: pws=0 no Google, mapa centrado no estúdio)
+Buscas (posição orgânica): fotógrafo corporativo florianópolis ~10º (`/contato`; era 5º em 30/10, 11º em 27/10) | fotógrafo profissional florianópolis ~27º (`/fotografo-corporativo-florianopolis`, 3ª página; antes fora da 1ª página) | fotógrafo de família florianópolis ~11º (`/ensaio-de-familia-florianopolis`; antes fora dos resultados de texto, melhora). Mac Frois aparece no bloco de Imagens nas buscas de corporativo e família.
+Maps (do ponto do estúdio, sem patrocinados): 3º nas três buscas (corporativo, profissional, família), atrás de Gabriela Souza (21 avaliações) e Zanetta (112); à frente de Camila Stuart (144).
+Meu Negócio: 93 avaliações, nota 5,0 (eram 91 em 30/10). 2 novas respondidas em 03/11 (Andrielli Amaral e Diego Bastos Moraes); nenhuma pendente. 289 interações com clientes; força do perfil: informações completas.
+Search Console (28 dias, 05/10 a 01/11): 25 cliques | 822 impressões | CTR 3% | posição média 12 (30/10: 30 cliques, 803, 3,7%, 10,6). Páginas mais vistas: home 15 cliques/150 impressões, `/fotografo-corporativo-florianopolis` 3/53, blog "quanto custa fotógrafo corporativo" 1/48, blog advogados/OAB 0/109. Consultas novas: "personal branding" (33 impressões), "fotografia profissional" (23), "selfbranding" (9).
+Indexação: 44 indexadas, 0 por erro, sitemap processado em 01/11 com 46 URLs. A "rastreada, mas não indexada" já aparece com 0 páginas afetadas (última atualização 22/10).
+Auditoria do site (build de 03/11): todas as páginas com canonical (exceto funil `/metodo-frois` e `/como-comecar-na-fotografia`), 1 H1 em todas (exceto `/metodo-frois/quiz.html`, 0), blog todo com título ≤60 e descrição 119–156. Pontos fracos: `/fotografo-corporativo-florianopolis` com só ~300 palavras (a página que sustenta corporativo e profissional); título da home com 63 caracteres e `/fotografo-para-advogados-florianopolis` com 61; `/portfolio`, `/contato`, `/servicos`, `/produtos` com 105–180 palavras; páginas do funil sem descrição (`/metodo-frois/index`, `mentoria`, `presenca-digital`, `workshop`).
+Ajustes feitos: fotos novas de Jhon e Karol no portfólio e seção "Retratos feitos no estúdio" na home (publicado 02/11).
+Atenção: o Maps varia com o ponto do mapa; repetir sempre do mesmo ponto para comparar. A queda de cliques (30→25) é pequena e as impressões subiram.
+
 ## 30/10/2026 (conferência sem login pessoal: pws=0 no Google, mapa centrado no estúdio)
 Buscas (posição orgânica): fotógrafo corporativo florianópolis 5º (home; era ~11º em 27/10) | fotógrafo profissional florianópolis fora da 1ª página | fotógrafo de família florianópolis fora dos resultados de texto, mas a página de família aparece em Imagens
 Maps (posição orgânica, sem contar patrocinados): corporativo 3º (5º na lista; era 9º) | profissional 3º (era 7º) | família 3º (era fora dos 10) — atrás de Gabriela Souza (21 avaliações) e Zanetta (112); à frente de Camila Stuart (143) e Cyntia Costa (80), que têm mais avaliações
