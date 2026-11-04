@@ -119,7 +119,7 @@ export const Contact: React.FC = () => {
                 </div>
                 <div>
                   <h4 className="text-white font-medium mb-1 text-sm tracking-widest">EMAIL</h4>
-                  <a href="mailto:frois.mac@gmail.com" className="text-zinc-500 text-sm hover:text-gold-500 transition-colors font-light">frois.mac@gmail.com</a>
+                  <a href="mailto:contato@macfrois.com.br" className="text-zinc-500 text-sm hover:text-gold-500 transition-colors font-light">contato@macfrois.com.br</a>
                 </div>
               </div>
 

@@ -153,7 +153,7 @@ const Footer: React.FC = () => {
               <a href="https://youtube.com/@macfroiss" target="_blank" rel="noreferrer" className="w-10 h-10 rounded-full border border-zinc-800 flex items-center justify-center text-zinc-400 hover:text-gold-500 hover:border-gold-500 transition-all">
                 <Youtube size={18} />
               </a>
-              <a href="mailto:frois.mac@gmail.com" className="w-10 h-10 rounded-full border border-zinc-800 flex items-center justify-center text-zinc-400 hover:text-gold-500 hover:border-gold-500 transition-all">
+              <a href="mailto:contato@macfrois.com.br" className="w-10 h-10 rounded-full border border-zinc-800 flex items-center justify-center text-zinc-400 hover:text-gold-500 hover:border-gold-500 transition-all">
                 <Mail size={18} />
               </a>
             </div>
@@ -189,7 +189,7 @@ const Footer: React.FC = () => {
               </li>
               <li className="flex items-center">
                 <Mail size={18} className="mr-3 text-gold-600" />
-                <a href="mailto:frois.mac@gmail.com" className="hover:text-gold-500 transition-colors">FROIS.MAC@GMAIL.COM</a>
+                <a href="mailto:contato@macfrois.com.br" className="hover:text-gold-500 transition-colors">CONTATO@MACFROIS.COM.BR</a>
               </li>
               <li className="pt-2">
                 <AvalieGoogleRodape />

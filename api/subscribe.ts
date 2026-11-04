@@ -304,7 +304,7 @@ export default async function handler(req: any, res: any) {
           headers: { "Content-Type": "application/json", "api-key": apiKey },
           body: JSON.stringify({
             sender: { name: process.env.BREVO_SENDER_NAME ?? "Mac Frois", email: process.env.BREVO_SENDER_EMAIL ?? "contato@macfrois.com.br" },
-            replyTo: { email: process.env.BREVO_REPLY_TO ?? "frois.mac@gmail.com", name: "Mac Frois" },
+            replyTo: { email: process.env.BREVO_REPLY_TO ?? "contato@macfrois.com.br", name: "Mac Frois" },
             to: [{ email: emailLimpo, name: nomeLimpo || undefined }],
             subject: m.assunto,
             htmlContent: m.html,
