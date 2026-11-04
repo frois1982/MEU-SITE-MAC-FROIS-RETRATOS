@@ -3,6 +3,7 @@ import React, { useState, useEffect } from 'react';
 import { SectionTitle, Button, Card } from '../components/UI';
 import { Mail, Phone, MapPin, CheckCircle2, Loader2 } from 'lucide-react';
 import { AvalieGoogle } from '../components/AvalieGoogle';
+import { CopiarEmail, MAILTO_CONTATO } from '../components/CopiarEmail';
 
 export const Contact: React.FC = () => {
   useEffect(() => {
@@ -119,7 +120,8 @@ export const Contact: React.FC = () => {
                 </div>
                 <div>
                   <h4 className="text-white font-medium mb-1 text-sm tracking-widest">EMAIL</h4>
-                  <a href="mailto:contato@macfrois.com.br" className="text-zinc-500 text-sm hover:text-gold-500 transition-colors font-light">contato@macfrois.com.br</a>
+                  <a href={MAILTO_CONTATO} className="text-zinc-500 text-sm hover:text-gold-500 transition-colors font-light">contato@macfrois.com.br</a>
+                  <CopiarEmail className="ml-3" />
                 </div>
               </div>
 
@@ -222,11 +224,26 @@ export const Contact: React.FC = () => {
                   className="w-full bg-black border border-zinc-800 p-4 text-white focus:border-gold-600 outline-none transition-colors rounded-sm appearance-none text-sm font-light"
                 >
                   <option value="">Selecione um projeto</option>
-                  <option value="Fotografia Corporativa — Pacote Presenca">Fotografia Corporativa — Pacote Presenca</option>
-                  <option value="Fotografia Corporativa — Pacote Autoridade">Fotografia Corporativa — Pacote Autoridade</option>
-                  <option value="Fotografia Corporativa — Pacote Lideranca">Fotografia Corporativa — Pacote Lideranca</option>
-                  <option value="Projeto Da Vinci — Posicionamento Estrategico">Projeto Da Vinci — Posicionamento Estrategico</option>
-                  <option value="Projeto Michelangelo — Imersao Completa">Projeto Michelangelo — Imersao Completa</option>
+                  <optgroup label="Fotografia corporativa">
+                    <option value="Corporativo — Pacote Presença">Corporativo — Pacote Presença</option>
+                    <option value="Corporativo — Pacote Autoridade">Corporativo — Pacote Autoridade</option>
+                    <option value="Corporativo — Pacote Liderança">Corporativo — Pacote Liderança</option>
+                  </optgroup>
+                  <optgroup label="Ensaio de família">
+                    <option value="Família — Pacote Momento">Família — Pacote Momento</option>
+                    <option value="Família — Pacote Memória">Família — Pacote Memória</option>
+                    <option value="Família — Pacote Legado">Família — Pacote Legado</option>
+                  </optgroup>
+                  <optgroup label="Ensaio de casal">
+                    <option value="Casal — Pacote Momento">Casal — Pacote Momento</option>
+                    <option value="Casal — Pacote Memória">Casal — Pacote Memória</option>
+                    <option value="Casal — Pacote Legado">Casal — Pacote Legado</option>
+                  </optgroup>
+                  <optgroup label="Projetos estratégicos de imagem">
+                    <option value="Projeto Da Vinci — Posicionamento Estratégico">Projeto Da Vinci — Posicionamento Estratégico</option>
+                    <option value="Projeto Michelangelo — Imersão Completa">Projeto Michelangelo — Imersão Completa</option>
+                  </optgroup>
+                    <option value="Ainda não sei, quero conversar">Ainda não sei, quero conversar</option>
                 </select>
               </div>
 
