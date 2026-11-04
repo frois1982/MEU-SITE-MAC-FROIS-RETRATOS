@@ -233,6 +233,8 @@ export const Contact: React.FC = () => {
                     <option value="Família — Pacote Momento">Família — Pacote Momento</option>
                     <option value="Família — Pacote Memória">Família — Pacote Memória</option>
                     <option value="Família — Pacote Legado">Família — Pacote Legado</option>
+                    <option value="Família — Legado + Além do Tempo, 1 ano">Família — Legado + Além do Tempo, 1 ano</option>
+                    <option value="Família — Legado + Além do Tempo, 2 anos">Família — Legado + Além do Tempo, 2 anos</option>
                   </optgroup>
                   <optgroup label="Ensaio de casal">
                     <option value="Casal — Pacote Momento">Casal — Pacote Momento</option>
