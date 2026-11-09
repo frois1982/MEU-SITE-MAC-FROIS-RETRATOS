@@ -14,7 +14,7 @@ const ELA = 'Retrato corporativo de uma mulher de cabelo longo, em estúdio';
 const ELE = 'Retrato corporativo de um homem de barba, em estúdio';
 // Fotos do site (public/retratos), uma de cada, alternando ela e ele.
 const RETRATOS_RECENTES = [
-  ['ela-2582', ELA], ['ele-2788', ELE], ['ela-2615', ELA], ['ele-2781', ELE], ['ela-2670', ELA],
+  ['ela-2670', ELA], ['ele-2788', ELE], ['ela-2615', ELA], ['ele-2781', ELE], ['ela-2582', ELA],
   ['ele-2805', ELE], ['ela-2709', ELA], ['ele-2825', ELE], ['ela-2742', ELA], ['ele-2873', ELE],
 ].map(([arquivo, alt]) => ({ arquivo, alt }));
 
@@ -271,10 +271,8 @@ export const Jornada: React.FC = () => {
             <p>{i === 0 ? 'Começa por aqui' : 'Próximo'}<strong>{c.arquetipo}</strong></p>
           </div>
           <Cena cena={c} numero={i + 1} />
-        </React.Fragment>
-      ))}
-      <div className="jr-intervalo" />
-
+          {i === 2 && (
+            <>
       <section className="relative px-6 py-24 bg-zinc-950 border-t border-zinc-900" aria-labelledby="retratos-recentes">
         <div className="max-w-6xl mx-auto">
           <p className="text-[10px] uppercase tracking-[0.4em] text-gold-500 text-center">Trabalhos recentes</p>
@@ -301,6 +299,11 @@ export const Jornada: React.FC = () => {
           </div>
         </div>
       </section>
+            </>
+          )}
+        </React.Fragment>
+      ))}
+      <div className="jr-intervalo" />
 
       <section className="relative px-6 py-24 bg-zinc-950 border-t border-zinc-900" aria-labelledby="roda">
         <div className="max-w-3xl mx-auto">
