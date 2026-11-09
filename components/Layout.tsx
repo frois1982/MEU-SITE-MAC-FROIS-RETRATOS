@@ -68,7 +68,7 @@ const Navbar: React.FC = () => {
   return (
     <nav className={`fixed w-full z-50 transition-all duration-300 ${scrolled ? 'bg-zinc-950/95 backdrop-blur-sm py-4 border-b border-zinc-900' : 'bg-transparent py-6'}`}>
       <div className="container mx-auto px-6 flex justify-between items-center">
-        <Link to="/" className="flex items-center gap-3 text-2xl font-serif tracking-tighter text-white uppercase group">
+        <Link to="/" onClick={() => { if (location.pathname === "/") window.scrollTo({ top: 0, behavior: "instant" as ScrollBehavior }); }} className="flex items-center gap-3 text-2xl font-serif tracking-tighter text-white uppercase group">
           <span>MAC <span className="text-gold-500 group-hover:text-gold-400 transition-colors">FROIS</span></span>
         </Link>
         <div className="hidden md:flex items-center space-x-8">
