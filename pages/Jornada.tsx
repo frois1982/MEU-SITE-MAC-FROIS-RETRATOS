@@ -12,10 +12,12 @@ import './jornada.css';
 
 const ELA = 'Retrato corporativo de uma mulher de cabelo longo, em estúdio';
 const ELE = 'Retrato corporativo de um homem de barba, em estúdio';
+const LIS = 'Retrato profissional de uma mulher loira de terno branco, em estúdio';
+const FRAN = 'Retrato profissional de uma mulher de cabelo escuro e ondulado, em estúdio';
 // Fotos do site (public/retratos), uma de cada, alternando ela e ele.
 const RETRATOS_RECENTES = [
-  ['ela-2670', ELA], ['ele-2788', ELE], ['ela-2615', ELA], ['ele-2781', ELE], ['ela-2582', ELA],
-  ['ele-2805', ELE], ['ela-2709', ELA], ['ele-2825', ELE], ['ela-2742', ELA], ['ele-2873', ELE],
+  ['ela-2670', ELA], ['lis-1191', LIS], ['fran-2254', FRAN], ['ele-2788', ELE], ['lis-1493', LIS],
+  ['fran-1697', FRAN], ['ele-2873', ELE], ['lis-1325', LIS], ['fran-2480', FRAN], ['ela-2709', ELA],
 ].map(([arquivo, alt]) => ({ arquivo, alt }));
 
 const reduzido = () => typeof window !== 'undefined' && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
