@@ -4,6 +4,16 @@ Como usar: copie o bloco "Modelo" no fim, preencha com a data e acrescente acima
 
 ---
 
+## 09/11/2026 (conferência sem login pessoal: pws=0 no Google, mapa centrado no estúdio; 6 dias depois da home nova)
+Buscas (posição orgânica): fotógrafo corporativo florianópolis 5º (`/fotografo-corporativo-florianopolis`; era ~10º em 03/11) | fotógrafo profissional florianópolis 7º (home; era ~27º, salto grande) | fotógrafo de família florianópolis ~17º (`/ensaio-de-familia-florianopolis`, 2ª página; era ~11º, oscilou para baixo).
+Maps (do ponto do estúdio, sem patrocinados): profissional 3º | família 3º (Denise & Lenine é patrocinado) | corporativo 4º (Fabio Aranda entrou à frente; era 3º). Gabriela Souza e Zanetta seguem na frente.
+Meu Negócio: 93 avaliações, nota 5,0 (sem novas desde 03/11); nenhuma pendente de resposta.
+Search Console (28 dias, 11/10 a 07/11): 27 cliques | 914 impressões | CTR 3% | posição média 11,6 (03/11: 25, 822, 3%, 12). Páginas: home 16 cliques/165 impressões, corporativo 4/63, blog custa corporativo 1/43, blog roupa família 1/39, médicos 1/26, casal 1/24; blog advogados/OAB 0/131. Consultas: "fotografia profissional" 33 imp., "personal branding" 33, "selfbranding" 9, "fotografia corporativa" 7.
+Indexação: 47 indexadas (eram 44), 0 por erro, 2 "rastreada, mas não indexada": `/retratos-que-vendem` e o blog "o erro mais comum que profissionais cometem com a imagem nas redes sociais" (rastreado em 27/06). Sitemap com 47 URLs. Post de coaches e mentores publicado em 06/11 pelo gerador automático.
+Auditoria (build de 09/11, 64 HTMLs): páginas principais e blog sem problema. Pendências: título de `/fotografo-para-advogados-florianopolis` com 61 caracteres; funil `/metodo-frois/*` (index, mentoria, presenca-digital, workshop) sem descrição e sem canonical, quiz sem H1; série `/como-comecar-na-fotografia/*` sem canonical e com títulos de 61 a 75 caracteres.
+Ajustes feitos (04 a 09/11): e-mail de contato trocado para contato@macfrois.com.br (rodapé, Contato, dados estruturados, resposta do quiz); botão copiar e-mail; assunto "E-mail pelo site"; seletor de projeto do Contato com pacotes de família, casal e Além do Tempo. Falta trocar o destino do formulário no Formspree (xykzkago).
+Atenção: o efeito da reescrita da home já aparece em profissional e corporativo. Família oscila e é a que merece ação (mais texto na página e links de blog). Repetir em ~16/11.
+
 ## 03/11/2026 (conferência sem login pessoal: pws=0 no Google, mapa centrado no estúdio)
 Buscas (posição orgânica): fotógrafo corporativo florianópolis ~10º (`/contato`; era 5º em 30/10, 11º em 27/10) | fotógrafo profissional florianópolis ~27º (`/fotografo-corporativo-florianopolis`, 3ª página; antes fora da 1ª página) | fotógrafo de família florianópolis ~11º (`/ensaio-de-familia-florianopolis`; antes fora dos resultados de texto, melhora). Mac Frois aparece no bloco de Imagens nas buscas de corporativo e família.
 Maps (do ponto do estúdio, sem patrocinados): 3º nas três buscas (corporativo, profissional, família), atrás de Gabriela Souza (21 avaliações) e Zanetta (112); à frente de Camila Stuart (144).
