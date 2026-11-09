@@ -156,6 +156,14 @@ const BlogPost: React.FC = () => {
               (48) 99623-1894
             </a>
           </p>
+          <p style={{ marginTop: '1.25rem' }}>
+            <Link
+              to="/contato"
+              style={{ display: 'inline-block', padding: '0.8rem 1.6rem', background: '#C9A84C', color: '#000', fontSize: '0.75rem', fontWeight: 700, letterSpacing: '0.2em', textTransform: 'uppercase' }}
+            >
+              Solicitar orçamento
+            </Link>
+          </p>
           <p style={{ marginTop: '1rem', fontSize: '0.85rem' }}>
             <Link to={post.cta?.href || '/fotografo-corporativo-florianopolis'} style={{ color: '#C9A84C' }}>
               {post.cta?.label || 'Conheça a sessão de fotografia corporativa em Florianópolis →'}

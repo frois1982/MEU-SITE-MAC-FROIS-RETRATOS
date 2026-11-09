@@ -154,6 +154,7 @@ for (const p of PAGINAS) {
     ] };
     extra.corpo = `<main><h1>${esc(FAM.h1)}</h1><p>${esc(FAM.intro)}</p>` +
       FAM.packages.map((k) => `<h2>${esc(k.nome)}: ${esc(k.precoRotulo)}</h2><ul>${k.itens.map((i) => `<li>${esc(i)}</li>`).join('')}</ul>`).join('') +
+      (FAM.secoes || []).map((x) => `<h2>${esc(x.h2)}</h2>${(x.paragrafos || []).map((q) => `<p>${esc(q)}</p>`).join('')}${x.lista ? `<ul>${x.lista.map((i) => `<li>${esc(i)}</li>`).join('')}</ul>` : ''}${x.links ? `<ul>${x.links.map((l) => `<li><a href="${l.to}">${esc(l.label)}</a></li>`).join('')}</ul>` : ''}`).join('') +
       `<h2>${esc(PRAIAS.h2)}</h2><p>${esc(PRAIAS.intro)}</p>` +
       PRAIAS.secoes.map((x) => `<h3>${esc(x.h2)}</h3>${(x.paragrafos || []).map((t) => `<p>${esc(t)}</p>`).join('')}${x.lista ? `<ul>${x.lista.map((i) => `<li>${esc(i)}</li>`).join('')}</ul>` : ''}`).join('') +
       PRAIAS.praias.map((x) => `<h3>${esc(x.h)}</h3>${x.p.map((t) => `<p>${esc(t)}</p>`).join('')}${x.link ? `<p><a href="${x.link}">${esc(x.nome)}</a></p>` : ''}`).join('') +

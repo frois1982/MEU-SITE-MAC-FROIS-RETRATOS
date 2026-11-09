@@ -157,6 +157,33 @@ export const FamilyPhotographer: React.FC = () => {
         </div>
       </section>
 
+      {/* Mais sobre o ensaio */}
+      <section className="max-w-3xl mx-auto px-6 pt-20">
+        <p className={`${C.terra} text-xs tracking-[0.4em] uppercase mb-3 text-center`}>Sobre o ensaio</p>
+        {(page as any).secoes.map((x: any) => (
+          <div key={x.h2} className="mb-10">
+            <h2 className="text-2xl font-serif mb-4">{x.h2}</h2>
+            {x.paragrafos?.map((t: string) => <p key={t} className="text-[#6B5648] text-sm md:text-base leading-relaxed mb-3">{t}</p>)}
+            {x.lista && (
+              <ul className="space-y-3 mb-3">
+                {x.lista.map((i: string) => (
+                  <li key={i} className="flex items-start text-sm md:text-base text-[#4a382e]">
+                    <Check size={14} className={`${C.terra} mr-3 shrink-0 mt-1.5`} />{i}
+                  </li>
+                ))}
+              </ul>
+            )}
+            {x.links && (
+              <ul className="space-y-2 mt-3">
+                {x.links.map((l: any) => (
+                  <li key={l.to}><Link to={l.to} className={`${C.terra} text-sm underline underline-offset-4`}>{l.label}</Link></li>
+                ))}
+              </ul>
+            )}
+          </div>
+        ))}
+      </section>
+
       {/* Praias */}
       <section id="praias" className="max-w-3xl mx-auto px-6 pt-20 pb-4 scroll-mt-24">
         <p className={`${C.terra} text-xs tracking-[0.4em] uppercase mb-3 text-center`}>{praias.kicker}</p>

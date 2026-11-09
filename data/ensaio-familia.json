@@ -124,5 +124,69 @@
       "q": "Como funciona o pagamento?",
       "a": "A data é reservada com um sinal de 30% do valor. O restante é pago no cartão de crédito, em até 6x nos pacotes Momento e Memória e em até 12x no Legado e no Além do Tempo, com a cobrança feita antes da sessão (não há pagamento no dia). Todo projeto é formalizado com contrato e nota fiscal."
     }
+  ],
+  "secoes": [
+    {
+      "h2": "Por que fazer um ensaio de família profissional",
+      "paragrafos": [
+        "As crianças mudam rápido, os avós ficam mais longe do que a gente gostaria e, no dia a dia, quase ninguém aparece em foto junto. O ensaio de família existe para parar esse tempo por algumas horas e guardar quem vocês são agora, todos juntos, com qualidade para imprimir e pendurar na parede.",
+        "Foto de celular registra o momento. O ensaio registra a relação: o jeito que o pai levanta o filho, o abraço da avó, o riso que só acontece quando ninguém está posando."
+      ]
+    },
+    {
+      "h2": "Como é uma sessão de fotos de família em Florianópolis",
+      "paragrafos": [
+        "Tudo começa com uma conversa: você me conta como é a sua família, o que vocês gostam de fazer juntos e onde se sentem melhor, no estúdio do Estreito ou ao ar livre. Depois disso eu oriento o figurino, para que as cores combinem sem ficar todo mundo igual.",
+        "Na sessão não há pose forçada. A direção é leve, no ritmo das crianças e respeitando quem não gosta de ser fotografado. No Momento a sessão dura até 1 hora; no Memória, até 2 horas, com mais trocas de figurino; no Legado são duas sessões, para contar a história com mais calma."
+      ]
+    },
+    {
+      "h2": "Quando fazer o ensaio de família",
+      "paragrafos": [
+        "Não existe data certa, mas algumas fases pedem registro: o bebê nos primeiros meses, o aniversário de um ano, a chegada de um novo membro, o reencontro com os avós, uma formatura, a virada do ano ou simplesmente um período em que todos estão bem e juntos."
+      ],
+      "lista": [
+        "Famílias com bebês e crianças pequenas",
+        "Famílias com adolescentes, que logo estarão de saída",
+        "Três gerações juntas, com avós, pais e netos",
+        "Quem quer um quadro de família de verdade para a sala"
+      ]
+    },
+    {
+      "h2": "Estúdio, praia ou outro local",
+      "paragrafos": [
+        "O estúdio do Estreito oferece luz controlada e conforto, bom para dias de chuva e para crianças menores. As sessões externas acontecem onde fizer sentido para vocês: praia, trilha, parque ou a própria casa. O deslocamento está incluso até 100 km da Grande Florianópolis."
+      ],
+      "links": [
+        {
+          "to": "/blog/ensaio-de-familia-no-estudio-ou-na-praia-qual-escolher",
+          "label": "Estúdio ou praia: como escolher"
+        },
+        {
+          "to": "/blog/melhores-praias-de-florianopolis-para-ensaio-de-familia",
+          "label": "As melhores praias para o ensaio"
+        }
+      ]
+    },
+    {
+      "h2": "Leia antes de agendar",
+      "paragrafos": [
+        "Alguns textos do blog respondem às dúvidas mais comuns de quem está planejando o ensaio:"
+      ],
+      "links": [
+        {
+          "to": "/blog/quanto-custa-um-ensaio-de-familia-em-florianopolis",
+          "label": "Quanto custa um ensaio de família em Florianópolis"
+        },
+        {
+          "to": "/blog/o-que-vestir-no-ensaio-de-familia",
+          "label": "O que vestir no ensaio de família"
+        },
+        {
+          "to": "/blog/ensaio-de-familia-com-bebe-e-criancas-pequenas",
+          "label": "Ensaio de família com bebê e crianças pequenas"
+        }
+      ]
+    }
   ]
 }
