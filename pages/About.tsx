@@ -46,6 +46,9 @@ export const About: React.FC = () => {
             {s.h2 === 'O Método Frois' && (
               <p className="text-sm"><Link to="/servicos" className="text-gold-500 underline underline-offset-4 hover:text-gold-400">Ver projetos de posicionamento de imagem</Link></p>
             )}
+            {s.h2 === 'Minha família' && (
+              <p className="text-sm"><Link to="/ensaio-de-familia-florianopolis" className="text-gold-500 underline underline-offset-4 hover:text-gold-400">Conhecer o ensaio de família</Link></p>
+            )}
             {s.h2 === 'Ensinar e escrever' && (
               <p className="text-sm space-x-6">
                 <Link to="/produtos" className="text-gold-500 underline underline-offset-4 hover:text-gold-400">Ver os cursos</Link>
