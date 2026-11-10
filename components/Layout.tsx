@@ -54,6 +54,7 @@ const Navbar: React.FC = () => {
   const navLinks: NavItem[] = [
     { name: 'Início', path: '/' },
     { name: 'Portfólio', path: '/portfolio' },
+    { name: 'Sobre', path: '/sobre' },
     { name: 'Retratos', path: '', children: [
       { name: 'Corporativo', path: '/fotografo-corporativo-florianopolis' },
       { name: 'Família', path: '/ensaio-de-familia-florianopolis' },
