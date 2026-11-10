@@ -16,6 +16,7 @@ const PRAIAS = JSON.parse(fs.readFileSync(path.join(__dirname, '../data/ensaio-f
 const FAM_FAQ = [...FAM.faq, ...PRAIAS.faq];
 const SEO = JSON.parse(fs.readFileSync(path.join(__dirname, '../data/home-seo.json'), 'utf-8'));
 const CENAS = JSON.parse(fs.readFileSync(path.join(__dirname, '../data/home-cenas.json'), 'utf-8'));
+const SOBRE = JSON.parse(fs.readFileSync(path.join(__dirname, '../data/sobre.json'), 'utf-8'));
 const TITULOS = JSON.parse(fs.readFileSync(path.join(__dirname, '../data/titulos-seo.json'), 'utf-8'));
 
 const WPP = '(48) 99623-1894';
@@ -24,6 +25,7 @@ const ESTATICO = {
     '<p>Retratos corporativos, fotografia de marca pessoal, ensaios de família e de casal feitos por Mac Frois no estúdio do Estreito e em locações de Florianópolis e região.</p>' +
     '<p>Cada imagem nasce de um briefing: quem você é, para quem você fala e o que a foto precisa dizer. Navegue pelas categorias Corporativo, Retratos e Artístico e clique em qualquer foto para ampliar.</p>' +
     '<h2>Quer um retrato assim?</h2><p>Veja como funciona a <a href="/fotografo-corporativo-florianopolis">sessão de retrato corporativo em Florianópolis</a>, os <a href="/servicos">projetos e pacotes</a> ou o <a href="/ensaio-de-familia-florianopolis">ensaio de família</a>. Para agendar, fale pelo <a href="/contato">contato</a>.</p></main>',
+  '/sobre': () => `<main><h1>${esc(SOBRE.h1)}</h1><p>${esc(SOBRE.intro)}</p>` + SOBRE.secoes.map((x) => `<h2>${esc(x.h2)}</h2>` + x.paragrafos.map((t) => `<p>${esc(t)}</p>`).join('')).join('') + '<p><a href="/portfolio">Ver portfólio</a> · <a href="/servicos">Projetos</a> · <a href="/contato">Contato</a></p></main>',
   '/servicos': () => '<main><h1>Autoridade em Imagem</h1>' +
     '<p>Fotografia corporativa para profissionais que querem ser reconhecidos como referência, em Florianópolis, SC.</p>' +
     '<h2>Fotografia corporativa</h2><p>Sessões focadas, de 1 a 3 horas, em estúdio ou locação externa, com fotos tratadas para LinkedIn, site, Google Meu Negócio e redes sociais. Pacotes a partir de R$ 890. Veja <a href="/fotografo-corporativo-florianopolis">como funciona a sessão do fotógrafo corporativo em Florianópolis</a>.</p>' +
@@ -56,6 +58,7 @@ const PAGINAS = [
   { rota: '/ensaio-de-familia-florianopolis', title: FAM.title, desc: FAM.description, fam: true },
   { rota: '/fotografo-corporativo-florianopolis', title: LP.title, desc: LP.description, lp: true },
   { rota: '/portfolio', title: 'Portfólio de Retratos Corporativos | Mac Frois', desc: 'Portfólio de Mac Frois: retratos corporativos, marca pessoal, ensaios de família e de casal em Florianópolis. Veja os trabalhos e agende sua sessão.' },
+  { rota: '/sobre', title: SOBRE.title, desc: SOBRE.description, sobre: true },
   { rota: '/servicos', title: 'Projetos de retrato corporativo em Florianópolis | Mac Frois', desc: 'Fotografia corporativa e projetos estrategicos de imagem em Florianopolis, SC. Pacotes a partir de R$890.' },
   { rota: '/produtos', title: 'Produtos Digitais | Mac Frois — Cursos de Fotografia', desc: 'Cursos digitais de fotografia por Mac Frois. Iluminacao Profissional e Retratos que Vendem disponíveis agora no Hotmart.' },
   { rota: '/blog', title: 'Blog | Mac Frois — Fotografia, Imagem e Marca Pessoal', desc: 'Artigos sobre fotografia corporativa, posicionamento de imagem, marca pessoal e estratégias para profissionais e executivos em Florianópolis, SC.' },
@@ -160,6 +163,7 @@ for (const p of PAGINAS) {
       PRAIAS.praias.map((x) => `<h3>${esc(x.h)}</h3>${x.p.map((t) => `<p>${esc(t)}</p>`).join('')}${x.link ? `<p><a href="${x.link}">${esc(x.nome)}</a></p>` : ''}`).join('') +
       FAM_FAQ.map((f) => `<h2>${esc(f.q)}</h2><p>${esc(f.a)}</p>`).join('') + '</main>';
   }
+  if (p.sobre) extra.jsonld = { '@context': 'https://schema.org', '@type': 'ProfilePage', mainEntity: { '@type': 'Person', name: 'Mac Frois', jobTitle: 'Fotógrafo retratista', url: BASE + '/sobre', image: BASE + '/sobre/mac-frois-1080.webp', workLocation: { '@type': 'City', name: 'Florianópolis' }, sameAs: ['https://instagram.com/froisretratista', 'https://youtube.com/@macfroiss', 'https://www.amazon.com.br/dp/B0HQ4XGDYY'] } };
   if (ESTATICO[p.rota]) extra.corpo = ESTATICO[p.rota]();
   gravar(p.rota, aplicar(p.jornada ? baseInicio : base, { title: p.title, desc: p.desc, url: BASE + p.rota, ...extra }));
   n++;

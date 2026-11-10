@@ -14,6 +14,7 @@ const Contact = lazy(() => import('./pages/Contact').then((m) => ({ default: m.C
 const Admin = lazy(() => import('./pages/Admin').then((m) => ({ default: m.Admin })));
 const CorporatePhotographer = lazy(() => import('./pages/CorporatePhotographer').then((m) => ({ default: m.CorporatePhotographer })));
 const FamilyPhotographer = lazy(() => import('./pages/FamilyPhotographer').then((m) => ({ default: m.FamilyPhotographer })));
+const About = lazy(() => import('./pages/About').then((m) => ({ default: m.About })));
 const LandingRota = lazy(() => import('./pages/LandingRota'));
 
 // Scroll to top helper
@@ -35,6 +36,7 @@ const App: React.FC = () => {
           <Routes>
             <Route path="/" element={<Jornada />} />
             <Route path="/portfolio" element={<Portfolio />} />
+            <Route path="/sobre" element={<About />} />
             <Route path="/servicos" element={<Services />} />
             <Route path="/produtos" element={<Products />} />
             <Route path="/blog" element={<Blog />} />
